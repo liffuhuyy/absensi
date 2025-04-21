@@ -14,6 +14,41 @@ class AuthController extends Controller
             return "View login tidak ditemukan.";
         }
     }
+    public function editprofil()
+    {
+        if (view()->exists('products.editprofil')) {
+            return view('products.editprofil');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function biodata()
+    {
+        if (view()->exists('products.biodata')) {
+            return view('products.biodata');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function izinsakit()
+    {
+        if (view()->exists('products.izinsakit')) {
+            return view('products.izinsakit');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function riwayatabsen()
+    {
+        if (view()->exists('products.riwayatabsen')) {
+            return view('products.riwayatabsen');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
 
     public function presensi()
     {

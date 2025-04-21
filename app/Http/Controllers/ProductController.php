@@ -57,10 +57,30 @@ class ProductController extends Controller
     {
         return view('profil'); 
     }
+    
+    public function izinsakit() : View
+    {
+        return view('izinsakit'); 
+    }
+
+    public function riwayatabsen() : View
+    {
+        return view('riwayatabsen'); 
+    }
+
+    public function biodata() : View
+    {
+        return view('biodata'); 
+    }
+
+    public function editprofil() : View
+    {
+        return view('products.editprofil'); 
+    }
 
     public function index() : View
     {
-        return view('index'); 
+        return view('products.index'); 
     }
 
     public function tentangkami() : View
