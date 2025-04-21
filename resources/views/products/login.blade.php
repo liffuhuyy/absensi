@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Login Form</title>
+      <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+     
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <style>
+         /* Styling untuk ikon mata */
+         .password-field {
+            position: relative;
+         }
+         .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: none; /* Sembunyikan ikon secara default */
+         }
+      </style>
+   </head>
+   <body>
+      <div class="wrapper">
+         <div class="title">
+            Login
+         </div>
+         <form action="proses_login.php" method="post"> <!-- Ubah GET menjadi POST -->
+            <div class="field">
+                <input type="text" name="email" required> <!-- Tambahkan name="email" -->
+                <label>Email </label>
+            </div>
+            <div class="field password-field">
+                <input type="password" name="password" id="password" oninput="checkPasswordInput()" required> <!-- Tambahkan name="password" -->
+                <label>Password</label>
+                <i class="toggle-password fas fa-eye-slash" onclick="togglePassword()"></i>
+            </div>
+            <br>
+            <div class="field">
+                <input type="submit" value="Login">
+            </div>
+            <div class="content">
+               <div class="pass-link">
+                  <a href="forgot-password.html">Forgot password?</a>
+               </div>
+            </div>
+            <div class="signup-link">
+               Belum Punya Akun? <a href="{{ url('/daftar') }}">Daftar sekarang</a>
+            </div>
+        </form>
+        
+      </div>
+
+      <!-- Script untuk mengatur fungsi toggle password dan tampilan ikon -->
+      <script>
+         function checkPasswordInput() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            
+            // Tampilkan ikon hanya jika ada input di field password
+            if(passwordInput.value.length > 0) {
+               toggleIcon.style.display = 'block';
+            } else {
+               toggleIcon.style.display = 'none';
+            }
+         }
+
+         function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            
+            if (passwordInput.type === 'password') {
+               passwordInput.type = 'text';
+               toggleIcon.classList.remove('fa-eye-slash');
+               toggleIcon.classList.add('fa-eye');
+            } else {
+               passwordInput.type = 'password';
+               toggleIcon.classList.remove('fa-eye');
+               toggleIcon.classList.add('fa-eye-slash');
+            }
+         }
+      </script>
+   </body>
+</html>

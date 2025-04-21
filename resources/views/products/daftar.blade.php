@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- Created By CodingNepal -->
+<html lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Daftar form</title>
+      <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+      <style>
+         /* Styling untuk ikon mata */
+         .password-field {
+            position: relative;
+         }
+         .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: none; /* Sembunyikan ikon secara default */
+         }
+      </style>
+   </head>
+   <body>
+      <div class="wrapper">
+         
+         <div class="title">
+            Daftar
+         </div>
+         
+         <form action="proses_daftar.php" method="POST">
+            <div class="field">
+                <input type="text" name="nama" required>
+                <label>Nama</label>
+            </div>
+            <div class="field">
+                <input type="email" name="email" required>
+                <label>Email</label>
+            </div>
+            <div class="field">
+                <input type="password" name="password" required>
+                <label>Password</label>
+            </div>
+            <div class="field">
+                <input type="text" name="no_hp" required>
+                <label>No Hp</label>
+            </div>
+            <div class="field">
+                <input type="submit" value="Daftar">
+            </div>
+            <div class="signup-link">
+               Sudah Punya Akun? <a href="{{ url('/login') }}">Login</a>
+            </div>
+
+        </form>
+      </div>
+
+      <script>
+         function checkPasswordInput() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            
+            // Tampilkan ikon hanya jika ada input di field password
+            if(passwordInput.value.length > 0) {
+               toggleIcon.style.display = 'block';
+            } else {
+               toggleIcon.style.display = 'none';
+            }
+         }
+
+         function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleIcon = document.querySelector('.toggle-password');
+            
+            if (passwordInput.type === 'password') {
+               passwordInput.type = 'text';
+               toggleIcon.classList.remove('fa-eye-slash');
+               toggleIcon.classList.add('fa-eye');
+            } else {
+               passwordInput.type = 'password';
+               toggleIcon.classList.remove('fa-eye');
+               toggleIcon.classList.add('fa-eye-slash');
+            }
+         }
+      </script>
+   </body>
+</html>
