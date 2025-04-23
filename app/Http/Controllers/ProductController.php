@@ -2,93 +2,123 @@
 
 namespace App\Http\Controllers;
 
-//import model product
-use App\Models\absensi; 
-
-//import return type View
+use App\Models\Absensi; // Pastikan nama model diawali huruf kapital
 use Illuminate\View\View;
 
-class absensiController extends Controller
+class AbsensiController extends Controller
 {
     /**
-     * index
-     *
-     * @return void
+     * Tampilkan form login
      */
-    public function showLoginForm() : View
+    public function showLoginForm(): View
     {
-        return view('login'); // Pastikan view bernama "login"
-    }
-    
-    public function register() : View
-    {
-        return view('daftar'); // Pastikan view bernama "daftar"
+        return view('login');
     }
 
-    public function beranda() : View
+    /**
+     * Tampilkan form registrasi
+     */
+    public function register(): View
+    {
+        return view('daftar');
+    }
+
+    /**
+     * Tampilkan halaman beranda
+     */
+    public function beranda(): View
     {
         if (!view()->exists('absensi.beranda')) {
             abort(404, 'Halaman beranda tidak ditemukan.');
         }
         return view('absensi.beranda');
     }
-    
-    public function presensi() : View
+
+    /**
+     * Tampilkan halaman presensi
+     */
+    public function presensi(): View
     {
-        return view('presensi'); 
-    }
-    
-    public function menajementugas() : View
-    {
-        return view('manajementugas'); 
+        return view('presensi');
     }
 
-    public function pengajuan() : View
+    /**
+     * Tampilkan halaman manajemen tugas
+     */
+    public function menajementugas(): View
     {
-        return view('pengajuan'); 
+        return view('manajementugas');
     }
 
-    public function kontak() : View
+    /**
+     * Tampilkan halaman pengajuan
+     */
+    public function pengajuan(): View
     {
-        return view('kontak'); 
+        return view('pengajuan');
     }
 
-    public function profil() : View
+    /**
+     * Tampilkan halaman kontak
+     */
+    public function kontak(): View
     {
-        return view('profil'); 
-    }
-    
-    public function izinsakit() : View
-    {
-        return view('izinsakit'); 
+        return view('kontak');
     }
 
-    public function riwayatabsen() : View
+    /**
+     * Tampilkan halaman profil
+     */
+    public function profil(): View
     {
-        return view('riwayatabsen'); 
+        return view('profil');
     }
 
-    public function biodata() : View
+    /**
+     * Tampilkan halaman izin/sakit
+     */
+    public function izinsakit(): View
     {
-        return view('biodata'); 
+        return view('izinsakit');
     }
 
-    public function editprofil() : View
+    /**
+     * Tampilkan halaman riwayat absen
+     */
+    public function riwayatabsen(): View
     {
-        return view('absensi.editprofil'); 
+        return view('riwayatabsen');
     }
 
-    public function index() : View
+    /**
+     * Tampilkan halaman biodata
+     */
+    public function biodata(): View
     {
-<<<<<<< HEAD
-        return view('products.index'); 
-=======
-        return view('absensi.index'); 
->>>>>>> 2efb661cecc40e4e2f969099ddd2609213d6dbd8
+        return view('biodata');
     }
 
-    public function tentangkami() : View
+    /**
+     * Tampilkan halaman edit profil
+     */
+    public function editprofil(): View
     {
-        return view('tentangkami'); 
+        return view('absensi.editprofil');
+    }
+
+    /**
+     * Tampilkan halaman index absensi
+     */
+    public function index(): View
+    {
+        return view('absensi.index');
+    }
+
+    /**
+     * Tampilkan halaman tentang kami
+     */
+    public function tentangkami(): View
+    {
+        return view('tentangkami');
     }
 }
