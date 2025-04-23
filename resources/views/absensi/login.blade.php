@@ -174,7 +174,7 @@ form .signup-link a:hover{
             </div>
             <div class="content">
                <div class="pass-link">
-                  <a href="forgot-password.html">Forgot password?</a>
+                  <a href="{{ url('/lupakatasandi') }}">Lupa kata sandi?</a>
                </div>
             </div>
             <div class="signup-link">

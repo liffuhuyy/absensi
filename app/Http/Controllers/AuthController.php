@@ -8,16 +8,16 @@ class AuthController extends Controller
 {
     public function showLoginForm()
     {
-        if (view()->exists('products.login')) {
-            return view('products.login');
+        if (view()->exists('absensi.login')) {
+            return view('absensi.login');
         } else {
             return "View login tidak ditemukan.";
         }
     }
     public function editprofil()
     {
-        if (view()->exists('products.editprofil')) {
-            return view('products.editprofil');
+        if (view()->exists('absensi.editprofil')) {
+            return view('absensi.editprofil');
         } else {
             return "View tidak ditemukan.";
         }
@@ -25,8 +25,8 @@ class AuthController extends Controller
 
     public function biodata()
     {
-        if (view()->exists('products.biodata')) {
-            return view('products.biodata');
+        if (view()->exists('absensi.biodata')) {
+            return view('absensi.biodata');
         } else {
             return "View tidak ditemukan.";
         }
@@ -34,8 +34,8 @@ class AuthController extends Controller
 
     public function izinsakit()
     {
-        if (view()->exists('products.izinsakit')) {
-            return view('products.izinsakit');
+        if (view()->exists('absensi.izinsakit')) {
+            return view('absensi.izinsakit');
         } else {
             return "View tidak ditemukan.";
         }
@@ -43,8 +43,8 @@ class AuthController extends Controller
 
     public function riwayatabsen()
     {
-        if (view()->exists('products.riwayatabsen')) {
-            return view('products.riwayatabsen');
+        if (view()->exists('absensi.riwayatabsen')) {
+            return view('absensi.riwayatabsen');
         } else {
             return "View tidak ditemukan.";
         }
@@ -52,8 +52,8 @@ class AuthController extends Controller
 
     public function presensi()
     {
-        if (view()->exists('products.presensi')) {
-            return view('products.presensi');
+        if (view()->exists('absensi.presensi')) {
+            return view('absensi.presensi');
         } else {
             return "View tidak ditemukan.";
         }
@@ -61,8 +61,8 @@ class AuthController extends Controller
 
     public function showBerandaform()
     {
-        if (view()->exists('products.beranda')) {
-            return view('products.beranda');
+        if (view()->exists('absensi.beranda')) {
+            return view('absensi.beranda');
         } else {
             return "View beranda tidak ditemukan.";
         }
@@ -70,8 +70,8 @@ class AuthController extends Controller
 
     public function manajementugas()
     {
-        if (view()->exists('products.manajementugas')) {
-            return view('products.manajementugas');
+        if (view()->exists('absensi.manajementugas')) {
+            return view('absensi.manajementugas');
         } else {
             return "View tidak ditemukan.";
         }
@@ -80,8 +80,8 @@ class AuthController extends Controller
     
     public function pengajuan()
     {
-        if (view()->exists('products.pengajuan')) {
-            return view('products.pengajuan');
+        if (view()->exists('absensi.pengajuan')) {
+            return view('absensi.pengajuan');
         } else {
             return "View tidak ditemukan.";
         }
@@ -89,8 +89,44 @@ class AuthController extends Controller
 
     public function kontak()
     {
-        if (view()->exists('products.kontak')) {
-            return view('products.kontak');
+        if (view()->exists('absensi.kontak')) {
+            return view('absensi.kontak');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function resetkatasandi()
+    {
+        if (view()->exists('absensi.resetkatasandi')) {
+            return view('absensi.resetkatasandi');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function ubahkatasandiberhasil()
+    {
+        if (view()->exists('absensi.ubahkatasandiberhasil')) {
+            return view('absensi.ubahkatasandiberhasil');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function lupakatasandi()
+    {
+        if (view()->exists('absensi.lupakatasandi')) {
+            return view('absensi.lupakatasandi');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function ubahkatasandi()
+    {
+        if (view()->exists('absensi.ubahkatasandi')) {
+            return view('absensi.ubahkatasandi');
         } else {
             return "View tidak ditemukan.";
         }
@@ -98,8 +134,8 @@ class AuthController extends Controller
 
     public function profil()
     {
-        if (view()->exists('products.profil')) {
-            return view('products.profil');
+        if (view()->exists('absensi.profil')) {
+            return view('absensi.profil');
         } else {
             return "View tidak ditemukan.";
         }
@@ -107,8 +143,8 @@ class AuthController extends Controller
 
     public function index()
     {
-        if (view()->exists('products.index')) {
-            return view('products.index');
+        if (view()->exists('absensi.index')) {
+            return view('absensi.index');
         } else {
             return "View tidak ditemukan.";
         }
@@ -116,8 +152,8 @@ class AuthController extends Controller
 
     public function tentangkami()
     {
-        if (view()->exists('products.tentangkami')) {
-            return view('products.tentangkami');
+        if (view()->exists('absensi.tentangkami')) {
+            return view('absensi.tentangkami');
         } else {
             return "View tidak ditemukan.";
         }
@@ -126,7 +162,7 @@ class AuthController extends Controller
     // Menampilkan halaman daftar
     public function showRegisterForm()
     {
-        return view('products.daftar'); // Tampilkan daftar.blade.php
+        return view('absensi.daftar'); // Tampilkan daftar.blade.php
     }
 
     public function login(Request $request)
