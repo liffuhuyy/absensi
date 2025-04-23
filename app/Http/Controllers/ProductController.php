@@ -60,7 +60,7 @@ class ProductController extends Controller
 
     public function index() : View
     {
-        return view('index'); 
+        return view('products.index'); 
     }
 
     public function tentangkami() : View
