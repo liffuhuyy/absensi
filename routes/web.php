@@ -1,16 +1,22 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\absensiController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 
+// Gunakan hanya Route::view untuk /products
+Route::view('/products', 'products'); // Menampilkan view resources/views/products.blade.php
+
 // Route resource untuk products (menggunakan resource standar)
-Route::resource('products', absensiController::class);
+Route::resource('products', ProductController::class);
 
 // Route untuk halaman utama (index)
 Route::get('/', function () {
     return view('products.index'); // Pastikan file index.blade.php ada di resources/views
+<<<<<<< HEAD
     return view('absensi.index'); // Pastikan file index.blade.php ada di resources/views
+=======
+>>>>>>> 2923c065d6cb132edc90f7d500b61795bf235dec
 });
 
 // Route untuk dashboard dengan middleware auth
@@ -31,8 +37,8 @@ Route::get('/test-db', function () {
 });
 
 // Route untuk halaman tambahan
-Route::get('/index', [AuthController::class, 'index'])->name('index');
-Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('absensi.tentangkami');
+Route::get('/product', [AuthController::class, 'product'])->name('product');
+Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('product.tentangkami');
 Route::get('/beranda', [AuthController::class, 'showBerandaForm'])->name('beranda');
 Route::get('/presensi', [AuthController::class, 'presensi'])->name('presensi');
 Route::get('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
@@ -43,10 +49,6 @@ Route::get('/editprofil', [AuthController::class, 'editprofil'])->name('editprof
 Route::get('/biodata', [AuthController::class, 'biodata'])->name('biodata');
 Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
 Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
-Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
-Route::get('/lupakatasandi', [AuthController::class, 'lupakatasandi'])->name('lupakatasandi');
-Route::get('/resetkatasandi', [AuthController::class, 'resetkatasandi'])->name('resetkatasandi');
-Route::get('/ubahkatasandiberhasil', [AuthController::class, 'ubahkatasandiberhasil'])->name('ubahkatasandiberhasil');
 
 // Rute untuk halaman daftar
 Route::get('/daftar', [AuthController::class, 'showRegisterForm'])->name('register');
