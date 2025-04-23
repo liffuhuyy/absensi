@@ -65,6 +65,12 @@
 
     </style>
     <script>
+            function confirmLogout() {
+        let confirmAction = confirm("Apakah Anda yakin ingin logout?");
+        if (confirmAction) {
+            window.location.href = "{{ url('/index') }}"; // Ganti '/index' dengan URL logout sebenarnya
+        }
+    }
         function showEditProfile() {
             document.getElementById('profileContainer').style.display = 'none';
             document.getElementById('editProfile').style.display = 'block';
@@ -78,10 +84,10 @@
         <h3>Nama siswa</h3>
         <p>08575467890</p><br><br><br>
         <div class="button-container">
-            <a href="editprofile.html" class="button">Edit Profile</a>
-            <a href="biodata.html" class="button">Biodata</a>
+            <a href="{{ url('/editprofil') }}" class="button">Edit Profil</a>
+            <a href="{{ url('/biodata') }}" class="button">Biodata</a>
         </div><br><br><br><br><br>
-        <p><a href="index.html" class="logout-link">Logout</a></p>
+        <p><a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a></p>
 
     </div>
 

@@ -89,7 +89,7 @@
 					<ul>
 						<li><a href="{{ url('/index') }}">HOME</a></li>
 						<li><a href="{{ url('/tentangkami') }}">TENTANG KAMI</a></li>
-						<li><a href="#contact" class="scrolly">CONTACT</a></li>
+						<li><a href="#contact" class="scrolly">KONTAK</a></li>
 					</ul>
 				</nav>
 			</header>

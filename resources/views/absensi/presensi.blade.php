@@ -400,8 +400,8 @@
                 <div id="status-message" class="status hide"></div>
                 
                 <div style="margin-top: 30px;">
-                    <a href="izinsakit.php" class="action-btn secondary-btn" style="text-decoration: none; text-align: center;">Sakit & Izin</a>
-                    <a href="riwayat-absen.php" class="action-btn secondary-btn" style="text-decoration: none; text-align: center;">Riwayat Absensi</a>
+                    <a href="{{ url('/izinsakit') }}" class="action-btn secondary-btn" style="text-decoration: none; text-align: center;">Sakit & Izin</a>
+                    <a href="{{ url('/riwayatabsen') }}" class="action-btn secondary-btn" style="text-decoration: none; text-align: center;">Riwayat Absensi</a>
                 </div>
             </div>
         </div>
