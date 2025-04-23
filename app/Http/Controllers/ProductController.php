@@ -30,7 +30,7 @@ class absensiController extends Controller
         if (!view()->exists('absensi.beranda')) {
             abort(404, 'Halaman beranda tidak ditemukan.');
         }
-        return view('products.beranda');
+        return view('absensi.beranda');
     }
     
     public function presensi() : View
