@@ -9,11 +9,8 @@ Route::resource('products', absensiController::class);
 
 // Route untuk halaman utama (index)
 Route::get('/', function () {
-<<<<<<< HEAD
     return view('products.index'); // Pastikan file index.blade.php ada di resources/views
-=======
     return view('absensi.index'); // Pastikan file index.blade.php ada di resources/views
->>>>>>> 77c59151baf84f034aabdb2590554c46426f3496
 });
 
 // Route untuk dashboard dengan middleware auth
