@@ -41,6 +41,10 @@ Route::get('/manajementugas', [AuthController::class, 'manajementugas'])->name('
 Route::get('/pengajuan', [AuthController::class, 'pengajuan'])->name('pengajuan');
 Route::get('/kontak', [AuthController::class, 'kontak'])->name('kontak');
 Route::get('/profil', [AuthController::class, 'profil'])->name('profil');
+Route::get('/editprofil', [AuthController::class, 'editprofil'])->name('editprofil');
+Route::get('/biodata', [AuthController::class, 'biodata'])->name('biodata');
+Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
+Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
 
 // Rute untuk halaman daftar
 Route::get('/daftar', [AuthController::class, 'showRegisterForm'])->name('register');

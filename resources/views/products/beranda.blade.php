@@ -272,8 +272,8 @@
             <h3 class="welcome-title">Selamat Datang!</h3>
             <p class="welcome-subtitle">Selamat datang di portal siswa SMK NEGERI 1 SUBANG. Silahkan lengkapi biodata Anda dan ajukan program magang untuk memulai perjalanan pendidikan Anda.</p>
             <div class="action-buttons">
-                <a href="biodata.html" class="btn btn-primary">Lengkapi Biodata</a>
-                <a href="pengajuan.php" class="btn btn-secondary">Ajukan Magang</a>
+                <a href="{{ url('/biodata') }}" class="btn btn-primary">Lengkapi Biodata</a>
+                <a href="{{ url('/pengajuan') }}" class="btn btn-secondary">Ajukan Magang</a>
             </div>
         </div>
 
@@ -291,7 +291,7 @@
                 <div class="stat-label">Rekap Nilai</div>
             </div>
             <div class="view-more-container">
-                <a href="manajemen-tugas.php" class="btn btn-primary">Lihat Selengkapnya</a>
+                <a href="{{ url('/manajementugas') }}" class="btn btn-primary">Lihat Selengkapnya</a>
             </div>
         </div>
     </div>
