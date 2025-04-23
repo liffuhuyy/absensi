@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 //import model product
-use App\Models\Product; 
+use App\Models\absensi; 
 
 //import return type View
 use Illuminate\View\View;
 
-class ProductController extends Controller
+class absensiController extends Controller
 {
     /**
      * index
@@ -27,7 +27,7 @@ class ProductController extends Controller
 
     public function beranda() : View
     {
-        if (!view()->exists('products.beranda')) {
+        if (!view()->exists('absensi.beranda')) {
             abort(404, 'Halaman beranda tidak ditemukan.');
         }
         return view('products.beranda');
@@ -75,12 +75,12 @@ class ProductController extends Controller
 
     public function editprofil() : View
     {
-        return view('products.editprofil'); 
+        return view('absensi.editprofil'); 
     }
 
     public function index() : View
     {
-        return view('products.index'); 
+        return view('absensi.index'); 
     }
 
     public function tentangkami() : View
