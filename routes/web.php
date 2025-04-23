@@ -1,18 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\absensiController;
 use App\Http\Controllers\AuthController;
 
-// Gunakan hanya Route::view untuk /products
-Route::view('/products', 'products'); // Menampilkan view resources/views/products.blade.php
+// Gunakan hanya Route::view untuk /absensi
+Route::view('/absensi', 'absensi'); // Menampilkan view resources/views/absensi.blade.php
 
-// Route resource untuk products (menggunakan resource standar)
-Route::resource('products', ProductController::class);
+// Route resource untuk absensi (menggunakan resource standar)
+Route::resource('absensi', ProductController::class);
 
 // Route untuk halaman utama (index)
 Route::get('/', function () {
-    return view('products.index'); // Pastikan file index.blade.php ada di resources/views
+    return view('absensi.index'); // Pastikan file index.blade.php ada di resources/views
 });
 
 // Route untuk dashboard dengan middleware auth
