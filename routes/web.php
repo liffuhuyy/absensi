@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 
+Route::view('/products', 'products'); // ini akan menampilkan view resources/views/products.blade.php
+
 // Route resource untuk products (menggunakan resource standar)
 Route::resource('products', ProductController::class);
 
