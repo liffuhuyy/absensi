@@ -84,7 +84,7 @@
         <h3>Nama siswa</h3>
         <p>08575467890</p><br><br><br>
         <div class="button-container">
-            <a href="{{ url('/editprofil') }}" class="button">Edit Profile</a>
+            <a href="{{ url('/editprofil') }}" class="button">Edit Profil</a>
             <a href="{{ url('/biodata') }}" class="button">Biodata</a>
         </div><br><br><br><br><br>
         <p><a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a></p>

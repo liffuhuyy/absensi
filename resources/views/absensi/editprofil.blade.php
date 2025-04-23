@@ -141,7 +141,7 @@
             <button type="submit" class="submit-btn">Simpan Perubahan</button>
         </form>
         
-        <a href="change-password.html" class="change-password">Ubah Kata Sandi</a><br>
+        <a href="{{ url('/ubahkatasandi') }}" class="change-password">Ubah Kata Sandi</a><br>
         
     </div>
 
