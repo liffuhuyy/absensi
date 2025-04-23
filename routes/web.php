@@ -9,7 +9,7 @@ Route::resource('products', ProductController::class);
 
 // Route untuk halaman utama (index)
 Route::get('/', function () {
-    return view('index'); // Pastikan file index.blade.php ada di resources/views
+    return view('products.index'); // Pastikan file index.blade.php ada di resources/views
 });
 
 // Route untuk dashboard dengan middleware auth
