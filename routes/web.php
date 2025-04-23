@@ -33,6 +33,7 @@ Route::get('/test-db', function () {
 });
 
 // Route untuk halaman tambahan
+Route::get('/index', [AuthController::class, 'index'])->name('index');
 Route::get('/product', [AuthController::class, 'product'])->name('product');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('product.tentangkami');
 Route::get('/beranda', [AuthController::class, 'showBerandaForm'])->name('beranda');
