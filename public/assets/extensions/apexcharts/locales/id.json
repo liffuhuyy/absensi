@@ -1,0 +1,42 @@
+{
+  "name": "id",
+  "options": {
+    "months": [
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu"
+    ],
+    "shortMonths": [
+      "Sen",
+      "Sel",
+      "Rab",
+      "Kam",
+      "Jum",
+      "Sab"
+    ],
+    "days": [
+      "Senin",
+      "Selasa",
+      "Rabu",
+      "Kamis",
+      "Jumat",
+      "Sabtu"
+    ],
+    "shortDays": ["Sen", "Sel", "Rab", "Kam", "Jum", "Sab"],
+    "toolbar": {
+      "exportToSVG": "Unduh SVG",
+      "exportToPNG": "Unduh PNG",
+      "exportToCSV": "Unduh CSV",
+      "menu": "Menu",
+      "selection": "Pilihan",
+      "selectionZoom": "Perbesar Pilihan",
+      "zoomIn": "Perbesar",
+      "zoomOut": "Perkecil",
+      "pan": "Geser",
+      "reset": "Atur Ulang Zoom"
+    }
+  }
+}

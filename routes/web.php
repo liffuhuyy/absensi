@@ -35,7 +35,7 @@ Route::get('/test-db', function () {
     }
 });
 
-// Route untuk halaman tambahan
+//Bagian user
 Route::get('/index', [AuthController::class, 'index'])->name('index');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('absensi.tentangkami');
 Route::get('/beranda', [AuthController::class, 'showBerandaForm'])->name('beranda');
@@ -48,6 +48,14 @@ Route::get('/editprofil', [AuthController::class, 'editprofil'])->name('editprof
 Route::get('/biodata', [AuthController::class, 'biodata'])->name('biodata');
 Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
 Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
+
+//Bagian admin
+Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsen'])->name('ringkasanabsen');
+Route::get('/managementpengguna', [AuthController::class, 'managementpengguna'])->name('managementpengguna');
+Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
+Route::get('/notif', [AuthController::class, 'notif'])->name('notif');
+Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
 
 // Rute untuk halaman daftar
 Route::get('/daftar', [AuthController::class, 'showRegisterForm'])->name('register');

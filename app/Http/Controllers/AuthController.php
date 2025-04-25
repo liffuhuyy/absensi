@@ -184,4 +184,60 @@ class AuthController extends Controller
             'email' => 'Email atau password salah.',
         ]);
     }
+
+
+ //PERUSAHAAN
+    public function dashboard()
+    {
+        if (view()->exists('perusahaan.dashboard')) {
+            return view('perusahaan.dashboard');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function ringkasanabsen()
+    {
+        if (view()->exists('perusahaan.ringkasanabsen')) {
+            return view('perusahaan.ringkasanabsen');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function managementpengguna()
+    {
+        if (view()->exists('perusahaan.managementpengguna')) {
+            return view('perusahaan.managementpengguna');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function managementakses()
+    {
+        if (view()->exists('perusahaan.managementakses')) {
+            return view('perusahaan.managementakses');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function notif()
+    {
+        if (view()->exists('perusahaan.notif')) {
+            return view('perusahaan.notif');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function pengaturan()
+    {
+        if (view()->exists('perusahaan.pengaturan')) {
+            return view('perusahaan.pengaturan');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
 }
