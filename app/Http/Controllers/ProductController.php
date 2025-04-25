@@ -81,6 +81,10 @@ class absensiController extends Controller
     public function index() : View
     {
         return view('absensi.index'); 
+<<<<<<< HEAD
+=======
+        return view('absensi.index'); 
+>>>>>>> 024fa2612cf0548aa04f2e9fa1c9d7ea28a096ec
     }
 
     public function tentangkami() : View

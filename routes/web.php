@@ -8,7 +8,7 @@ use App\Http\Controllers\AuthController;
 Route::view('/absensi', 'absensi'); // Menampilkan view resources/views/absensi.blade.php
 
 // Route resource untuk absensi (menggunakan resource standar)
-Route::resource('absensi', ProductController::class);
+Route::resource('absensi', absensiController::class);
 
 // Route untuk halaman utama (index)
 Route::get('/', function () {
@@ -36,8 +36,8 @@ Route::get('/test-db', function () {
 });
 
 // Route untuk halaman tambahan
-Route::get('/product', [AuthController::class, 'product'])->name('product');
-Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('product.tentangkami');
+Route::get('/index', [AuthController::class, 'index'])->name('index');
+Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('absensi.tentangkami');
 Route::get('/beranda', [AuthController::class, 'showBerandaForm'])->name('beranda');
 Route::get('/presensi', [AuthController::class, 'presensi'])->name('presensi');
 Route::get('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
