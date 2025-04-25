@@ -1,0 +1,42 @@
+{
+  "name": "nl",
+  "options": {
+    "months": [
+      "Maandag",
+      "Dinsdag",
+      "Woensdag",
+      "Donderdag",
+      "Vrijdag",
+      "Zaterdag"
+    ],
+    "shortMonths": [
+      "Ma",
+      "Di",
+      "Wo",
+      "Do",
+      "Vr",
+      "Za"
+    ],
+    "days": [
+      "Maandag",
+      "Dinsdag",
+      "Woensdag",
+      "Donderdag",
+      "Vrijdag",
+      "Zaterdag"
+    ],
+    "shortDays": ["Ma", "Di", "Wo", "Do", "Vr", "Za"],
+    "toolbar": {
+      "exportToSVG": "Download SVG",
+      "exportToPNG": "Download PNG",
+      "exportToCSV": "Download CSV",
+      "menu": "Menu",
+      "selection": "Selectie",
+      "selectionZoom": "Zoom selectie",
+      "zoomIn": "Zoom in",
+      "zoomOut": "Zoom out",
+      "pan": "Verplaatsen",
+      "reset": "Standaardwaarden"
+    }
+  }
+}
