@@ -84,7 +84,7 @@ class AbsensiController extends Controller
 
     /**
      * Tampilkan halaman riwayat absen
-     */
+     */ 
     public function riwayatabsen(): View
     {
         return view('riwayatabsen');
