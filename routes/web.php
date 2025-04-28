@@ -13,9 +13,6 @@ Route::resource('absensi', absensiController::class);
 // Route untuk halaman utama (index)
 Route::get('/', function () {
     return view('absensi.index'); // Pastikan file index.blade.php ada di resources/views
-
-    return view('absensi.index'); // Pastikan file index.blade.php ada di resources/views
-
 });
 
 // Route untuk dashboard dengan middleware auth
@@ -35,7 +32,7 @@ Route::get('/test-db', function () {
     }
 });
 
-//Bagian user
+//Bagian USER
 Route::get('/index', [AuthController::class, 'index'])->name('index');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('absensi.tentangkami');
 Route::get('/beranda', [AuthController::class, 'showBerandaForm'])->name('beranda');
@@ -49,18 +46,31 @@ Route::get('/biodata', [AuthController::class, 'biodata'])->name('biodata');
 Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
 Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
 
-//Bagian admin
-Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+//Bagian ADMIN
+Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
 Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsen'])->name('ringkasanabsen');
 Route::get('/managementpengguna', [AuthController::class, 'managementpengguna'])->name('managementpengguna');
 Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
 Route::get('/notif', [AuthController::class, 'notif'])->name('notif');
-Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
 
-// Rute untuk halaman daftar
+//Bagian PERUSAHAAN
+Route::get('/dashboardpt', [AuthController::class, 'dashboardpt'])->name('dashboardpt');
+Route::get('/pengaturanpt', [AuthController::class, 'pengaturanpt'])->name('pengaturanpt');
+Route::get('/nilai', [AuthController::class, 'nilai'])->name('nilai');
+Route::get('/profilpt', [AuthController::class, 'profilpt'])->name('profilpt');
+Route::get('/ringkasanabsenpt', [AuthController::class, 'ringkasanabsenpt'])->name('ringkasanabsenpt');
+Route::get('/pengajuanpt', [AuthController::class, 'pengajuanpt'])->name('pengajuanpt');
+Route::get('/jadwalpt', [AuthController::class, 'jadwalpt'])->name('jadwalpt');
+Route::get('/managementaksespt', [AuthController::class, 'managementaksespt'])->name('managementaksespt');
+Route::get('/managementpenggunapt', [AuthController::class, 'managementpenggunapt'])->name('managementpenggunapt');
+Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
+
+// Rute untuk halaman daftar dan login
 Route::get('/daftar', [AuthController::class, 'showRegisterForm'])->name('register');
+Route::get('/loginpt', [AuthController::class, 'loginpt'])->name('loginpt');
+Route::get('/daftarpt', [AuthController::class, 'daftarpt'])->name('daftarpt');
 
-// Routes untuk autentikasi
+// Routes untuk autentikasi login
 Route::controller(AuthController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login'); // Pastikan metode login ada di AuthController
