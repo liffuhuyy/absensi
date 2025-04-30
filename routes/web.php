@@ -32,6 +32,11 @@ Route::get('/test-db', function () {
     }
 });
 
+Route::post('/presensi/store', [PresensiController::class, 'store'])->name('presensi.store');
+use App\Http\Controllers\DashboardController;
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
 // Route untuk halaman tambahan
 Route::get('/index ', [AuthController::class, 'index'])->name('index');

@@ -316,7 +316,11 @@
             <h1>Sistem Presensi Siswa</h1>
         </header>
         
-        <div class="card">
+        <!-- Tombol untuk kembali ke halaman sebelumnya -->
+<a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+<a href="{{ url('/dashboard') }}" class="btn btn-primary">Kembali ke Dashboard</a>
+
+        <div class="card"> 
             <div class="tanggal" id="tanggal"></div>
             <div class="jam-digital" id="jam"></div>
             

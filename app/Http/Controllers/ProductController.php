@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absensi; // Pastikan nama model diawali huruf kapital
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class AbsensiController extends Controller
@@ -45,7 +46,7 @@ class AbsensiController extends Controller
     /**
      * Tampilkan halaman manajemen tugas
      */
-    public function menajementugas(): View
+    public function manajementugas(): View
     {
         return view('manajementugas');
     }
@@ -120,5 +121,20 @@ class AbsensiController extends Controller
     public function tentangkami(): View
     {
         return view('tentangkami');
+    }
+
+    /**
+     * Simpan data presensi
+     */
+    public function store(Request $request)
+    {
+        // Proses penyimpanan data presensi
+        $presensi = new Absensi; // Pastikan menggunakan model yang benar
+        $presensi->siswa_id = $request->siswa_id;
+        $presensi->status = $request->status;
+        $presensi->save();
+
+        // Setelah menyimpan, kembali ke halaman sebelumnya
+        return redirect()->back()->with('message', 'Data presensi berhasil disimpan');
     }
 }
