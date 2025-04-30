@@ -186,32 +186,23 @@ form .signup-link a:hover{
 
       <!-- Script untuk mengatur fungsi toggle password dan tampilan ikon -->
       <script>
-         function checkPasswordInput() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.querySelector('.toggle-password');
-            
-            // Tampilkan ikon hanya jika ada input di field password
-            if(passwordInput.value.length > 0) {
-               toggleIcon.style.display = 'block';
-            } else {
-               toggleIcon.style.display = 'none';
-            }
-         }
+   function validateFields() {
+      const emailInput = document.getElementById('email');
+      const passwordInput = document.getElementById('password');
+      const loginButton = document.getElementById('loginButton');
 
-         function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            const toggleIcon = document.querySelector('.toggle-password');
-            
-            if (passwordInput.type === 'password') {
-               passwordInput.type = 'text';
-               toggleIcon.classList.remove('fa-eye-slash');
-               toggleIcon.classList.add('fa-eye');
-            } else {
-               passwordInput.type = 'password';
-               toggleIcon.classList.remove('fa-eye');
-               toggleIcon.classList.add('fa-eye-slash');
-            }
-         }
-      </script>
+      // Enable the login button only if both fields are not empty
+      if (emailInput.value.trim() !== '' && passwordInput.value.trim() !== '') {
+         loginButton.disabled = false;
+      } else {
+         loginButton.disabled = true;
+      }
+   }
+
+   // Event listeners for the input fields
+   document.getElementById('email').addEventListener('input', validateFields);
+   document.getElementById('password').addEventListener('input', validateFields);
+</script>
+
    </body>
 </html>
