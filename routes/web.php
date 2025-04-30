@@ -52,6 +52,7 @@ Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsen'])->name('
 Route::get('/managementpengguna', [AuthController::class, 'managementpengguna'])->name('managementpengguna');
 Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
 Route::get('/notif', [AuthController::class, 'notif'])->name('notif');
+Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
 
 //Bagian PERUSAHAAN
 Route::get('/dashboardpt', [AuthController::class, 'dashboardpt'])->name('dashboardpt');

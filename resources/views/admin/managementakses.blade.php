@@ -27,7 +27,7 @@
     <div class="sidebar-header position-relative">
         <div class="d-flex justify-content-between align-items-center">
             <div class="logo">
-                <a href="{{ url('/dashboard') }}"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
+                <a href="{{ url('/dashboardmin') }}"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
             </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -79,7 +79,7 @@
             
             <li
             class="sidebar-item">
-            <a href="{{ url('/dashboard') }}" class='sidebar-link'>
+            <a href="{{ url('/dashboardmin') }}" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
                 <span>Dashboard</span>
             </a>
@@ -123,15 +123,7 @@
                     <i class="bi bi-justify fs-3"></i>
                 </a>
             </header>
-        <body>
-                <i class="bi bi-arrow-left-circle back-icon" onclick="goToSettings()"></i> <!-- Ikon panah -->
-            
-                <script>
-                    function goToSettings() {
-                        window.location.href = "{{ url('/pengaturan') }}"; // Arahkan pengguna ke halaman pengaturan
-                    }
-                </script>
-      </body>
+
 <br>
             <!-- Manajemen Akses -->
  <div class="page-heading">
@@ -143,7 +135,7 @@
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboardmin') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Management Akses</li>
                     </ol>
                 </nav>
