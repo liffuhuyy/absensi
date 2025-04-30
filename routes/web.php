@@ -32,16 +32,15 @@ Route::get('/test-db', function () {
     }
 });
 
-<<<<<<< HEAD
+
 // Route untuk halaman tambahan
 Route::get('/index ', [AuthController::class, 'index'])->name('index');
 Route::get('/product', [AuthController::class, 'product'])->name ('product');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('product.tentangkami');
-=======
+
 //Bagian USER
 Route::get('/index', [AuthController::class, 'index'])->name('index');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('absensi.tentangkami');
->>>>>>> 7d888a3ea5f5de2c286fe5f77c0314ed61280eee
 Route::get('/beranda', [AuthController::class, 'showBerandaForm'])->name('beranda');
 Route::get('/presensi', [AuthController::class, 'presensi'])->name('presensi');
 Route::get('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
