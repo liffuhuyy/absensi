@@ -18,6 +18,106 @@
             line-height: 1.6;
         }
         
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: linear-gradient(to right, #0a192f, #000000);
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 2px 0;
+            border-radius: 3px;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background: linear-gradient(to bottom, #0a192f, #111827);
+            transition: left 0.3s ease;
+            z-index: 1000;
+            padding-top: 60px;
+            color: white;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .close-sidebar {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .menu-group {
+            margin-bottom: 20px;
+        }
+
+        .menu-title {
+            padding: 10px 20px;
+            font-weight: bold;
+            color: #bdc3c7;
+        }
+
+        .menu-item {
+            padding: 12px 30px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            color: white;
+            display: block;
+        }
+
+        .menu-item:hover {
+            background-color: #172a46;
+        }
+
+        .profile-icon a {
+             display: block; 
+             width: 100%;
+             height: 100%;
+        }
+        .profile-icon img {
+             width: 40px;
+             height: 40px;
+             border-radius: 50%;
+             object-fit: cover;
+             cursor: pointer;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
         .container {
             max-width: 1000px;
             margin: 20px auto;
@@ -311,6 +411,45 @@
     </style>
 </head>
 <body>
+    <div class="header">
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <h3>SMKN 1 SUBANG</h3>
+
+        <div class="profile-icon">
+            <a href="{{ url('/profil') }}">
+                <img src="{{ url('/profil') }}" alt="Profile Picture">
+            </a>
+        </div>            
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="close-sidebar" id="closeSidebar">×</div>
+        
+        <div class="menu-group">
+            <a href="{{ url('/beranda') }}" class="menu-item">Beranda</a>
+            <a href="{{ url('/profil') }}" class="menu-item">Profil Saya</a>
+        </div>
+        
+        <div class="menu-group">
+            <div class="menu-title">Menu Utama</div>
+            <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
+            <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
+            <a href="{{ url('/pengajuan') }}" class="menu-item">Pengajuan Magang</a>
+        </div>
+        
+        <div class="menu-group">
+            <div class="menu-title">Lainnya</div>
+            <a href="{{ url('/kontak') }}" class="menu-item">Kontak</a>
+            <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
+        </div>
+    </div>
+
     <div class="container">
         <header>
             <h1>Sistem Presensi Siswa</h1>
@@ -409,6 +548,39 @@
     </div>
 
     <script>
+        // Fungsi untuk sidebar
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuToggle = document.getElementById("menuToggle");
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("overlay");
+            const closeSidebar = document.getElementById("closeSidebar");
+
+            // Menampilkan sidebar saat menu toggle diklik
+            menuToggle.addEventListener("click", function () {
+                sidebar.classList.add("active");
+                overlay.classList.add("active");
+            });
+
+            // Menyembunyikan sidebar saat tombol close diklik
+            closeSidebar.addEventListener("click", function () {
+                sidebar.classList.remove("active");
+                overlay.classList.remove("active");
+            });
+
+            // Menyembunyikan sidebar saat overlay diklik
+            overlay.addEventListener("click", function () {
+                sidebar.classList.remove("active");
+                overlay.classList.remove("active");
+            });
+        });
+
+        function confirmLogout() {
+            let confirmAction = confirm("Apakah Anda yakin ingin logout?");
+            if (confirmAction) {
+                window.location.href = "{{ url('/index') }}";
+            }
+        }
+
         // Data presensi (simulasi penyimpanan data)
         let dataPresensi = JSON.parse(localStorage.getItem('dataPresensi')) || [];
         
