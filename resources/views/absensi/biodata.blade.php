@@ -40,6 +40,7 @@
             margin: 2px 0;
             border-radius: 3px;
         }
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -87,6 +88,7 @@
         .menu-item:hover {
             background-color: #172a46;
         }
+
         .profile-icon a {
              display: block; 
              width: 100%;
@@ -263,7 +265,6 @@
             display: block;
         }
 
-
         @media (max-width: 768px) {
             .form-row {
                 flex-direction: column;
@@ -276,6 +277,46 @@
         }
     </style>
 </head>
+<body>
+    <div class="header">
+        <div class="menu-toggle" id="menuToggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <h3>SMKN 1 SUBANG</h3>
+
+        <div class="profile-icon">
+            <a href="{{ url('/profil') }}">
+                <img src="{{ url('/profil') }}" alt="Profile Picture">
+            </a>
+        </div>            
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="sidebar" id="sidebar">
+        <div class="close-sidebar" id="closeSidebar">×</div>
+        
+        <div class="menu-group">
+            <a href="{{ url('/beranda') }}" class="menu-item">Beranda</a>
+            <a href="{{ url('/profil') }}" class="menu-item">Profil Saya</a>
+        </div>
+        
+        <div class="menu-group">
+            <div class="menu-title">Menu Utama</div>
+            <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
+            <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
+            <a href="{{ url('/pengajuan') }}" class="menu-item">Pengajuan Magang</a>
+        </div>
+        
+        <div class="menu-group">
+            <div class="menu-title">Lainnya</div>
+            <a href="{{ url('/kontak') }}" class="menu-item">Kontak</a>
+            <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
+        </div>
+    </div>
+
     <div class="container">
         <div class="form-card">
             <h2 class="form-title">Biodata Siswa</h2>
@@ -404,43 +445,42 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-    const menuToggle = document.getElementById("menuToggle");
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-    const closeSidebar = document.getElementById("closeSidebar");
+            const menuToggle = document.getElementById("menuToggle");
+            const sidebar = document.getElementById("sidebar");
+            const overlay = document.getElementById("overlay");
+            const closeSidebar = document.getElementById("closeSidebar");
 
-    // Menampilkan sidebar saat menu toggle diklik
-    menuToggle.addEventListener("click", function () {
-        sidebar.classList.add("active");
-        overlay.style.display = "block";
-    });
+            // Menampilkan sidebar saat menu toggle diklik
+            menuToggle.addEventListener("click", function () {
+                sidebar.classList.add("active");
+                overlay.classList.add("active");
+            });
 
-    // Menyembunyikan sidebar saat tombol close diklik
-    closeSidebar.addEventListener("click", function () {
-        sidebar.classList.remove("active");
-        overlay.style.display = "none";
-    });
+            // Menyembunyikan sidebar saat tombol close diklik
+            closeSidebar.addEventListener("click", function () {
+                sidebar.classList.remove("active");
+                overlay.classList.remove("active");
+            });
 
-    // Menyembunyikan sidebar saat overlay diklik
-    overlay.addEventListener("click", function () {
-        sidebar.classList.remove("active");
-        overlay.style.display = "none";
-    });
-});
-        document.getElementById('biodataForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // Simulate form submission
-            alert('Data berhasil disimpan!');
-            // In actual implementation, add AJAX to submit form data to server
+            // Menyembunyikan sidebar saat overlay diklik
+            overlay.addEventListener("click", function () {
+                sidebar.classList.remove("active");
+                overlay.classList.remove("active");
+            });
         });
 
+        function confirmLogout() {
+            let confirmAction = confirm("Apakah Anda yakin ingin logout?");
+            if (confirmAction) {
+                window.location.href = "{{ url('/index') }}";
+            }
+        }
 
         document.getElementById('biodataForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    alert('Data berhasil disimpan!');
-    window.location.href = 'beranda.php'; // Ganti dengan halaman beranda yang sesuai
-});
-
+            e.preventDefault();
+            alert('Data berhasil disimpan!');
+            window.location.href = 'beranda.php'; // Ganti dengan halaman beranda yang sesuai
+        });
     </script>
 </body>
 </html>
