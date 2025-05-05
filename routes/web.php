@@ -56,6 +56,8 @@ Route::get('/editprofil', [AuthController::class, 'editprofil'])->name('editprof
 Route::get('/biodata', [AuthController::class, 'biodata'])->name('biodata');
 Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
 Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
+Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
+Route::get('/ubahkatasandiberhasil', [AuthController::class, 'ubahkatasandiberhasil'])->name('ubahkatasandiberhasil');
 
 //Bagian ADMIN
 Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
