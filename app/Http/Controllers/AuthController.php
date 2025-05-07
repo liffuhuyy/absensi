@@ -2,10 +2,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\UserTugas;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-
+ 
 class AuthController extends Controller
 {
+    public function simpanTugas(Request $request)
+    {
+        try {
+            UserTugas::create([
+                'tanggal' => $request->tanggal, // Data dari form input
+                'tugas' => $request->tugas
+            ]);
+            return redirect()->back()->with('success', 'Data berhasil disimpan!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
+        }
+    }
+
     public function showLoginForm()
     {
         if (view()->exists('absensi.login')) {
@@ -68,13 +83,9 @@ class AuthController extends Controller
         }
     }
 
-    public function manajementugas()
-    {
-        if (view()->exists('absensi.manajementugas')) {
-            return view('absensi.manajementugas');
-        } else {
-            return "View tidak ditemukan.";
-        }
+    public function showTugas() {
+        $tugas = UserTugas::all(); // Ambil data dari database
+        return view('absensi.manajementugas', compact('tugas')); // Kirim ke tampilan
     }
 
     
@@ -163,26 +174,6 @@ class AuthController extends Controller
     public function showRegisterForm()
     {
         return view('absensi.daftar'); // Tampilkan daftar.blade.php
-    }
-
-    public function login(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        // Cek kredensial
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Login berhasil
-            return redirect()->intended('/dashboard'); // Ganti dengan rute yang sesuai
-        }
-
-        // Login gagal
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ]);
     }
 
 
@@ -355,4 +346,46 @@ class AuthController extends Controller
         }
     }
 
+    public function register(Request $request) {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6'
+        ]);
+    
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password) // Enkripsi password
+        ]);
+    
+        Auth::login($user);
+    
+        return redirect('/beranda')->with('success', 'Pendaftaran berhasil! Anda telah login.');
+    }
+
+    public function login(Request $request) {
+
+        dd($request->all());
+        // Validasi input
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+    
+        // Coba login
+        if (Auth::attempt($request->only('email', 'password'))) {
+            // Regenerasi session agar lebih aman
+            $request->session()->regenerate();
+    
+            // Redirect ke dashboard
+            return redirect()->intended('/dashboard')->with('success', 'Login berhasil!');
+        }
+    
+        // Jika login gagal, kembalikan dengan pesan error
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->withInput(); // Biarkan input email tetap ada agar tidak perlu mengetik ulang
+    }
+    
 }

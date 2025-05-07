@@ -547,19 +547,11 @@
         </div>
         <h3>SMKN 1 SUBANG</h3>
 
-<<<<<<< HEAD
-            <div class="profile-icon">
-                <a href="{{ url('/profil') }}">
-                    <img src="{{ url('/profil') }}" alt="Profile Picture">
-                </a>
-            </div>            
-=======
         <div class="profile-icon">
             <a href="{{ url('/profil') }}">
                 <img src="{{ url('/profil') }}" alt="Profile Picture">
             </a>
         </div>            
->>>>>>> fb40700e7cfcad7f4144a7e25c785e29c1890d5f
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -585,11 +577,6 @@
             <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
         </div>
     </div>
-<<<<<<< HEAD
-<body>
-=======
-
->>>>>>> fb40700e7cfcad7f4144a7e25c785e29c1890d5f
     <div class="container">
         <header>
             <h1>Sistem Presensi Siswa</h1>
@@ -688,7 +675,6 @@
     </div>
 
     <script>
-<<<<<<< HEAD
           const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const closeSidebar = document.getElementById('closeSidebar');
@@ -708,7 +694,6 @@
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
         });
-=======
         // Fungsi untuk sidebar
         document.addEventListener("DOMContentLoaded", function () {
             const menuToggle = document.getElementById("menuToggle");
@@ -742,7 +727,6 @@
             }
         }
 
->>>>>>> fb40700e7cfcad7f4144a7e25c785e29c1890d5f
         // Data presensi (simulasi penyimpanan data)
         let dataPresensi = JSON.parse(localStorage.getItem('dataPresensi')) || [];
         

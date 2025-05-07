@@ -24,16 +24,6 @@
             
         }
         
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: linear-gradient(to right, #0a192f, #000000);
-            color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        
         .header h1 {
             margin: 0;
             font-size: 24px;

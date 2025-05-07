@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\absensiController;
 use App\Http\Controllers\AuthController;
+use App\Models\UserTugas;
+use App\Models\User;
 
 // Gunakan hanya Route::view untuk /absensi
 Route::view('/absensi', 'absensi'); // Menampilkan view resources/views/absensi.blade.php
@@ -45,6 +47,9 @@ Route::get('/editprofil', [AuthController::class, 'editprofil'])->name('editprof
 Route::get('/biodata', [AuthController::class, 'biodata'])->name('biodata');
 Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
 Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
+Route::post('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
+Route::get('/manajementugas', [AuthController::class, 'showTugas']);
+Route::post('/simpan-tugas', [AuthController::class, 'simpanTugas']);
 
 //Bagian ADMIN
 Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
@@ -70,9 +75,14 @@ Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('back
 Route::get('/daftar', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::get('/loginpt', [AuthController::class, 'loginpt'])->name('loginpt');
 Route::get('/daftarpt', [AuthController::class, 'daftarpt'])->name('daftarpt');
-
-// Routes untuk autentikasi login
-Route::controller(AuthController::class)->group(function () {
-    Route::get('/login', 'showLoginForm')->name('login');
-    Route::post('/login', 'login'); // Pastikan metode login ada di AuthController
-});
+Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/beranda', function() {
+        return "Selamat datang di Dashboard!";
+    })->middleware('auth');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/'); // Redirect ke halaman utama setelah logout
+})->name('logout');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
