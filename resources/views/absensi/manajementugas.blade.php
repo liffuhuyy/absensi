@@ -255,10 +255,31 @@
         h3 {
              color: rgb(255, 255, 255);
         }
+               
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        table th, table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        table th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        
+        table tr:hover {
+            background-color: #f5f5f5;
+        }
     </style>
 </head>
 <body>
-    <div class="header">
+<div class="header">
         <div class="menu-toggle" id="menuToggle">
             <span></span>
             <span></span>
@@ -301,41 +322,45 @@
             <h1>Manajemen Tugas</h1>
         </div>
 
-        <form method="POST" action="proses_tambah.php">
-            <div class="input-section">
-                <select name="bulan" id="bulan" required>
-                    <option value="">Pilih Bulan</option>
-                    <option value="01">Januari</option>
-                    <option value="02">Februari</option>
-                    <option value="03">Maret</option>
-                    <option value="04">April</option>
-                    <option value="05">Mei</option>
-                    <option value="06">Juni</option>
-                    <option value="07">Juli</option>
-                    <option value="08">Agustus</option>
-                    <option value="09">September</option>
-                    <option value="10">Oktober</option>
-                    <option value="11">November</option>
-                    <option value="12">Desember</option>
-                </select>
-        
-                <select name="tahun" id="tahun" required>
-                    <option value="">Pilih Tahun</option>
-                    <option value="2025">2025</option>
-                    <option value="2026">2026</option>
-                    <option value="2027">2027</option>
-                </select>
-            </div>
-        
-            <div class="input-section">
-                <input type="text" name="tugas" id="tugas" placeholder="Masukkan tugas baru" required>
-                <button type="submit">Tambah Tugas</button>
-            </div>
-        </form>
-        <br>
-        <h2>Daftar Tugas</h2>
+        <form method="POST" action="{{ url('/simpan-tugas') }}">
+    @csrf <!-- Token keamanan Laravel -->
+
+
+<div class="input-section">
+ <input type="date" name="tanggal" id="tanggal" required>
+       <script>
+          document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
+       </script>
+ <input type="text" name="tugas" required>
+     <button type="submit">Tambah Tugas</button>
+    </div>
+</form>
+
+<br>
+<h2>Daftar Tugas</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Tanggal</th>
+            <th>Tugas</th>
+        </tr>
+    </thead>
+<tbody>
+    @foreach ($tugas as $item)
+    <tr>
+        <td>{{ $item->tanggal }}</td>
+        <td>{{ $item->tugas }}</td>
+    </tr>
+    @endforeach
+
+    @if ($tugas->isEmpty())
+    <tr>
+        <td colspan="5" style="text-align: center;">Belum ada data tugas bulan ini.</td>
+    </tr>
+    @endif
+</tbody>
+
         <br> 
-        
         <script>
     function confirmLogout() {
         let confirmAction = confirm("Apakah Anda yakin ingin logout?");
