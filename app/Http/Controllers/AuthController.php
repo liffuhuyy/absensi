@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserTugas;
 use App\Models\User;
+use App\Models\Absensi;
 use Illuminate\Support\Facades\Auth;
  
 class AuthController extends Controller
@@ -19,6 +20,10 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
+
+        $tugas = UserTugas::all(); // Mengambil semua tugas dari database
+        return response()->json($tugas);
+
     }
 
     public function showLoginForm()
@@ -29,6 +34,16 @@ class AuthController extends Controller
             return "View login tidak ditemukan.";
         }
     }
+
+    public function magang()
+    {
+        if (view()->exists('absensi.magang')) {
+            return view('absensi.magang');
+        } else {
+            return "View magang tidak ditemukan.";
+        }
+    }
+
     public function editprofil()
     {
         if (view()->exists('absensi.editprofil')) {
@@ -89,7 +104,7 @@ class AuthController extends Controller
     }
 
     
-    public function pengajuan()
+    public function pengajuan1()
     {
         if (view()->exists('absensi.pengajuan')) {
             return view('absensi.pengajuan');
@@ -176,7 +191,22 @@ class AuthController extends Controller
         return view('absensi.daftar'); // Tampilkan daftar.blade.php
     }
 
+    public function store(Request $request)
+    {
+        Absensi::create($request->all());
+        return response()->json(['message' => 'Data berhasil disimpan']);
+    }
+    public function absensi(Request $request)
+    {
+        $jumlahAbsensi = Absensi::count();
+        if ($request->wantsJson()) {
+            return response()->json(['jumlahAbsensi' => $jumlahAbsensi, 'data' => Absensi::all()]);
+        }
+        return view('perusahaan.dashboardpt', compact('jumlahAbsensi'));
+    
+    }
 
+    
 
  //ADMIN
     public function dashboardmin()

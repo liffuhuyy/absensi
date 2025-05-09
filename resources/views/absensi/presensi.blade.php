@@ -539,7 +539,7 @@
     </style>
 </head>
 <body>
-    <div class="header">
+<div class="header">
         <div class="menu-toggle" id="menuToggle">
             <span></span>
             <span></span>
@@ -547,11 +547,11 @@
         </div>
         <h3>SMKN 1 SUBANG</h3>
 
-        <div class="profile-icon">
-            <a href="{{ url('/profil') }}">
-                <img src="{{ url('/profil') }}" alt="Profile Picture">
-            </a>
-        </div>            
+            <div class="profile-icon">
+                <a href="{{ url('/profil') }}">
+                    <img src="{{ url('/profil') }}" alt="Profile Picture">
+                </a>
+            </div>            
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -577,12 +577,14 @@
             <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
         </div>
     </div>
+<form method="POST" action="{{ url('/absensi') }}">
     <div class="container">
         <header>
             <h1>Sistem Presensi Siswa</h1>
         </header>
         
         <div class="card">
+
             <div class="tanggal" id="tanggal"></div>
             <div class="jam-digital" id="jam"></div>
             
@@ -673,7 +675,7 @@
             </form>
         </div>
     </div>
-
+</form>
     <script>
           const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
@@ -1110,6 +1112,44 @@
         
         // Inisialisasi tampilan
         updateTabelPresensi();
+
+        document.getElementById("btnMasuk").addEventListener("click", function() {
+    let tanggal = new Date().toISOString().split('T')[0];
+    let jamMasuk = new Date().toLocaleTimeString();
+    
+    fetch('/absensi', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            tanggal: tanggal,
+            status: "Hadir",
+            jam_masuk: jamMasuk,
+            jam_keluar: "",
+            keterangan: ""
+        })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(error => console.error("Error:", error));
+});
+fetch("/absensi")
+    .then(response => response.json())
+    .then(data => {
+        let tabel = document.getElementById("tabelPresensi");
+        tabel.innerHTML = "";
+
+        data.forEach(item => {
+            let row = `<tr>
+                <td>${item.tanggal}</td>
+                <td>${item.status}</td>
+                <td>${item.jam_masuk || "-"}</td>
+                <td>${item.jam_keluar || "-"}</td>
+                <td>${item.keterangan || "-"}</td>
+            </tr>`;
+            tabel.innerHTML += row;
+        });
+    })
+    .catch(error => console.error("Error:", error));
     </script>
 </body>
 </html>

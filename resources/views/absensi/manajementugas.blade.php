@@ -279,7 +279,7 @@
     </style>
 </head>
 <body>
-    <div class="header">
+<div class="header">
         <div class="menu-toggle" id="menuToggle">
             <span></span>
             <span></span>
