@@ -303,21 +303,22 @@
             </div>
             
             <div class="form-group">
-                <label for="jurusan">Jurusan</label>
-                <select id="jurusan" name="jurusan" required>
-                    <option value="">Pilih Jurusan</option>
-                    <option value="AKL" <?php echo (isset($jurusan) && $jurusan == 'AKL') ? 'selected' : ''; ?>Akuntansi Keuangan dan Lembaga</option>
-                    <option value="RPL" <?php echo (isset($jurusan) && $jurusan == 'RPL') ? 'selected' : ''; ?>Rekayasa perangkat lunak</option>
-                    <option value="TKJ" <?php echo (isset($jurusan) && $jurusan == 'TKJ') ? 'selected' : ''; ?>Teknik Jaringan Dan Komputer</option>
-                    <option value="KL" <?php echo (isset($jurusan) && $jurusan == 'KL') ? 'selected' : ''; ?>Kuliner</option>
-                    <option value="TL" <?php echo (isset($jurusan) && $jurusan == 'TL') ? 'selected' : ''; ?>Teknik Logistik</option>
-                    <option value="MPLB" <?php echo (isset($jurusan) && $jurusan == 'MPLB') ? 'selected' : ''; ?>Manajemen Perkantoran dan Layanan Bisnis</option>
-                    <option value="TO" <?php echo (isset($jurusan) && $jurusan == 'TO') ? 'selected' : ''; ?>Teknik Otomotif</option>
-                    <option value="TPM" <?php echo (isset($jurusan) && $jurusan == 'TPM') ? 'selected' : ''; ?>Teknik Permesinan</option>
-                    <option value="DKV" <?php echo (isset($jurusan) && $jurusan == 'DKV') ? 'selected' : ''; ?>Desain Komunikasi Visual</option>
-                    <option value="PM" <?php echo (isset($jurusan) && $jurusan == 'PM') ? 'selected' : ''; ?>Pemasaran</option>
-                </select>
-            </div>
+    <label for="jurusan">Jurusan</label>
+    <select id="jurusan" name="jurusan" required>
+        <option value="">Pilih Jurusan</option>
+        <option value="AKL" <?php echo (isset($jurusan) && $jurusan == 'AKL') ? 'selected' : ''; ?>>Akuntansi Keuangan dan Lembaga</option>
+        <option value="RPL" <?php echo (isset($jurusan) && $jurusan == 'RPL') ? 'selected' : ''; ?>>Rekayasa Perangkat Lunak</option>
+        <option value="TKJ" <?php echo (isset($jurusan) && $jurusan == 'TKJ') ? 'selected' : ''; ?>>Teknik Komputer dan Jaringan</option>
+        <option value="KL" <?php echo (isset($jurusan) && $jurusan == 'KL') ? 'selected' : ''; ?>>Kuliner</option>
+        <option value="TL" <?php echo (isset($jurusan) && $jurusan == 'TL') ? 'selected' : ''; ?>>Teknik Logistik</option>
+        <option value="MPLB" <?php echo (isset($jurusan) && $jurusan == 'MPLB') ? 'selected' : ''; ?>>Manajemen Perkantoran dan Layanan Bisnis</option>
+        <option value="TO" <?php echo (isset($jurusan) && $jurusan == 'TO') ? 'selected' : ''; ?>>Teknik Otomotif</option>
+        <option value="TPM" <?php echo (isset($jurusan) && $jurusan == 'TPM') ? 'selected' : ''; ?>>Teknik Permesinan</option>
+        <option value="DKV" <?php echo (isset($jurusan) && $jurusan == 'DKV') ? 'selected' : ''; ?>>Desain Komunikasi Visual</option>
+        <option value="PM" <?php echo (isset($jurusan) && $jurusan == 'PM') ? 'selected' : ''; ?>>Pemasaran</option>
+    </select>
+</div>
+
             
             <div class="form-group">
                 <label for="tanggal_mulai">Tanggal Mulai Magang</label>
