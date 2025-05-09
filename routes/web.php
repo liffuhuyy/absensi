@@ -3,6 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\absensiController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PengajuanController;
+use App\Models\UserTugas;
+use App\Models\User;
+use App\Models\Absensi;
+use App\Models\Pengajuan;
 
 // Gunakan hanya Route::view untuk /absensi
 Route::view('/absensi', 'absensi'); // Menampilkan view resources/views/absensi.blade.php
@@ -38,13 +43,21 @@ Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('absens
 Route::get('/beranda', [AuthController::class, 'showBerandaForm'])->name('beranda');
 Route::get('/presensi', [AuthController::class, 'presensi'])->name('presensi');
 Route::get('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
-Route::get('/pengajuan', [AuthController::class, 'pengajuan'])->name('pengajuan');
+Route::get('/pengajuan1', [AuthController::class, 'pengajuan1'])->name('pengajuan1');
 Route::get('/kontak', [AuthController::class, 'kontak'])->name('kontak');
 Route::get('/profil', [AuthController::class, 'profil'])->name('profil');
 Route::get('/editprofil', [AuthController::class, 'editprofil'])->name('editprofil');
 Route::get('/biodata', [AuthController::class, 'biodata'])->name('biodata');
 Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
 Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
+Route::post('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
+Route::get('/manajementugas', [AuthController::class, 'showTugas']);
+Route::post('/simpan-tugas', [AuthController::class, 'simpanTugas']);
+Route::post('/absensi', [AuthController::class, 'store']);
+Route::get('/absensi', [AuthController::class, 'absensi']);
+Route::get('/magang', [AuthController::class, 'magang'])->name('magang');
+Route::post('/pengajuan', [PengajuanController::class, 'store']);
+Route::get('/pengajuan', [PengajuanController::class, 'index']);
 
 //Bagian ADMIN
 Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
@@ -52,6 +65,7 @@ Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsen'])->name('
 Route::get('/managementpengguna', [AuthController::class, 'managementpengguna'])->name('managementpengguna');
 Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
 Route::get('/notif', [AuthController::class, 'notif'])->name('notif');
+Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
 
 //Bagian PERUSAHAAN
 Route::get('/dashboardpt', [AuthController::class, 'dashboardpt'])->name('dashboardpt');
@@ -69,9 +83,14 @@ Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('back
 Route::get('/daftar', [AuthController::class, 'showRegisterForm'])->name('register');
 Route::get('/loginpt', [AuthController::class, 'loginpt'])->name('loginpt');
 Route::get('/daftarpt', [AuthController::class, 'daftarpt'])->name('daftarpt');
-
-// Routes untuk autentikasi login
-Route::controller(AuthController::class)->group(function () {
-    Route::get('/login', 'showLoginForm')->name('login');
-    Route::post('/login', 'login'); // Pastikan metode login ada di AuthController
-});
+Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/beranda', function() {
+        return "Selamat datang di Dashboard!";
+    })->middleware('auth');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+})->name('logout');
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');

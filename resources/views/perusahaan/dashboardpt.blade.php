@@ -138,13 +138,17 @@ class="sidebar-item">
             <div class="row">
                 <div class="col-12 mb-2">
                     <div class="card text-center">
-                        <div class="card-body p-2">
-                            <div class="stats-icon blue mb-1">
-                                <i class="iconly-boldTick-Square"></i>
-                            </div>
-                            <h6 class="text-muted">Hadir</h6>
-                            <h6 class="font-extrabold mb-0">200</h6>
-                        </div>
+                    <div class="card-body p-2">
+                    <div class="stats-icon blue mb-1">
+                       <i class="iconly-boldTick-Square"></i>
+                   </div>
+                       <h6 class="text-muted">Hadir</h6>
+                    @if(isset($jumlahAbsensi))
+                       <h6 class="font-extrabold mb-0">{{ $jumlahAbsensi }}</h6>
+                    @else
+                      <h6 class="font-extrabold mb-0">0</h6> <!-- Default jika tidak ada data -->
+                   @endif
+                       </div>
                     </div>
                 </div>
                 <div class="col-12 mb-2">
