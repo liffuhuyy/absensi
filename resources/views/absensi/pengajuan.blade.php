@@ -306,27 +306,27 @@
                 <label for="jurusan">Jurusan</label>
                 <select id="jurusan" name="jurusan" required>
                     <option value="">Pilih Jurusan</option>
-                    <option value="AKL" <?php echo (isset($jurusan) && $jurusan == 'AKL') ? 'selected' : ''; ?>Akuntansi Keuangan dan Lembaga</option>
-                    <option value="RPL" <?php echo (isset($jurusan) && $jurusan == 'RPL') ? 'selected' : ''; ?>Rekayasa perangkat lunak</option>
-                    <option value="TKJ" <?php echo (isset($jurusan) && $jurusan == 'TKJ') ? 'selected' : ''; ?>Teknik Jaringan Dan Komputer</option>
-                    <option value="KL" <?php echo (isset($jurusan) && $jurusan == 'KL') ? 'selected' : ''; ?>Kuliner</option>
-                    <option value="TL" <?php echo (isset($jurusan) && $jurusan == 'TL') ? 'selected' : ''; ?>Teknik Logistik</option>
-                    <option value="MPLB" <?php echo (isset($jurusan) && $jurusan == 'MPLB') ? 'selected' : ''; ?>Manajemen Perkantoran dan Layanan Bisnis</option>
-                    <option value="TO" <?php echo (isset($jurusan) && $jurusan == 'TO') ? 'selected' : ''; ?>Teknik Otomotif</option>
-                    <option value="TPM" <?php echo (isset($jurusan) && $jurusan == 'TPM') ? 'selected' : ''; ?>Teknik Permesinan</option>
-                    <option value="DKV" <?php echo (isset($jurusan) && $jurusan == 'DKV') ? 'selected' : ''; ?>Desain Komunikasi Visual</option>
-                    <option value="PM" <?php echo (isset($jurusan) && $jurusan == 'PM') ? 'selected' : ''; ?>Pemasaran</option>
+                    <option value="AKL">Akuntansi Keuangan dan Lembaga (AKL)</option>
+                    <option value="MPLB">Manajemen Perkantoran dan Layanan Bisnis (MPLB)</option>
+                    <option value="BDP">Bisnis Daring dan Pemasaran (BDP)</option>
+                    <option value="RPL">Rekayasa Perangkat Lunak (RPL)</option>
+                    <option value="TKJ">Teknik Komputer dan Jaringan (TKJ)</option>
+                    <option value="DKV">Desain Komunikasi Visual (DKV)</option>
+                    <option value="TO">Teknik Otomotif (TO)</option>
+                    <option value="TM">Teknik Mesin (TM)</option>
+                    <option value="KL">Kuliner (KL)</option>
+                    <option value="TL">Teknik Logistik (TL)</option>
                 </select>
             </div>
             
             <div class="form-group">
                 <label for="tanggal_mulai">Tanggal Mulai Magang</label>
-                <input type="date" id="tanggal_mulai" name="tanggal_mulai" value="<?php echo isset($tanggal_mulai) ? $tanggal_mulai : ''; ?>" required>
+                <input type="date" id="tanggal_mulai" name="tanggal_mulai" required>
             </div>
             
             <div class="form-group">
                 <label for="tanggal_selesai">Tanggal Selesai Magang</label>
-                <input type="date" id="tanggal_selesai" name="tanggal_selesai" value="<?php echo isset($tanggal_selesai) ? $tanggal_selesai : ''; ?>" required>
+                <input type="date" id="tanggal_selesai" name="tanggal_selesai" required>
             </div>
             <div class="form-group">
                 <label for="perusahaan">Perusahaan:</label>
@@ -335,7 +335,6 @@
             <div class="button-container">
                 <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
             </div>
-        
         </form>
     </div>
 
@@ -343,29 +342,30 @@
     function confirmLogout() {
         let confirmAction = confirm("Apakah Anda yakin ingin logout?");
         if (confirmAction) {
-            window.location.href = "{{ url('/index') }}"; // Ganti '/index' dengan URL logout sebenarnya
+            window.location.href = "{{ url('/index') }}";
         }
     }
-               // Menu toggle functionality
-               const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('closeSidebar');  
-        const overlay = document.getElementById('overlay');
+    
+    // Menu toggle functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('closeSidebar');  
+    const overlay = document.getElementById('overlay');
 
-        menuToggle.addEventListener('click', function() {
-            sidebar.classList.add('active');
-            overlay.classList.add('active');
-        });
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.add('active');
+        overlay.classList.add('active');
+    });
 
-        closeSidebar.addEventListener('click', function() {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
+    closeSidebar.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    });
 
-        overlay.addEventListener('click', function() {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
+    overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    });
     </script>
 </body>
 </html>
