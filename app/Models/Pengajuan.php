@@ -8,6 +8,6 @@ class Pengajuan extends Model
 {
     use HasFactory;
 
-    protected $table = 'pengajuan'; // Nama tabel
-    protected $fillable = ['id','nama', 'jurusan', 'tanggal_masuk', 'tanggal_keluar', 'perusahaan']; // Kolom yang bisa diisi
+    protected $table = 'pengajuan';
+    protected $fillable = ['id','nama', 'jurusan', 'tanggal_masuk', 'tanggal_keluar', 'perusahaan', 'status']; 
 }

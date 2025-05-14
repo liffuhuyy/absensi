@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Siswa</title>
@@ -497,7 +498,17 @@ tr:hover {
                         <td>{{ $p->tanggal_masuk }}</td>
                         <td>{{ $p->tanggal_keluar ?? '-' }}</td>
                         <td>{{ $p->perusahaan }}</td>
-                        <td>{{ $p->status }}</td>
+                        <td>
+                        <div class="text-dark bg-{{ $p->status == 'Ditolak' ? 'danger' : ($p->status == 'Menunggu' ? 'warning' : 'success') }}">
+                      <div class="row">
+                        <div class="col">
+                          <div class="text-white text-center p-2">
+                              {{ $p->status }}
+                          </div>
+                       </div>
+                     </div>
+                </div>
+                      </td>
                     </tr>
                 @endforeach
             </tbody>

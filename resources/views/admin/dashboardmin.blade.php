@@ -122,8 +122,12 @@
                                 <div class="stats-icon blue mb-2">
                                     <i class="iconly-boldTick-Square"></i>
                                 </div>
-                                <h6 class="text-muted font-semibold">Hadir</h6>
-                                <h6 class="font-extrabold mb-0">200</h6>
+                      <h6 class="text-muted">Hadir</h6>
+                    @if(isset($jumlahAbsensi))
+                      <h6 class="font-extrabold mb-0">{{ $jumlahAbsensi }}</h6>
+                    @else
+                      <h6 class="font-extrabold mb-0">0</h6>
+                   @endif
                             </div>
                         </div>
                     </div>
