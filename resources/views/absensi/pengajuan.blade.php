@@ -24,16 +24,6 @@
             
         }
         
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: linear-gradient(to right, #0a192f, #000000);
-            color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-        }
-        
         .header h1 {
             margin: 0;
             font-size: 24px;
@@ -255,7 +245,7 @@
     </style>
 </head>
 <body>
-    <div class="header">
+<div class="header">
         <div class="menu-toggle" id="menuToggle">
             <span></span>
             <span></span>
@@ -336,6 +326,51 @@
                 <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
             </div>
         </form>
+=======
+<form method="POST" action="{{ url('/pengajuan') }}">
+    @csrf
+    <div class="form-group">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" name="nama" required>
+    </div>
+
+    <div class="form-group">
+        <label for="jurusan">Jurusan</label>
+        <select id="jurusan" name="jurusan" required>
+            <option value="">Pilih Jurusan</option>
+            <option value="AKL">Akuntansi Keuangan dan Lembaga</option>
+            <option value="RPL">Rekayasa Perangkat Lunak</option>
+            <option value="TKJ">Teknik Jaringan dan Komputer</option>
+            <option value="KL">Kuliner</option>
+            <option value="TL">Teknik Logistik</option>
+            <option value="MPLB">Manajemen Perkantoran dan Layanan Bisnis</option>
+            <option value="TO">Teknik Otomotif</option>
+            <option value="TPM">Teknik Permesinan</option>
+            <option value="DKV">Desain Komunikasi Visual</option>
+            <option value="PM">Pemasaran</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="tanggal_masuk">Tanggal Mulai Magang</label>
+        <input type="date" id="tanggal_masuk" name="tanggal_masuk" required>
+    </div>
+
+    <div class="form-group">
+        <label for="tanggal_keluar">Tanggal Selesai Magang</label>
+        <input type="date" id="tanggal_keluar" name="tanggal_keluar" required>
+    </div>
+
+    <div class="form-group">
+        <label for="perusahaan">Perusahaan:</label>
+        <input type="text" name="perusahaan" id="perusahaan" required>
+    </div>
+
+    <div class="button-container">
+        <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
+    </div>
+</form>
+>>>>>>> 6a48cef28b1d1c07ec5266abca5e4b85e389aa6f
     </div>
 
     <script>

@@ -66,7 +66,7 @@
             
             <li
             class="sidebar-item">
-            <a href="{{ url('/dashboard') }}" class='sidebar-link'>
+            <a href="{{ url('/dashboardmin') }}" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
                 <span>Dashboard</span>
             </a>
@@ -119,7 +119,7 @@
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/dashboard') }}">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="{{ url('/dashboardmin') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active" aria-current="page">Pengaturan</li>
                     </ol>
                 </nav>
@@ -138,7 +138,7 @@
             </div> 
         </div>
     </div>
-    <a href="management-akses.html" target="_blank" style="text-decoration: none;">
+    <a href="{{ url('/managementakses') }}"  style="text-decoration: none;">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -148,7 +148,7 @@
         </div>
     </div>
     </a>
-    <a href="backupdata.html" target="_blank" style="text-decoration: none;">
+    <a href="backupdata.html"  style="text-decoration: none;">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -166,7 +166,7 @@
             </div> 
         </div>
     </div>
-    <a href="auth-login.html" target="_blank" style="text-decoration: none;">
+    <a href="auth-login.html"  style="text-decoration: none;">
     <div class="col-12">
         <div class="card">
             <div class="card-header">

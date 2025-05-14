@@ -142,7 +142,7 @@ class="sidebar-item">
             </div>
         </div>
     </div>
-    <a href="{{ url('/managementaksespt') }}" target="_blank" style="text-decoration: none;">
+    <a href="{{ url('/managementaksespt') }}"  style="text-decoration: none;">
     <div class="col-12">
         <div class="card">
             <div class="card-header">
@@ -152,7 +152,7 @@ class="sidebar-item">
         </div>
     </div>
     </a>
-    <a href="{{ url('/managementpenggunapt') }}" target="_blank" style="text-decoration: none;">
+    <a href="{{ url('/managementpenggunapt') }}"  style="text-decoration: none;">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -162,7 +162,7 @@ class="sidebar-item">
             </div>
         </div>
         </a>
-    <a href="{{ url('/backupdatapt') }}" target="_blank" style="text-decoration: none;">
+    <a href="{{ url('/backupdatapt') }}"  style="text-decoration: none;">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
@@ -180,7 +180,7 @@ class="sidebar-item">
             </div> 
         </div>
     </div>
-    <a href="{{ url('/loginpt') }}" target="_blank" style="text-decoration: none;">
+    <a href="{{ url('/loginpt') }}"  style="text-decoration: none;">
     <div class="col-12">
         <div class="card">
             <div class="card-header">

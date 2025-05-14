@@ -158,16 +158,16 @@ form .signup-link a:hover{
          <div class="title">
             Login
          </div>
-         <form action="proses_login.php" method="post"> <!-- Ubah GET menjadi POST -->
-            <div class="field">
-                <input type="text" name="email" required> <!-- Tambahkan name="email" -->
-                <label>Email </label>
-            </div>
-            <div class="field password-field">
-                <input type="password" name="password" id="password" oninput="checkPasswordInput()" required> <!-- Tambahkan name="password" -->
-                <label>Password</label>
-                <i class="toggle-password fas fa-eye-slash" onclick="togglePassword()"></i>
-            </div>
+  <form action="{{ url('/login') }}" method="POST"> <!-- Ubah GET menjadi POST -->
+         @csrf <!-- Token keamanan Laravel -->
+        <div class="field">
+              <input type="text" name="email" required>
+              <label>Email </label>
+        </div>       
+        <div class="field">
+              <input type="password" name="password" required>
+              <label>Password</label>
+        </div>  
             <br>
             <div class="field">
                 <input type="submit" value="Login">
@@ -181,7 +181,6 @@ form .signup-link a:hover{
                Belum Punya Akun? <a href="{{ url('/daftar') }}">Daftar sekarang</a>
             </div>
         </form>
-        
       </div>
 
       <!-- Script untuk mengatur fungsi toggle password dan tampilan ikon -->
