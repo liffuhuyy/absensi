@@ -37,6 +37,17 @@ Route::get('/test-db', function () {
     }
 });
 
+Route::post('/presensi/store', [PresensiController::class, 'store'])->name('presensi.store');
+use App\Http\Controllers\DashboardController;
+
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+// Route untuk halaman tambahan
+Route::get('/index ', [AuthController::class, 'index'])->name('index');
+Route::get('/product', [AuthController::class, 'product'])->name ('product');
+Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('product.tentangkami');
+
 //Bagian USER
 Route::get('/index', [AuthController::class, 'index'])->name('index');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('absensi.tentangkami');

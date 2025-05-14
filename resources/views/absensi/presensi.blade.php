@@ -552,6 +552,15 @@
                     <img src="{{ url('/profil') }}" alt="Profile Picture">
                 </a>
             </div>            
+<<<<<<< HEAD
+=======
+
+        <div class="profile-icon">
+            <a href="{{ url('/profil') }}">
+                <img src="{{ url('/profil') }}" alt="Profile Picture">
+            </a>
+        </div>            
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -577,14 +586,27 @@
             <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
         </div>
     </div>
+<<<<<<< HEAD
 <form method="POST" action="{{ url('/absensi') }}">
+=======
+
+<body>
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
     <div class="container">
         <header>
             <h1>Sistem Presensi Siswa</h1>
         </header>
         
+<<<<<<< HEAD
         <div class="card">
 
+=======
+        <!-- Tombol untuk kembali ke halaman sebelumnya -->
+<a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+<a href="{{ url('/dashboard') }}" class="btn btn-primary">Kembali ke Dashboard</a>
+
+        <div class="card"> 
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
             <div class="tanggal" id="tanggal"></div>
             <div class="jam-digital" id="jam"></div>
             
@@ -677,6 +699,10 @@
     </div>
 </form>
     <script>
+<<<<<<< HEAD
+=======
+
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
           const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const closeSidebar = document.getElementById('closeSidebar');
@@ -696,6 +722,10 @@
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
         });
+<<<<<<< HEAD
+=======
+
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
         // Fungsi untuk sidebar
         document.addEventListener("DOMContentLoaded", function () {
             const menuToggle = document.getElementById("menuToggle");
