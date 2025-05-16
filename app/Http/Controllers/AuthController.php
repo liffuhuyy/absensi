@@ -5,10 +5,23 @@ use Illuminate\Http\Request;
 use App\Models\UserTugas;
 use App\Models\User;
 use App\Models\Absensi;
+use App\Models\Biodata;
+use App\Models\Pengajuan;
+
 use Illuminate\Support\Facades\Auth;
  
 class AuthController extends Controller
 {
+    public function filter(Request $request)
+{
+    $bulan = $request->bulan;
+
+    // Ambil data tugas berdasarkan bulan pada kolom "tanggal"
+    $tugas = UserTugas::whereMonth('tanggal', $bulan)->get();
+
+    return view('absensi.manajementugas', compact('tugas', 'bulan'));
+}
+
     public function simpanTugas(Request $request)
     {
         try {
@@ -158,14 +171,12 @@ class AuthController extends Controller
         }
     }
 
-    public function profil()
-    {
-        if (view()->exists('absensi.profil')) {
-            return view('absensi.profil');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
+  public function profil()
+{
+    $biodata = Biodata::whereNotNull('nohp')->get();
+    return view('absensi.profil', compact('biodata'));
+}
+
 
     public function index()
     {
@@ -311,14 +322,15 @@ class AuthController extends Controller
         }
     }
 
-    public function pengajuanpt()
-    {
-        if (view()->exists('perusahaan.pengajuanpt')) {
-            return view('perusahaan.pengajuanpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
+public function pengajuanpt()
+{
+    if (view()->exists('perusahaan.pengajuanpt')) {
+        $pengajuan = Pengajuan::all();
+        return view('perusahaan.pengajuanpt', compact('pengajuan'));
+    } else {
+        return "View tidak ditemukan.";
     }
+}
 
     public function jadwalpt()
     {

@@ -338,27 +338,39 @@
 
 <br>
 <h2>Daftar Tugas</h2>
-<table>
+<br>
+<form method="GET" action="{{ route('filter') }}">
+    <select name="bulan" id="bulan" class="form-select">
+        <option value="">Pilih Bulan</option>
+        @foreach (range(1, 12) as $bulan)
+            <option value="{{ $bulan }}">{{ date('F', mktime(0, 0, 0, $bulan, 1)) }}</option>
+        @endforeach
+    </select>
+    <button type="submit" class="btn btn-primary mt-2">Cari</button>
+</form>
+
+<table class="table">
     <thead>
         <tr>
             <th>Tanggal</th>
             <th>Tugas</th>
         </tr>
     </thead>
-<tbody>
-    @foreach ($tugas as $item)
-    <tr>
-        <td>{{ $item->tanggal }}</td>
-        <td>{{ $item->tugas }}</td>
-    </tr>
-    @endforeach
+    <tbody>
+        @foreach ($tugas as $item)
+        <tr>
+            <td>{{ $item->tanggal }}</td>
+            <td>{{ $item->tugas }}</td>
+        </tr>
+        @endforeach
 
-    @if ($tugas->isEmpty())
-    <tr>
-        <td colspan="5" style="text-align: center;">Belum ada data tugas bulan ini.</td>
-    </tr>
-    @endif
-</tbody>
+        @if ($tugas->isEmpty())
+        <tr>
+            <td colspan="2" style="text-align: center; color: red;">Belum ada data tugas bulan ini.</td>
+        </tr>
+        @endif
+    </tbody>
+</table>
 
         <br> 
         <script>

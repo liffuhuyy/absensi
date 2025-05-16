@@ -8,6 +8,7 @@ use App\Models\UserTugas;
 use App\Models\User;
 use App\Models\Absensi;
 use App\Models\Pengajuan;
+use App\Http\Controllers\BiodataController;
 
 // Gunakan hanya Route::view untuk /absensi
 Route::view('/absensi', 'absensi'); // Menampilkan view resources/views/absensi.blade.php
@@ -37,6 +38,7 @@ Route::get('/test-db', function () {
     }
 });
 
+<<<<<<< HEAD
 Route::post('/presensi/store', [PresensiController::class, 'store'])->name('presensi.store');
 use App\Http\Controllers\DashboardController;
 
@@ -47,6 +49,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/index ', [AuthController::class, 'index'])->name('index');
 Route::get('/product', [AuthController::class, 'product'])->name ('product');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('product.tentangkami');
+=======
+Route::post('/pengajuan/update-status', [PengajuanController::class, 'updateStatus'])->name('pengajuan.updateStatus');
+Route::get('/filter', [AuthController::class, 'filter'])->name('filter');
+>>>>>>> 710b49bb669535d68817385ce555f1f61add49da
 
 //Bagian USER
 Route::get('/index', [AuthController::class, 'index'])->name('index');
@@ -69,6 +75,8 @@ Route::get('/absensi', [AuthController::class, 'absensi']);
 Route::get('/magang', [AuthController::class, 'magang'])->name('magang');
 Route::post('/pengajuan', [PengajuanController::class, 'store']);
 Route::get('/pengajuan', [PengajuanController::class, 'index']);
+Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata.index');
+Route::put('/biodata/{id}', [BiodataController::class, 'update'])->name('biodata.update');
 
 //Bagian ADMIN
 Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
