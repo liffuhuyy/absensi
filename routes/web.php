@@ -38,7 +38,6 @@ Route::get('/test-db', function () {
     }
 });
 
-<<<<<<< HEAD
 Route::post('/presensi/store', [PresensiController::class, 'store'])->name('presensi.store');
 use App\Http\Controllers\DashboardController;
 
@@ -49,10 +48,9 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::get('/index ', [AuthController::class, 'index'])->name('index');
 Route::get('/product', [AuthController::class, 'product'])->name ('product');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('product.tentangkami');
-=======
 Route::post('/pengajuan/update-status', [PengajuanController::class, 'updateStatus'])->name('pengajuan.updateStatus');
 Route::get('/filter', [AuthController::class, 'filter'])->name('filter');
->>>>>>> 710b49bb669535d68817385ce555f1f61add49da
+
 
 //Bagian USER
 Route::get('/index', [AuthController::class, 'index'])->name('index');
