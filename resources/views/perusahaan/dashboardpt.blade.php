@@ -158,7 +158,7 @@ class="sidebar-item">
                                 <i class="iconly-boldShield-Done"></i>
                             </div>
                             <h6 class="text-muted">Izin</h6>
-                            <h6 class="font-extrabold mb-0">30</h6>
+                            <h6 class="font-extrabold mb-0">{{ isset($data['izin']) ? $data['izin'] : 0 }}</h6>
                         </div>
                     </div>
                 </div>
@@ -169,7 +169,7 @@ class="sidebar-item">
                                 <i class="iconly-boldClose-Square"></i>
                             </div>
                             <h6 class="text-muted">Sakit</h6>
-                            <h6 class="font-extrabold mb-0">15</h6>
+                            <h6 class="font-extrabold mb-0">{{ isset($data['sakit']) ? $data['sakit'] : 0 }}</h6>
                         </div>
                     </div>
                 </div>

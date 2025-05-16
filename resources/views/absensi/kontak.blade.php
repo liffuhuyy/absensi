@@ -138,17 +138,26 @@ body {
 						<h2>Hubungi Kami</h2>
 						<p>Silakan isi formulir di bawah untuk menghubungi kami</p>
 					</header>
-					<form method="post" action="#" class="cta">
-						<div class="row gtr-uniform gtr-50">
-							<div class="col-6 col-12-xsmall"><input type="text" name="name" id="name" placeholder="Nama Anda" required /></div>
-							<div class="col-6 col-12-xsmall"><input type="email" name="email" id="email" placeholder="Alamat Email" required /></div>
-							<div class="col-12"><textarea name="message" id="message" placeholder="Pesan Anda" rows="4" required></textarea></div>
-							<div class="col-12"><input type="submit" value="Kirim Pesan" class="fit primary" /></div>
-						</div>
-                        <br>
-                        <button class="back-button" onclick="window.location.href='beranda.php'">Kembali</button>
-					</form>
-				</div>
+         <form method="post" action="{{ route('admin.notif') }}" class="cta">
+    @csrf
+    <div class="row gtr-uniform gtr-50">
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="name" id="name" placeholder="Nama Anda" required />
+        </div>
+        <div class="col-6 col-12-xsmall">
+            <input type="email" name="email" id="email" placeholder="Alamat Email" required />
+        </div>
+        <div class="col-12">
+            <textarea name="message" id="message" placeholder="Pesan Anda" rows="4" required></textarea>
+        </div>
+        <div class="col-12">
+            <input type="submit" value="Kirim Pesan" class="fit primary" />
+        </div>
+    </div>
+    <br>
+    <button class="back-button" onclick="window.location.href='beranda.php'">Kembali</button>
+</form>
+      </div>
 			</section>
             			<!-- Footer -->
 			<footer id="footer">
