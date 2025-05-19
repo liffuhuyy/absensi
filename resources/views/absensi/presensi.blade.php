@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -817,8 +816,8 @@
                 alertBox.style.display = 'none';
             }, 5000);
         }
-        
-        // Fungsi untuk menambahkan data presensi
+
+               // Fungsi untuk menambahkan data presensi
         function tambahDataPresensi(data) {
             dataPresensi.push(data);
             localStorage.setItem('dataPresensi', JSON.stringify(dataPresensi));
@@ -1120,8 +1119,7 @@
         window.onclick = function(event) {
             const modalIzin = document.getElementById('modalIzin');
             const modalPulangAwal = document.getElementById('modalPulangAwal');
-            
-            if (event.target === modalIzin) {
+                        if (event.target === modalIzin) {
                 modalIzin.style.display = 'none';
             }
             
@@ -1170,6 +1168,7 @@ fetch("/absensi")
         });
     })
     .catch(error => console.error("Error:", error));
+    
     </script>
 </body>
 </html>

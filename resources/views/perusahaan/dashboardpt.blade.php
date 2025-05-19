@@ -146,7 +146,7 @@ class="sidebar-item">
                     @if(isset($jumlahAbsensi))
                        <h6 class="font-extrabold mb-0">{{ $jumlahAbsensi }}</h6>
                     @else
-                      <h6 class="font-extrabold mb-0">0</h6> <!-- Default jika tidak ada data -->
+                      <h6 class="font-extrabold mb-0">0</h6> 
                    @endif
                        </div>
                     </div>

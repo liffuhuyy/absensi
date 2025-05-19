@@ -264,6 +264,7 @@ class="sidebar-item">
                                     </select>
                                 </div>
 
+
                                 <div class="form-group">
                                     <label for="dateInputNilai">Tanggal</label>
                                     <div style="display: flex; align-items: center; position: relative;">
@@ -291,6 +292,15 @@ class="sidebar-item">
                                     <a href="#" class="btn">Simpan Nilai</a>
                                 </div>
                             </div>
+
+                        <div class="form-group mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Catatan</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        </div>
+                        <br>
+                        <div class="button-container">
+                            <a href="#" class="btn">Simpan</a> 
+
                         </div>
                     </div>
                 </div>

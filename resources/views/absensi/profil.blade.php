@@ -282,6 +282,7 @@
 <body>
     <!-- Kontainer Profil Pengguna -->
     <div class="container" id="profileContainer">
+
         <div class="profile-pic-container">
             <img id="profileImage" class="profile-pic" src="https://via.placeholder.com/100" alt="Profile Picture">
             <div class="profile-pic-overlay">
@@ -316,6 +317,19 @@
         <p><a href="javascript:void(0)" class="logout-link" id="logoutBtn">
             <i class="material-icons">logout</i> Logout
         </a></p>
+
+        <div class="profile-pic"></div>
+@foreach ($biodata as $data)
+    <p>Nama: {{ $data->nama}}</p>
+    <p>No HP: {{ $data->nohp }}</p>
+
+        <br><br><br>
+        <div class="button-container">
+            <a href="{{ url('/editprofil') }}" class="button">Edit Akun</a>
+            <a href="{{ url('/biodata') }}" class="button">Biodata</a>
+        </div><br><br><br><br><br>
+        <p><a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a></p>
+
     </div>
 
     <!-- Edit Profile Container (hidden by default) -->

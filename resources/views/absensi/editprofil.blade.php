@@ -131,13 +131,7 @@
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
                 title="Masukkan email yang valid">
             </div>
-            
-            <div class="form-group">
-                <input type="tel" id="hp" placeholder="No HP" required 
-                pattern="[0-9]{10,13}" 
-                title="Nomor HP harus 10-13 digit angka">
-            </div><br><br>
-           
+ <br>         
             <button type="submit" class="submit-btn">Simpan Perubahan</button>
         </form>
         

@@ -15,6 +15,7 @@ class PengajuanController extends Controller
             'tanggal_masuk' => 'required|date',
             'tanggal_keluar' => 'nullable|date',
             'perusahaan' => 'required|string',
+            'status' => 'Menunggu',
         ]);
     
 
@@ -29,5 +30,18 @@ class PengajuanController extends Controller
         return view('absensi.magang', compact('pengajuan'));
     }
     
+   public function updateStatus(Request $request)
+{
+    $pengajuan = Pengajuan::find($request->id);
+
+    if ($pengajuan && $pengajuan->status == 'Menunggu') { // Hanya bisa diubah jika status masih "Menunggu"
+        $pengajuan->status = $request->status;
+        $pengajuan->save();
+        return response()->json(['success' => true, 'message' => 'Status berhasil diperbarui']);
+    }
+
+    return response()->json(['success' => false, 'message' => 'Status sudah diperbarui sebelumnya']);
+}
+
 
 }
