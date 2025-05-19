@@ -177,9 +177,6 @@ form .signup-link a:hover{
                   <a href="{{ url('/lupakatasandi') }}">Lupa kata sandi?</a>
                </div>
             </div>
-            <div class="signup-link">
-               Belum Punya Akun? <a href="{{ url('/daftar') }}">Daftar sekarang</a>
-            </div>
         </form>
       </div>
 
