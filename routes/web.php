@@ -61,6 +61,8 @@ Route::get('/editprofil', [AuthController::class, 'editprofil'])->name('editprof
 Route::get('/biodata', [AuthController::class, 'biodata'])->name('biodata');
 Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
 Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
+Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
+Route::get('/ubahkatasandiberhasil', [AuthController::class, 'ubahkatasandiberhasil'])->name('ubahkatasandiberhasil');
 Route::post('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
 Route::get('/manajementugas', [AuthController::class, 'showTugas']);
 Route::post('/simpan-tugas', [AuthController::class, 'simpanTugas']);
