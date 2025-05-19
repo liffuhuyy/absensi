@@ -85,6 +85,20 @@
         <span>Management Pengguna</span>
     </a>
 </li>
+<li
+    class="sidebar-item">
+    <a href="{{ url('/managementpengguna') }}" class='sidebar-link'>
+        <i class="bi bi-journal-check"></i>
+        <span>Data Siswa</span>
+    </a>
+</li>
+<li
+    class="sidebar-item">
+    <a href="{{ url('/managementpengguna') }}" class='sidebar-link'>
+        <i class="bi bi-journal-check"></i>
+        <span>Data Perusahaan</span>
+    </a>
+</li>
     <li
     class="sidebar-item">
     <a href="{{ url('/notif') }}" class='sidebar-link'>
@@ -258,71 +272,8 @@
                 </table>
             </div>
         </div>
-    </div>
-
-</section>
-<!-- Basic Tables end -->
-<section class="section">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title">Kelola Siswa</h5>
-        </div>
         
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table display" id="table2">
-
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>NIS</th>
-                            <th>Perusahaan</th>
-                            <th>Jurusan</th>
-                            <th>Pembimbing</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Budi</td>
-                            <td>123456</td>
-                            <td>Rekayasa Perangkat Lunak</td>
-                            <td>PT Digital</td>
-                            <td>Dzikri Pangestu</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Silvia</td>
-                            <td>123456</td>
-                            <td>PT Jerbee</td>
-                            <td>Rekayasa Perangkat Lunak</td>
-                            <td>Dede Iskandar</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Alif</td>
-                            <td>123456</td>
-                            <td>PT Digital</td>
-                            <td>Desain Komunikasi Visual</td>
-                            <td>Dzikri Pangestu</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
-
 </section>
 
 <!-- FOOTER -->
@@ -367,12 +318,6 @@
         searchBoxPengguna.parent().addClass("d-flex align-items-center justify-content-between");
         searchBoxPengguna.append(addUserButton);
 
-        // Menyamakan tampilan kolom search dan tombol Tambah Siswa
-        let searchBoxSiswa = $("#table2_wrapper .dataTables_filter");
-        let addSiswaButton = $('<a href="#" class="btn btn-sm btn-outline-primary ms-2">Tambah Siswa</a>');
-
-        searchBoxSiswa.parent().addClass("d-flex align-items-center justify-content-between");
-        searchBoxSiswa.append(addSiswaButton);
     });
     
 </script>
