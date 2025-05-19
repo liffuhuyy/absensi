@@ -279,10 +279,16 @@
 
         <div class="stats-card">
             <div class="stat-item">
-                <div>
-                    <a href="manajemen-tugas.php" class="stat-icon">📚</a>
-                </div>
-                <div class="stat-value"><?php echo "Tugas: " ?></div>
+            <div>
+     <a href="{{ url('/manajementugas') }}" class="stat-icon">📚</a>
+</div>
+<div class="stat-value">
+    <?php
+        use App\Models\UserTugas;
+        $tugas = UserTugas::all();
+        echo "Tugas: " . $tugas->count();
+         ?>
+        </div>
             <div class="stat-item">
                 <div class="stat-icon">
                     <a href="nilai.html" class="stat-icon">📋</a>
@@ -323,6 +329,18 @@
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
         });
+        fetch('/tugas')
+    .then(response => response.json())
+    .then(data => {
+        let tugasContainer = document.querySelector(".stat-value");
+        tugasContainer.innerHTML = "Tugas: " + data.length;
+
+        data.forEach(item => {
+            let tugasItem = `<div>Tugas ID: ${item.id} - ${item.judul_tugas}</div>`;
+            tugasContainer.innerHTML += tugasItem;
+        });
+    })
+    .catch(error => console.error("Error:", error));
     </script>
 </body>
 </html>

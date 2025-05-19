@@ -539,7 +539,7 @@
     </style>
 </head>
 <body>
-    <div class="header">
+<div class="header">
         <div class="menu-toggle" id="menuToggle">
             <span></span>
             <span></span>
@@ -552,12 +552,15 @@
                     <img src="{{ url('/profil') }}" alt="Profile Picture">
                 </a>
             </div>            
+<<<<<<< HEAD
+=======
 
         <div class="profile-icon">
             <a href="{{ url('/profil') }}">
                 <img src="{{ url('/profil') }}" alt="Profile Picture">
             </a>
         </div>            
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -583,18 +586,27 @@
             <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
         </div>
     </div>
+<<<<<<< HEAD
+<form method="POST" action="{{ url('/absensi') }}">
+=======
 
 <body>
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
     <div class="container">
         <header>
             <h1>Sistem Presensi Siswa</h1>
         </header>
         
+<<<<<<< HEAD
+        <div class="card">
+
+=======
         <!-- Tombol untuk kembali ke halaman sebelumnya -->
 <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
 <a href="{{ url('/dashboard') }}" class="btn btn-primary">Kembali ke Dashboard</a>
 
         <div class="card"> 
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
             <div class="tanggal" id="tanggal"></div>
             <div class="jam-digital" id="jam"></div>
             
@@ -685,9 +697,12 @@
             </form>
         </div>
     </div>
-
+</form>
     <script>
+<<<<<<< HEAD
+=======
 
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
           const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const closeSidebar = document.getElementById('closeSidebar');
@@ -707,7 +722,10 @@
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
         });
+<<<<<<< HEAD
+=======
 
+>>>>>>> a50be81209320b210ce93d517623996a999f033b
         // Fungsi untuk sidebar
         document.addEventListener("DOMContentLoaded", function () {
             const menuToggle = document.getElementById("menuToggle");
@@ -1124,6 +1142,44 @@
         
         // Inisialisasi tampilan
         updateTabelPresensi();
+
+        document.getElementById("btnMasuk").addEventListener("click", function() {
+    let tanggal = new Date().toISOString().split('T')[0];
+    let jamMasuk = new Date().toLocaleTimeString();
+    
+    fetch('/absensi', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            tanggal: tanggal,
+            status: "Hadir",
+            jam_masuk: jamMasuk,
+            jam_keluar: "",
+            keterangan: ""
+        })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(error => console.error("Error:", error));
+});
+fetch("/absensi")
+    .then(response => response.json())
+    .then(data => {
+        let tabel = document.getElementById("tabelPresensi");
+        tabel.innerHTML = "";
+
+        data.forEach(item => {
+            let row = `<tr>
+                <td>${item.tanggal}</td>
+                <td>${item.status}</td>
+                <td>${item.jam_masuk || "-"}</td>
+                <td>${item.jam_keluar || "-"}</td>
+                <td>${item.keterangan || "-"}</td>
+            </tr>`;
+            tabel.innerHTML += row;
+        });
+    })
+    .catch(error => console.error("Error:", error));
     </script>
 </body>
 </html>

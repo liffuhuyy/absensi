@@ -161,8 +161,10 @@ form .signup-link a:hover{
             Daftar
          </div>
          
-         <form action="proses_daftar.php" method="POST">
-            <div class="field">
+         <form action="{{ url('/register') }}" method="POST">
+    @csrf <!-- Token keamanan Laravel -->
+
+    <div class="field">
                 <input type="text" name="nama" required>
                 <label>Nama</label>
             </div>
@@ -184,7 +186,6 @@ form .signup-link a:hover{
             <div class="signup-link">
                Sudah Punya Akun? <a href="{{ url('/login') }}">Login</a>
             </div>
-
         </form>
       </div>
 

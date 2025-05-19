@@ -24,7 +24,7 @@
     <div class="sidebar-header position-relative">
         <div class="d-flex justify-content-between align-items-center">  
             <div class="logo">
-                <a href="{{ url('/dashboardmin') }}"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
+                <a href="{{ url('/dashboard') }}"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
             </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
@@ -65,7 +65,7 @@
             
             <li
             class="sidebar-item">
-            <a href="{{ url('/dashboardmin') }}" class='sidebar-link'>
+            <a href="{{ url('/dashboard') }}" class='sidebar-link'>
                 <i class="bi bi-grid-fill"></i>
                 <span>Dashboard</span>
             </a>
@@ -122,12 +122,8 @@
                                 <div class="stats-icon blue mb-2">
                                     <i class="iconly-boldTick-Square"></i>
                                 </div>
-                      <h6 class="text-muted">Hadir</h6>
-                    @if(isset($jumlahAbsensi))
-                      <h6 class="font-extrabold mb-0">{{ $jumlahAbsensi }}</h6>
-                    @else
-                      <h6 class="font-extrabold mb-0">0</h6>
-                   @endif
+                                <h6 class="text-muted font-semibold">Hadir</h6>
+                                <h6 class="font-extrabold mb-0">200</h6>
                             </div>
                         </div>
                     </div>
