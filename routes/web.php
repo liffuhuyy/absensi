@@ -65,10 +65,8 @@ Route::get('/editprofil', [AuthController::class, 'editprofil'])->name('editprof
 Route::get('/biodata', [AuthController::class, 'biodata'])->name('biodata');
 Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
 Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
-<<<<<<< HEAD
 Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
 Route::get('/ubahkatasandiberhasil', [AuthController::class, 'ubahkatasandiberhasil'])->name('ubahkatasandiberhasil');
-=======
 Route::post('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
 Route::get('/manajementugas', [AuthController::class, 'showTugas']);
 Route::post('/simpan-tugas', [AuthController::class, 'simpanTugas']);
@@ -79,7 +77,6 @@ Route::post('/pengajuan', [PengajuanController::class, 'store']);
 Route::get('/pengajuan', [PengajuanController::class, 'index']);
 Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata.index');
 Route::put('/biodata/{id}', [BiodataController::class, 'update'])->name('biodata.update');
->>>>>>> 2770975e46b8f670ab0b35edd95765065b794275
 
 //Bagian ADMIN
 Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
