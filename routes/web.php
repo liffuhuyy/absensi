@@ -74,6 +74,7 @@ Route::get('/pengajuan', [PengajuanController::class, 'index']);
 Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
 Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsen'])->name('ringkasanabsen');
 Route::get('/managementpengguna', [AuthController::class, 'managementpengguna'])->name('managementpengguna');
+Route::get('/datasiswa', [AuthController::class, 'datasiswa'])->name('datasiswa');
 Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
 Route::get('/notif', [AuthController::class, 'notif'])->name('notif');
 Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');

@@ -247,6 +247,15 @@ class AuthController extends Controller
         }
     }
 
+    public function datasiswa()
+    {
+        if (view()->exists('admin.datasiswa')) {
+            return view('admin.datasiswa');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
     public function managementakses()
     {
         if (view()->exists('admin.managementakses')) {
