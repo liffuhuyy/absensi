@@ -326,7 +326,7 @@
                 <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
             </div>
         </form>
-=======
+
 <form method="POST" action="{{ url('/pengajuan') }}">
     @csrf
     <div class="form-group">
