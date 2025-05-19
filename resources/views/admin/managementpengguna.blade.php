@@ -87,7 +87,7 @@
 </li>
 <li
     class="sidebar-item">
-    <a href="{{ url('/managementpengguna') }}" class='sidebar-link'>
+    <a href="{{ url('/datasiswa') }}" class='sidebar-link'>
         <i class="bi bi-journal-check"></i>
         <span>Data Siswa</span>
     </a>
