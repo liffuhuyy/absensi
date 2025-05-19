@@ -286,18 +286,14 @@
 
     <div class="container">
         <h1>Form Pengajuan Magang</h1>
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> f183962a2e6b2646572b3784bc0761d7a8dee2c7
-        <form id="proses_magang" method="POST" action="proses_magang.php">
+      <form id="proses_magang" method="POST" action="proses_magang.php">
             <div class="form-group">
                 <label for="nama">Nama Lengkap</label>
                 <input type="text" id="nama" name="nama" required>
             </div>
             
             <div class="form-group">
-<<<<<<< HEAD
+
     <label for="jurusan">Jurusan</label>
     <select id="jurusan" name="jurusan" required>
         <option value="">Pilih Jurusan</option>
@@ -318,7 +314,7 @@
             <div class="form-group">
                 <label for="tanggal_mulai">Tanggal Mulai Magang</label>
                 <input type="date" id="tanggal_mulai" name="tanggal_mulai" value="<?php echo isset($tanggal_mulai) ? $tanggal_mulai : ''; ?>" required>
-=======
+
                 <label for="jurusan">Jurusan</label>
                 <select id="jurusan" name="jurusan" required>
                     <option value="">Pilih Jurusan</option>
@@ -338,17 +334,13 @@
             <div class="form-group">
                 <label for="tanggal_mulai">Tanggal Mulai Magang</label>
                 <input type="date" id="tanggal_mulai" name="tanggal_mulai" required>
->>>>>>> f183962a2e6b2646572b3784bc0761d7a8dee2c7
             </div>
             
             <div class="form-group">
                 <label for="tanggal_selesai">Tanggal Selesai Magang</label>
-<<<<<<< HEAD
                 <input type="date" id="tanggal_selesai" name="tanggal_selesai" value="<?php echo isset($tanggal_selesai) ? $tanggal_selesai : ''; ?>" required>
-=======
+
                 <input type="date" id="tanggal_selesai" name="tanggal_selesai" required>
->>>>>>> f183962a2e6b2646572b3784bc0761d7a8dee2c7
-            </div>
             <div class="form-group">
                 <label for="perusahaan">Perusahaan:</label>
                 <input type="text" name="perusahaan" id="perusahaan" required>                
@@ -356,10 +348,6 @@
             <div class="button-container">
                 <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
             </div>
-<<<<<<< HEAD
-        
-=======
->>>>>>> f183962a2e6b2646572b3784bc0761d7a8dee2c7
         </form>
 
 <form method="POST" action="{{ url('/pengajuan') }}">
@@ -405,11 +393,7 @@
         <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
     </div>
 </form>
-<<<<<<< HEAD
->>>>>>> 2770975e46b8f670ab0b35edd95765065b794275
-=======
->>>>>>> 6a48cef28b1d1c07ec5266abca5e4b85e389aa6f
->>>>>>> f183962a2e6b2646572b3784bc0761d7a8dee2c7
+
     </div>
 
     <script>
