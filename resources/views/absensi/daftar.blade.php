@@ -139,6 +139,19 @@ form .signup-link a:hover{
   text-decoration: underline;
 }
 
+.field select {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 25px;
+   background: #f5f5f5;
+   font-size: 16px;
+   color: #333;
+   appearance: none;
+   -webkit-appearance: none;
+   -moz-appearance: none;
+   outline: none;
+}
 
          /* Styling untuk ikon mata */
          .password-field {
@@ -161,10 +174,8 @@ form .signup-link a:hover{
             Daftar
          </div>
          
-         <form action="{{ url('/register') }}" method="POST">
-    @csrf <!-- Token keamanan Laravel -->
-
-    <div class="field">
+         <form action="proses_daftar.php" method="POST">
+            <div class="field">
                 <input type="text" name="nama" required>
                 <label>Nama</label>
             </div>
@@ -177,15 +188,20 @@ form .signup-link a:hover{
                 <label>Password</label>
             </div>
             <div class="field">
-                <input type="text" name="no_hp" required>
-                <label>No Hp</label>
-            </div>
+   <select name="role" required>
+      <option value="" disabled selected hidden>Pilih Role</option>
+      <option value="user">User</option>
+      <option value="admin">Admin</option>
+      <option value="perusahaan">Perusahaan</option>
+   </select>
+</div>
             <div class="field">
                 <input type="submit" value="Daftar">
             </div>
             <div class="signup-link">
                Sudah Punya Akun? <a href="{{ url('/login') }}">Login</a>
             </div>
+
         </form>
       </div>
 

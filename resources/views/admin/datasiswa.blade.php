@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Pengguna</title>
+    <title>Data Siswa</title>
     
     
     <!-- Tambahkan Bootstrap CSS -->
@@ -87,7 +87,7 @@
 </li>
 <li
     class="sidebar-item">
-    <a href="{{ url('/datasiswa') }}" class='sidebar-link'>
+    <a href="{{ url('/managementpengguna') }}" class='sidebar-link'>
         <i class="bi bi-journal-check"></i>
         <span>Data Siswa</span>
     </a>
@@ -129,14 +129,14 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Management Pengguna</h3>
-                <p class="text-subtitle text-muted">Kelola akun siswa dan perusahaan dengan mudah!</p>
+                <h3>Data Siswa</h3>
+                <p class="text-subtitle text-muted">Kelola akun siswa dengan mudah!</p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/dashboardmin') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Management Pengguna</li>
+                        <li class="breadcrumb-item active" aria-current="page">Data Siswa</li>
                     </ol>
                 </nav>
             </div>
@@ -157,43 +157,32 @@
                 <form id="editForm">
                     <div id="formPengguna" style="display: none;">
                         <div class="form-group">
-                            <label>Nama</label>
+                            <label>Nis</label>
                             <input type="text" id="namaPengguna" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
+                            <label>Nama Siswa</label>
                             <input type="email" id="emailPengguna" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Telepon</label>
+                            <label>Kelas</label>
                             <input type="text" id="teleponPengguna" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Peran</label>
+                            <label>Jurusan</label>
                             <input type="text" id="peranPengguna" class="form-control">
                         </div>
-                    </div>
-                    
-                    <div id="formSiswa" style="display: none;">
-                        <div class="form-group">
-                            <label>Nama</label>
-                            <input type="text" id="namaSiswa" class="form-control">
+                         <div class="form-group">
+                            <label>Jenis Kelamin</label>
+                            <input type="text" id="peranPengguna" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label>NIS</label>
-                            <input type="text" id="nisSiswa" class="form-control">
+                         <div class="form-group">
+                            <label>Username</label>
+                            <input type="text" id="peranPengguna" class="form-control">
                         </div>
-                        <div class="form-group">
-                            <label>Perusahaan</label>
-                            <input type="text" id="perusahaanSiswa" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Jurusan</label>
-                            <input type="text" id="jurusanSiswa" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Pembimbing</label>
-                            <input type="text" id="pembimbingSiswa" class="form-control">
+                         <div class="form-group">
+                            <label>Password</label>
+                            <input type="text" id="peranPengguna" class="form-control">
                         </div>
                     </div>
                 </form>
@@ -212,7 +201,7 @@
     <div class="card">
         <div class="card-header">
             <h5 class="card-title">
-                Kelola Pengguna 
+                Kelola Data Siswa
             </h5>
         </div>
         <div class="card-body">
@@ -220,60 +209,49 @@
                 <table class="table" id="table1">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Peran</th>
+                            <th>Nis</th>
+                            <th>Nama Siswa</th>
+                            <th>Kelas</th>
+                            <th>Jurusan</th>
+                            <th>Jenis Kelamin</th>
+                            <th>Username</th>
+                            <th>Password</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
+                            <td>2324712</td>
                             <td>Denis</td>
-                            <td>nis@gmail.com</td>
-                            <td>076 4820 8838</td>
-                            <td>Admin</td>
+                            <td>XII</td>
+                            <td>Rpl</td>
+                            <td>Laki-laki</td>
+                            <td>Denis01</td>
+                            <td>22345</td>
                             <td>
                                 <a href="#" class="btn btn-sm btn-warning">Edit</a>
                                 <a href="#" class="btn btn-sm btn-danger">Hapus</a>
                             </td>
                         </tr>
                         <tr>
+                            <td>1223489</td>
                             <td>Alif</td>
-                            <td>lif@gmail.com</td>
-                            <td>0500 527693</td>
-                            <td>Admin</td>
+                            <td>XII</td>
+                            <td>Rpl</td>
+                            <td>Laki-laki</td>
+                            <td>alif02</td>
+                            <td>12345</td>
                             <td> 
                                 <a href="#" class="btn btn-sm btn-warning">Edit</a>
                                 <a href="#" class="btn btn-sm btn-danger">Hapus</a>
                             </td>
-                        </tr>
-                        <tr>
-                            <td>Putri</td>
-                            <td>tri@gmail.com</td>
-                            <td>(012165) 76278</td>
-                            <td>Admin</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Suci</td>
-                            <td>ci@gmail.com</td>
-                            <td>0309 690 7871</td>
-                            <td>Admin</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
+                        </tr>                      
                     </tbody>
                 </table>
             </div>
         </div>
-        
     </div>
+
 </section>
 
 <!-- FOOTER -->
@@ -312,12 +290,13 @@
         $('#table1').DataTable();
 
         // Menyamakan tampilan kolom search dan tombol Tambah Pengguna
-        let searchBoxPengguna = $("#table1_wrapper .dataTables_filter");
-        let addUserButton = $('<a href="#" class="btn btn-sm btn-outline-primary ms-2">Tambah Pengguna</a>');
+        let searchBoxSiswa = $("#table1_wrapper .dataTables_filter");
+        let addUserButton = $('<a href="#" class="btn btn-sm btn-outline-primary ms-2">Tambah Siswa</a>');
 
-        searchBoxPengguna.parent().addClass("d-flex align-items-center justify-content-between");
-        searchBoxPengguna.append(addUserButton);
+        searchBoxSiswa.parent().addClass("d-flex align-items-center justify-content-between");
+        searchBoxSiswa.append(addUserButton);
 
+       
     });
     
 </script>
