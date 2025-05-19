@@ -105,3 +105,6 @@ Route::get('/logout', function () {
     return redirect('/');
 })->name('logout');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/absensi', [PresensiController::class, 'store']);
+Route::post('/izin', [PresensiController::class, 'izin']);
+Route::post('/pulang-awal', [PresensiController::class, 'pulangAwal']);

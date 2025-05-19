@@ -286,6 +286,47 @@
 
     <div class="container">
         <h1>Form Pengajuan Magang</h1>
+        <form id="proses_magang" method="POST" action="proses_magang.php">
+            <div class="form-group">
+                <label for="nama">Nama Lengkap</label>
+                <input type="text" id="nama" name="nama" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="jurusan">Jurusan</label>
+                <select id="jurusan" name="jurusan" required>
+                    <option value="">Pilih Jurusan</option>
+                    <option value="AKL">Akuntansi Keuangan dan Lembaga (AKL)</option>
+                    <option value="MPLB">Manajemen Perkantoran dan Layanan Bisnis (MPLB)</option>
+                    <option value="BDP">Bisnis Daring dan Pemasaran (BDP)</option>
+                    <option value="RPL">Rekayasa Perangkat Lunak (RPL)</option>
+                    <option value="TKJ">Teknik Komputer dan Jaringan (TKJ)</option>
+                    <option value="DKV">Desain Komunikasi Visual (DKV)</option>
+                    <option value="TO">Teknik Otomotif (TO)</option>
+                    <option value="TM">Teknik Mesin (TM)</option>
+                    <option value="KL">Kuliner (KL)</option>
+                    <option value="TL">Teknik Logistik (TL)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="tanggal_mulai">Tanggal Mulai Magang</label>
+                <input type="date" id="tanggal_mulai" name="tanggal_mulai" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="tanggal_selesai">Tanggal Selesai Magang</label>
+                <input type="date" id="tanggal_selesai" name="tanggal_selesai" required>
+            </div>
+            <div class="form-group">
+                <label for="perusahaan">Perusahaan:</label>
+                <input type="text" name="perusahaan" id="perusahaan" required>                
+            </div>
+            <div class="button-container">
+                <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
+            </div>
+        </form>
+=======
 <form method="POST" action="{{ url('/pengajuan') }}">
     @csrf
     <div class="form-group">
@@ -329,35 +370,37 @@
         <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
     </div>
 </form>
+>>>>>>> 6a48cef28b1d1c07ec5266abca5e4b85e389aa6f
     </div>
 
     <script>
     function confirmLogout() {
         let confirmAction = confirm("Apakah Anda yakin ingin logout?");
         if (confirmAction) {
-            window.location.href = "{{ url('/index') }}"; // Ganti '/index' dengan URL logout sebenarnya
+            window.location.href = "{{ url('/index') }}";
         }
     }
-               // Menu toggle functionality
-               const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('closeSidebar');  
-        const overlay = document.getElementById('overlay');
+    
+    // Menu toggle functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('closeSidebar');  
+    const overlay = document.getElementById('overlay');
 
-        menuToggle.addEventListener('click', function() {
-            sidebar.classList.add('active');
-            overlay.classList.add('active');
-        });
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.add('active');
+        overlay.classList.add('active');
+    });
 
-        closeSidebar.addEventListener('click', function() {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
+    closeSidebar.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    });
 
-        overlay.addEventListener('click', function() {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
+    overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    });
     </script>
 </body>
 </html>
