@@ -103,7 +103,6 @@
 					</header>
 					<div class="button-container">
 						<a href="{{ url('/login') }}" class="btn btn-login">Login</a>
-						<a href="{{ url('/daftar') }}" class="btn btn-register">Daftar</a>
 					</div>
 				</div>
 			</section>
