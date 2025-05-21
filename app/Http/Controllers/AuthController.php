@@ -373,15 +373,6 @@ public function pengajuanpt()
         }
     }
 
-    public function managementpenggunapt()
-    {
-        if (view()->exists('perusahaan.managementpenggunapt')) {
-            return view('perusahaan.managementpenggunapt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
     public function backupdatapt()
     {
         if (view()->exists('perusahaan.backupdatapt')) {

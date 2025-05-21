@@ -18,10 +18,11 @@
   <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
 </head>
 <style>
-    #roleFilter {
-    width: 150px; /* Sesuaikan ukuran */
-    font-size: 14px; /* Perkecil teks */
-    padding: 5px; /* Kurangi padding */
+   #searchBox {
+  width: 300px; /* Sesuaikan lebar sesuai kebutuhan */
+  height: 40px; /* Sesuaikan tinggi sesuai kebutuhan */
+  font-size: 16px; /* Mengatur ukuran teks */
+  padding: 8px; /* Memberikan ruang di dalam kotak */
 }
     .center-text {
         text-align: center;
@@ -182,49 +183,6 @@
     </div>
 </div>
 
-<!-- Modal Form edit-->
-<div id="editModal" class="modal fade" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Edit Data</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="editForm">
-                    <input type="hidden" id="penggunaId"> <!-- ID pengguna untuk edit -->
-                    <div class="form-group">
-                        <label>Nama Pengguna</label>
-                        <input type="text" id="namaPengguna_edit" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Email</label>
-                        <input type="email" id="emailPengguna_edit" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password (Kosongkan jika tidak ingin mengubah)</label>
-                        <input type="password" id="passwordPengguna_edit" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Role</label>
-                        <select id="rolePengguna_edit" class="form-control">
-                            <option value="user">User</option>
-                            <option value="perusahaan">Perusahaan</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-primary" id="updateButton">Simpan</button>
-            </div>
-        </div>
-    </div>
-</div>
-
  <!-- Basic Tables start -->
  <section class="section">
     <div class="card">
@@ -233,20 +191,10 @@
             <div class="d-flex align##-items-center justify-content-between mb-3">
 <div class="row mb-3">
     <div class="col-md-6">
-        <input type="text" id="searchBox" class="form-control form-control-sm" placeholder="Cari berdasarkan nama...">
-    </div>
-    <div class="col-md-6">
-        <select id="roleFilter" class="form-control form-control-sm">
-            <option value="all">Semua Role</option>
-            <option value="user">User</option>
-            <option value="perusahaan">Perusahaan</option>
-            <option value="admin">Admin</option>
-        </select>
+        <input type="text" id="searchBox" class="form-control form-control-sm" placeholder="Cari berdasarkan nama">
     </div>
 </div>
-  
     <a href="#" class="btn btn-sm btn-outline-primary ms-2" id="openAddModal" >Tambah Data</a>
-
 </div>
     </div>    
         <div class="card-body">
