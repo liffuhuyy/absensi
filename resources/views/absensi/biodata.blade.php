@@ -436,7 +436,7 @@
                 <!-- Alamat Rumah -->
                 <div class="form-group">
                     <label for="alamat" class="form-label">Alamat Rumah<span class="required-mark">*</span></label>
-                    <textarea id="alamat" name="alamat" class="form-textarea">{{ old('alamat', $biodata->alamat) }}</textarea>
+                    <textarea id="alamat" name="alamat" class="form-textarea">{{ old('alamat', optional($biodata)->alamat) }}</textarea>
                 </div>
                     <button type="submit" class="btn btn-save">Simpan Data</button>
             </form>

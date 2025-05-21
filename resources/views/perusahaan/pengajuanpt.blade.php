@@ -251,7 +251,7 @@ class="sidebar-item">
             </div>
             
             <!-- Tabel -->
-  <div class="table-responsive mt-3">
+ <div class="table-responsive mt-3">
     <table class="table" id="table1">
         <thead>
             <tr>
@@ -260,41 +260,43 @@ class="sidebar-item">
                 <th>Tanggal Mulai</th>
                 <th>Tanggal Selesai</th>
                 <th>Perusahaan</th>
+                <th>Tanggal pengajuan</th>
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
             @foreach($pengajuan as $data)
-                        @php
-    $bgColor = match ($data->status) {
-        'Diterima' => 'bg-success',
-        'Ditolak' => 'bg-danger',
-        'Menunggu' => 'bg-warning',
-        default => 'bg-secondary',
-    };
-            @endphp
+                @php
+                    $bgColor = match ($data->status) {
+                        'Diterima' => 'bg-success',
+                        'Ditolak' => 'bg-danger',
+                        'Menunggu' => 'bg-warning',
+                        default => 'bg-secondary',
+                    };
+                @endphp
                 <tr>
                     <td>{{ $data->nama }}</td>
                     <td>{{ $data->jurusan }}</td>
                     <td>{{ $data->tanggal_masuk }}</td>
                     <td>{{ $data->tanggal_keluar }}</td>
                     <td>{{ $data->perusahaan }}</td>
+                    <td>{{ $data->created_at->format('d-m-Y H:i') }}</td>
                     <td>
-                 <div class="container text-dark {{ $bgColor }}">
-                      <div class="row">
-                        <div class="col">
-                          <div class="text-white text-center p-2">
-                              {{ $data->status }}
-                          </div>
-                       </div>
-                     </div>
-                </div>
+                        <div class="container text-dark {{ $bgColor }}">
+                            <div class="row">
+                                <div class="col">
+                                    <div class="text-white text-center p-2">
+                                        {{ $data->status }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
-                   <td>
-                     <button class="btn btn-sm  update-status" data-id="{{ $data->id }}" data-status="Diterima" {{ $data->status != 'Menunggu' ? 'disabled' : '' }}>Terima</button>
-                     <button class="btn btn-sm  update-status" data-id="{{ $data->id }}" data-status="Ditolak" {{ $data->status != 'Menunggu' ? 'disabled' : '' }}>Tolak</button>
-                   </td>
+                    <td>
+                        <button class="btn btn-sm update-status" data-id="{{ $data->id }}" data-status="Diterima" {{ $data->status != 'Menunggu' ? 'disabled' : '' }}>Terima</button>
+                        <button class="btn btn-sm update-status" data-id="{{ $data->id }}" data-status="Ditolak" {{ $data->status != 'Menunggu' ? 'disabled' : '' }}>Tolak</button>
+                    </td>
                 </tr>
             @endforeach
         </tbody>

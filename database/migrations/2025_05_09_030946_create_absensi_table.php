@@ -9,18 +9,19 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-    {
-        Schema::create('absensi', function (Blueprint $table) {
-            $table->id();
-            $table->date('tanggal');
-            $table->string('status');
-            $table->time('jam_masuk')->nullable();
-            $table->time('jam_keluar')->nullable();
-            $table->text('keterangan')->nullable();
-            $table->timestamps();
-        });
-    }
+ public function up()
+{
+    Schema::create('absensi', function (Blueprint $table) {
+        $table->id();
+        $table->date('tanggal');
+        $table->time('jam_masuk')->nullable();
+        $table->time('jam_keluar')->nullable();
+        $table->enum('status', ['Hadir', 'Terlambat', 'Izin', 'Sakit']);
+        $table->text('keterangan')->nullable();
+        $table->timestamps();
+    });
+}
+
 
     /**
      * Reverse the migrations.

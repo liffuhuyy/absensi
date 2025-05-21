@@ -6,6 +6,7 @@ use App\Models\UserTugas;
 use App\Models\User;
 use App\Models\Absensi;
 use App\Models\Biodata;
+use App\Models\Notifikasi;
 use App\Models\Pengajuan;
 
 use Illuminate\Support\Facades\Auth;
@@ -15,8 +16,6 @@ class AuthController extends Controller
     public function filter(Request $request)
 {
     $bulan = $request->bulan;
-
-    // Ambil data tugas berdasarkan bulan pada kolom "tanggal"
     $tugas = UserTugas::whereMonth('tanggal', $bulan)->get();
 
     return view('absensi.manajementugas', compact('tugas', 'bulan'));
@@ -26,7 +25,7 @@ class AuthController extends Controller
     {
         try {
             UserTugas::create([
-                'tanggal' => $request->tanggal, // Data dari form input
+                'tanggal' => $request->tanggal,
                 'tugas' => $request->tugas
             ]);
             return redirect()->back()->with('success', 'Data berhasil disimpan!');
@@ -34,7 +33,7 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
 
-        $tugas = UserTugas::all(); // Mengambil semua tugas dari database
+        $tugas = UserTugas::all(); 
         return response()->json($tugas);
 
     }
@@ -112,8 +111,8 @@ class AuthController extends Controller
     }
 
     public function showTugas() {
-        $tugas = UserTugas::all(); // Ambil data dari database
-        return view('absensi.manajementugas', compact('tugas')); // Kirim ke tampilan
+        $tugas = UserTugas::all();
+        return view('absensi.manajementugas', compact('tugas')); 
     }
 
     
@@ -174,7 +173,7 @@ class AuthController extends Controller
   public function profil()
 {
     $biodata = Biodata::whereNotNull('nohp')->get();
-    return view('absensi.profil', compact('biodata'));
+      return view('absensi.profil', compact('biodata'));
 }
 
 
@@ -196,28 +195,8 @@ class AuthController extends Controller
         }
     }
 
-    // Menampilkan halaman daftar
-    public function showRegisterForm()
-    {
-        return view('absensi.daftar'); // Tampilkan daftar.blade.php
-    }
-
-    public function store(Request $request)
-    {
-        Absensi::create($request->all());
-        return response()->json(['message' => 'Data berhasil disimpan']);
-    }
-    public function absensi(Request $request)
-    {
-        $jumlahAbsensi = Absensi::count();
-        if ($request->wantsJson()) {
-            return response()->json(['jumlahAbsensi' => $jumlahAbsensi, 'data' => Absensi::all()]);
-        }
-        return view('perusahaan.dashboardpt', compact('jumlahAbsensi'));
     
-    }
 
-    
 
  //ADMIN
     public function dashboardmin()
@@ -238,19 +217,19 @@ class AuthController extends Controller
         }
     }
 
-    public function managementpengguna()
+    public function datapt()
     {
-        if (view()->exists('admin.managementpengguna')) {
-            return view('admin.managementpengguna');
+        if (view()->exists('admin.datapt')) {
+            return view('admin.datapt');
         } else {
             return "View tidak ditemukan.";
         }
     }
 
-    public function datasiswa()
+    public function pengguna()
     {
-        if (view()->exists('admin.datasiswa')) {
-            return view('admin.datasiswa');
+        if (view()->exists('admin.pengguna')) {
+            return view('admin.pengguna');
         } else {
             return "View tidak ditemukan.";
         }
@@ -273,6 +252,41 @@ class AuthController extends Controller
             return "View tidak ditemukan.";
         }
     }
+
+     public function storeNotif(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'message' => 'required|string'
+        ]);
+
+        Notifikasi::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ]);
+
+        return redirect()->back()->with('success', 'Pesan berhasil dikirim!');
+    }
+
+public function showNotif()
+{
+    $notifikasi = Notifikasi::orderBy('created_at', 'desc')->get();
+    return view('admin.notif', compact('notifikasi'));
+}
+
+public function destroy($id)
+{
+    $notifikasi = Notifikasi::find($id);
+
+    if (!$notifikasi) {
+        return redirect()->back()->with('error', 'Notifikasi tidak ditemukan.');
+    }
+
+    $notifikasi->delete();
+    return redirect()->back()->with('success', 'Notifikasi berhasil dihapus!');
+}
 
     public function pengaturan()
     {
@@ -380,23 +394,6 @@ public function pengajuanpt()
 
 
     //LOGIN DAN DAFTAR
-    public function loginpt()
-    {
-        if (view()->exists('perusahaan.loginpt')) {
-            return view('perusahaan.loginpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-    public function daftarpt()
-    {
-        if (view()->exists('perusahaan.daftarpt')) {
-            return view('perusahaan.daftarpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
     public function register(Request $request) {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -407,7 +404,7 @@ public function pengajuanpt()
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password) // Enkripsi password
+            'password' => Hash::make($request->password)
         ]);
     
         Auth::login($user);
@@ -418,7 +415,6 @@ public function pengajuanpt()
     public function login(Request $request) {
 
         dd($request->all());
-        // Validasi input
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -426,17 +422,15 @@ public function pengajuanpt()
     
         // Coba login
         if (Auth::attempt($request->only('email', 'password'))) {
-            // Regenerasi session agar lebih aman
             $request->session()->regenerate();
-    
-            // Redirect ke dashboard
+
             return redirect()->intended('/dashboard')->with('success', 'Login berhasil!');
         }
     
-        // Jika login gagal, kembalikan dengan pesan error
+
         return back()->withErrors([
             'email' => 'Email atau password salah.',
-        ])->withInput(); // Biarkan input email tetap ada agar tidak perlu mengetik ulang
+        ])->withInput();
     }
     
 }

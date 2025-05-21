@@ -61,7 +61,7 @@
         </div>
     </div>
     <div class="sidebar-menu">
-    <ul class="menu">
+     <ul class="menu">
             <li class="sidebar-title">Menu</li>
             
             <li
@@ -78,11 +78,11 @@
             <span>Ringkasan Absen</span>
         </a>
     </li>
-    <li
+<li
     class="sidebar-item">
-    <a href="{{ url('/managementpengguna') }}" class='sidebar-link'>
+    <a href="{{ url('/pengguna') }}" class='sidebar-link'>
         <i class="bi bi-journal-check"></i>
-        <span>Management Pengguna</span>
+        <span>Data Pengguna</span>
     </a>
 </li>
     <li

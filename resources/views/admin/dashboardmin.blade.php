@@ -60,7 +60,7 @@
         </div>
     </div>
     <div class="sidebar-menu">
-        <ul class="menu">
+         <ul class="menu">
             <li class="sidebar-title">Menu</li>
             
             <li
@@ -77,25 +77,11 @@
             <span>Ringkasan Absen</span>
         </a>
     </li>
-    <li
-    class="sidebar-item">
-    <a href="{{ url('/managementpengguna') }}" class='sidebar-link'>
-        <i class="bi bi-journal-check"></i>
-        <span>Management Pengguna</span>
-    </a>
-</li>
 <li
     class="sidebar-item">
-    <a href="{{ url('/datasiswa') }}" class='sidebar-link'>
+    <a href="{{ url('/pengguna') }}" class='sidebar-link'>
         <i class="bi bi-journal-check"></i>
-        <span>Data Siswa</span>
-    </a>
-</li>
-<li
-    class="sidebar-item">
-    <a href="{{ url('/dataperusahaan') }}" class='sidebar-link'>
-        <i class="bi bi-journal-check"></i>
-        <span>Data Perusahaan</span>
+        <span>Data Pengguna</span>
     </a>
 </li>
     <li
