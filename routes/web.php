@@ -7,23 +7,24 @@ use App\Http\Controllers\PengajuanController;
 use App\Models\UserTugas;
 use App\Models\User;
 use App\Models\Absensi;
+use App\Models\Notifikasi;
 use App\Models\Pengajuan;
 
 // Gunakan hanya Route::view untuk /absensi
-Route::view('/absensi', 'absensi'); // Menampilkan view resources/views/absensi.blade.php
+Route::view('/absensi', 'absensi'); 
 
 // Route resource untuk absensi (menggunakan resource standar)
 Route::resource('absensi', absensiController::class);
 
 // Route untuk halaman utama (index)
 Route::get('/', function () {
-    return view('absensi.index'); // Pastikan file index.blade.php ada di resources/views
+    return view('absensi.index');
 });
 
 // Route untuk dashboard dengan middleware auth
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard'); // Pastikan file dashboard.blade.php ada
+        return view('dashboard');
     });
 });
 
@@ -66,11 +67,17 @@ Route::get('/ubahkatasandiberhasil', [AuthController::class, 'ubahkatasandiberha
 Route::post('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
 Route::get('/manajementugas', [AuthController::class, 'showTugas']);
 Route::post('/simpan-tugas', [AuthController::class, 'simpanTugas']);
-Route::post('/absensi', [AuthController::class, 'store']);
-Route::get('/absensi', [AuthController::class, 'absensi']);
+Route::post('/absensi', [AbsensiController::class, 'store']);
+Route::get('/absensi', [AbsensiController::class, 'absensi']);
+Route::post('/absensi/izin', [AbsensiController::class, 'izin']);
+Route::post('/absensi/pulang-awal', [AbsensiController::class, 'pulangAwal']);
 Route::get('/magang', [AuthController::class, 'magang'])->name('magang');
 Route::post('/pengajuan', [PengajuanController::class, 'store']);
 Route::get('/pengajuan', [PengajuanController::class, 'index']);
+Route::post('/biodata/store', [BiodataController::class, 'store'])->name('biodata.store');
+Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata.index');
+Route::put('/biodata/{id}', [BiodataController::class, 'update'])->name('biodata.update');
+
 
 //Bagian ADMIN
 Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
@@ -79,6 +86,9 @@ Route::get('/managementpengguna', [AuthController::class, 'managementpengguna'])
 Route::get('/datasiswa', [AuthController::class, 'datasiswa'])->name('datasiswa');
 Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
 Route::get('/notif', [AuthController::class, 'notif'])->name('notif');
+Route::post('/admin/notif', [AuthController::class, 'storeNotif'])->name('admin.notif');
+Route::get('/notif', [AuthController::class, 'showNotif'])->name('notif');
+Route::delete('/notifikasi/{id}', [AuthController::class, 'destroy'])->name('notifikasi.destroy');
 Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
 
 //Bagian PERUSAHAAN
@@ -95,13 +105,8 @@ Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('back
 
 // Rute untuk halaman daftar dan login
 Route::get('/daftar', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::get('/loginpt', [AuthController::class, 'loginpt'])->name('loginpt');
-Route::get('/daftarpt', [AuthController::class, 'daftarpt'])->name('daftarpt');
 Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
-    Route::post('/beranda', function() {
-        return "Selamat datang di Dashboard!";
-    })->middleware('auth');
+Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/logout', function () {
     Auth::logout();

@@ -180,7 +180,7 @@ class="sidebar-item">
             </div> 
         </div>
     </div>
-    <a href="{{ url('/loginpt') }}"  style="text-decoration: none;">
+    <a href="{{ url('/login') }}"  style="text-decoration: none;">
     <div class="col-12">
         <div class="card">
             <div class="card-header">

@@ -593,8 +593,7 @@
     <div class="container">
         <header>
             <h1>Sistem Presensi Siswa</h1>
-        </header>
-        
+        </header>       
         <div class="card">
 
         <!-- Tombol untuk kembali ke halaman sebelumnya -->
@@ -612,49 +611,46 @@
                 <button id="btnKeluar" class="btn-keluar" disabled>Absen Keluar</button>
                 <button id="btnIzin" class="btn-izin">Izin / Sakit</button>
             </div>
-        </div>
-        
-        <div class="card">
-            <h2 class="card-title">Riwayat Absensi - <span id="bulanTahun"></span></h2>
-            
-            <div class="statistik">
-                <div class="stat-item stat-hadir">
-                    <h3>Hadir</h3>
-                    <div class="value" id="statHadir">0</div>
-                </div>
-                <div class="stat-item stat-terlambat">
-                    <h3>Terlambat</h3>
-                    <div class="value" id="statTerlambat">0</div>
-                </div>
-                <div class="stat-item stat-izin">
-                    <h3>Izin</h3>
-                    <div class="value" id="statIzin">0</div>
-                </div>
-                <div class="stat-item stat-sakit">
-                    <h3>Sakit</h3>
-                    <div class="value" id="statSakit">0</div>
-                </div>
-            </div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th>Tanggal</th>
-                        <th>Status</th>
-                        <th>Jam Masuk</th>
-                        <th>Jam Keluar</th>
-                        <th>Keterangan</th>
-                    </tr>
-                </thead>
-                <tbody id="tabelPresensi">
-                    <tr>
-                        <td colspan="5" style="text-align: center;">Belum ada data presensi bulan ini.</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        </div> 
+     <div class="card">
+   <h2 class="card-title">Riwayat Absensi - <span id="bulanTahun"></span></h2>
+<div class="statistik">
+    <div class="stat-item stat-hadir">
+        <h3>Hadir</h3>
+        <div class="value">{{ $data['hadir'] ?? 0 }}</div>
     </div>
-    
+    <div class="stat-item stat-terlambat">
+        <h3>Terlambat</h3>
+        <div class="value">{{ $data['terlambat'] ?? 0 }}</div>
+    </div>
+    <div class="stat-item stat-izin">
+        <h3>Izin</h3>
+        <div class="value">{{ $data['izin'] ?? 0 }}</div>
+    </div>
+    <div class="stat-item stat-sakit">
+        <h3>Sakit</h3>
+        <div class="value">{{ $data['sakit'] ?? 0 }}</div>
+    </div>
+</div>
+<tbody>
+    @if(isset($absensiData) && count($absensiData) > 0)
+        @foreach($absensiData as $absen)
+            <tr>
+                <td>{{ $absen->tanggal }}</td>
+                <td>{{ $absen->status }}</td>
+                <td>{{ $absen->jam_masuk ?? '-' }}</td>
+                <td>{{ $absen->jam_keluar ?? '-' }}</td>
+                <td>{{ $absen->keterangan ?? '-' }}</td>
+            </tr>
+        @endforeach
+    @else
+        <tr>
+            <td style="text-align: center">Belum ada data presensi bulan ini.</td>
+        </tr>
+    @endif
+</tbody>
+   </div>
+      </div>
     <!-- Modal Izin / Sakit -->
     <div id="modalIzin" class="modal">
         <div class="modal-content">
@@ -694,7 +690,7 @@
     </div>
 </form>
     <script>
-          const menuToggle = document.getElementById('menuToggle');
+        const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const closeSidebar = document.getElementById('closeSidebar');
         const overlay = document.getElementById('overlay');
@@ -1187,7 +1183,51 @@ fetch("/absensi")
         });
     })
     .catch(error => console.error("Error:", error));
+
+
+    document.getElementById("formIzin").addEventListener("submit", function(event) {
+    event.preventDefault();
     
+    let jenisIzin = document.getElementById("jenis_izin").value;
+    let alasanIzin = document.getElementById("alasan_izin").value;
+
+    fetch("/absensi/izin", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+        },
+        body: JSON.stringify({ jenis_izin: jenisIzin, alasan_izin: alasanIzin })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();
+    })
+    .catch(error => console.error("Terjadi kesalahan:", error));
+});
+
+document.getElementById("formPulangAwal").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let alasanPulang = document.getElementById("alasan_pulang_cepat").value;
+
+    fetch("/absensi/pulang-awal", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+        },
+        body: JSON.stringify({ alasan_pulang_cepat: alasanPulang })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();
+    })
+    .catch(error => console.error("Terjadi kesalahan:", error));
+});
+
     </script>
 </body>
 </html>
