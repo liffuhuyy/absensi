@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Management Pengguna</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Data Siswa</title>
     
     
     <!-- Tambahkan Bootstrap CSS -->
@@ -16,7 +17,17 @@
   <link rel="stylesheet" href="./assets/compiled/css/app.css">
   <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
 </head>
-
+<style>
+    #roleFilter {
+    width: 150px; /* Sesuaikan ukuran */
+    font-size: 14px; /* Perkecil teks */
+    padding: 5px; /* Kurangi padding */
+}
+    .center-text {
+        text-align: center;
+        margin-top: 20px;
+    }
+</style>
 <body>
     <script src="assets/static/js/initTheme.js"></script>
     <div id="app">
@@ -61,7 +72,7 @@
         </div>
     </div>
     <div class="sidebar-menu">
-    <ul class="menu">
+      <ul class="menu">
             <li class="sidebar-title">Menu</li>
             
             <li
@@ -78,11 +89,11 @@
             <span>Ringkasan Absen</span>
         </a>
     </li>
-    <li
+<li
     class="sidebar-item">
-    <a href="{{ url('/managementpengguna') }}" class='sidebar-link'>
+    <a href="{{ url('/pengguna') }}" class='sidebar-link'>
         <i class="bi bi-journal-check"></i>
-        <span>Management Pengguna</span>
+        <span>Data Pengguna</span>
     </a>
 </li>
     <li
@@ -115,21 +126,63 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Management Pengguna</h3>
+                <h3>Data Pengguna</h3>
                 <p class="text-subtitle text-muted">Kelola akun siswa dan perusahaan dengan mudah!</p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/dashboardmin') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Management Pengguna</li>
+                        <li class="breadcrumb-item active" aria-current="page">Data pengguna siswa</li>
                     </ol>
                 </nav>
             </div>
         </div>
     </div>
 
-<!-- Modal Form -->
+
+<!-- Modal Tambah Siswa -->
+<div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Tambah Pengguna</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="addForm">
+                    <div class="form-group">
+                        <label>Nama Pengguna</label>
+                        <input type="text" id="namaPengguna" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="emailPengguna" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="passwordPengguna" class="form-control" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="rolePengguna" class="form-control">
+                            <option value="user">User</option>
+                            <option value="perusahaan">Perusahaan</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <form id="addForm">
+                        <button type="submit" class="btn btn-primary" id="saveButton">Simpan</button>
+                    </form>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Form edit-->
 <div id="editModal" class="modal fade" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -141,188 +194,100 @@
             </div>
             <div class="modal-body">
                 <form id="editForm">
-                    <div id="formPengguna" style="display: none;">
-                        <div class="form-group">
-                            <label>Nama</label>
-                            <input type="text" id="namaPengguna" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" id="emailPengguna" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Telepon</label>
-                            <input type="text" id="teleponPengguna" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Peran</label>
-                            <input type="text" id="peranPengguna" class="form-control">
-                        </div>
+                    <input type="hidden" id="penggunaId"> <!-- ID pengguna untuk edit -->
+                    <div class="form-group">
+                        <label>Nama Pengguna</label>
+                        <input type="text" id="namaPengguna_edit" class="form-control" required>
                     </div>
-                    
-                    <div id="formSiswa" style="display: none;">
-                        <div class="form-group">
-                            <label>Nama</label>
-                            <input type="text" id="namaSiswa" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>NIS</label>
-                            <input type="text" id="nisSiswa" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Perusahaan</label>
-                            <input type="text" id="perusahaanSiswa" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Jurusan</label>
-                            <input type="text" id="jurusanSiswa" class="form-control">
-                        </div>
-                        <div class="form-group">
-                            <label>Pembimbing</label>
-                            <input type="text" id="pembimbingSiswa" class="form-control">
-                        </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="emailPengguna_edit" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password (Kosongkan jika tidak ingin mengubah)</label>
+                        <input type="password" id="passwordPengguna_edit" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Role</label>
+                        <select id="rolePengguna_edit" class="form-control">
+                            <option value="user">User</option>
+                            <option value="perusahaan">Perusahaan</option>
+                            <option value="admin">Admin</option>
+                        </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-primary" id="updateButton">Simpan</button>
             </div>
         </div>
     </div>
 </div>
 
-
  <!-- Basic Tables start -->
  <section class="section">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">
-                Kelola Pengguna 
-            </h5>
-        </div>
+            <h5 class="card-title">Kelola Data pengguna </h5>
+            <div class="d-flex align##-items-center justify-content-between mb-3">
+<div class="row mb-3">
+    <div class="col-md-6">
+        <input type="text" id="searchBox" class="form-control form-control-sm" placeholder="Cari berdasarkan nama...">
+    </div>
+    <div class="col-md-6">
+        <select id="roleFilter" class="form-control form-control-sm">
+            <option value="all">Semua Role</option>
+            <option value="user">User</option>
+            <option value="perusahaan">Perusahaan</option>
+            <option value="admin">Admin</option>
+        </select>
+    </div>
+</div>
+  
+    <a href="#" class="btn btn-sm btn-outline-primary ms-2" id="openAddModal" >Tambah Data</a>
+
+</div>
+    </div>    
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table" id="table1">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Peran</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Denis</td>
-                            <td>nis@gmail.com</td>
-                            <td>076 4820 8838</td>
-                            <td>Admin</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Alif</td>
-                            <td>lif@gmail.com</td>
-                            <td>0500 527693</td>
-                            <td>Admin</td>
-                            <td> 
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Putri</td>
-                            <td>tri@gmail.com</td>
-                            <td>(012165) 76278</td>
-                            <td>Admin</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Suci</td>
-                            <td>ci@gmail.com</td>
-                            <td>0309 690 7871</td>
-                            <td>Admin</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+               @if (isset($pengguna) && $pengguna->count()) 
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Role</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="dataPengguna">
+            @foreach ($pengguna as $user)
+                <tr>
+                    <td>{{ $user->nama }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>{{ $user->password }}</td>
+                    <td>{{ $user->role }}</td>
+                    <td>
+                        <form method="POST" action="/pengguna/hapus/{{ $user->id }}">
+                             @csrf
+                              @method('DELETE')
+                              <a href="#" class="btn btn-sm btn-danger deleteButton" data-id="{{ $user->id }}">Hapus</a>
+                        </form>
+                    </td>
+                </tr>
+            @endforeach
+        </tbody>
+    </table>
+    @else
+<div class="center-text">
+    <p>Belum ada pengguna yang terdaftar.</p>
+</div>
+     @endif
+        </div>
         </div>
     </div>
-
-</section>
-<!-- Basic Tables end -->
-<section class="section">
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title">Kelola Siswa</h5>
-        </div>
-        
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table display" id="table2">
-
-                    <thead>
-                        <tr>
-                            <th>Nama</th>
-                            <th>NIS</th>
-                            <th>Perusahaan</th>
-                            <th>Jurusan</th>
-                            <th>Pembimbing</th>
-                            <th>Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Budi</td>
-                            <td>123456</td>
-                            <td>Rekayasa Perangkat Lunak</td>
-                            <td>PT Digital</td>
-                            <td>Dzikri Pangestu</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Silvia</td>
-                            <td>123456</td>
-                            <td>PT Jerbee</td>
-                            <td>Rekayasa Perangkat Lunak</td>
-                            <td>Dede Iskandar</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Alif</td>
-                            <td>123456</td>
-                            <td>PT Digital</td>
-                            <td>Desain Komunikasi Visual</td>
-                            <td>Dzikri Pangestu</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-warning">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Hapus</a>
-                            </td>
-                        </tr>
-                        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
 </section>
 
 <!-- FOOTER -->
@@ -336,7 +301,8 @@
         </div>
     </div>
 </footer>
-
+    <script src="assets/static/js/components/dark.js"></script>
+    <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
 <!-- SCRIPT DITARUH SEBELUM </BODY> -->
 <script src="assets/extensions/jquery/jquery.min.js"></script>
 <script src="assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
@@ -344,82 +310,141 @@
 <script src="assets/static/js/pages/datatables.js"></script>
 <!-- Tambahkan Bootstrap Bundle (JS + Popper.js) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-
-   <script>
-    $(document).ready(function() {
-        // Pastikan table2 tidak di-reinitialize
-        if ($.fn.DataTable.isDataTable('#table2')) {
-            $('#table2').DataTable().destroy();
-        }
-        
-        // Inisialisasi ulang DataTable untuk table2
-        let tableSiswa = $('#table2').DataTable();
-
-        // Inisialisasi DataTable untuk table1
-        $('#table1').DataTable();
-
-        // Menyamakan tampilan kolom search dan tombol Tambah Pengguna
-        let searchBoxPengguna = $("#table1_wrapper .dataTables_filter");
-        let addUserButton = $('<a href="#" class="btn btn-sm btn-outline-primary ms-2">Tambah Pengguna</a>');
-
-        searchBoxPengguna.parent().addClass("d-flex align-items-center justify-content-between");
-        searchBoxPengguna.append(addUserButton);
-
-        // Menyamakan tampilan kolom search dan tombol Tambah Siswa
-        let searchBoxSiswa = $("#table2_wrapper .dataTables_filter");
-        let addSiswaButton = $('<a href="#" class="btn btn-sm btn-outline-primary ms-2">Tambah Siswa</a>');
-
-        searchBoxSiswa.parent().addClass("d-flex align-items-center justify-content-between");
-        searchBoxSiswa.append(addSiswaButton);
-    });
-    
-</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-    $(document).on("click", ".btn-warning", function() {
-        let row = $(this).closest("tr");
-        let tableId = $(this).closest("table").attr("id");
-        
-        if (tableId === "table1") {
-            $("#formPengguna").show();
-            $("#formSiswa").hide();
-            
-            $("#namaPengguna").val(row.find("td:eq(0)").text());
-            $("#emailPengguna").val(row.find("td:eq(1)").text());
-            $("#teleponPengguna").val(row.find("td:eq(2)").text());
-            $("#peranPengguna").val(row.find("td:eq(3)").text());
-        } else {
-            $("#formSiswa").show();
-            $("#formPengguna").hide();
-            
-            $("#namaSiswa").val(row.find("td:eq(0)").text());
-            $("#nisSiswa").val(row.find("td:eq(1)").text());
-            $("#perusahaanSiswa").val(row.find("td:eq(2)").text());
-            $("#jurusanSiswa").val(row.find("td:eq(3)").text());
-            $("#pembimbingSiswa").val(row.find("td:eq(4)").text());
-        }
-        
-        $("#editModal").modal("show");
+    $('.close').click(function() {
+    $('#addModal').modal('hide');
+});
+    // Fungsi untuk memuat data pengguna ke dalam tabel
+    function loadData() {
+$.get('/pengguna', function(data) {
+    console.log("Data yang diterima:", data);
+    console.log("Tipe data:", typeof data);
+});
+
+    }
+    // Panggil fungsi saat halaman dimuat
+    loadData();
+    // Tangani pencarian pengguna
+    $('#searchBox').on('input', function() {
+        let query = $(this).val().toLowerCase();
+        $('#dataPengguna tr').filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
+        });
     });
 
-    // Tombol Tutup dan ikon Close
-    $(document).on("click", ".close, .btn-secondary", function() {
-        $("#editModal").modal("hide");
+    // Pencarian berdasarkan teks input
+    $('#searchBox').on('input', function () {
+        let query = $(this).val().toLowerCase();
+        $('#dataPengguna tr').filter(function () {
+            $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
+        });
     });
 
-    // Tombol Simpan (sementara hanya menutup modal)
-    $("#editForm").on("submit", function(e) {
+    // Pencarian berdasarkan dropdown role
+    $('#roleFilter').on('change', function () {
+        let selectedRole = $(this).val().toLowerCase();
+        $('#dataPengguna tr').filter(function () {
+            if (selectedRole === 'all') {
+                $(this).show(); // Tampilkan semua jika pilih "All"
+            } else {
+                $(this).toggle($(this).find('td.role').text().toLowerCase() === selectedRole);
+            }
+        });
+    });
+
+
+    // Tangani submit formulir tambah pengguna
+    $('#addForm').submit(function(e) {
         e.preventDefault();
-        alert("Data berhasil disimpan (dummy action)");
-        $("#editModal").modal("hide");
+
+        let data = {
+            _token: '{{ csrf_token() }}',
+            namaPengguna: $('#namaPengguna').val(),
+            emailPengguna: $('#emailPengguna').val(),
+            passwordPengguna: $('#passwordPengguna').val(),
+            role: $('#rolePengguna').val()
+        };
+
+        $.post('/pengguna/tambah', data, function(response) {
+            alert(response.message);
+            $('#addModal').modal('hide'); // Tutup modal setelah simpan
+            location.reload(); // Perbarui tabel pengguna
+        }).fail(function(xhr) {
+            alert('Terjadi kesalahan: ' + xhr.responseText);
+        });
     });
+
+    // Tangani klik tombol tambah pengguna
+    $('#openAddModal').click(function() {
+        $('#addModal').modal('show');
+    });
+ 
+    // Tangani klik tombol hapus pengguna
+    $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+$(document).on('click', '.deleteButton', function(e) {
+    e.preventDefault();
+    let id = $(this).data('id');
+
+    if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
+        $.ajax({
+            url: '/pengguna/hapus/' + id,
+            type: 'DELETE',
+            success: function(response) {
+                alert(response.message);
+                location.reload();
+            },
+            error: function(xhr) {
+                alert('Terjadi kesalahan: ' + xhr.responseText);
+            }
+        });
+    }
+});
+
+$.ajax({
+    url: '/pengguna/hapus/' + id,
+    type: 'DELETE',
+    data: {
+        _token: '{{ csrf_token() }}'
+    },
+    success: function(response) {
+        alert(response.message);
+        location.reload();
+    },
+    error: function(xhr) {
+        alert('Terjadi kesalahan: ' + xhr.responseText);
+    }
+});
+
+$(document).ready(function () {
+    function filterUsers() {
+        let query = $('#searchBox').val().toLowerCase();
+        let selectedRole = $('#roleFilter').val().toLowerCase();
+
+        $('#dataPengguna tr').each(function () {
+            let textMatch = $(this).find('td:first-child').text().toLowerCase().indexOf(query) > -1; // Cari berdasarkan nama
+            let roleMatch = selectedRole === 'all' || $(this).find('td:nth-child(4)').text().toLowerCase() === selectedRole; // Cari berdasarkan role
+
+            $(this).toggle(textMatch && roleMatch); // Tampilkan hanya yang sesuai
+        });
+    }
+
+    // Pencarian berdasarkan teks input
+    $('#searchBox').on('input', filterUsers);
+
+    // Filter berdasarkan role
+    $('#roleFilter').on('change', filterUsers);
 });
 
 </script>
-
 </body>
 
 </html>

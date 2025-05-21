@@ -195,11 +195,6 @@ class AuthController extends Controller
         }
     }
 
-    public function showRegisterForm()
-    {
-        return view('absensi.daftar');
-    }
- 
     
 
 
@@ -222,10 +217,19 @@ class AuthController extends Controller
         }
     }
 
-    public function managementpengguna()
+    public function datapt()
     {
-        if (view()->exists('admin.managementpengguna')) {
-            return view('admin.managementpengguna');
+        if (view()->exists('admin.datapt')) {
+            return view('admin.datapt');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function pengguna()
+    {
+        if (view()->exists('admin.pengguna')) {
+            return view('admin.pengguna');
         } else {
             return "View tidak ditemukan.";
         }
