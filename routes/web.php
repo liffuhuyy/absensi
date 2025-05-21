@@ -81,10 +81,6 @@ Route::get('/pengajuan', [PengajuanController::class, 'index']);
 Route::post('/biodata/store', [BiodataController::class, 'store'])->name('biodata.store');
 Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata.index');
 Route::put('/biodata/{id}', [BiodataController::class, 'update'])->name('biodata.update');
-<<<<<<< HEAD
-
-=======
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
 
 //Bagian ADMIN
 Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');

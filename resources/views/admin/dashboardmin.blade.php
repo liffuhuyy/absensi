@@ -123,59 +123,6 @@
                         <div class="card-body">
                             <div class="stats-icon blue mb-2">
                                 <i class="iconly-boldTick-Square"></i>
-<<<<<<< HEAD
-    </div>  
-    <div class="page-content">
-        <section class="row">
-            <div class="col-3">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <div class="stats-icon blue mb-2">
-                                 <i class="iconly-boldTick-Square"></i>
-                            </div>
-                      <h6 class="text-muted">Hadir</h6>
-                    @if(isset($jumlahAbsensi))
-                      <h6 class="font-extrabold mb-0">{{ $jumlahAbsensi }}</h6>
-                    @else
-                      <h6 class="font-extrabold mb-0">0</h6>
-                   @endif
-                        </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <div class="stats-icon orange mb-2">
-                                    <i class="iconly-boldShield-Done"></i>
-                                </div>
-                              <h6 class="text-muted">Izin</h6>
-                              <h6 class="font-extrabold mb-0">{{ isset($data['izin']) ? $data['izin'] : 0 }}</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <div class="stats-icon red mb-2">
-                                    <i class="iconly-boldClose-Square"></i>
-                                </div>
-                                <h6 class="text-muted">Sakit</h6>
-                                <h6 class="font-extrabold mb-0">{{ isset($data['sakit']) ? $data['sakit'] : 0 }}</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-body text-center">
-                                <div class="stats-icon dark mb-2">
-                                    <i class="iconly-boldDanger"></i>
-                                </div>
-                                <h6 class="text-muted font-semibold" style="font-size: 0.60rem;">Tanpa Keterangan</h6>
-                                <h6 class="font-extrabold mb-0">5</h6>
-=======
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
                             </div>
                             <h6 class="text-muted">Hadir</h6>
                             @if(isset($jumlahAbsensi))
