@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Pengguna;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Pengguna;
 
 class PenggunaSeeder extends Seeder
 {
@@ -17,17 +16,4 @@ class PenggunaSeeder extends Seeder
             'role' => 'admin',
         ]);
     }
-}
-
-class DatabaseSeeder extends Seeder
-{
-    /**
-     * Seed the application's database.
-     */
-public function run()
-{
-    dump("DatabaseSeeder dipanggil!"); // Debugging
-    Pengguna::factory(10)->create();
-}
-
 }
