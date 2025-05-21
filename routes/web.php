@@ -103,7 +103,6 @@ Route::get('/ringkasanabsenpt', [AuthController::class, 'ringkasanabsenpt'])->na
 Route::get('/pengajuanpt', [AuthController::class, 'pengajuanpt'])->name('pengajuanpt');
 Route::post('/pengajuan/updateStatus', [PengajuanController::class, 'updateStatus'])->name('pengajuan.updateStatus');
 Route::get('/jadwalpt', [AuthController::class, 'jadwalpt'])->name('jadwalpt');
-Route::get('/managementpenggunapt', [AuthController::class, 'managementpenggunapt'])->name('managementpenggunapt');
 Route::get('/managementaksespt', [AuthController::class, 'managementaksespt'])->name('managementaksespt');
 Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
 

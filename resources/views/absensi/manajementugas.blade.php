@@ -319,7 +319,7 @@
     </div>
 <div class="container">
         <div class="header">
-            <h1>Manajemen Tugas</h1>
+            <h1>Management Tugas</h1>
         </div>
 
         <form method="POST" action="{{ url('/simpan-tugas') }}">

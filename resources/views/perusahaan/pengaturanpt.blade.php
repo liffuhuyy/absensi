@@ -152,16 +152,6 @@ class="sidebar-item">
         </div>
     </div>
     </a>
-    <a href="{{ url('/managementpenggunapt') }}"  style="text-decoration: none;">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Manajemen Pengguna</h4>
-                    <p class='text-muted'>Sistem Pengelolaan Pengguna </p>
-                </div> 
-            </div>
-        </div>
-        </a>
     <a href="{{ url('/backupdatapt') }}"  style="text-decoration: none;">
         <div class="col-12">
             <div class="card">

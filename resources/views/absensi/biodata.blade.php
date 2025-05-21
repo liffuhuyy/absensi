@@ -399,8 +399,8 @@
     <option value="akuntansi" {{ (isset($biodata) && $biodata->jurusan == 'akuntansi') ? 'selected' : '' }}>Akuntansi Keuangan dan Lembaga</option>
     <option value="pemasaran" {{ (isset($biodata) && $biodata->jurusan == 'pemasaran') ? 'selected' : '' }}>Pemasaran</option>
     <option value="manajemen" {{ (isset($biodata) && $biodata->jurusan == 'manajemen') ? 'selected' : '' }}>Manajemen Perkantoran dan Layanan Bisnis</option>
-    <option value="rpl" {{ (isset($biodata) && $biodata->jurusan == 'rpl') ? 'selected' : '' }}>Pengembangan Perangkat Lunak dan Gim</option>
-    <option value="tjkt" {{ (isset($biodata) && $biodata->jurusan == 'tjkt') ? 'selected' : '' }}>Teknik Jaringan Komputer dan Telekomunikasi</option>
+    <option value="rpl" {{ (isset($biodata) && $biodata->jurusan == 'rpl') ? 'selected' : '' }}>Rekayasa Perangkat Lunak</option>
+    <option value="tkj" {{ (isset($biodata) && $biodata->jurusan == 'tkj') ? 'selected' : '' }}>Teknik Komputer dan Jaringan</option>
     <option value="dkv" {{ (isset($biodata) && $biodata->jurusan == 'dkv') ? 'selected' : '' }}>Desain Komunikasi Visual</option>
     <option value="mesin" {{ (isset($biodata) && $biodata->jurusan == 'mesin') ? 'selected' : '' }}>Teknik Mesin</option>
     <option value="otomotif" {{ (isset($biodata) && $biodata->jurusan == 'otomotif') ? 'selected' : '' }}>Teknik Otomotif</option>
