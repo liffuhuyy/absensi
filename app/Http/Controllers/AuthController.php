@@ -3,23 +3,25 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserTugas;
-use App\Models\User;
+use App\Models\Pengguna;
 use App\Models\Absensi;
 use App\Models\Biodata;
 use App\Models\Notifikasi;
 use App\Models\Pengajuan;
+use Illuminate\Support\Facades\Hash;
+
 
 use Illuminate\Support\Facades\Auth;
  
 class AuthController extends Controller
 {
     public function filter(Request $request)
-{
+    {
     $bulan = $request->bulan;
     $tugas = UserTugas::whereMonth('tanggal', $bulan)->get();
 
     return view('absensi.manajementugas', compact('tugas', 'bulan'));
-}
+    }
 
     public function simpanTugas(Request $request)
     {
@@ -171,10 +173,10 @@ class AuthController extends Controller
     }
 
   public function profil()
-{
+    {
     $biodata = Biodata::whereNotNull('nohp')->get();
       return view('absensi.profil', compact('biodata'));
-}
+    }
 
 
     public function index()
@@ -270,32 +272,32 @@ class AuthController extends Controller
         return redirect()->back()->with('success', 'Pesan berhasil dikirim!');
     }
 
-public function showNotif()
-{
-    $notifikasi = Notifikasi::orderBy('created_at', 'desc')->get();
-    return view('admin.notif', compact('notifikasi'));
-}
-
-public function destroy($id)
-{
-    $notifikasi = Notifikasi::find($id);
-
-    if (!$notifikasi) {
-        return redirect()->back()->with('error', 'Notifikasi tidak ditemukan.');
-    }
-
-    $notifikasi->delete();
-    return redirect()->back()->with('success', 'Notifikasi berhasil dihapus!');
-}
-
-    public function pengaturan()
+    public function showNotif()
     {
-        if (view()->exists('admin.pengaturan')) {
-            return view('admin.pengaturan');
-        } else {
-            return "View tidak ditemukan.";
-        }
+        $notifikasi = Notifikasi::orderBy('created_at', 'desc')->get();
+        return view('admin.notif', compact('notifikasi'));
     }
+
+    public function destroy($id)
+    {
+        $notifikasi = Notifikasi::find($id);
+
+        if (!$notifikasi) {
+            return redirect()->back()->with('error', 'Notifikasi tidak ditemukan.');
+        }
+
+        $notifikasi->delete();
+        return redirect()->back()->with('success', 'Notifikasi berhasil dihapus!');
+    }
+
+        public function pengaturan()
+        {
+            if (view()->exists('admin.pengaturan')) {
+                return view('admin.pengaturan');
+            } else {
+                return "View tidak ditemukan.";
+            }
+        }
 
 
 
@@ -345,15 +347,15 @@ public function destroy($id)
         }
     }
 
-public function pengajuanpt()
-{
-    if (view()->exists('perusahaan.pengajuanpt')) {
-        $pengajuan = Pengajuan::all();
-        return view('perusahaan.pengajuanpt', compact('pengajuan'));
-    } else {
-        return "View tidak ditemukan.";
+    public function pengajuanpt()
+    {
+        if (view()->exists('perusahaan.pengajuanpt')) {
+            $pengajuan = Pengajuan::all();
+            return view('perusahaan.pengajuanpt', compact('pengajuan'));
+        } else {
+            return "View tidak ditemukan.";
+        }
     }
-}
 
     public function jadwalpt()
     {
@@ -391,46 +393,57 @@ public function pengajuanpt()
         }
     }
 
-
-
-    //LOGIN DAN DAFTAR
-    public function register(Request $request) {
+    // LOGIN DAN DAFTAR
+    public function register(Request $request)
+    {
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
+            'email' => 'required|email|unique:pengguna,email', // sesuaikan dengan nama tabel
             'password' => 'required|min:6'
         ]);
-    
-        $user = User::create([
+
+        $user = Pengguna::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'role' => 'siswa', // default role jika tidak diinput
         ]);
-    
+
         Auth::login($user);
-    
+
         return redirect('/beranda')->with('success', 'Pendaftaran berhasil! Anda telah login.');
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
+        $credentials = $request->only('email', 'password');
 
-        dd($request->all());
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-    
-        // Coba login
-        if (Auth::attempt($request->only('email', 'password'))) {
-            $request->session()->regenerate();
+        $user = Pengguna::where('email', $credentials['email'])->first();
 
-            return redirect()->intended('/dashboard')->with('success', 'Login berhasil!');
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            Auth::login($user); // Login user
+
+            // Arahkan ke halaman berdasarkan role
+            switch ($user->role) {
+                case 'admin':
+                    return redirect()->route('dashboardmin');
+                case 'user':
+                    return redirect()->route('beranda');
+                case 'perusahaan':
+                    return redirect()->route('dashboardpt');
+                default:
+                    Auth::logout();
+                    return redirect()->route('login')->withErrors(['role' => 'Role tidak dikenali.']);
+            }
+        } else {
+            return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
         }
-    
-
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->withInput();
     }
-    
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+        return redirect()->route('login');
+    }
 }
+
