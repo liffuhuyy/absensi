@@ -59,7 +59,7 @@
         </div>
     </div>
     <div class="sidebar-menu">
-    <ul class="menu">
+      <ul class="menu">
             <li class="sidebar-title">Menu</li>
             
             <li
@@ -76,11 +76,11 @@
             <span>Ringkasan Absen</span>
         </a>
     </li>
-    <li
+<li
     class="sidebar-item">
-    <a href="{{ url('/managementpengguna') }}" class='sidebar-link'>
+    <a href="{{ url('/pengguna') }}" class='sidebar-link'>
         <i class="bi bi-journal-check"></i>
-        <span>Management Pengguna</span>
+        <span>Data Pengguna</span>
     </a>
 </li>
     <li
@@ -100,7 +100,7 @@
         </ul>
     </div>
 </div>
-        </div>
+    </div>
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -128,20 +128,35 @@
                 </style>
             </head>
             <body>
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4 class="card-title">Denis Irwansyah</h4>
-                            <h4 class="card-title">11 RPL 1 - PT. INOVINDO</h4>
-                            <p class='text-muted'> Permisi Admin, saya perwakilan magang di PT. Inovindo. Saya ingin melaporkan bahwa sejak pagi tadi, kami belum bisa melakukan absen pagi. Sepertinya ada kendala. Mohon bantuannya, terima kasih.</p>
-                            <div class="button-container">
-                                <a href="notif2.html" class="button">Lanjut</a>
-                            </div>
-                        </div> 
+          <div class="page-heading">
+        <h3>Notifikasi</h3>
+    </div>
+<div class="container mt-4">
+    @if(isset($notifikasi) && $notifikasi->isNotEmpty())
+        <div class="row">
+            @foreach($notifikasi as $notif)
+                <div class="col-md-6">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $notif->name }}</h5>
+                            <h6 class="card-subtitle text-muted">{{ $notif->email }}</h6>
+                            <p class="card-text">{{ $notif->message }}</p>
+                            <small class="text-muted">{{ $notif->created_at->diffForHumans() }}</small>                        
+                            <form action="{{ route('notifikasi.destroy', $notif->id) }}" method="POST" class="mt-2">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </body>
-
+            @endforeach
+        </div>
+    @else
+        <p class="text-center">Belum ada notifikasi.</p>
+    @endif
+</div>
+<br>
     <!-- FOOTER -->
 <footer>
     <div class="footer clearfix mb-0 text-muted">

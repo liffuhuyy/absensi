@@ -236,12 +236,7 @@ class="sidebar-item">
             <input type="checkbox" id="jumat"><label for="jumat">Jumat</label>
             <input type="checkbox" id="sabtu"><label for="sabtu">Sabtu</label>
         </div>
-
-        <label for="max-peserta">Jumlah Maksimal Peserta Magang</label>
-        <input type="number" id="max-peserta" min="1">
-
         <button class="btn">Tambah Jadwal</button>
-
 
     <footer>
         <div class="footer clearfix mb-0 text-muted">

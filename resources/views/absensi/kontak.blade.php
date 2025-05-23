@@ -116,49 +116,48 @@
             background: linear-gradient(#e44c65, #e44c65);
         }
     </style>
-</head>
-<body>
-    <!-- Contact Section -->
-    <section id="contact" class="wrapper style2 special fade">
-        <div class="container">
-            <header>
-                <h2>Hubungi Kami</h2>
-                <p>Silakan isi formulir di bawah untuk menghubungi kami</p>
-            </header>
-            <form method="post" action="#" class="cta">
-                <div class="row gtr-uniform gtr-50">
-                    <div class="col-6 col-12-xsmall">
-                        <input type="text" name="name" id="name" placeholder="Nama Anda" required />
-                    </div>
-                    <div class="col-6 col-12-xsmall">
-                        <input type="email" name="email" id="email" placeholder="Alamat Email" required />
-                    </div>
-                    <div class="col-12">
-                        <textarea name="message" id="message" placeholder="Pesan Anda" rows="4" required></textarea>
-                    </div>
-                    <div class="col-12">
-                        <input type="submit" value="Kirim Pesan" class="fit primary" />
-                    </div>
-                </div>
-                <br />
-                <button type="button" class="back-button" onclick="window.location.href='beranda.php'">Kembali</button>
-            </form>
+    			   <!-- Contact Section -->
+			   <section id="contact" class="wrapper style2 special fade">
+				<div class="container">
+                
+					<header>
+						<h2>Hubungi Kami</h2>
+						<p>Silakan isi formulir di bawah untuk menghubungi kami jika kamu mengalami kendala</p>
+					</header>
+         <form method="post" action="{{ route('admin.notif') }}" class="cta">
+    @csrf
+    <div class="row gtr-uniform gtr-50">
+        <div class="col-6 col-12-xsmall">
+            <input type="text" name="name" id="name" placeholder="Nama Anda" required />
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="footer">
-        <ul class="icons">
-            <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="https://www.facebook.com/share/19qyo1W1i1/" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-            <li><a href="https://www.instagram.com/officialsmkn1subang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-            <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-        </ul>
-        <ul class="copyright">
-            <li>&copy; SMK Negeri 1 Subang. All rights reserved.</li>
-            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-        </ul>
-    </footer>
-</body>
-</html>
+        <div class="col-6 col-12-xsmall">
+            <input type="email" name="email" id="email" placeholder="Alamat Email" required />
+        </div>
+        <div class="col-12">
+            <textarea name="message" id="message" placeholder="Pesan Anda" rows="4" required></textarea>
+        </div>
+        <div class="col-12">
+            <input type="submit" value="Kirim Pesan" class="fit primary" />
+        </div>
+    </div>
+    <br>
+    <button class="back-button" onclick="window.location.href='{{ url('/beranda') }}'">Kembali</button>
+</form>
+      </div>
+			</section>
+            			<!-- Footer -->
+			<footer id="footer">
+				<ul class="icons">
+					<li><a href="https://www.tiktok.com/@nesasofficial?_t=ZS-8wVHHLRIbsf&_r=1" class="icon brands alt fa-tiktok"><span class="label">TikTok</span></a></li>				
+					<li><a href="https://youtube.com/@nesasceren?si=g22qqpOl365lYpfo" class="icon brands alt fa-youtube"><span class="label">Youtube</span></a></li>
+					<li><a href="https://www.facebook.com/share/19qyo1W1i1/" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+					<li><a href="https://www.instagram.com/officialsmkn1subang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+				</ul>
+				<ul class="copyright">
+					<li>&copy; SMK Negeri 1 Subang. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+				</ul>
+			</footer>
+        
+                
+            </body>
+            </html>

@@ -34,7 +34,7 @@ class PengajuanController extends Controller
 {
     $pengajuan = Pengajuan::find($request->id);
 
-    if ($pengajuan && $pengajuan->status == 'Menunggu') { // Hanya bisa diubah jika status masih "Menunggu"
+    if ($pengajuan && $pengajuan->status == 'Menunggu') {
         $pengajuan->status = $request->status;
         $pengajuan->save();
         return response()->json(['success' => true, 'message' => 'Status berhasil diperbarui']);

@@ -6,18 +6,18 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('pengguna', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('nama');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('no_hp')->nullable(); // Tambahkan kolom no_hp
+            $table->string('role')->default('user');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('pengguna');
     }
 };
