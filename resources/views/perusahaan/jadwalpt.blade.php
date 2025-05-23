@@ -267,5 +267,5 @@ class="sidebar-item">
 <script src="assets/static/js/pages/sweetalert2.js"></script>>
 
 </body>
-
+ 
 </html>
