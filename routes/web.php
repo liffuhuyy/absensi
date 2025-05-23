@@ -86,7 +86,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/pengajuan', [PengajuanController::class, 'index']);
     Route::post('/pengajuan', [PengajuanController::class, 'store']);
 
-<<<<<<< HEAD
 //Bagian PERUSAHAAN
 Route::get('/dashboardpt', [AuthController::class, 'dashboardpt'])->name('dashboardpt');
 Route::get('/pengaturanpt', [AuthController::class, 'pengaturanpt'])->name('pengaturanpt');
@@ -98,14 +97,14 @@ Route::post('/pengajuan/updateStatus', [PengajuanController::class, 'updateStatu
 Route::get('/jadwalpt', [AuthController::class, 'jadwalpt'])->name('jadwalpt');
 Route::get('/managementaksespt', [AuthController::class, 'managementaksespt'])->name('managementaksespt');
 Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
-=======
+
     // Absensi
     Route::get('/absensi', [AbsensiController::class, 'absensi'])->name('absensi');
     Route::post('/absensi', [AbsensiController::class, 'store']);
     Route::post('/absensi/izin', [AbsensiController::class, 'izin']);
     Route::post('/absensi/simpan', [AbsensiController::class, 'simpan'])->name('simpan.absensi');
     Route::post('/absensi/pulang-awal', [AbsensiController::class, 'pulangAwal']);
->>>>>>> 1584b82ca55c091bcecdb0a174dc1b94dba7f341
+
 
     // PresensiController opsional (jika digunakan terpisah dari AbsensiController)
     Route::post('/presensi/store', [PresensiController::class, 'store'])->name('presensi.store');
