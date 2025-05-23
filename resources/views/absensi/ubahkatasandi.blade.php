@@ -162,7 +162,7 @@
             
             <br>
             <button type="submit" class="btn-primary">Konfirmasi</button>
-            <a href="editprofile.html" class="btn-back">Kembali</a>
+            <a href="{{ url('/editprofil') }}" class="btn-back">Kembali</a>
         </form>
     </div>
 

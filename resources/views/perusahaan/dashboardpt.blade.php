@@ -128,7 +128,7 @@ class="sidebar-item">
     </header>
     
     <div class="page-heading">
-        <h3>Dashboard</h3>
+        <h3>Dashboard Perusahaan</h3>
     </div>
   
 <div class="page-content">
@@ -211,31 +211,11 @@ class="sidebar-item">
     </div>
 </div>
 
-<!-- Perusahaan Partner -->
-<div class="col-12 col-md-6 col-lg-6">
-    <div class="card">
-        <div class="card-body px-4 py-4-5">
-            <div class="row align-items-center">
-                <div class="col-4 d-flex justify-content-start">
-                    <div class="stats-icon blue mb-2" style="font-size: 2rem;">
-                        <i class="iconly-boldProfile"></i>
-                    </div>
-                </div>
-                <div class="col-8">
-                    <h6 class="text-muted font-semibold">Perusahaan Partner</h6>
-                    <h4 class="font-extrabold mb-0" style="font-size: 2rem;">100</h4>
-                </div>
-            </div>
-        </div>
+ <!-- Tambahan item lain bisa disisipkan di sini -->
+ </div>
     </div>
-</div>
-
-
-                <!-- Tambahan item lain bisa disisipkan di sini -->
-            </div>
-        </div>
-    </section>
-</div>
+         </section>
+             </div>
                  <div class="col-12">
                         <div class="card">
                             <div class="card-header">

@@ -184,8 +184,8 @@ class="sidebar-item">
         <div class="card-header d-flex justify-content-between align-items-center">
             <!-- Kolom Pencarian -->
             <div class="form-group me-3">
-                <label for="searchInput">Cari Nama Siswa</label>
-                <input type="text" class="form-control" id="searchInput" placeholder="Ketik nama siswa atau jurusan">
+                <label for="searchInput">Cari Pengguna</label>
+                <input type="text" class="form-control" id="searchInput" placeholder="Ketik nama pengguana">
             </div>
             
             <!-- Dropdown -->

@@ -6,11 +6,14 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PenggunaController;
+use App\Http\Controllers\JadwalKerjaController;
 use App\Models\UserTugas;
 use App\Models\Absensi;
 use App\Models\Notifikasi;
 use App\Models\Pengajuan;
 use App\Models\Pengguna;
+use App\Models\JadwalKerja;
+
 
 // Gunakan hanya Route::view untuk /absensi
 Route::view('/absensi', 'absensi'); 
@@ -39,8 +42,6 @@ Route::get('/test-db', function () {
         return "Gagal terhubung: " . $e->getMessage();
     }
 });
-
-Route::post('/presensi/store', [PresensiController::class, 'store'])->name('presensi.store');
 use App\Http\Controllers\DashboardController;
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -48,8 +49,6 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // Route untuk halaman tambahan
 Route::get('/index ', [AuthController::class, 'index'])->name('index');
-Route::get('/product', [AuthController::class, 'product'])->name ('product');
-Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('product.tentangkami');
 
 //Bagian USER
 Route::get('/index', [AuthController::class, 'index'])->name('index');
@@ -66,15 +65,17 @@ Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwa
 Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
 Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
 Route::get('/ubahkatasandiberhasil', [AuthController::class, 'ubahkatasandiberhasil'])->name('ubahkatasandiberhasil');
+Route::get('/lupakatasandi', [AuthController::class, 'lupakatasandi'])->name('lupakatasandi');
+Route::get('/resetkatasandi', [AuthController::class, 'resetkatasandi'])->name('resetkatasandi');
+Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
 Route::post('/manajementugas', [AuthController::class, 'manajementugas'])->name('manajementugas');
 Route::get('/filter', [AuthController::class, 'filter'])->name('filter');
 Route::get('/manajementugas', [AuthController::class, 'showTugas']);
 Route::post('/simpan-tugas', [AuthController::class, 'simpanTugas']);
-Route::post('/absensi', [AbsensiController::class, 'store']);
-Route::get('/absensi', [AbsensiController::class, 'absensi']);
-Route::post('/absensi/izin', [AbsensiController::class, 'izin']);
-Route::post('/absensi/simpan', [AbsensiController::class, 'simpan'])->name('simpan.absensi');
-Route::post('/absensi/pulang-awal', [AbsensiController::class, 'pulangAwal']);
+Route::post('/absen/masuk', [AbsensiController::class, 'absenMasuk']);
+Route::post('/absen/keluar', [AbsensiController::class, 'absenKeluar']);
+Route::post('/izin', [AbsensiController::class, 'absenIzin']);
+Route::get('/absen/riwayat/{userId}', [AbsensiController::class, 'riwayatAbsensi']);
 Route::get('/magang', [AuthController::class, 'magang'])->name('magang');
 Route::post('/pengajuan', [PengajuanController::class, 'store']);
 Route::get('/pengajuan', [PengajuanController::class, 'index']);
@@ -93,6 +94,8 @@ Route::post('/admin/notif', [AuthController::class, 'storeNotif'])->name('admin.
 Route::get('/notif', [AuthController::class, 'showNotif'])->name('notif');
 Route::delete('/notifikasi/{id}', [AuthController::class, 'destroy'])->name('notifikasi.destroy');
 Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
+Route::post('/jadwal-kerja', [JadwalKerjaController::class, 'store']); // Menyimpan jadwal kerja
+Route::get('/cek-hari-kerja', [JadwalKerjaController::class, 'cekHariKerja']); // Cek apakah hari ini libur
 
 //Bagian PERUSAHAAN
 Route::get('/dashboardpt', [AuthController::class, 'dashboardpt'])->name('dashboardpt');
@@ -122,6 +125,7 @@ Route::get('/logout', function () {
     return redirect('/');
 })->name('logout');
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/absensi', [PresensiController::class, 'store']);
-Route::post('/izin', [PresensiController::class, 'izin']);
-Route::post('/pulang-awal', [PresensiController::class, 'pulangAwal']);
+
+Route::post('/absensi', [AbsensiController::class, 'absenMasuk']);
+Route::post('/izin', [AbsensiController::class, 'absenIzin']);
+Route::post('/pulang-awal', [AbsensiController::class, 'pulangAwal']);

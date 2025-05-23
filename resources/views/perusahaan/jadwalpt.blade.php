@@ -221,23 +221,31 @@ class="sidebar-item">
     </style>
 </head>
 <body>
-        <label for="jam-masuk">Jam Masuk</label>
-        <input type="time" id="jam-masuk">
+<form method="POST" action="{{ url('/jadwal-kerja') }}">
+    @csrf
+    <form id="jadwal-form">
+    <label for="jam-masuk">Jam Masuk</label>
+    <input type="time" id="jam-masuk" name="jam_masuk" required>
 
-        <label for="jam-keluar">Jam Keluar</label>
-        <input type="time" id="jam-keluar">
+    <label for="jam-keluar">Jam Keluar</label>
+    <input type="time" id="jam-keluar" name="jam_keluar" required>
 
-        <label>Hari Kerja</label>
-        <div class="days-container">
-            <input type="checkbox" id="senin"><label for="senin">Senin</label>
-            <input type="checkbox" id="selasa"><label for="selasa">Selasa</label>
-            <input type="checkbox" id="rabu"><label for="rabu">Rabu</label>
-            <input type="checkbox" id="kamis"><label for="kamis">Kamis</label>
-            <input type="checkbox" id="jumat"><label for="jumat">Jumat</label>
-            <input type="checkbox" id="sabtu"><label for="sabtu">Sabtu</label>
-        </div>
-        <button class="btn">Tambah Jadwal</button>
+    <label>Hari Kerja</label>
+    <div class="days-container">
+        <input type="checkbox" id="senin" name="hari_kerja[]" value="senin"><label for="senin">Senin</label>
+        <input type="checkbox" id="selasa" name="hari_kerja[]" value="selasa"><label for="selasa">Selasa</label>
+        <input type="checkbox" id="rabu" name="hari_kerja[]" value="rabu"><label for="rabu">Rabu</label>
+        <input type="checkbox" id="kamis" name="hari_kerja[]" value="kamis"><label for="kamis">Kamis</label>
+        <input type="checkbox" id="jumat" name="hari_kerja[]" value="jumat"><label for="jumat">Jumat</label>
+        <input type="checkbox" id="sabtu" name="hari_kerja[]" value="sabtu"><label for="sabtu">Sabtu</label>
+    </div>
 
+    <button type="submit" class="btn">Tambah Jadwal</button>
+</form>
+</form>
+</div>
+</div>
+</div>
     <footer>
         <div class="footer clearfix mb-0 text-muted">
             <div class="float-start">
@@ -252,15 +260,101 @@ class="sidebar-item">
     </div>
     <script src="assets/static/js/components/dark.js"></script>
     <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    
-    
+    <script src="assets/js/pages/horizontal-layout.js"></script>
+    <script src="assets/js/mazer.js"></script>
+    <script src="assets/extensions/jquery/jquery.min.js"></script>
+    <script src="assets/extensions/sweetalert2/sweetalert2.all.min.js"></script>
     <script src="assets/compiled/js/app.js"></script>
-    
+    <script src="assets/extensions/sweetalert2/sweetalert2.min.js"></script>>
+    <script src="assets/static/js/pages/sweetalert2.js"></script>>
+    <script>
+        document.getElementById("jadwal-form").addEventListener("submit", async function (event) {
+    event.preventDefault(); // Mencegah reload halaman
 
-    
-<script src="assets/extensions/sweetalert2/sweetalert2.min.js"></script>>
-<script src="assets/static/js/pages/sweetalert2.js"></script>>
+    const jamMasuk = document.getElementById("jam-masuk").value;
+    const jamKeluar = document.getElementById("jam-keluar").value;
+    const hariKerja = Array.from(document.querySelectorAll(".days-container input:checked")).map(checkbox => checkbox.value);
 
+    if (hariKerja.length === 0) {
+        alert("Pilih minimal satu hari kerja!");
+        return;
+    }
+
+    // Kirim data ke backend Laravel
+    try {
+        const response = await fetch('/api/jadwal-kerja', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer TOKEN_KAMU' // Tambahkan autentikasi jika diperlukan
+            },
+            body: JSON.stringify({
+                jam_masuk: jamMasuk,
+                jam_keluar: jamKeluar,
+                hari_kerja: hariKerja
+            })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            alert("Jadwal kerja berhasil disimpan!");
+        } else {
+            alert(`Gagal menyimpan: ${data.message}`);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Terjadi kesalahan saat menyimpan jadwal kerja.");
+    }
+});
+
+        document.addEventListener("DOMContentLoaded", function () {
+    const form = document.getElementById("jadwal-form");
+    const jamMasukInput = document.getElementById("jam-masuk");
+    const jamKeluarInput = document.getElementById("jam-keluar");
+    const hariCheckboxes = document.querySelectorAll(".days-container input");
+
+    // Ambil data jadwal kerja dari localStorage (bisa diubah ke API jika menggunakan backend)
+    let jadwalKerja = JSON.parse(localStorage.getItem("jadwalKerja")) || {};
+
+    // Isi input waktu jika data jadwal sudah ada
+    if (jadwalKerja.jamMasuk) jamMasukInput.value = jadwalKerja.jamMasuk;
+    if (jadwalKerja.jamKeluar) jamKeluarInput.value = jadwalKerja.jamKeluar;
+
+    // Tandai hari kerja yang sudah dipilih
+    if (jadwalKerja.hariKerja) {
+        hariCheckboxes.forEach(checkbox => {
+            checkbox.checked = jadwalKerja.hariKerja.includes(checkbox.value);
+        });
+    }
+
+    // Simpan jadwal saat formulir dikirim
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Mencegah reload halaman
+
+        let jamMasuk = jamMasukInput.value;
+        let jamKeluar = jamKeluarInput.value;
+        let hariKerja = [];
+
+        hariCheckboxes.forEach(checkbox => {
+            if (checkbox.checked) hariKerja.push(checkbox.value);
+        });
+
+        if (hariKerja.length === 0) {
+            alert("Pilih minimal satu hari kerja!");
+            return;
+        }
+
+        // Simpan ke localStorage (bisa diganti dengan API jika menggunakan backend)
+        localStorage.setItem("jadwalKerja", JSON.stringify({
+            jamMasuk: jamMasuk,
+            jamKeluar: jamKeluar,
+            hariKerja: hariKerja
+        }));
+
+        alert("Jadwal kerja berhasil disimpan!");
+    });
+    });
+    </script>
 </body>
 
 </html>
