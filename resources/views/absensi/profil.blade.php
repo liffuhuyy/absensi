@@ -83,7 +83,7 @@
         <div class="profile-pic"></div>
 @foreach ($biodata as $data)
     <p>Nama: {{ $data->nama}}</p>
-    <p>No HP: {{ $data->nohp }}</p>
+    <p>No Hp: {{ $data->nohp }}</p>
 @endforeach
         <br><br><br>
         <div class="button-container">
