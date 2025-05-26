@@ -6,7 +6,7 @@
     <title>Profil Pengguna</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family:'Poppins', sans-serif;
             background-color: #f0f2f5;
             display: flex;
             justify-content: center;

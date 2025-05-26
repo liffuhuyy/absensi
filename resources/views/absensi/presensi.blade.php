@@ -9,7 +9,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
@@ -482,7 +482,7 @@
         }
 
         .menu-item:hover {
-            background-color: #172a46;
+            background-color: : #0a192f;
         }
 
         .container {
