@@ -127,9 +127,9 @@
             </div>
             
             <div class="form-group">
-                <input type="email" id="email" placeholder="No Hp" required 
+                <input type="email" id="email" placeholder="Email" required 
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" 
-                title="Masukkan nomor hp yang valid">
+                title="Masukkan email yang valid">
             </div>
  <br>         
             <button type="submit" class="submit-btn">Simpan Perubahan</button>
