@@ -112,6 +112,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/pengguna/tambah', [PenggunaController::class, 'store']);
     Route::delete('/pengguna/hapus/{id}', [PenggunaController::class, 'hapus'])->name('pengguna.hapus');
 
+    Route::get('/datapembimbing', [AuthController::class, 'datapembimbing'])->name('datapembimbing');
     Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
     Route::get('/notif', [AuthController::class, 'showNotif'])->name('notif');
     Route::post('/admin/notif', [AuthController::class, 'storeNotif'])->name('admin.notif');

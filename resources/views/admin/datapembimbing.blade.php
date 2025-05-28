@@ -133,14 +133,14 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Pengguna</h3>
-                <p class="text-subtitle text-muted">Kelola akun siswa dan perusahaan dengan mudah!</p>
+                <h3>Data Pembimbing</h3>
+                <p class="text-subtitle text-muted">Kelola data pembimbing dengan mudah</p>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/dashboardmin') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Data pengguna siswa</li>
+                        <li class="breadcrumb-item active" aria-current="page">Data pembimbing</li>
                     </ol>
                 </nav>
             </div>
@@ -153,7 +153,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Tambah Pengguna</h5>
+                <h5 class="modal-title">Tambah Pembimbing</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -161,24 +161,29 @@
             <div class="modal-body">
                 <form id="addForm">
                     <div class="form-group">
-                        <label>Nama Pengguna</label>
+                        <label>Nama</label>
+                        <input type="text" id="namaPengguna" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nip</label>
+                        <input type="text" id="namaPengguna" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Jurusan</label>
+                        <input type="text" id="namaPengguna" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kelas</label>
+                        <input type="text" id="namaPengguna" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>No Hp</label>
                         <input type="text" id="namaPengguna" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" id="emailPengguna" class="form-control" required>
-                    </div>
-                    <div class="form-group">
-                        <label>Password</label>
-                        <input type="password" id="passwordPengguna" class="form-control" required minlength="6">
-                    </div>
-                    <div class="form-group">
-                        <label>Role</label>
-                        <select id="rolePengguna" class="form-control">
-                            <option value="user">User</option>
-                            <option value="perusahaan">Perusahaan</option>
-                            <option value="admin">Admin</option>
-                        </select>
                     </div>
                     <form id="addForm">
                         <button type="submit" class="btn btn-primary" id="saveButton">Simpan</button>
@@ -203,7 +208,19 @@
                 <form id="editForm">
                     <input type="hidden" id="penggunaId"> <!-- ID pengguna untuk edit -->
                     <div class="form-group">
-                        <label>Nama Pengguna</label>
+                        <label>Nama Pembimbing</label>
+                        <input type="text" id="namaPengguna_edit" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nip</label>
+                        <input type="text" id="namaPengguna_edit" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Jurusan</label>
+                        <input type="text" id="namaPengguna_edit" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Kelas</label>
                         <input type="text" id="namaPengguna_edit" class="form-control" required>
                     </div>
                     <div class="form-group">
@@ -211,16 +228,8 @@
                         <input type="email" id="emailPengguna_edit" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label>Password (Kosongkan jika tidak ingin mengubah)</label>
-                        <input type="password" id="passwordPengguna_edit" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Role</label>
-                        <select id="rolePengguna_edit" class="form-control">
-                            <option value="user">User</option>
-                            <option value="perusahaan">Perusahaan</option>
-                            <option value="admin">Admin</option>
-                        </select>
+                        <label>No Hp</label>
+                        <input type="text" id="namaPengguna_edit" class="form-control" required>
                     </div>
                 </form>
             </div>
@@ -236,23 +245,15 @@
  <section class="section">
     <div class="card">
         <div class="card-header">
-            <h5 class="card-title">Kelola Data pengguna </h5>
+            <h5 class="card-title">Kelola data pembimbing </h5>
             <div class="d-flex align##-items-center justify-content-between mb-3">
 <div class="row mb-3">
     <div class="col-md-6">
         <input type="text" id="searchBox" class="form-control form-control-sm" placeholder="Cari berdasarkan nama...">
     </div>
-    <div class="col-md-6">
-        <select id="roleFilter" class="form-control form-control-sm">
-            <option value="all">Semua Role</option>
-            <option value="user">User</option>
-            <option value="perusahaan">Perusahaan</option>
-            <option value="admin">Admin</option>
-        </select>
-    </div>
 </div>
   
-    <a href="#" class="btn btn-sm btn-outline-primary ms-2" id="openAddModal" >Tambah Data</a>
+    <a href="#" class="btn btn-sm btn-outline-primary ms-2" id="openAddModal" >Tambah Pembimbing</a>
 
 </div>
     </div>    
@@ -263,21 +264,25 @@
         <thead>
             <tr>
                 <th>Nama</th>
+                <th>Nip</th>
+                <th>Jurusan</th>
+                <th>Kelas</th>
                 <th>Email</th>
-                <th>Password</th>
-                <th>Role</th>
+                <th>No Hp</th>
                 <th>Aksi</th>
             </tr>
         </thead>
-        <tbody id="dataPengguna">
-            @foreach ($pengguna as $user)
+        <tbody id="datapembimbing">
+            @foreach ($pembimbing as $user)
                 <tr>
                     <td>{{ $user->nama }}</td>
+                    <td>{{ $user->nip }}</td>
+                    <td>{{ $user->jurusan }}</td>
+                    <td>{{ $user->kelas }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->password }}</td>
-                    <td>{{ $user->role }}</td>
+                    <td>{{ $user->no_hp }}</td>
                     <td>
-                        <form method="POST" action="/pengguna/hapus/{{ $user->id }}">
+                        <form method="POST" action="/pembimbing/hapus/{{ $user->id }}">
                              @csrf
                               @method('DELETE')
                               <a href="#" class="btn btn-sm btn-danger deleteButton" data-id="{{ $user->id }}">Hapus</a>
@@ -289,7 +294,7 @@
     </table>
     @else
 <div class="center-text">
-    <p>Belum ada pengguna yang terdaftar.</p>
+    <p>Belum ada pembimbing yang terdaftar.</p>
 </div>
      @endif
         </div>
@@ -370,13 +375,16 @@ $.get('/pengguna', function(data) {
 
         let data = {
             _token: '{{ csrf_token() }}',
-            namaPengguna: $('#namaPengguna').val(),
+            namaPembimbing: $('#namaPembimbing').val(),
+            nipPembimbing: $('#nipPembimbing').val(),
+            jurusanPembimbing: $('#jurusanPembimbing').val(),
+            kelasPembimbing: $('#kelasPembimbing').val(),
+            no_hpPembimbing: $('#nohpPembimbing').val(),
             emailPengguna: $('#emailPengguna').val(),
-            passwordPengguna: $('#passwordPengguna').val(),
-            role: $('#rolePengguna').val()
+           
         };
 
-        $.post('/pengguna/tambah', data, function(response) {
+        $.post('/pembimbing/tambah', data, function(response) {
             alert(response.message);
             $('#addModal').modal('hide'); // Tutup modal setelah simpan
             location.reload(); // Perbarui tabel pengguna
@@ -401,9 +409,9 @@ $(document).on('click', '.deleteButton', function(e) {
     e.preventDefault();
     let id = $(this).data('id');
 
-    if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
+    if (confirm('Apakah Anda yakin ingin menghapus pembimbing ini?')) {
         $.ajax({
-            url: '/pengguna/hapus/' + id,
+            url: '/pembimbing/hapus/' + id,
             type: 'DELETE',
             success: function(response) {
                 alert(response.message);
@@ -417,7 +425,7 @@ $(document).on('click', '.deleteButton', function(e) {
 });
 
 $.ajax({
-    url: '/pengguna/hapus/' + id,
+    url: '/pembimbing/hapus/' + id,
     type: 'DELETE',
     data: {
         _token: '{{ csrf_token() }}'
