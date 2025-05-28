@@ -125,3 +125,4 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/absensi', [PresensiController::class, 'store']);
 Route::post('/izin', [PresensiController::class, 'izin']);
 Route::post('/pulang-awal', [PresensiController::class, 'pulangAwal']);
+Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
