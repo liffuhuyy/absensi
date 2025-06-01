@@ -135,34 +135,6 @@
             </div> 
         </div>
     </div>
-    <a href="{{ url('/managementakses') }}"  style="text-decoration: none;">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Manajemen Akses</h4>
-                <p class='text-muted'>Atur hak akses pengguna sistem</p>
-            </div> 
-        </div>
-    </div>
-    </a>
-    <a href="backupdata.html"  style="text-decoration: none;">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Back up data</h4>
-                    <p class='text-muted'>Unduh cadangan data sistem</p>
-                </div> 
-            </div>
-        </div>
-    </a>
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Hapus Akun</h4>
-                <p class='text-muted'>Hapus akun dan semua data terkait</p>
-            </div> 
-        </div>
-    </div>
     <a href="auth-login.html"  style="text-decoration: none;">
     <div class="col-12">
         <div class="card">

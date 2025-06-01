@@ -60,7 +60,7 @@ class AbsensiController extends Controller
     if (!auth()->check()) {
     return response()->json(['message' => 'User belum login!'], 401);
 }
-$userId = auth()->user()->id;
+$userId = auth()->pengguna()->id;
 }
 
 

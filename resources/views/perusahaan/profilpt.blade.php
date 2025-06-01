@@ -150,70 +150,102 @@ class="sidebar-item">
         <div class="card">
             <h5 class="mb-3">Profil</h5>
             
-            <div class="mb-3">
-                <label class="form-label">Nama Perusahaan</label>
-                <input type="text" id="namaPerusahaan" class="form-control" placeholder="Masukkan Nama Perusahaan">
-            </div>
+<form method="POST" action="{{ isset($perusahaan) ? route('profilpt.update', $perusahaan->id) : route('profilpt.store') }}">
+    @csrf
+    @if(isset($perusahaan))
+        @method('PUT')
+    @endif
 
-            <div class="mb-3">
-                <label class="form-label">Alamat</label>
-                <textarea id="alamat" class="form-control" placeholder="Masukkan Alamat"></textarea>
-            </div>
+    <input type="hidden" name="id" value="{{ $perusahaan->id ?? '' }}">
 
-            <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" id="email" class="form-control" placeholder="Masukkan Email">
-            </div>
+    <div class="mb-3">
+        <label class="form-label">Nama Perusahaan</label>
+        <input type="text" id="namaPerusahaan" name="nama_perusahaan" class="form-control" placeholder="Masukkan Nama Perusahaan" value="{{ $perusahaan->nama_perusahaan ?? '' }}" required>
+    </div>
 
-            <div class="mb-3">
-                <label class="form-label">Nomor Telepon</label>
-                <input type="text" id="telepon" class="form-control" placeholder="Masukkan Nomor Telepon">
-            </div>
+<!-- Tambahkan CSS dan JavaScript Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
-            <div class="mb-3">
-                <label class="form-label">Logo Perusahaan</label>
-                <div class="d-flex align-items-center gap-3">
-                    <div class="logo-preview" id="logoPreview">100 x 100</div>
-                    <input type="file" id="logoInput" accept="image/*" class="d-none">
-                    <button class="btn btn-black" onclick="document.getElementById('logoInput').click()">Ganti Logo</button>
-                </div>
-            </div>
+<div class="mb-3">
+    <label class="form-label">Lokasi (Pilih di Peta)</label>
+    <input type="text" id="searchBox" class="form-control" placeholder="Cari lokasi...">
+    <input type="hidden" id="latitude" name="latitude">
+    <input type="hidden" id="longitude" name="longitude">
+    <div id="map" style="height: 300px; width: 100%;"></div>
+</div>
 
-            <div class="mb-3">
-                <label class="form-label">Deskripsi Perusahaan</label>
-                <textarea id="deskripsi" class="form-control" placeholder="Masukkan Deskripsi Perusahaan"></textarea>
-            </div>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan Email" value="{{ $perusahaan->email ?? '' }}" required>
+    </div>
 
-            <button class="btn btn-black w-100" onclick="simpanPerubahan()">Simpan Perubahan</button>
+    <div class="mb-3">
+        <label class="form-label">Nomor Telepon</label>
+        <input type="text" id="telepon" name="telepon" class="form-control" placeholder="Masukkan Nomor Telepon" value="{{ $perusahaan->telepon ?? '' }}" required>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Logo Perusahaan</label>
+        <div class="d-flex align-items-center gap-3">
+            <div class="logo-preview" id="logoPreview">
+                <img src="{{ $perusahaan->logo ?? 'default-logo.png' }}" width="100" height="100">
+            </div>
+            <input type="file" id="logoInput" name="logo" accept="image/*" class="d-none">
+            <button class="btn btn-black" type="button" onclick="document.getElementById('logoInput').click()">Ganti Logo</button>
         </div>
     </div>
 
-    <script>
-        document.getElementById("logoInput").addEventListener("change", function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById("logoPreview").style.backgroundImage = `url(${e.target.result})`;
-                    document.getElementById("logoPreview").textContent = "";
-                };
-                reader.readAsDataURL(file);
-            }
+    <div class="mb-3">
+        <label class="form-label">Deskripsi Perusahaan</label>
+        <textarea id="deskripsi" name="deskripsi" class="form-control" placeholder="Masukkan Deskripsi Perusahaan">{{ $perusahaan->deskripsi ?? '' }}</textarea>
+    </div>
+
+    <button type="submit" class="btn btn-black w-100">Simpan Data</button>
+</form>
+<script>
+ document.addEventListener('DOMContentLoaded', function () {
+    let map = L.map('map').setView([-6.2088, 106.8456], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+    let marker = L.marker([-6.2088, 106.8456], { draggable: true }).addTo(map);
+
+    marker.on('dragend', function(event) {
+        let position = marker.getLatLng();
+        document.getElementById('latitude').value = position.lat;
+        document.getElementById('longitude').value = position.lng;
+    });
+
+    let searchBox = document.getElementById('searchBox');
+    if (searchBox) {
+        searchBox.addEventListener('change', function () {
+            let searchQuery = this.value;
+            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        let lat = parseFloat(data[0].lat);
+                        let lon = parseFloat(data[0].lon);
+
+                        map.setView([lat, lon], 15);
+                        marker.setLatLng([lat, lon]);
+
+                        document.getElementById('latitude').value = lat;
+                        document.getElementById('longitude').value = lon;
+                    } else {
+                        alert("Lokasi tidak ditemukan, coba lagi!");
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Terjadi kesalahan saat mengambil data lokasi. Silakan coba lagi.");
+                });
         });
+    }
+});
 
-        function simpanPerubahan() {
-            const data = {
-                namaPerusahaan: document.getElementById("namaPerusahaan").value,
-                alamat: document.getElementById("alamat").value,
-                email: document.getElementById("email").value,
-                telepon: document.getElementById("telepon").value,
-                deskripsi: document.getElementById("deskripsi").value
-            };
+</script>
 
-            console.log("Data tersimpan:", data);
-            alert("Data berhasil diperbarui!");
-        }
-    </script>
 </div>
 
             <footer>

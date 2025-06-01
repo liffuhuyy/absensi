@@ -10,12 +10,13 @@ use App\Models\Notifikasi;
 use App\Models\Pengajuan;
 use App\Models\JadwalKerja;
 use Illuminate\Support\Facades\Hash;
-
+use App\Http\Middleware\RoleMiddleware;
 
 use Illuminate\Support\Facades\Auth;
  
 class AuthController extends Controller
 {
+
     public function filter(Request $request)
     {
     $bulan = $request->bulan;
@@ -41,23 +42,14 @@ class AuthController extends Controller
 
     }
 
-    public function showLoginForm()
-    {
-        if (view()->exists('absensi.login')) {
-            return view('absensi.login');
-        } else {
-            return "View login tidak ditemukan.";
-        }
+public function showLoginForm()
+{
+    if (!view()->exists('absensi.login')) {
+        abort(404, 'Halaman login tidak ditemukan.');
     }
 
-    public function magang()
-    {
-        if (view()->exists('absensi.magang')) {
-            return view('absensi.magang');
-        } else {
-            return "View magang tidak ditemukan.";
-        }
-    }
+    return view('absensi.login');
+}
 
     public function editprofil()
     {
@@ -104,7 +96,7 @@ class AuthController extends Controller
         }
     }
 
-    public function showBerandaform()
+    public function beranda()
     {
         if (view()->exists('absensi.beranda')) {
             return view('absensi.beranda');
@@ -118,14 +110,29 @@ class AuthController extends Controller
         return view('absensi.manajementugas', compact('tugas')); 
     }
 
-    
+    public function showPengajuan1()
+{
+    $pengajuan = Pengajuan::paginate(10);
+    return view('absensi.magang', compact('pengajuan'));
+}
+
     public function pengajuan1()
     {
-        if (view()->exists('absensi.pengajuan')) {
-            return view('absensi.pengajuan');
+        if (view()->exists('absensi.pengajuan1')) {
+            return view('absensi.pengajuan1');
         } else {
             return "View tidak ditemukan.";
         }
+    }
+
+        public function magang()
+    {
+        if (view()->exists('absensi.magang')) {
+            return view('absensi.magang');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    
     }
 
     public function kontak()
@@ -393,51 +400,32 @@ public function testMiddleware()
     }
 
     // LOGIN DAN DAFTAR
-    public function register(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:pengguna,email', // sesuaikan dengan nama tabel
-            'password' => 'required|min:6'
-        ]);
+   public function login(Request $request)
+{
+    // Validasi input agar lebih aman
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|min:6'
+    ]);
 
-        $user = Pengguna::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'siswa', // default role jika tidak diinput
-        ]);
+    $credentials = $request->only('email', 'password');
 
-        Auth::login($user);
+    $user = Pengguna::where('email', $credentials['email'])->first();
 
-        return redirect('/beranda')->with('success', 'Pendaftaran berhasil! Anda telah login.');
+    if ($user && Hash::check($credentials['password'], $user->password)) {
+        Auth::login($user); // Login user
+
+        // Arahkan ke halaman berdasarkan role
+        return match ($user->role) {
+            'admin' => redirect()->route('dashboardmin'),
+            'user' => redirect()->route('beranda'),
+            'perusahaan' => redirect()->route('dashboardpt'),
+            default => tap(Auth::logout(), fn() => redirect()->route('login')->withErrors(['role' => 'Role tidak dikenali.']))
+        };
     }
 
-    public function login(Request $request)
-    {
-        $credentials = $request->only('email', 'password');
-
-        $user = Pengguna::where('email', $credentials['email'])->first();
-
-        if ($user && Hash::check($credentials['password'], $user->password)) {
-            Auth::login($user); // Login user
-
-            // Arahkan ke halaman berdasarkan role
-            switch ($user->role) {
-                case 'admin':
-                    return redirect()->route('dashboardmin');
-                case 'user':
-                    return redirect()->route('beranda');
-                case 'perusahaan':
-                    return redirect()->route('dashboardpt');
-                default:
-                    Auth::logout();
-                    return redirect()->route('login')->withErrors(['role' => 'Role tidak dikenali.']);
-            }
-        } else {
-            return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
-        }
-    }
+    return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
+}
 
     public function logout(Request $request)
     {

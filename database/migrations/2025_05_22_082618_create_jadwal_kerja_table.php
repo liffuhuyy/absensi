@@ -9,10 +9,12 @@ return new class extends Migration {
     {
         Schema::create('jadwal_kerja', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('pengguna')->onDelete('cascade'); // Relasi ke tabel pengguna
+            $table->foreignId('pengguna_id')->constrained('pengguna')->onDelete('cascade');
             $table->time('jam_masuk');
             $table->time('jam_keluar');
-            $table->json('hari_kerja'); // Menyimpan hari kerja dalam format JSON
+            $table->json('hari_kerja'); // Format array JSON untuk menyimpan hari kerja
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
             $table->timestamps();
         });
     }
@@ -22,4 +24,3 @@ return new class extends Migration {
         Schema::dropIfExists('jadwal_kerja');
     }
 };
-

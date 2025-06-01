@@ -2,23 +2,20 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
-class Authenticate
+class Authenticate extends Middleware
 {
     /**
-     * Handle an incoming request.
+     * Redirect pengguna ke halaman login jika belum masuk.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @return string|null
      */
-public function handle($request, Closure $next)
-{
-    if (!Auth::check()) {
-        dd('Middleware auth belum aktif');
+    protected function redirectTo($request)
+    {
+        if (!$request->expectsJson()) {
+            return route('login'); // Pastikan route login sudah ada
+        }
     }
-    return $next($request);
-}
-
 }

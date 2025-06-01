@@ -115,14 +115,13 @@ class="sidebar-item">
         </ul>
     </div>
 </div>
-        </div>
+    </div>
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
-            </header>
-            
+            </header>  
 <div class="page-heading">
     <div class="page-title">
         <div class="row">
@@ -137,34 +136,6 @@ class="sidebar-item">
                     </ol>
                 </nav>
             </div>
-        </div>
-    </div>
-    <a href="{{ url('/managementaksespt') }}"  style="text-decoration: none;">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Manajemen Akses</h4>
-                <p class='text-muted'>Atur hak akses pengguna sistem</p>
-            </div> 
-        </div>
-    </div>
-    </a>
-    <a href="{{ url('/backupdatapt') }}"  style="text-decoration: none;">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Back up data</h4>
-                    <p class='text-muted'>Unduh cadangan data sistem</p>
-                </div> 
-            </div>
-        </div>
-    </a>
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Hapus Akun</h4>
-                <p class='text-muted'>Hapus akun dan semua data terkait</p>
-            </div> 
         </div>
     </div>
     <a href="{{ url('/login') }}"  style="text-decoration: none;">

@@ -44,7 +44,7 @@ public function index()
         ]);
 
         if (Auth::attempt($credentials)) {
-            $pengguna = Auth::user();
+            $pengguna = Auth::pengguna();
 
             if ($pengguna->role === 'user') {
                 return redirect('/beranda');
@@ -72,6 +72,13 @@ public function index()
                 'message' => 'Terjadi kesalahan: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+        public function getPenggunaPerusahaan()
+    {
+        $penggunaPerusahaan = Pengguna::where('role', 'perusahaan')->select('id', 'nama')->get();
+
+        return response()->json($penggunaPerusahaan);
     }
 
 }
