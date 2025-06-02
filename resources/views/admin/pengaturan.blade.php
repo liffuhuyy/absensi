@@ -24,9 +24,6 @@
             <div class="sidebar-wrapper active">
     <div class="sidebar-header position-relative">
         <div class="d-flex justify-content-between align-items-center">
-            <div class="logo">
-                <a href="{{ url('/dashboardpt') }}"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
-            </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
                     role="img" class="iconify iconify--system-uicons" width="20" height="20"
@@ -142,34 +139,6 @@
                     <input class="form-check-input  me-0" type="checkbox" id="toggle-dark" style="cursor: pointer">
                     <label class="form-check-label"></label>
                 </div>
-            </div> 
-        </div>
-    </div>
-    <a href="{{ url('/managementakses') }}"  style="text-decoration: none;">
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Manajemen Akses</h4>
-                <p class='text-muted'>Atur hak akses pengguna sistem</p>
-            </div> 
-        </div>
-    </div>
-    </a>
-    <a href="backupdata.html"  style="text-decoration: none;">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h4 class="card-title">Back up data</h4>
-                    <p class='text-muted'>Unduh cadangan data sistem</p>
-                </div> 
-            </div>
-        </div>
-    </a>
-    <div class="col-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Hapus Akun</h4>
-                <p class='text-muted'>Hapus akun dan semua data terkait</p>
             </div> 
         </div>
     </div>

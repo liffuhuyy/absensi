@@ -242,6 +242,26 @@
                 gap: 1rem;
             }
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        td {
+            color: #555;
+        }
+        .text-dark {
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -274,7 +294,7 @@
             <div class="menu-title">Menu Utama</div>
             <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
             <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
-            <a href="{{ url('/pengajuan') }}" class="menu-item">Pengajuan Magang</a>
+            <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
         </div>
         
         <div class="menu-group">
@@ -284,73 +304,10 @@
         </div>
     </div>
 
-    <div class="container">
-        <h1>Form Pengajuan Magang</h1>
-      <form id="proses_magang" method="POST" action="proses_magang.php">
-            <div class="form-group">
-                <label for="nama">Nama Lengkap</label>
-                <input type="text" id="nama" name="nama" required>
-            </div>
-            
-            <div class="form-group">
-
-    <label for="jurusan">Jurusan</label>
-    <select id="jurusan" name="jurusan" required>
-        <option value="">Pilih Jurusan</option>
-        <option value="AKL" <?php echo (isset($jurusan) && $jurusan == 'AKL') ? 'selected' : ''; ?>>Akuntansi Keuangan dan Lembaga</option>
-        <option value="RPL" <?php echo (isset($jurusan) && $jurusan == 'RPL') ? 'selected' : ''; ?>>Rekayasa Perangkat Lunak</option>
-        <option value="TKJ" <?php echo (isset($jurusan) && $jurusan == 'TKJ') ? 'selected' : ''; ?>>Teknik Komputer dan Jaringan</option>
-        <option value="KL" <?php echo (isset($jurusan) && $jurusan == 'KL') ? 'selected' : ''; ?>>Kuliner</option>
-        <option value="TL" <?php echo (isset($jurusan) && $jurusan == 'TL') ? 'selected' : ''; ?>>Teknik Logistik</option>
-        <option value="MPLB" <?php echo (isset($jurusan) && $jurusan == 'MPLB') ? 'selected' : ''; ?>>Manajemen Perkantoran dan Layanan Bisnis</option>
-        <option value="TO" <?php echo (isset($jurusan) && $jurusan == 'TO') ? 'selected' : ''; ?>>Teknik Otomotif</option>
-        <option value="TPM" <?php echo (isset($jurusan) && $jurusan == 'TPM') ? 'selected' : ''; ?>>Teknik Permesinan</option>
-        <option value="DKV" <?php echo (isset($jurusan) && $jurusan == 'DKV') ? 'selected' : ''; ?>>Desain Komunikasi Visual</option>
-        <option value="PM" <?php echo (isset($jurusan) && $jurusan == 'PM') ? 'selected' : ''; ?>>Pemasaran</option>
-    </select>
-</div>
-
-            
-            <div class="form-group">
-                <label for="tanggal_mulai">Tanggal Mulai Magang</label>
-                <input type="date" id="tanggal_mulai" name="tanggal_mulai" value="<?php echo isset($tanggal_mulai) ? $tanggal_mulai : ''; ?>" required>
-
-                <label for="jurusan">Jurusan</label>
-                <select id="jurusan" name="jurusan" required>
-                    <option value="">Pilih Jurusan</option>
-                    <option value="AKL">Akuntansi Keuangan dan Lembaga (AKL)</option>
-                    <option value="MPLB">Manajemen Perkantoran dan Layanan Bisnis (MPLB)</option>
-                    <option value="BDP">Bisnis Daring dan Pemasaran (BDP)</option>
-                    <option value="RPL">Rekayasa Perangkat Lunak (RPL)</option>
-                    <option value="TKJ">Teknik Komputer dan Jaringan (TKJ)</option>
-                    <option value="DKV">Desain Komunikasi Visual (DKV)</option>
-                    <option value="TO">Teknik Otomotif (TO)</option>
-                    <option value="TM">Teknik Mesin (TM)</option>
-                    <option value="KL">Kuliner (KL)</option>
-                    <option value="TL">Teknik Logistik (TL)</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="tanggal_mulai">Tanggal Mulai Magang</label>
-                <input type="date" id="tanggal_mulai" name="tanggal_mulai" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="tanggal_selesai">Tanggal Selesai Magang</label>
-                <input type="date" id="tanggal_selesai" name="tanggal_selesai" value="<?php echo isset($tanggal_selesai) ? $tanggal_selesai : ''; ?>" required>
-
-                <input type="date" id="tanggal_selesai" name="tanggal_selesai" required>
-            <div class="form-group">
-                <label for="perusahaan">Perusahaan:</label>
-                <input type="text" name="perusahaan" id="perusahaan" required>                
-            </div>
-            <div class="button-container">
-                <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
-            </div>
-        </form>
-
-<form method="POST" action="{{ url('/pengajuan') }}">
+ <div class="container">
+<h1>Form Pengajuan Magang</h1>
+<div class="form-group">
+<form method="POST" action="{{ url('/pengajuan/tambah') }}">
     @csrf
     <div class="form-group">
         <label for="nama">Nama Lengkap</label>
@@ -393,7 +350,6 @@
         <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
     </div>
 </form>
-
     </div>
 
     <script>

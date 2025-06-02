@@ -16,27 +16,167 @@
   <link rel="stylesheet" href="./assets/compiled/css/app.css">
   <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
 </head> 
-<style>
-    .button-container {
-        display: flex;
-        justify-content: flex-end; /* Memindahkan tombol ke sisi kanan */
-        margin: 10px 0; /* Memberi jarak jika diperlukan */
-    }
+   <style>
 
-    .btn {
-        padding: 10px 20px;
-        font-size: 16px;
-        color: #fff;
-        background-color: #007bff;
-        text-decoration: none;
-        border-radius: 5px;
-        border: none;
-        cursor: pointer;
-    }
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+        input[type="time"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #007bff;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+            color: black;
+        }
+        .days-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        .days-container label {
+            background: #007bff;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .days-container input[type="checkbox"] {
+            display: none;
+        }
+        .days-container input[type="checkbox"]:checked + label {
+            background: #28a745;
+            transform: scale(1.1);
+        }
+        .btn {
+            width: 100%;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+        label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
-    .btn:hover {
-        background-color: #0056b3; /* Warna saat dihover */
-    }
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+/* Gaya untuk tabel */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.table th {
+    background-color:rgb(133, 214, 255);
+}
+
+/* Gaya untuk tombol */
+.btn-tambah {
+    background-color: #007bff;
+    border: none;
+    color: white;
+    padding: 10px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: block; 
+    margin: 20px auto;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    min-width: 200px;
+}
+
+.btn-tambah:hover {
+    background-color:rgb(42, 66, 91); 
+}
+.btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    width: 80px; 
+}
+
+/* Tombol Edit (kuning) */
+.btn-warning {
+    background-color: #ffc107;
+    border: none;
+    color: #fff;
+}
+
+/* Tombol Hapus (merah) */
+.btn-danger {
+    background-color: #dc3545;
+    border: none;
+    color: #fff;
+}
+
+/* Efek hover */
+.btn:hover {
+    opacity: 0.8;
+}
+
+/* Tata letak tombol di tabel */
+.action-buttons .btn-edit {
+    background-color: #FFC107; /* Warna kuning */
+    border-color: #FFA000;
+    color: #000; /* Warna teks hitam agar kontras */
+}
+
+.action-buttons .btn-danger {
+    background-color: #DC3545; /* Warna merah */
+    border-color: #C82333;
+    color: #fff; /* Warna teks putih agar kontras */
+}
+
+/* Efek hover agar lebih interaktif */
+.action-buttons .btn-edit:hover {
+    background-color: #FFA000;
+}
+
+.action-buttons .btn-danger:hover {
+    background-color: #C82333;
+}
 </style>
 <body>
     <script src="assets/static/js/initTheme.js"></script>
@@ -45,9 +185,6 @@
             <div class="sidebar-wrapper active">
     <div class="sidebar-header position-relative">
         <div class="d-flex justify-content-between align-items-center">
-            <div class="logo">
-                <a href="{{ url('/dashboardpt') }}"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
-            </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
                     role="img" class="iconify iconify--system-uicons" width="20" height="20"
@@ -152,7 +289,7 @@ class="sidebar-item">
     <div class="page-title">
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Jadwal</h3>
+                <h3>Jadwal Kerja Dan Titik Koordinat</h3>
             </div>
             <div class="col-12 col-md-6 order-md-2 order-first">
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -164,85 +301,144 @@ class="sidebar-item">
             </div>
         </div>
     </div>
-    <style>
-
-        label {
-            font-weight: 600;
-            display: block;
-            margin-top: 15px;
-            text-align: left;
-            font-size: 14px;
-        }
-        input[type="time"], input[type="number"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #007bff;
-            border-radius: 8px;
-            font-size: 16px;
-            background: white;
-            color: black;
-        }
-        .days-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-            justify-content: center;
-        }
-        .days-container label {
-            background: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-        .days-container input[type="checkbox"] {
-            display: none;
-        }
-        .days-container input[type="checkbox"]:checked + label {
-            background: #28a745;
-            transform: scale(1.1);
-        }
-        .btn {
-            width: 100%;
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            margin-top: 25px;
-            font-size: 18px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
-    </style>
-</head>
-<body>
+</div>
+<div class="page-content">
+  <div class="row">
+     <div class="col-12">
+        <div class="card">
+          <div class="card-body">
+      <body>
+<form method="POST" action="{{ url('/jadwalpt/tambah') }}">
+    @csrf
+    <div id="jadwal-form">
         <label for="jam-masuk">Jam Masuk</label>
-        <input type="time" id="jam-masuk">
+        <input type="time" id="jam-masuk" name="jam_masuk" required>
 
         <label for="jam-keluar">Jam Keluar</label>
-        <input type="time" id="jam-keluar">
+        <input type="time" id="jam-keluar" name="jam_keluar" required>
 
         <label>Hari Kerja</label>
         <div class="days-container">
-            <input type="checkbox" id="senin"><label for="senin">Senin</label>
-            <input type="checkbox" id="selasa"><label for="selasa">Selasa</label>
-            <input type="checkbox" id="rabu"><label for="rabu">Rabu</label>
-            <input type="checkbox" id="kamis"><label for="kamis">Kamis</label>
-            <input type="checkbox" id="jumat"><label for="jumat">Jumat</label>
-            <input type="checkbox" id="sabtu"><label for="sabtu">Sabtu</label>
+            <input type="checkbox" id="senin" name="hari_kerja[]" value="senin"><label for="senin">Senin</label>
+            <input type="checkbox" id="selasa" name="hari_kerja[]" value="selasa"><label for="selasa">Selasa</label>
+            <input type="checkbox" id="rabu" name="hari_kerja[]" value="rabu"><label for="rabu">Rabu</label>
+            <input type="checkbox" id="kamis" name="hari_kerja[]" value="kamis"><label for="kamis">Kamis</label>
+            <input type="checkbox" id="jumat" name="hari_kerja[]" value="jumat"><label for="jumat">Jumat</label>
+            <input type="checkbox" id="sabtu" name="hari_kerja[]" value="sabtu"><label for="sabtu">Sabtu</label>
         </div>
 
-        <label for="max-peserta">Jumlah Maksimal Peserta Magang</label>
-        <input type="number" id="max-peserta" min="1">
+        <label for="latitude">Latitude</label>
+        <input type="text" id="latitude" name="latitude" placeholder="Masukkan latitude" required>
 
-        <button class="btn">Tambah Jadwal</button>
+        <label for="longitude">Longitude</label>
+        <input type="text" id="longitude" name="longitude" placeholder="Masukkan longitude" required>
+
+        <button type="submit" class="btn-tambah">Tambah Jadwal</button>
+    </div>
+</form>
+<br>
 
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Jam Masuk</th>
+            <th>Jam Keluar</th>
+            <th>Hari Kerja</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if ($jadwal)
+            <tr>
+                <td>{{ $jadwal->jam_masuk }}</td>
+                <td>{{ $jadwal->jam_keluar }}</td>
+                <td>{{ implode(', ', json_decode($jadwal->hari_kerja)) }}</td>
+                <td>{{ $jadwal->latitude }}</td>
+                <td>{{ $jadwal->longitude }}</td>
+  <td>
+    <div class="action-buttons">
+        <!-- Tombol Edit -->
+<button class="btn btn-warning btn-sm btn-edit" data-id="{{ $jadwal->id }}">
+  Edit
+</button>
+        <!-- Form Hapus -->
+        <form action="{{ route('jadwal.destroy', $jadwal->id) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+        </form>
+    </div>
+</td>
+
+     @else
+            <tr>
+                <td colspan="6" class="text-center">Tidak ada jadwal kerja tersedia</td>
+            </tr>
+        @endif
+    </tbody>
+</table>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form id="editForm" method="POST">
+      @csrf
+      @method('PUT')
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Jadwal</h5>
+          <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="jadwal_id" name="id">
+
+          <div class="form-group">
+            <label for="jam_masuk">Jam Masuk</label>
+            <input type="time" name="jam_masuk" id="jam_masuk" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="jam_keluar">Jam Keluar</label>
+            <input type="time" name="jam_keluar" id="jam_keluar" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label>Hari Kerja</label>
+            <div class="days-container d-flex flex-wrap" id="hari_kerja_checkboxes">
+              @foreach (['senin','selasa','rabu','kamis','jumat','sabtu'] as $hari)
+                <div class="form-check mr-3 mb-2">
+                  <input type="checkbox" class="form-check-input" id="hari_{{ $hari }}" name="hari_kerja[]" value="{{ $hari }}">
+                  <label class="form-check-label" for="hari_{{ $hari }}">{{ ucfirst($hari) }}</label>
+                </div>
+              @endforeach
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="latitude">Latitude</label>
+            <input type="text" name="latitude" id="edit_latitude" class="form-control" required>
+          </div>
+
+          <div class="form-group">
+            <label for="longitude">Longitude</label>
+            <input type="text" name="longitude" id="edit_longitude" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success">Simpan</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+</div>
+</div>
     <footer>
         <div class="footer clearfix mb-0 text-muted">
             <div class="float-start">
@@ -257,14 +453,132 @@ class="sidebar-item">
     </div>
     <script src="assets/static/js/components/dark.js"></script>
     <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    
-    
+    <script src="assets/extensions/jquery/jquery.min.js"></script>
     <script src="assets/compiled/js/app.js"></script>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/extensions/sweetalert2/sweetalert2.all.min.js"></script>
+<script>    
+$(document).ready(function () {
+    // Tombol Close Modal
+    $('.close').click(function () {
+        $('#editModal').modal('hide');
+    });
 
-    
-<script src="assets/extensions/sweetalert2/sweetalert2.min.js"></script>>
-<script src="assets/static/js/pages/sweetalert2.js"></script>>
+    // Tombol Edit - Mengambil Data dari Server
+    $('.btn-edit').click(function () {
+        var id = $(this).data('id');
+
+        if (!id) {
+            alert("ID tidak ditemukan!");
+            return;
+        }
+
+        $.ajax({
+            url: '/jadwalpt/edit/' + id,
+            method: 'GET',
+            success: function (data) {
+                 console.log("Data dari server:", data);
+                $('#editForm').attr('action', '/jadwalpt/update/' + id);
+
+                if ($('#edit_jam_masuk').length) {
+    $('#edit_jam_masuk').val(data.jam_masuk);
+} else {
+    console.warn("Elemen #edit_jam_masuk tidak ditemukan.");
+}
+                if ($('#edit_jam_keluar').length) $('#edit_jam_keluar').val(data.jam_keluar);
+                if ($('#edit_latitude').length) $('#edit_latitude').val(data.latitude || '');
+                if ($('#edit_longitude').length) $('#edit_longitude').val(data.longitude || '');
+
+                // Uncheck semua checkbox hari kerja
+                $('input[name="hari_kerja[]"]').prop('checked', false);
+                if (Array.isArray(data.hari_kerja)) {
+                    data.hari_kerja.forEach(function (hari) {
+                        $('#hari_' + hari).prop('checked', true);
+                    });
+                }
+
+                $('#editModal').modal('show'); // Tampilkan modal setelah data diisi
+            },
+            error: function (xhr) {
+                console.log(xhr.responseText);
+                alert('Gagal memuat data.');
+            }
+        });
+    });
+
+    // Form Submit - Menyimpan Data ke Server
+    $('#editForm').submit(function (e) {
+        e.preventDefault(); // Hindari reload otomatis
+
+        let actionUrl = $('#editForm').attr('action');
+        let id = actionUrl.match(/(\d+)$/) ? actionUrl.match(/(\d+)$/)[0] : null;
+        let formData = $(this).serialize();
+
+        if (!id) {
+            console.error("ID tidak ditemukan!");
+            alert("Terjadi kesalahan: ID tidak valid.");
+            return;
+        }
+
+        $.ajax({
+            url: '/jadwalpt/update/' + id,
+            type: 'POST',
+            data: formData,
+            success: function (res) {
+                console.log("Response dari server:", res);
+                alert("Data berhasil diperbarui!");
+                $('#editModal').modal('hide'); 
+                location.reload();
+            },
+error: function (xhr) {
+    console.error("Gagal menyimpan data:", xhr.status, xhr.responseText);
+    alert('Gagal menyimpan data.');
+}
+
+        });
+    });
+
+    // Form Tambah Data
+    $('#jadwal-form').on('submit', function (e) {
+        e.preventDefault(); // Hindari pengiriman standar
+
+        $.ajax({
+            url: "/jadwalpt/tambah",
+            type: "POST",
+            data: $(this).serialize(),
+            beforeSend: function () {
+                $('#saveButton').prop('disabled', true).text('Menyimpan...');
+            },
+            success: function (response) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sukses!',
+                    text: 'Jadwal berhasil ditambahkan!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                $('#jadwal-form')[0].reset(); // Reset formulir setelah sukses
+            },
+            error: function (xhr) {
+                let errorMsg = "Terjadi kesalahan, silakan coba lagi.";
+                if (xhr.responseText) {
+                    let response = JSON.parse(xhr.responseText);
+                    errorMsg = response.message ?? errorMsg;
+                }
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops!',
+                    text: errorMsg
+                });
+            },
+            complete: function () {
+                $('#saveButton').prop('disabled', false).text('Simpan');
+            }
+        });
+    });
+});
+
+</script>
 
 </body>
 

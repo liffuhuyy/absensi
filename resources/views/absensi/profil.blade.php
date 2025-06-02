@@ -81,9 +81,18 @@
     <!-- Kontainer Profil Pengguna -->
     <div class="container" id="profileContainer">
         <div class="profile-pic"></div>
+     <p>Nama: </p>
+     <p>Email: </p>
+     <p>No HP: </p>
 @foreach ($biodata as $data)
+<<<<<<< HEAD
     <p>Nama: {{ $data->nama}}</p>
     <p>No Hp: {{ $data->nohp }}</p>
+=======
+    <p>{{ $data->nama}}</p>
+    <p>{{ $data->email}}</p>
+    <p>{{ $data->nohp }}</p>
+>>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
 @endforeach
         <br><br><br>
         <div class="button-container">

@@ -307,7 +307,7 @@
             <div class="menu-title">Menu Utama</div>
             <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
             <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
-            <a href="{{ url('/pengajuan') }}" class="menu-item">Pengajuan Magang</a>
+            <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
         </div>
         
         <div class="menu-group">
@@ -399,8 +399,8 @@
     <option value="akuntansi" {{ (isset($biodata) && $biodata->jurusan == 'akuntansi') ? 'selected' : '' }}>Akuntansi Keuangan dan Lembaga</option>
     <option value="pemasaran" {{ (isset($biodata) && $biodata->jurusan == 'pemasaran') ? 'selected' : '' }}>Pemasaran</option>
     <option value="manajemen" {{ (isset($biodata) && $biodata->jurusan == 'manajemen') ? 'selected' : '' }}>Manajemen Perkantoran dan Layanan Bisnis</option>
-    <option value="rpl" {{ (isset($biodata) && $biodata->jurusan == 'rpl') ? 'selected' : '' }}>Pengembangan Perangkat Lunak dan Gim</option>
-    <option value="tjkt" {{ (isset($biodata) && $biodata->jurusan == 'tjkt') ? 'selected' : '' }}>Teknik Jaringan Komputer dan Telekomunikasi</option>
+    <option value="rpl" {{ (isset($biodata) && $biodata->jurusan == 'rpl') ? 'selected' : '' }}>Rekayasa Perangkat Lunak</option>
+    <option value="tkj" {{ (isset($biodata) && $biodata->jurusan == 'tkj') ? 'selected' : '' }}>Teknik Komputer dan Jaringan</option>
     <option value="dkv" {{ (isset($biodata) && $biodata->jurusan == 'dkv') ? 'selected' : '' }}>Desain Komunikasi Visual</option>
     <option value="mesin" {{ (isset($biodata) && $biodata->jurusan == 'mesin') ? 'selected' : '' }}>Teknik Mesin</option>
     <option value="otomotif" {{ (isset($biodata) && $biodata->jurusan == 'otomotif') ? 'selected' : '' }}>Teknik Otomotif</option>
@@ -440,6 +440,7 @@
                 </div>
                     <button type="submit" class="btn btn-save">Simpan Data</button>
             </form>
+                   <div id="notif" style="display: none;"></div>
         </div>
     </div>
 
@@ -479,7 +480,7 @@
         document.getElementById('biodataForm').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Data berhasil disimpan!');
-            window.location.href = 'beranda.php'; // Ganti dengan halaman beranda yang sesuai
+            window.location.href = "{{ url('/beranda') }}"; // Ganti dengan halaman beranda yang sesuai
         });
     </script>
 </body>
