@@ -10,6 +10,7 @@ use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PresensiController;
+use App\Models\Absensi;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,9 +95,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/absensi/pulang-awal', [AbsensiController::class, 'pulangAwal']);
 
     // PresensiController opsional (jika digunakan terpisah dari AbsensiController)
-    Route::post('/presensi/store', [PresensiController::class, 'store'])->name('presensi.store');
-    Route::post('/izin', [PresensiController::class, 'izin']);
-    Route::post('/pulang-awal', [PresensiController::class, 'pulangAwal']);
+    Route::post('/presensi/store', [AbsensiController::class, 'store'])->name('presensi.store');
+    Route::post('/izin', [AbsensiController::class, 'izin']);
+    Route::post('/pulang-awal', [AbsensiController::class, 'pulangAwal']);
 });
 
 /*
