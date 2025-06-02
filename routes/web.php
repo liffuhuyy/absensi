@@ -10,6 +10,7 @@ use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\PembimbingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -94,9 +95,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/absensi/pulang-awal', [AbsensiController::class, 'pulangAwal']);
 
     // PresensiController opsional (jika digunakan terpisah dari AbsensiController)
-    Route::post('/presensi/store', [PresensiController::class, 'store'])->name('presensi.store');
-    Route::post('/izin', [PresensiController::class, 'izin']);
-    Route::post('/pulang-awal', [PresensiController::class, 'pulangAwal']);
+    Route::post('/presensi/store', [AbsensiController::class, 'store'])->name('presensi.store');
+    Route::post('/izin', [AbsensiController::class, 'izin']);
+    Route::post('/pulang-awal', [AbsensiController::class, 'pulangAwal']);
 });
 
 /*
@@ -118,7 +119,40 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/notif', [AuthController::class, 'storeNotif'])->name('admin.notif');
     Route::delete('/notifikasi/{id}', [AuthController::class, 'destroy'])->name('notifikasi.destroy');
     Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
-});
+
+    // Route untuk halaman utama data pembimbing
+    Route::get('/datapembimbing', [PembimbingController::class, 'index'])->name('pembimbing.index');
+
+    // Route untuk CRUD pembimbing
+    Route::prefix('pembimbing')->name('pembimbing.')->group(function () {
+        // Create
+        Route::post('/tambah', [PembimbingController::class, 'store'])->name('store');
+        
+        // Read
+        Route::get('/data', [PembimbingController::class, 'index'])->name('data');
+        Route::get('/show/{id}', [PembimbingController::class, 'show'])->name('show');
+        
+        // Update
+        Route::put('/update/{id}', [PembimbingController::class, 'update'])->name('update');
+        Route::post('/update/{id}', [PembimbingController::class, 'update'])->name('update.post'); // Untuk form yang tidak support PUT
+        
+        // Delete
+        Route::delete('/hapus/{id}', [PembimbingController::class, 'destroy'])->name('destroy');
+        
+        // Additional routes
+        Route::get('/jurusan/{jurusan}', [PembimbingController::class, 'getByJurusan'])->name('by-jurusan');
+        Route::get('/export', [PembimbingController::class, 'export'])->name('export');
+    });
+
+    // Route untuk API (jika diperlukan)
+    Route::prefix('api/pembimbing')->name('api.pembimbing.')->group(function () {
+        Route::get('/', [PembimbingController::class, 'index']);
+        Route::post('/', [PembimbingController::class, 'store']);
+        Route::get('/{id}', [PembimbingController::class, 'show']);
+        Route::put('/{id}', [PembimbingController::class, 'update']);
+        Route::delete('/{id}', [PembimbingController::class, 'destroy']);
+    });
+}); 
 
 /*
 |--------------------------------------------------------------------------
