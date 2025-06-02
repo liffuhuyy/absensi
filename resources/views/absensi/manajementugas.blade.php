@@ -308,7 +308,7 @@
             <div class="menu-title">Menu Utama</div>
             <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
             <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
-            <a href="{{ url('/pengajuan') }}" class="menu-item">Pengajuan Magang</a>
+            <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
         </div>
         
         <div class="menu-group">

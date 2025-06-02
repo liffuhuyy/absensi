@@ -94,26 +94,15 @@
         .back-button:hover {
             background: black !important;
         }
-
-        .back-button {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
+        /* Tombol Kembali */    
+        .btn-back {
+            background: none;
             border: none;
-            border-radius: 20px;
-            font-weight: 600;
+            color: #000022;
+            font-size: 20px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
             text-decoration: none;
-            text-align: center;
-            background: linear-gradient(#ffffff, #ffffff);
-            color: rgb(244, 156, 156);
-            margin-bottom: 1.5rem;
-            border-bottom: dotted 2px;
-        }
-
-        .back-button:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(#e44c65, #e44c65);
+            margin-top: 10px;
         }
     </style>
     			   <!-- Contact Section -->
@@ -141,7 +130,7 @@
         </div>
     </div>
     <br>
-    <button class="back-button" onclick="window.location.href='{{ url('/beranda') }}'">Kembali</button>
+    <a href="{{ url('/beranda') }}" class="btn-back">Kembali</a>
 </form>
       </div>
 			</section>

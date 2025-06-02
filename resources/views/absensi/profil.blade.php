@@ -96,9 +96,30 @@
   </style>
 </head>
 <body>
+<<<<<<< HEAD
   <div class="container loading" id="profileContainer">
     <div class="profile-photo">
       <img id="profileImage" src="default-avatar.png" alt="Foto Profil" class="fade-in" />
+=======
+    <!-- Kontainer Profil Pengguna -->
+    <div class="container" id="profileContainer">
+        <div class="profile-pic"></div>
+     <p>Nama: </p>
+     <p>Email: </p>
+     <p>No HP: </p>
+@foreach ($biodata as $data)
+    <p>{{ $data->nama}}</p>
+    <p>{{ $data->email}}</p>
+    <p>{{ $data->nohp }}</p>
+@endforeach
+        <br><br><br>
+        <div class="button-container">
+            <a href="{{ url('/editprofil') }}" class="button">Edit Akun</a>
+            <a href="{{ url('/biodata') }}" class="button">Biodata</a>
+        </div><br><br><br><br><br>
+        <p><a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a></p>
+
+>>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
     </div>
 
     <div class="info">

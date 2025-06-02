@@ -1,18 +1,41 @@
 <?php
-
 namespace App\Models;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Pengguna extends Model
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+
+class Pengguna extends Authenticatable
 {
-    use HasFactory;
-    protected $table = 'pengguna';
+    use Notifiable;
+
+    protected $table = 'pengguna'; 
     protected $fillable = [
         'nama',
         'email',
         'password',
         'role',
     ];
-}
 
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
+
+    // Mengecek peran pengguna
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
+
+    public function isAdmin()
+    {
+        return $this->role === 'admin';
+    }
+
+    public function isPerusahaan()
+    {
+        return $this->role === 'perusahaan';
+    }
+
+
+}

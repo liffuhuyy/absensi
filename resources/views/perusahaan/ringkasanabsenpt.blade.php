@@ -24,9 +24,6 @@
             <div class="sidebar-wrapper active">
     <div class="sidebar-header position-relative">
         <div class="d-flex justify-content-between align-items-center">
-            <div class="logo">
-                <a href="{{ url('/dashboardpt') }}"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
-            </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
                     role="img" class="iconify iconify--system-uicons" width="20" height="20"
@@ -62,8 +59,7 @@
     </div>
     <div class="sidebar-menu">
     <ul class="menu">
-            <li class="sidebar-title">Menu</li>
-           
+        <li class="sidebar-title">Menu</li>
             <li
             class="sidebar-item">
             <a href="{{ url('/dashboardpt') }}" class='sidebar-link'>
@@ -78,7 +74,6 @@
             <span>Pengajuan</span>
         </a>
     </li>
-    
     <li
     class="sidebar-item">
     <a href="{{ url('/jadwalpt') }}" class='sidebar-link'>
@@ -86,8 +81,7 @@
         <span>Jadwal</span>
     </a>
 </li>
-
-        <li
+    <li
         class="sidebar-item">
         <a href="{{ url('/ringkasanabsenpt') }}" class='sidebar-link'>
             <i class="bi bi-journal-check"></i>
@@ -118,7 +112,7 @@ class="sidebar-item">
         </ul>
     </div>
 </div>
-        </div>
+    </div>
         <div id="main">
             <header class="mb-3">
                 <a href="#" class="burger-btn d-block d-xl-none">
@@ -142,7 +136,7 @@ class="sidebar-item">
             </div>
         </div>
     </div>
-  
+
     <section class="section">
         <div class="row" id="basic-table">
             <div class="col-12 col-md-6">

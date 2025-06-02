@@ -242,6 +242,26 @@
                 gap: 1rem;
             }
         }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        td {
+            color: #555;
+        }
+        .text-dark {
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -274,7 +294,7 @@
             <div class="menu-title">Menu Utama</div>
             <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
             <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
-            <a href="{{ url('/pengajuan') }}" class="menu-item">Pengajuan Magang</a>
+            <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
         </div>
         
         <div class="menu-group">
@@ -287,7 +307,7 @@
  <div class="container">
 <h1>Form Pengajuan Magang</h1>
 <div class="form-group">
-<form method="POST" action="{{ url('/pengajuan') }}">
+<form method="POST" action="{{ url('/pengajuan/tambah') }}">
     @csrf
     <div class="form-group">
         <label for="nama">Nama Lengkap</label>
@@ -330,7 +350,6 @@
         <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
     </div>
 </form>
-
     </div>
 
     <script>

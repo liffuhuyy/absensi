@@ -307,7 +307,7 @@
             <div class="menu-title">Menu Utama</div>
             <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
             <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
-            <a href="{{ url('/pengajuan') }}" class="menu-item">Pengajuan Magang</a>
+            <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
         </div>
         
         <div class="menu-group">
@@ -440,6 +440,7 @@
                 </div>
                     <button type="submit" class="btn btn-save">Simpan Data</button>
             </form>
+                   <div id="notif" style="display: none;"></div>
         </div>
     </div>
 
@@ -479,7 +480,7 @@
         document.getElementById('biodataForm').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Data berhasil disimpan!');
-            window.location.href = 'beranda.php'; // Ganti dengan halaman beranda yang sesuai
+            window.location.href = "{{ url('/beranda') }}"; // Ganti dengan halaman beranda yang sesuai
         });
     </script>
 </body>

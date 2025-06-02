@@ -3,7 +3,6 @@
    <head>
       <meta charset="utf-8">
       <title>Login Form</title>
-      <link rel="stylesheet" href="{{ asset('css/style.css') }}">
      
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
       <style>
@@ -137,27 +136,33 @@ form .pass-link a:hover,
 form .signup-link a:hover{
   text-decoration: underline;
 }
-
- 
-         /* Styling untuk ikon mata */
-         .password-field {
-            position: relative;
-         }
-         .toggle-password {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-            display: none; /* Sembunyikan ikon secara default */
-         }
-      </style>
+.password-field {
+position: relative;
+}
+.toggle-password {
+position: absolute;
+right: 15px;
+top: 50%;
+transform: translateY(-50%);
+cursor: pointer;
+display: none; /* Sembunyikan ikon secara default */
+}
+</style>
    </head>
    <body>
       <div class="wrapper">
          <div class="title">
             Login
          </div>
+
+         @if ($errors->any())
+    <div style="color: red; text-align: center; margin-top: 10px;">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+@endif
+
   <form action="{{ url('/login') }}" method="POST"> <!-- Ubah GET menjadi POST -->
          @csrf <!-- Token keamanan Laravel -->
         <div class="field">
