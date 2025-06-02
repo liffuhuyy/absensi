@@ -1,175 +1,191 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="Pragma" content="no-cache">
-    <meta http-equiv="Expires" content="0">
-    <title>Profil Pengguna</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            width: 100%;
-            max-width: 300px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .profile-pic {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-        }
-        .profile-pic img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .profile-info {
-            margin-bottom: 20px;
-            text-align: left;
-            padding: 0 10px;
-        }
-        .profile-info p {
-            margin: 10px 0;
-            padding: 8px 0;
-            border-bottom: 1px solid #eee;
-        }
-        .button-container {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        .button {
-            width: 100%;
-            padding: 12px;
-            background: #0f172a;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-            box-sizing: border-box;
-            transition: all 0.3s ease;
-        }
-        .button:hover {
-            background: #1e293b;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        .logout-link {
-            text-decoration: none;
-            color: black;
-            display: inline-block;
-            margin-top: 20px;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-        .logout-link:hover {
-            color: #e74c3c;
-        }
-        @media (max-width: 400px) {
-            .container {
-                padding: 15px;
-            }
-            .profile-pic {
-                width: 80px;
-                height: 80px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profil Saya</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    body {
+      background-color: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s ease;
+    }
+    .container {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 300px;
+      text-align: center;
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      transform: translateY(0);
+      transition: all 0.3s ease;
+    }
+    .container:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+    .profile-photo {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: transform 0.3s ease;
+    }
+    .profile-photo:hover {
+      transform: scale(1.05);
+    }
+    .profile-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.3s ease;
+    }
+    .info {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #333;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    .loading .info {
+      opacity: 0.5;
+    }
+    .label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+      color: #555;
+    }
+    .action-btn {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 18px;
+      background-color: #0f172a;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      transform: scale(1);
+    }
+    .action-btn:hover {
+      background-color: #1e293b;
+      transform: scale(1.05);
+    }
+    .action-btn:active {
+      transform: scale(0.98);
+    }
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Kontainer Profil Pengguna -->
-    <div class="container" id="profileContainer">
-        <div class="profile-pic">
-            @if(isset($biodata[0]->foto) && $biodata[0]->foto)
-                <img src="{{ asset('storage/' . $biodata[0]->foto) }}?v={{ time() }}" alt="Profile Picture" id="profileImage">
-            @else
-                <div style="background: #ccc; width: 100%; height: 100%;" id="defaultProfile"></div>
-            @endif
-        </div>
-        
-        <div class="profile-info">
-            @foreach ($biodata as $data)
-                <p><strong>Nama:</strong> {{ $data->nama }}</p>
-                <p><strong>No HP:</strong> {{ $data->nohp }}</p>
-                <!-- Tambahkan field lainnya sesuai kebutuhan -->
-            @endforeach
-        </div>
-        
-        <div class="button-container">
-            <a href="{{ url('/editprofil') }}" class="button">Edit Profil</a>
-            <a href="{{ url('/biodata') }}" class="button">Biodata</a>
-        </div>
-        
-        <p><a href="javascript:void(0)" class="logout-link" onclick="confirmLogout()">Logout</a></p>
+  <div class="container loading" id="profileContainer">
+    <div class="profile-photo">
+      <img id="profileImage" src="default-avatar.png" alt="Foto Profil" class="fade-in" />
     </div>
 
-    <script>
-        // Confirm logout
-        function confirmLogout() {
-            const isConfirmed = confirm("Apakah Anda yakin ingin logout?");
-            if (isConfirmed) {
-                // Add loading effect
-                const container = document.getElementById('profileContainer');
-                container.style.opacity = '0.7';
-                container.style.pointerEvents = 'none';
-                
-                // Redirect after delay
-                setTimeout(() => {
-                    window.location.href = "{{ url('/index') }}";
-                }, 500);
-            }
-        }
+    <div class="info">
+      <span class="label">Nama Lengkap</span>
+      <div id="nama">Loading...</div>
+    </div>
 
-        // Add animation when page loads
-        document.body.style.opacity = '0';
-        setTimeout(() => {
-            document.body.style.transition = 'opacity 0.5s ease';
-            document.body.style.opacity = '1';
-        }, 100);
+    <div class="info">
+      <span class="label">Email</span>
+      <div id="email">Loading...</div>
+    </div>
 
-        // Function to refresh profile image
-        function refreshProfileImage() {
-            const profileImage = document.getElementById('profileImage');
-            if (profileImage) {
-                // Add timestamp to prevent caching
-                profileImage.src = "{{ isset($biodata[0]->foto) ? asset('storage/' . $biodata[0]->foto) : '' }}?v=" + new Date().getTime();
-            }
-        }
+    <a href="{{ url('/editprofil') }}" class="action-btn">Edit Profil</a>
+    <br> <a href="{{ url('/biodata') }}" class="action-btn">Biodata</a>
+  </div>
 
-        // Check for updates when returning from edit profile
-        window.addEventListener('focus', function() {
-            refreshProfileImage();
+  <script>
+    // Wait for everything to load
+    window.addEventListener('load', () => {
+      // Add a slight delay to simulate loading (optional)
+      setTimeout(loadProfileData, 300);
+    });
+
+    function loadProfileData() {
+      try {
+        // Get container element
+        const container = document.getElementById('profileContainer');
+        
+        // Add smooth transition class
+        container.classList.add('loading');
+        
+        // Use requestAnimationFrame for smoother animations
+        requestAnimationFrame(() => {
+          // Get data from localStorage with fallback
+          const data = JSON.parse(localStorage.getItem('profileData')) || {
+            nama: 'Belum diisi',
+            email: 'Belum diisi',
+            profileImage: 'default-avatar.png'
+          };
+          
+          // Animate the content updates
+          animateContentUpdate('nama', data.nama);
+          animateContentUpdate('email', data.email);
+          
+          // Smooth image loading
+          const profileImage = document.getElementById('profileImage');
+          if (data.profileImage && data.profileImage !== profileImage.src) {
+            profileImage.style.opacity = '0';
+            setTimeout(() => {
+              profileImage.src = data.profileImage;
+              profileImage.style.opacity = '1';
+            }, 200);
+          }
+          
+          // Remove loading class when done
+          setTimeout(() => {
+            container.classList.remove('loading');
+          }, 500);
         });
-
-        // Also refresh when page is shown (for mobile)
-        document.addEventListener('visibilitychange', function() {
-            if (!document.hidden) {
-                refreshProfileImage();
-            }
-        });
-    </script>
+      } catch (error) {
+        console.error('Error loading profile data:', error);
+        // Fallback to default values if error occurs
+        document.getElementById('nama').textContent = 'Belum diisi';
+        document.getElementById('email').textContent = 'Belum diisi';
+        document.getElementById('profileContainer').classList.remove('loading');
+      }
+    }
+    
+    function animateContentUpdate(elementId, newValue) {
+      const element = document.getElementById(elementId);
+      element.style.opacity = '0';
+      element.style.transform = 'translateY(5px)';
+      
+      setTimeout(() => {
+        element.textContent = newValue;
+        element.style.opacity = '1';
+        element.style.transform = 'translateY(0)';
+        element.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      }, 200);
+    }
+    
+    // Optional: Add event listener for storage changes to update in real-time
+    window.addEventListener('storage', (event) => {
+      if (event.key === 'profileData') {
+        loadProfileData();
+      }
+    });
+  </script>
 </body>
 </html>
