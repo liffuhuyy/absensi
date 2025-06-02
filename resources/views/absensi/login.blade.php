@@ -164,36 +164,39 @@ display: none; /* Sembunyikan ikon secara default */
     </div>
 @endif
 
-  <form action="{{ url('/login') }}" method="POST"> <!-- Ubah GET menjadi POST -->
-         @csrf <!-- Token keamanan Laravel -->
-        <div class="field">
-              <input type="text" name="email" required>
-              <label>Email </label>
-        </div>       
-        <div class="field">
-              <input type="password" name="password" required>
-              <label>Password</label>
-        </div>  
-            <br>
-            <div class="field">
-                <input type="submit" value="Login">
-            </div>
-            <div class="content">
-               <div class="pass-link">
-                  <a href="{{ url('/lupakatasandi') }}">Lupa kata sandi?</a>
-               </div>
-            </div>
-        </form>
-      </div>
+  <form action="{{ url('/login') }}" method="POST"> <!-- Gunakan POST -->
+    @csrf <!-- Penting untuk hindari error 419 -->
+
+    <div class="field">
+        <input type="text" name="email" id="email" required>
+        <label>Email</label>
+    </div>       
+
+    <div class="field">
+        <input type="password" name="password" id="password" required>
+        <label>Password</label>
+    </div>  
+
+    <br>
+    <div class="field">
+        <input type="submit" id="loginButton" value="Login">
+    </div>
+
+    <div class="content">
+        <div class="pass-link">
+            <a href="{{ url('/lupakatasandi') }}">Lupa kata sandi?</a>
+        </div>
+    </div>
+</form>
+
 
       <!-- Script untuk mengatur fungsi toggle password dan tampilan ikon -->
-      <script>
+    <script>
    function validateFields() {
       const emailInput = document.getElementById('email');
       const passwordInput = document.getElementById('password');
       const loginButton = document.getElementById('loginButton');
 
-      // Enable the login button only if both fields are not empty
       if (emailInput.value.trim() !== '' && passwordInput.value.trim() !== '') {
          loginButton.disabled = false;
       } else {
@@ -201,10 +204,6 @@ display: none; /* Sembunyikan ikon secara default */
       }
    }
 
-   // Event listeners for the input fields
    document.getElementById('email').addEventListener('input', validateFields);
    document.getElementById('password').addEventListener('input', validateFields);
 </script>
-
-   </body>
-</html>

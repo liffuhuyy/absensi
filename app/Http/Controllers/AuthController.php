@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -9,265 +10,90 @@ use App\Models\Biodata;
 use App\Models\Notifikasi;
 use App\Models\Pengajuan;
 use Illuminate\Support\Facades\Hash;
-
-
 use Illuminate\Support\Facades\Auth;
- 
+
 class AuthController extends Controller
 {
-    public function filter(Request $request)
-    {
-    $bulan = $request->bulan;
-    $tugas = UserTugas::whereMonth('tanggal', $bulan)->get();
+    // ================== UMUM ===================
+    public function index() { return $this->loadView('absensi.index'); }
+    public function showLoginForm() { return $this->loadView('absensi.login'); }
+    public function showBerandaForm() { return $this->loadView('absensi.beranda'); }
+    public function magang() { return $this->loadView('absensi.magang'); }
+    public function editprofil() { return $this->loadView('absensi.editprofil'); }
+    public function biodata() { return $this->loadView('absensi.biodata'); }
+    public function izinsakit() { return $this->loadView('absensi.izinsakit'); }
+    public function riwayatabsen() { return $this->loadView('absensi.riwayatabsen'); }
+    public function presensi() { return $this->loadView('absensi.presensi'); }
+    public function pengajuan1() { return $this->loadView('absensi.pengajuan'); }
+    public function kontak() { return $this->loadView('absensi.kontak'); }
+    public function resetkatasandi() { return $this->loadView('absensi.resetkatasandi'); }
+    public function ubahkatasandiberhasil() { return $this->loadView('absensi.ubahkatasandiberhasil'); }
+    public function lupakatasandi() { return $this->loadView('absensi.lupakatasandi'); }
+    public function ubahkatasandi() { return $this->loadView('absensi.ubahkatasandi'); }
+    public function tentangkami() { return $this->loadView('absensi.tentangkami'); }
+    public function product() { return $this->loadView('absensi.product'); }
 
-    return view('absensi.manajementugas', compact('tugas', 'bulan'));
+    public function profil()
+    {
+        $biodata = Biodata::whereNotNull('nohp')->get();
+        return view('absensi.profil', compact('biodata'));
+    }
+
+    // ================== TUGAS ===================
+    public function showTugas()
+    {
+        $tugas = UserTugas::all();
+        return view('absensi.manajementugas', compact('tugas'));
+    }
+
+    public function manajementugas(Request $request)
+    {
+        return redirect()->route('manajementugas');
     }
 
     public function simpanTugas(Request $request)
     {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'tugas' => 'required|string',
+        ]);
+
         try {
             UserTugas::create([
                 'tanggal' => $request->tanggal,
-                'tugas' => $request->tugas
+                'tugas' => $request->tugas,
             ]);
             return redirect()->back()->with('success', 'Data berhasil disimpan!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
-
-        $tugas = UserTugas::all(); 
-        return response()->json($tugas);
-
     }
 
-    public function showLoginForm()
+    public function filter(Request $request)
     {
-        if (view()->exists('absensi.login')) {
-            return view('absensi.login');
-        } else {
-            return "View login tidak ditemukan.";
-        }
+        $bulan = $request->bulan;
+        $tugas = UserTugas::whereMonth('tanggal', $bulan)->get();
+        return view('absensi.manajementugas', compact('tugas', 'bulan'));
     }
 
-    public function magang()
-    {
-        if (view()->exists('absensi.magang')) {
-            return view('absensi.magang');
-        } else {
-            return "View magang tidak ditemukan.";
-        }
-    }
+    // ================== ADMIN ===================
+    public function dashboardmin() { return $this->loadView('admin.dashboardmin'); }
+    public function ringkasanabsen() { return $this->loadView('admin.ringkasanabsen'); }
+    public function datapt() { return $this->loadView('admin.datapt'); }
+    public function pengguna() { return $this->loadView('admin.pengguna'); }
+    public function managementakses() { return $this->loadView('admin.managementakses'); }
+    public function notif() { return $this->loadView('admin.notif'); }
+    public function pengaturan() { return $this->loadView('admin.pengaturan'); }
 
-    public function editprofil()
-    {
-        if (view()->exists('absensi.editprofil')) {
-            return view('absensi.editprofil');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function biodata()
-    {
-        if (view()->exists('absensi.biodata')) {
-            return view('absensi.biodata');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function izinsakit()
-    {
-        if (view()->exists('absensi.izinsakit')) {
-            return view('absensi.izinsakit');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function riwayatabsen()
-    {
-        if (view()->exists('absensi.riwayatabsen')) {
-            return view('absensi.riwayatabsen');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function presensi()
-    {
-        if (view()->exists('absensi.presensi')) {
-            return view('absensi.presensi');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function showBerandaform()
-    {
-        if (view()->exists('absensi.beranda')) {
-            return view('absensi.beranda');
-        } else {
-            return "View beranda tidak ditemukan.";
-        }
-    }
-
-    public function showTugas() {
-        $tugas = UserTugas::all();
-        return view('absensi.manajementugas', compact('tugas')); 
-    }
-
-    
-    public function pengajuan1()
-    {
-        if (view()->exists('absensi.pengajuan')) {
-            return view('absensi.pengajuan');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function kontak()
-    {
-        if (view()->exists('absensi.kontak')) {
-            return view('absensi.kontak');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function resetkatasandi()
-    {
-        if (view()->exists('absensi.resetkatasandi')) {
-            return view('absensi.resetkatasandi');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function ubahkatasandiberhasil()
-    {
-        if (view()->exists('absensi.ubahkatasandiberhasil')) {
-            return view('absensi.ubahkatasandiberhasil');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function lupakatasandi()
-    {
-        if (view()->exists('absensi.lupakatasandi')) {
-            return view('absensi.lupakatasandi');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function ubahkatasandi()
-    {
-        if (view()->exists('absensi.ubahkatasandi')) {
-            return view('absensi.ubahkatasandi');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-  public function profil()
-    {
-    $biodata = Biodata::whereNotNull('nohp')->get();
-      return view('absensi.profil', compact('biodata'));
-    }
-
-
-    public function index()
-    {
-        if (view()->exists('absensi.index')) {
-            return view('absensi.index');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function tentangkami()
-    {
-        if (view()->exists('absensi.tentangkami')) {
-            return view('absensi.tentangkami');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    
-
-
- //ADMIN
-    public function dashboardmin()
-    {
-        if (view()->exists('admin.dashboardmin')) {
-            return view('admin.dashboardmin');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function ringkasanabsen()
-    {
-        if (view()->exists('admin.ringkasanabsen')) {
-            return view('admin.ringkasanabsen');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function datapt()
-    {
-        if (view()->exists('admin.datapt')) {
-            return view('admin.datapt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function pengguna()
-    {
-        if (view()->exists('admin.pengguna')) {
-            return view('admin.pengguna');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function managementakses()
-    {
-        if (view()->exists('admin.managementakses')) {
-            return view('admin.managementakses');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function notif()
-    {
-        if (view()->exists('admin.notif')) {
-            return view('admin.notif');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-     public function storeNotif(Request $request)
+    public function storeNotif(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'nama' => 'required|string|max:255',
             'email' => 'required|email',
-            'message' => 'required|string'
+            'message' => 'required|string',
         ]);
 
-        Notifikasi::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'message' => $request->message,
-        ]);
+        Notifikasi::create($request->only('nama', 'email', 'message'));
 
         return redirect()->back()->with('success', 'Pesan berhasil dikirim!');
     }
@@ -290,131 +116,60 @@ class AuthController extends Controller
         return redirect()->back()->with('success', 'Notifikasi berhasil dihapus!');
     }
 
-        public function pengaturan()
-        {
-            if (view()->exists('admin.pengaturan')) {
-                return view('admin.pengaturan');
-            } else {
-                return "View tidak ditemukan.";
-            }
-        }
+    // ================== PERUSAHAAN ===================
+    public function dashboardpt() { return $this->loadView('perusahaan.dashboardpt'); }
+    public function pengaturanpt() { return $this->loadView('perusahaan.pengaturanpt'); }
+    public function nilai() { return $this->loadView('perusahaan.nilai'); }
+    public function profilpt() { return $this->loadView('perusahaan.profilpt'); }
+    public function ringkasanabsenpt() { return $this->loadView('perusahaan.ringkasanabsenpt'); }
+    public function jadwalpt() { return $this->loadView('perusahaan.jadwalpt'); }
+    public function managementaksespt() { return $this->loadView('perusahaan.managementaksespt'); }
+    public function backupdatapt() { return $this->loadView('perusahaan.backupdatapt'); }
 
-
-
-    //PERUSAHAAN
-    public function dashboardpt()
+    public function managementpenggunapt()
     {
-        if (view()->exists('perusahaan.dashboardpt')) {
-            return view('perusahaan.dashboardpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function pengaturanpt()
-    {
-        if (view()->exists('perusahaan.pengaturanpt')) {
-            return view('perusahaan.pengaturanpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function nilai()
-    {
-        if (view()->exists('perusahaan.nilai')) {
-            return view('perusahaan.nilai');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function profilpt()
-    {
-        if (view()->exists('perusahaan.profilpt')) {
-            return view('perusahaan.profilpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function ringkasanabsenpt()
-    {
-        if (view()->exists('perusahaan.ringkasanabsenpt')) {
-            return view('perusahaan.ringkasanabsenpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
+        return $this->loadView('perusahaan.managementpenggunapt');
     }
 
     public function pengajuanpt()
     {
-        if (view()->exists('perusahaan.pengajuanpt')) {
-            $pengajuan = Pengajuan::all();
-            return view('perusahaan.pengajuanpt', compact('pengajuan'));
-        } else {
-            return "View tidak ditemukan.";
-        }
+        $pengajuan = Pengajuan::all();
+        return view('perusahaan.pengajuanpt', compact('pengajuan'));
     }
 
-    public function jadwalpt()
-    {
-        if (view()->exists('perusahaan.jadwalpt')) {
-            return view('perusahaan.jadwalpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function managementaksespt()
-    {
-        if (view()->exists('perusahaan.managementaksespt')) {
-            return view('perusahaan.managementaksespt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function backupdatapt()
-    {
-        if (view()->exists('perusahaan.backupdatapt')) {
-            return view('perusahaan.backupdatapt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    // LOGIN DAN DAFTAR
+    // ================== AUTH ===================
     public function register(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:pengguna,email', // sesuaikan dengan nama tabel
-            'password' => 'required|min:6'
-        ]);
+       $request->validate([
+    'nama' => 'required|string|max:255',   // ubah dari 'name'
+    'email' => 'required|email|unique:pengguna,email',
+    'password' => 'required|min:6|confirmed',
+]);
 
-        $user = Pengguna::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'siswa', // default role jika tidak diinput
-        ]);
+$user = Pengguna::create([
+    'nama' => $request->nama,  // ubah dari 'name'
+    'email' => $request->email,
+    'password' => Hash::make($request->password),
+    'role' => 'user',
+]);
 
         Auth::login($user);
 
-        return redirect('/beranda')->with('success', 'Pendaftaran berhasil! Anda telah login.');
+        return redirect()->route('beranda')->with('success', 'Pendaftaran berhasil! Anda telah login.');
     }
 
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
         $credentials = $request->only('email', 'password');
 
-        $user = Pengguna::where('email', $credentials['email'])->first();
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
 
-        if ($user && Hash::check($credentials['password'], $user->password)) {
-            Auth::login($user); // Login user
-
-            // Arahkan ke halaman berdasarkan role
             switch ($user->role) {
                 case 'admin':
                     return redirect()->route('dashboardmin');
@@ -426,9 +181,9 @@ class AuthController extends Controller
                     Auth::logout();
                     return redirect()->route('login')->withErrors(['role' => 'Role tidak dikenali.']);
             }
-        } else {
-            return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
         }
+
+        return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
     }
 
     public function logout(Request $request)
@@ -436,5 +191,12 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
-}
 
+    // ================== HELPER ===================
+    private function loadView(string $viewName)
+    {
+        return view()->exists($viewName)
+            ? view($viewName)
+            : abort(404, "View $viewName tidak ditemukan.");
+    }
+}

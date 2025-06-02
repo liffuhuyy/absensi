@@ -300,7 +300,7 @@ $.get('/pengguna', function(data) {
                 $(this).show(); // Tampilkan semua jika pilih "All"
             } else {
                 $(this).toggle($(this).find('td.role').text().toLowerCase() === selectedRole);
-            }
+            } 
         });
     });
 
