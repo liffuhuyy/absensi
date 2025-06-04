@@ -1,3 +1,6 @@
+<?php
+
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -99,38 +102,40 @@
   <div class="container loading" id="profileContainer">
     <div class="profile-photo">
       <img id="profileImage" src="default-avatar.png" alt="Foto Profil" class="fade-in" />
-    <!-- Kontainer Profil Pengguna -->
-    <div class="container" id="profileContainer">
-        <div class="profile-pic"></div>
-     <p>Nama: </p>
-     <p>Email: </p>
-     <p>No HP: </p>
-@foreach ($biodata as $data)
-    <p>Nama: {{ $data->nama}}</p>
-    <p>No Hp: {{ $data->nohp }}</p>
-    <p>{{ $data->nama}}</p>
-    <p>{{ $data->email}}</p>
-    <p>{{ $data->nohp }}</p>
-        <br><br><br>
-        <div class="button-container">
-            <a href="{{ url('/editprofil') }}" class="button">Edit Akun</a>
-            <a href="{{ url('/biodata') }}" class="button">Biodata</a>
-        </div><br><br><br><br><br>
-        <p><a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a></p>
     </div>
 
+    {{-- Biodata dari Database --}}
+    @foreach ($biodata as $data)
+      <div class="info">
+        <span class="label">Nama:</span>
+        <p>{{ $data->nama }}</p>
+      </div>
+      <div class="info">
+        <span class="label">Email:</span>
+        <p>{{ $data->email }}</p>
+      </div>
+      <div class="info">
+        <span class="label">No HP:</span>
+        <p>{{ $data->nohp }}</p>
+      </div>
+    @endforeach
+
+    {{-- Tombol Navigasi --}}
+    <a href="{{ url('/editprofil') }}" class="action-btn">Edit Profil</a>
+    <br><a href="{{ url('/biodata') }}" class="action-btn">Biodata</a>
+
+    <br><br>
+    <p><a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a></p>
+
+    {{-- Data dari localStorage --}}
     <div class="info">
       <span class="label">Nama Lengkap</span>
       <div id="nama">Loading...</div>
     </div>
-
     <div class="info">
       <span class="label">Email</span>
       <div id="email">Loading...</div>
     </div>
-
-    <a href="{{ url('/editprofil') }}" class="action-btn">Edit Profil</a>
-    <br> <a href="{{ url('/biodata') }}" class="action-btn">Biodata</a>
   </div>
 
   <script>
@@ -204,5 +209,13 @@
         loadProfileData();
       }
     });
+
+    // Example function for logout confirmation
+    function confirmLogout() {
+      if (confirm('Apakah Anda yakin ingin logout?')) {
+        window.location.href = '/logout'; // Ganti dengan route logout yang sesuai
+      }
+    }
   </script>
 </body>
+</html>
