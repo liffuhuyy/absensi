@@ -132,9 +132,8 @@ Route::middleware(['auth', RoleMiddleware::class.':perusahaan'])->group(function
     Route::get('/jadwalpt/edit/{id}', [JadwalKerjaController::class, 'edit'])->name('jadwal.edit');
     Route::put('/jadwalpt/update/{id}', [JadwalKerjaController::class, 'update'])->name('jadwal.update');
     Route::delete('/jadwalpt/hapus/{id}', [JadwalKerjaController::class, 'destroy'])->name('jadwal.destroy');
-<<<<<<< HEAD
 
-<<<<<<< HEAD
+
 // Route untuk halaman pengguna 
 Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
 Route::get('/pengguna/tambah', [PenggunaController::class, 'store'])->name('pengguna.store');
@@ -155,9 +154,7 @@ Route::post('/absensi', [PresensiController::class, 'store']);
 Route::post('/izin', [PresensiController::class, 'izin']);
 Route::post('/pulang-awal', [PresensiController::class, 'pulangAwal']);
 Route::post('/profile/update', [ProfileController::class, 'update'])->name('profile.update')->middleware('auth');
-=======
-=======
->>>>>>> d1d392254c622b58447032346056bcba254f97de
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -179,9 +176,5 @@ Route::middleware(['auth', RoleMiddleware::class.':admin'])->group(function () {
     Route::post('/pengguna/tambah', [PenggunaController::class, 'store'])->name('pengguna.tambah');
     Route::delete('/notifikasi/{id}', [AuthController::class, 'destroy'])->name('notifikasi.destroy');
     Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
-<<<<<<< HEAD
     Route::get('/cek-hari-kerja', [JadwalKerjaController::class, 'cekHariKerja'])->name('jadwal.cekHariKerja');
->>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
-=======
     Route::get('/cek-hari-kerja', [JadwalKerjaController::class, 'cekHariKerja'])->name('jadwal.cekHariKerja');
->>>>>>> d1d392254c622b58447032346056bcba254f97de
