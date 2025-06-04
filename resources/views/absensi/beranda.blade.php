@@ -257,7 +257,7 @@
             <div class="menu-title">Menu Utama</div>
             <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
             <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
-            <a href="{{ url('/pengajuan') }}" class="menu-item">Pengajuan Magang</a>
+            <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
         </div>
         
         <div class="menu-group">
@@ -273,7 +273,7 @@
             <p class="welcome-subtitle">Selamat datang di portal siswa SMK NEGERI 1 SUBANG. Silahkan lengkapi biodata Anda dan ajukan program magang untuk memulai perjalanan pendidikan Anda.</p>
             <div class="action-buttons">
                 <a href="{{ url('/biodata') }}" class="btn btn-primary">Lengkapi Biodata</a>
-                <a href="{{ url('/pengajuan') }}" class="btn btn-secondary">Ajukan Magang</a>
+                <a href="{{ url('/magang') }}" class="btn btn-secondary">Ajukan Magang</a>
             </div>
         </div>
 
@@ -291,10 +291,10 @@
         </div>
             <div class="stat-item">
                 <div class="stat-icon">
-                    <a href="nilai.html" class="stat-icon">📋</a>
+                    <a class="stat-icon">📋</a>
                 </div>
                 <div class="stat-value">0</div>
-                <div class="stat-label">Rekap Nilai</div>
+                <div class="stat-label">Nilai akhir</div>
             </div>
             <div class="view-more-container">
                 <a href="{{ url('/manajementugas') }}" class="btn btn-primary">Lihat Selengkapnya</a>

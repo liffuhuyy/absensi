@@ -94,26 +94,15 @@
         .back-button:hover {
             background: black !important;
         }
-
-        .back-button {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
+        /* Tombol Kembali */    
+        .btn-back {
+            background: none;
             border: none;
-            border-radius: 20px;
-            font-weight: 600;
+            color: #000022;
+            font-size: 20px;
             cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
             text-decoration: none;
-            text-align: center;
-            background: linear-gradient(#ffffff, #ffffff);
-            color: rgb(244, 156, 156);
-            margin-bottom: 1.5rem;
-            border-bottom: dotted 2px;
-        }
-
-        .back-button:hover {
-            transform: translateY(-2px);
-            background: linear-gradient(#e44c65, #e44c65);
+            margin-top: 10px;
         }
     </style>
 <<<<<<< HEAD
@@ -197,10 +186,14 @@
     </div>
     <br>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <button class="back-button" onclick="window.location.href='beranda.php'">Kembali</button>
 =======
     <button class="back-button" onclick="window.location.href='{{ url('/beranda') }}'">Kembali</button>
 >>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
+=======
+    <a href="{{ url('/beranda') }}" class="btn-back">Kembali</a>
+>>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
 </form>
       </div>
 			</section>

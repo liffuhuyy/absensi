@@ -10,8 +10,6 @@ class Pengguna extends Authenticatable
     use Notifiable;
 
     protected $table = 'pengguna';
-
-    // Sesuaikan kolom dengan database: pakai 'nama', bukan 'name'
     protected $fillable = [
         'nama',
         'email',
@@ -24,14 +22,21 @@ class Pengguna extends Authenticatable
         'remember_token',
     ];
 
-    // Beri tahu Laravel untuk pakai 'nama' sebagai name
-    public function getAuthIdentifierName()
+    
+    public function isUser()
     {
-        return 'email';
+        return $this->role === 'user';
     }
 
-    public function getAuthPassword()
+    public function isAdmin()
     {
-        return $this->password;
+        return $this->role === 'admin';
     }
+
+    public function isPerusahaan()
+    {
+        return $this->role === 'perusahaan';
+    }
+
+
 }

@@ -58,9 +58,6 @@
             <div class="sidebar-wrapper active">
     <div class="sidebar-header position-relative">
         <div class="d-flex justify-content-between align-items-center">
-            <div class="logo">
-                <a href="{{ url('/dashboardpt') }}"><img src="./assets/compiled/svg/logo.svg" alt="Logo" srcset=""></a>
-            </div>
             <div class="theme-toggle d-flex gap-2  align-items-center mt-2">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"
                     role="img" class="iconify iconify--system-uicons" width="20" height="20"
@@ -184,8 +181,8 @@ class="sidebar-item">
         <div class="card-header d-flex justify-content-between align-items-center">
             <!-- Kolom Pencarian -->
             <div class="form-group me-3">
-                <label for="searchInput">Cari Nama Siswa</label>
-                <input type="text" class="form-control" id="searchInput" placeholder="Ketik nama siswa atau jurusan">
+                <label for="searchInput">Cari Pengguna</label>
+                <input type="text" class="form-control" id="searchInput" placeholder="Ketik nama pengguana">
             </div>
             
             <!-- Dropdown -->
