@@ -163,10 +163,14 @@
                                             <option value="">Pilih Jurusan</option>
                                             <option value="RPL">Rekayasa Perangkat Lunak</option>
                                             <option value="TKJ">Teknik Komputer dan Jaringan</option>
-                                            <option value="MM">Multimedia</option>
-                                            <option value="OTKP">Otomatisasi dan Tata Kelola Perkantoran</option>
+                                            <option value="DKV">Desain Komunikasi Visual</option>
+                                            <option value="MPLB">Otomatisasi dan Tata Kelola Perkantoran</option>
                                             <option value="AKL">Akuntansi dan Keuangan Lembaga</option>
+                                            <option value="TL">Teknik Logistik</option>
                                             <option value="BDP">Bisnis Daring dan Pemasaran</option>
+                                            <option value="KL">Kuliner</option>
+                                            <option value="TPM">Teknik Pemesinan</option>
+                                            <option value="TO">Teknik Otomotif</option>
                                         </select>
                                     </div>
                                     <div class="form-group mb-3">

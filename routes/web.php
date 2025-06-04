@@ -10,6 +10,7 @@ use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PresensiController;
+use App\Http\Controllers\PembimbingController;
 use App\Models\Absensi;
 
 /*
@@ -119,7 +120,12 @@ Route::middleware('auth')->group(function () {
     Route::post('/admin/notif', [AuthController::class, 'storeNotif'])->name('admin.notif');
     Route::delete('/notifikasi/{id}', [AuthController::class, 'destroy'])->name('notifikasi.destroy');
     Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
-});
+
+    Route::get('/datapembimbing', [PembimbingController::class, 'index'])->name('datapembimbing');
+    Route::post('/pembimbing/tambah', [PembimbingController::class, 'store'])->name('pembimbing.tambah');
+    Route::put('/pembimbing/update/{id}', [PembimbingController::class, 'update'])->name('pembimbing.update');
+    Route::delete('/pembimbing/hapus/{id}', [PembimbingController::class, 'destroy'])->name('pembimbing.hapus');
+    });
 
 /*
 |--------------------------------------------------------------------------
