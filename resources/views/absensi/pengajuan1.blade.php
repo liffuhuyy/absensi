@@ -307,7 +307,7 @@
  <div class="container">
 <h1>Form Pengajuan Magang</h1>
 <div class="form-group">
-<form method="POST" action="{{ url('/pengajuan/tambah') }}">
+    <form method="POST" action="{{ route('pengajuan.store') }}">
     @csrf
     <div class="form-group">
         <label for="nama">Nama Lengkap</label>
@@ -343,7 +343,12 @@
 
     <div class="form-group">
         <label for="perusahaan">Perusahaan:</label>
-        <input type="text" name="perusahaan" id="perusahaan" required>
+        <select name="perusahaan_id" id="perusahaan" required>
+            <option>Pilih Perusahaan</option>
+            @foreach($perusahaanList as $jadwal)
+                <option value="{{ $jadwal->pengguna_id }}">{{ $jadwal->pengguna->nama }}</option>
+            @endforeach
+        </select>
     </div>
 
     <div class="button-container">
