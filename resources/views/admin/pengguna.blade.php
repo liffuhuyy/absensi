@@ -131,7 +131,7 @@
                 <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ url('/dashboardmin') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Data pengguna siswa</li>
+                        <li class="breadcrumb-item active" aria-current="page">Data pengguna</li>
                     </ol>
                 </nav>
             </div>

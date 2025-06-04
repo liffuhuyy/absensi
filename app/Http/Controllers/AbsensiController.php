@@ -1,104 +1,111 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Support\Facades\Validator;
-use App\Models\Absensi;
+
 use Illuminate\Http\Request;
+use App\Models\Absensi;
+use App\Models\JadwalKerja;
+use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class AbsensiController extends Controller
 {
- public function absenMasuk(Request $request)
-{
-    // Validasi input
-    $validator = Validator::make($request->all(), [
-        'user_id' => 'required|exists:pengguna,id',
-        'jam_masuk' => 'required|date_format:H:i:s'
-    ]);
+    // Cek apakah hari ini adalah hari kerja
+    public function cekHariKerja()
+    {
+        $pengguna = Auth::user();
+        $jadwal = JadwalKerja::where('pengguna_id', $pengguna->id)->first();
 
-    if ($validator->fails()) {
-        return response()->json([
-            'message' => 'Validasi gagal',
-            'errors' => $validator->errors()
-        ], 422);
+        if (!$jadwal || !$jadwal->isHariKerja()) {
+            return view('libur', ['message' => 'Selamat berlibur! Hari ini bukan hari kerja']);
+        }
+
+        return view('absensi', ['jadwal' => $jadwal]);
     }
 
-    // Cek apakah user sudah absen hari ini
-    $absensiHariIni = Absensi::where('user_id', $request->user_id)
-                             ->where('tanggal', now()->toDateString())
-                             ->first();
+    // Absen masuk
+    public function absenMasuk(Request $request)
+    {
+        $pengguna = Auth::user();
+        $jadwal = JadwalKerja::where('pengguna_id', $pengguna->id)->first();
+        $jamMasukResmi = Carbon::parse($jadwal->jam_masuk);
+        $jamSekarang = Carbon::now();
 
-    if ($absensiHariIni) {
-        return response()->json([
-            'message' => 'Anda sudah absen hari ini!',
-            'data' => $absensiHariIni
-        ], 400);
-    }
+        $status = ($jamSekarang->diffInMinutes($jamMasukResmi) > 5) ? 'Terlambat' : 'Hadir';
 
-    // Menentukan status berdasarkan jam masuk
-    $status = ($request->jam_masuk > '07:30:00') ? 'Terlambat' : 'Hadir';
-
-    try {
-        // Simpan absensi masuk
-        $absensi = Absensi::create([
-            'user_id' => $request->user_id,
-            'tanggal' => now()->toDateString(),
-            'jam_masuk' => $request->jam_masuk,
+        Absensi::create([
+            'pengguna_id' => $pengguna->id,
+            'absen_masuk' => $jamSekarang,
+            'lokasi_masuk' => $request->lokasi,
             'status' => $status
         ]);
 
-        return response()->json([
-            'message' => 'Absensi masuk berhasil',
-            'data' => $absensi
-        ], 201);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'message' => 'Gagal menyimpan data',
-            'error' => $e->getMessage()
-        ], 500);
+        return response()->json(['message' => "Absen masuk berhasil. Status: $status"]);
     }
-    if (!auth()->check()) {
-    return response()->json(['message' => 'User belum login!'], 401);
-}
-$userId = auth()->pengguna()->id;
-}
 
-
+    // Absen pulang
     public function absenPulang(Request $request)
     {
-        Absensi::where('user_id', $request->user_id)
-            ->where('tanggal', now()->toDateString())
-            ->update(['jam_keluar' => $request->jam_keluar]);
+        $pengguna = Auth::user();
+        $jadwal = JadwalKerja::where('pengguna_id', $pengguna->id)->first();
+        $jamPulangResmi = Carbon::parse($jadwal->jam_keluar);
+        $jamSekarang = Carbon::now();
 
-        return response()->json(['message' => 'Absensi pulang berhasil']);
-    }
+        $status = ($jamSekarang->greaterThan($jamPulangResmi->addHours(1))) ? 'Terlambat' : 'Hadir';
 
-    public function absenIzin(Request $request)
-    {
-        Absensi::create([
-            'user_id' => $request->user_id,
-            'tanggal' => now()->toDateString(),
-            'status' => $request->status,
-            'alasan' => $request->alasan
+        Absensi::where('pengguna_id', $pengguna->id)->update([
+            'absen_pulang' => $jamSekarang,
+            'lokasi_pulang' => $request->lokasi,
+            'status' => $status
         ]);
 
-        return response()->json(['message' => 'Absensi izin/sakit berhasil']);
+        return response()->json(['message' => "Absen pulang berhasil. Status: $status"]);
     }
 
-    public function riwayatAbsensi($userId)
+    // Pulang lebih awal
+    public function pulangAwal(Request $request)
     {
-        $data = Absensi::where('user_id', $userId)->orderBy('tanggal', 'desc')->get();
-        return response()->json($data);
+        $pengguna = Auth::user();
+        $jadwal = JadwalKerja::where('pengguna_id', $pengguna->id)->first();
+        $jamPulangResmi = Carbon::parse($jadwal->jam_keluar);
+        $jamSekarang = Carbon::now();
+
+        if ($jamSekarang->lessThan($jamPulangResmi)) {
+            Absensi::where('pengguna_id', $pengguna->id)->update([
+                'absen_pulang' => $jamSekarang,
+                'lokasi_pulang' => $request->lokasi,
+                'pulang_awal' => true,
+                'alasan_pulang_cepat' => $request->alasan
+            ]);
+
+            return response()->json(['message' => "Pulang lebih awal berhasil dicatat"]);
+        } else {
+            return response()->json(['message' => "Sudah waktunya pulang, lakukan absen pulang biasa"]);
+        }
     }
 
-public function rekapBulanan()
+    public function riwayatAbsensi(Request $request)
 {
-    $bulanIni = now()->format('m');
-    $dataBulanan = Absensi::whereMonth('tanggal', $bulanIni)
-        ->selectRaw('status, COUNT(*) as jumlah')
-        ->groupBy('status')
+    $pengguna = Auth::user();
+
+    // Ambil bulan dan tahun yang dipilih, default ke bulan dan tahun saat ini
+    $bulan = $request->input('bulan', Carbon::now()->format('m'));
+    $tahun = $request->input('tahun', Carbon::now()->format('Y'));
+
+    // Ambil data absensi sesuai bulan dan tahun
+    $absensiData = Absensi::where('pengguna_id', $pengguna->id)
+        ->whereMonth('absen_masuk', $bulan)
+        ->whereYear('absen_masuk', $tahun)
         ->get();
 
-    return view('rekap.bulanan', compact('dataBulanan'));
+    // Hitung statistik kehadiran
+    $data = [
+        'hadir' => $absensiData->where('status', 'Hadir')->count(),
+        'terlambat' => $absensiData->where('status', 'Terlambat')->count(),
+        'izin' => $absensiData->where('status', 'Izin')->count(),
+        'sakit' => $absensiData->where('status', 'Sakit')->count(),
+    ];
+
+    return view('absensi.presensi', compact('absensiData', 'data', 'bulan', 'tahun'));
 }
 }
