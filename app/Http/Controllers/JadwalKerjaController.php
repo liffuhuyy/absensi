@@ -104,4 +104,36 @@ public function destroy($id)
 
     return redirect()->route('perusahaan.jadwalpt')->with('success', 'Jadwal kerja berhasil dihapus');
 }
+
+    // Relasi dengan pengguna
+    public function pengguna(): BelongsTo
+    {
+        return $this->belongsTo(Pengguna::class, 'pengguna_id');
+    }
+
+    // Cast agar data memiliki format yang sesuai
+    protected $casts = [
+        'jam_masuk' => 'datetime:H:i:s',
+        'jam_keluar' => 'datetime:H:i:s',
+        'hari_kerja' => 'json',
+        'latitude' => 'float',
+        'longitude' => 'float',
+    ];
+
+    // Cek apakah hari ini adalah hari kerja
+    public function isHariKerja(): bool
+    {
+        $hariIni = Carbon::now()->format('l'); // Mendapatkan nama hari (Monday, Tuesday, etc.)
+        $hariKerja = json_decode($this->hari_kerja, true);
+
+        return in_array($hariIni, $hariKerja);
+    }
+
+    
+public function create()
+{
+    $perusahaanList = JadwalKerja::select('pengguna_id')->distinct()->get();
+    return view('absensi.pengajuan1', compact('perusahaanList'));
+}
+
 }

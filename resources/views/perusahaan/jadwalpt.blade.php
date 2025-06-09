@@ -342,6 +342,7 @@ class="sidebar-item">
 <table class="table">
     <thead>
         <tr>
+            <th>Perusahaan</th>
             <th>Jam Masuk</th>
             <th>Jam Keluar</th>
             <th>Hari Kerja</th>
@@ -353,6 +354,7 @@ class="sidebar-item">
     <tbody>
         @if ($jadwal)
             <tr>
+                <td>{{ $jadwal->pengguna->nama ?? ''}}</td>
                 <td>{{ $jadwal->jam_masuk }}</td>
                 <td>{{ $jadwal->jam_keluar }}</td>
                 <td>{{ implode(', ', json_decode($jadwal->hari_kerja)) }}</td>
