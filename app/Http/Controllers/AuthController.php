@@ -409,9 +409,8 @@ public function testMiddleware()
     }
 
     // LOGIN DAN DAFTAR
-   public function login(Request $request)
+ public function login(Request $request)
 {
-    // Validasi input agar lebih aman
     $request->validate([
         'email' => 'required|email',
         'password' => 'required|min:6'
@@ -419,27 +418,24 @@ public function testMiddleware()
 
     $credentials = $request->only('email', 'password');
 
-    $user = Pengguna::where('email', $credentials['email'])->first();
+    // Gunakan Auth::attempt() untuk handle session otomatis
+    if (Auth::attempt($credentials)) {
+        $user = Auth::user(); // Ambil user yang sudah login
 
-    if ($user && Hash::check($credentials['password'], $user->password)) {
-        Auth::login($user); // Login user
-
-        // Arahkan ke halaman berdasarkan role
+        // Pastikan route-nya ada di routes/web.php
         return match ($user->role) {
-            'admin' => redirect()->route('dashboardmin'),
-            'user' => redirect()->route('beranda'),
-            'perusahaan' => redirect()->route('dashboardpt'),
-            default => tap(Auth::logout(), fn() => redirect()->route('login')->withErrors(['role' => 'Role tidak dikenali.']))
+            'admin' => redirect()->intended(route('dashboardmin')),
+            'user' => redirect()->intended(route('beranda')),
+            'perusahaan' => redirect()->intended(route('dashboardpt')),
+            default => $this->forceLogout()
         };
     }
 
-    return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
+    return back()->withErrors(['login' => 'Email atau password salah.']);
 }
 
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        return redirect()->route('login');
-    }
+private function forceLogout()
+{
+    Auth::logout();
+    return redirect()->route('login')->withErrors(['role' => 'Role tidak valid.']);
 }
-
