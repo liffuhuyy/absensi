@@ -497,7 +497,7 @@ tr:hover {
                         <td>{{ $p->jurusan }}</td>
                         <td>{{ $p->tanggal_masuk }}</td>
                         <td>{{ $p->tanggal_keluar ?? '-' }}</td>
-                        <td>{{ $p->jadwal_kerja ? $p->pengguna_id : '-' }}</td>
+                        <td>{{ $p->perusahaan_id ?? '-' }}</td>
                         <td>
                         <div class="text-dark bg-{{ $p->status == 'Ditolak' ? 'danger' : ($p->status == 'Menunggu' ? 'warning' : 'success') }}">
                       <div class="row">

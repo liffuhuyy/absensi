@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Perusahaan</title>
@@ -19,6 +20,39 @@
   <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
 </head>
 <style>
+    .modal {
+        display: none;
+        position: fixed;    
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+
+    }
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 10px;
+    }
+    .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+    }
+    .close:hover,
+    .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+    }
     .container { margin-top: 20px; }
     .card { padding: 20px; border-radius: 10px; box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1); }
     .logo-preview { width: 100px; height: 100px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; border: 1px solid #ccc; }
@@ -147,108 +181,146 @@ class="sidebar-item">
             </div>
         </div>
 
-        <div class="card">
-            <h5 class="mb-3">Profil</h5>
-            
-<form method="POST" action="{{ isset($perusahaan) ? route('profilpt.update', $perusahaan->id) : route('profilpt.store') }}">
-    @csrf
-    @if(isset($perusahaan))
-        @method('PUT')
-    @endif
+<!-- Form Tambah Perusahaan -->
+<div class="container mt-">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="mb-3">Tambah Perusahaan</h5>
+            <form id="formTambahPerusahaan" method="POST" action="{{ route('perusahaan.store') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="mb-3">
+                    <label class="form-label">Nama Perusahaan</label>
+                    <input type="text" name="nama_perusahaan" class="form-control" placeholder="Masukkan Nama Perusahaan" required>
+                </div>
 
-    <input type="hidden" name="id" value="{{ $perusahaan->id ?? '' }}">
+                <div class="mb-3">
+                    <label class="form-label">Alamat</label>
+                    <input type="text" name="alamat" class="form-control" placeholder="Masukkan Alamat" required>
+                </div>
 
-    <div class="mb-3">
-        <label class="form-label">Nama Perusahaan</label>
-        <input type="text" id="namaPerusahaan" name="nama_perusahaan" class="form-control" placeholder="Masukkan Nama Perusahaan" value="{{ $perusahaan->nama_perusahaan ?? '' }}" required>
-    </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" placeholder="Masukkan Email" required>
+                </div>
 
-<!-- Tambahkan CSS dan JavaScript Leaflet -->
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+                <div class="mb-3">
+                    <label class="form-label">Nomor Telepon</label>
+                    <input type="text" name="telepon" class="form-control" placeholder="Masukkan Nomor Telepon" required>
+                </div>
 
-<div class="mb-3">
-    <label class="form-label">Lokasi (Pilih di Peta)</label>
-    <input type="text" id="searchBox" class="form-control" placeholder="Cari lokasi...">
-    <input type="hidden" id="latitude" name="latitude">
-    <input type="hidden" id="longitude" name="longitude">
-    <div id="map" style="height: 300px; width: 100%;"></div>
-</div>
+                <div class="mb-3">
+                    <label class="form-label">Logo Perusahaan</label>
+                    <input type="file" name="logo" accept="image/*">
+                </div>
 
-    <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" id="email" name="email" class="form-control" placeholder="Masukkan Email" value="{{ $perusahaan->email ?? '' }}" required>
-    </div>
+                <div class="mb-3">
+                    <label class="form-label">Deskripsi Perusahaan</label>
+                    <textarea name="deskripsi" class="form-control" placeholder="Masukkan Deskripsi Perusahaan"></textarea>
+                </div>
 
-    <div class="mb-3">
-        <label class="form-label">Nomor Telepon</label>
-        <input type="text" id="telepon" name="telepon" class="form-control" placeholder="Masukkan Nomor Telepon" value="{{ $perusahaan->telepon ?? '' }}" required>
-    </div>
-
-    <div class="mb-3">
-        <label class="form-label">Logo Perusahaan</label>
-        <div class="d-flex align-items-center gap-3">
-            <div class="logo-preview" id="logoPreview">
-                <img src="{{ $perusahaan->logo ?? 'default-logo.png' }}" width="100" height="100">
-            </div>
-            <input type="file" id="logoInput" name="logo" accept="image/*" class="d-none">
-            <button class="btn btn-black" type="button" onclick="document.getElementById('logoInput').click()">Ganti Logo</button>
+                <button type="submit" class="btn btn-success w-100">Simpan Data</button>
+            </form>
         </div>
     </div>
-
-    <div class="mb-3">
-        <label class="form-label">Deskripsi Perusahaan</label>
-        <textarea id="deskripsi" name="deskripsi" class="form-control" placeholder="Masukkan Deskripsi Perusahaan">{{ $perusahaan->deskripsi ?? '' }}</textarea>
-    </div>
-
-    <button type="submit" class="btn btn-black w-100">Simpan Data</button>
-</form>
-<script>
- document.addEventListener('DOMContentLoaded', function () {
-    let map = L.map('map').setView([-6.2088, 106.8456], 13);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-
-    let marker = L.marker([-6.2088, 106.8456], { draggable: true }).addTo(map);
-
-    marker.on('dragend', function(event) {
-        let position = marker.getLatLng();
-        document.getElementById('latitude').value = position.lat;
-        document.getElementById('longitude').value = position.lng;
-    });
-
-    let searchBox = document.getElementById('searchBox');
-    if (searchBox) {
-        searchBox.addEventListener('change', function () {
-            let searchQuery = this.value;
-            fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${searchQuery}`)
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.length > 0) {
-                        let lat = parseFloat(data[0].lat);
-                        let lon = parseFloat(data[0].lon);
-
-                        map.setView([lat, lon], 15);
-                        marker.setLatLng([lat, lon]);
-
-                        document.getElementById('latitude').value = lat;
-                        document.getElementById('longitude').value = lon;
-                    } else {
-                        alert("Lokasi tidak ditemukan, coba lagi!");
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    alert("Terjadi kesalahan saat mengambil data lokasi. Silakan coba lagi.");
-                });
-        });
-    }
-});
-
-</script>
-
 </div>
 
-            <footer>
+<!-- Modal Edit Perusahaan -->
+<div id="modalEditPerusahaan" class="modal" style="display: none;">
+    <div class="modal-content">
+        <span class="close" onclick="tutupModalEdit()" style="position: absolute; right: 15px; top: 10px; cursor: pointer;">&times;</span>
+        <br>
+         <h2>Edit Perusahaan</h2>
+
+        <form id="formEditPerusahaan" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <input type="hidden" id="editId" name="id">
+
+            <div class="mb-3">
+                <label class="form-label">Nama Perusahaan</label>
+                <input type="text" id="editNamaPerusahaan" name="nama_perusahaan" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Alamat</label>
+                <input type="text" id="editAlamat" name="alamat" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" id="editEmail" name="email" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Nomor Telepon</label>
+                <input type="text" id="editTelepon" name="telepon" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Logo Perusahaan</label>
+                <input type="file" id="editLogo" name="logo" accept="image/*">
+                <img id="editLogoPreview" width="100">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Deskripsi Perusahaan</label>
+                <textarea id="editDeskripsi" name="deskripsi" class="form-control" placeholder="Masukkan Deskripsi Perusahaan"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">Simpan Perubahan</button>
+        </form>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="mb-3">Data Perusahaan</h5>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nama Perusahaan</th>
+                        <th>Alamat</th>
+                        <th>Email</th>
+                        <th>Telepon</th>
+                        <th>Logo</th>
+                        <th>Deskripsi</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($perusahaan as $data)
+                    <tr>
+                        <td>{{ $data->nama_perusahaan }}</td>
+                        <td>{{ $data->alamat }}</td>
+                        <td>{{ $data->email }}</td>
+                        <td>{{ $data->telepon }}</td>
+                        <td>
+                            @if($data->logo)
+                                <img src="{{ asset('storage/' . $data->logo) }}" width="50">
+                            @else
+                                <img src="{{ asset('images/default-logo.png') }}" width="50">
+                            @endif
+                        </td>
+                        <td>{{ $data->deskripsi }}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" onclick="bukaModalEdit({{ $data->id }})">Edit</button>
+                            <form action="{{ route('perusahaan.destroy', $data->id) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                            </form>
+                            
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<footer>
     <div class="footer clearfix mb-0 text-muted">
         <div class="float-start">
             <p>2025 &copy; SMKN 1 SUBANG</p>
@@ -263,17 +335,176 @@ class="sidebar-item">
     </div>
     <script src="assets/static/js/components/dark.js"></script>
     <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-    
-    
     <script src="assets/compiled/js/app.js"></script>
-    
-
-    
-<script src="assets/extensions/jquery/jquery.min.js"></script>
-<script src="assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-<script src="assets/static/js/pages/datatables.js"></script>
+    <script src="assets/extensions/jquery/jquery.min.js"></script>
+    <script src="assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+    <script src="assets/static/js/pages/datatables.js"></script>
 
 </body>
+<script>
+    document.getElementById("editLogo").addEventListener("change", function (event) {
+    let file = event.target.files[0]; // Ambil file yang dipilih
 
+    if (file) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            document.getElementById("editLogoPreview").src = e.target.result;
+            document.getElementById("editLogoPreview").style.display = "block"; // Pastikan gambar terlihat
+        };
+        reader.readAsDataURL(file); // Baca file dan tampilkan sebagai gambar
+    }
+});
+
+// Menampilkan data di tabel
+function loadPerusahaan() {
+    $.ajax({
+        type: "GET",
+        url: "/perusahaan",
+        success: function (data) {
+            if (!Array.isArray(data)) {
+                console.error("Data yang diterima bukan array:", data);
+                return;
+            }
+
+            let tableBody = "";
+            data.forEach(function (perusahaan) {
+                const logoUrl = perusahaan.logo ? `/storage/${perusahaan.logo}` : "/images/default-logo.png";
+                tableBody += `
+                    <tr>
+                        <td>${perusahaan.nama_perusahaan}</td>
+                        <td>${perusahaan.alamat}</td>
+                        <td>${perusahaan.email}</td>
+                        <td>${perusahaan.telepon}</td>
+                        <td><img src="${logoUrl}" width="50"></td>
+                        <td>${perusahaan.deskripsi}</td>
+                        <td>
+                            <button class="btn btn-warning btn-sm" onclick="bukaModalEdit(${perusahaan.id})">Edit</button>
+                            <button class="btn btn-danger btn-sm" onclick="hapusPerusahaan(${perusahaan.id})">Hapus</button>
+                        </td>
+                    </tr>`;
+            });
+
+            $("#tablePerusahaan tbody").html(tableBody);
+        },
+        error: function (xhr) {
+            console.error("Gagal memuat data perusahaan:", xhr.responseText);
+            alert("Gagal memuat data perusahaan.");
+        }
+    });
+}
+
+// Panggil saat halaman dimuat
+$(document).ready(function () {
+    loadPerusahaan();
+});
+
+// Simpan data perusahaan baru
+$("#formTambahPerusahaan").submit(function (e) {
+    e.preventDefault();
+    let formData = new FormData(this);
+
+    $.ajax({
+        type: "POST",
+        url: "/perusahaan",
+        data: formData,
+        processData: false,
+        contentType: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr("content")
+        },
+        success: function (response) {
+            alert(response.message || "Data perusahaan berhasil disimpan.");
+            $("#formTambahPerusahaan")[0].reset();
+            location.reload(); // Refresh halaman setelah menyimpan
+        },
+        error: function (xhr) {
+            console.error("Error saat menyimpan:", xhr.responseText);
+            alert(xhr.responseJSON?.message || "Gagal menyimpan data perusahaan.");
+        }
+    });
+});
+
+// Tampilkan form edit perusahaan
+function bukaModalEdit(id) {
+    $.ajax({
+        type: "GET",
+        url: `/perusahaan/${id}`,
+        success: function (data) {
+            if (!data || data.error) {
+                alert("Data perusahaan tidak ditemukan!");
+                return;
+            }
+
+            $("#editId").val(data.id);
+            $("#editNamaPerusahaan").val(data.nama_perusahaan);
+            $("#editAlamat").val(data.alamat);
+            $("#editEmail").val(data.email);
+            $("#editTelepon").val(data.telepon);
+            $("#editDeskripsi").val(data.deskripsi);
+            const logoUrl = data.logo ? `/storage/${data.logo}` : "/images/default-logo.png";
+            $("#editLogoPreview").attr("src", logoUrl);
+            $("#modalEditPerusahaan").fadeIn();
+        },
+        error: function (xhr) {
+            console.error("Gagal mengambil data:", xhr.responseText);
+            alert("Gagal mengambil data perusahaan.");
+        }
+    });
+}
+
+function tutupModalEdit() {
+    $("#modalEditPerusahaan").fadeOut();
+}
+
+// Update data perusahaan
+$("#formEditPerusahaan").submit(function (e) {
+    e.preventDefault();
+    let id = $("#editId").val();
+    let formData = new FormData(this);
+
+    formData.append('_method', 'PUT'); // Simulasikan PUT via POST
+
+    $.ajax({
+        type: "POST",
+        url: `/perusahaan/${id}`,
+        data: formData,
+        processData: false,
+        contentType: false,
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr("content")
+        },
+        success: function (response) {
+            alert(response.message || "Data perusahaan berhasil diperbarui.");
+            location.reload(); // Refresh halaman setelah update
+        },
+        error: function (xhr) {
+            console.error("Error saat update:", xhr.responseText);
+            alert(xhr.responseJSON?.message || "Gagal memperbarui data perusahaan.");
+        }
+    });
+});
+
+// Hapus perusahaan
+function hapusPerusahaan(id) {
+    if (!confirm("Apakah Anda yakin ingin menghapus perusahaan ini?")) return;
+
+    $.ajax({
+        type: "POST",
+        url: `/perusahaan/${id}`,
+        data: {
+            _method: "DELETE",
+            _token: $('meta[name="csrf-token"]').attr("content")
+        },
+        success: function (response) {
+            alert(response.message || "Data perusahaan berhasil dihapus.");
+            location.reload(); // Refresh halaman setelah hapus
+        },
+        error: function (xhr) {
+            console.error("Error saat menghapus:", xhr.responseText);
+            alert("Gagal menghapus data perusahaan.");
+        }
+    });
+}
+</script>
 </html>

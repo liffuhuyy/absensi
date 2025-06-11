@@ -307,8 +307,9 @@
  <div class="container">
 <h1>Form Pengajuan Magang</h1>
 <div class="form-group">
-    <form method="POST" action="{{ route('pengajuan.store') }}">
+<form method="POST" action="{{ route('pengajuan.store') }}">
     @csrf
+    <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
     <div class="form-group">
         <label for="nama">Nama Lengkap</label>
         <input type="text" id="nama" name="nama" required>
