@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistem Presensi</title>
     <style>
@@ -198,12 +199,12 @@
             background-color: #27ae60;
         }
         
-        .btn-keluar {
+        .btn-pulang {
             background-color: #e74c3c;
             color: white;
         }
         
-        .btn-keluar:hover:not(:disabled) {
+        .btn-pulang:hover:not(:disabled) {
             background-color: #c0392b;
         }
         
@@ -536,6 +537,32 @@
         .overlay.active {
             display: block;
         }
+        .modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 40%;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -589,18 +616,9 @@
 
         <!-- Tombol Absensi -->
         <div class="button-group">
-            <form method="POST" action="{{ url('/absen/masuk') }}">
-                @csrf
-                <button id="btnMasuk" class="btn-masuk">Absen Masuk</button>
-            </form>
-            <form method="POST" action="{{ url('/absen/keluar') }}">
-                @csrf
-                <button id="btnKeluar" class="btn-keluar" disabled>Absen Keluar</button>
-            </form>
-            <form method="POST" action="{{ url('/izin') }}">
-                @csrf
-                <button id="btnIzin" class="btn-izin">Izin / Sakit</button>
-            </form>
+            <button id="btnMasuk" class="btn-masuk">Absen Masuk</button>
+            <button id="btnPulang" class="btn-pulang" style="display: none;">Absen Pulang</button>
+            <button id="btnIzin" class="btn-izin">Ajukan Izin</button>
         </div>
     </div>
 </div>
@@ -610,8 +628,8 @@
     <div class="modal-content">
         <span class="close">&times;</span>
         <h2>Form Izin / Sakit</h2>
-        <form method="POST" action="{{ url('/izin') }}">
-            @csrf
+        <form id="formIzin" method="POST" action="{{ route('absen.izin') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group">
                 <label for="jenis_izin">Jenis Izin</label>
                 <select name="jenis_izin" id="jenis_izin" class="form-control" required>
@@ -628,72 +646,100 @@
     </div>
 </div>
 
-<!-- Modal Pulang Lebih Awal -->
+<!-- Modal Pulang Awal -->
 <div id="modalPulangAwal" class="modal">
     <div class="modal-content">
         <span class="close">&times;</span>
-        <h2>Pulang Lebih Awal</h2>
-        <p>Anda pulang sebelum jam 17:00. Silakan berikan alasan:</p>
-        <form method="POST" action="{{ url('/absensi/pulang-cepat') }}">
-            @csrf
+        <h2>Konfirmasi Pulang Awal</h2>
+        <p>Anda mencoba melakukan absen pulang sebelum waktu yang ditentukan. Harap berikan alasan.</p>
+        <form id="formPulangAwal" method="POST" action="{{ route('absen.pulang.awal') }}">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="form-group">
-                <label for="alasan_pulang_cepat">Alasan Pulang Lebih Awal</label>
-                <textarea name="alasan_pulang_cepat" id="alasan_pulang_cepat" class="form-control" rows="4" required></textarea>
+                <label for="alasan_pulang_awal">Alasan Pulang Awal</label>
+                <textarea name="alasan_pulang_awal" id="alasan_pulang_awal" class="form-control" rows="4" required></textarea>
             </div>
-            <button type="submit" class="btn-submit">Konfirmasi</button>
+            <button type="submit" class="btn-submit">Kirim</button>
         </form>
     </div>
 </div>
 
-<h2 class="card-title">Riwayat Absensi - 
-    <select id="bulan">
-        <option value="01">Januari</option>
-        <option value="02">Februari</option>
-        <option value="03">Maret</option>
-        <option value="04">April</option>
-        <option value="05">Mei</option>
-        <option value="06">Juni</option>
-        <option value="07">Juli</option>
-        <option value="08">Agustus</option>
-        <option value="09">September</option>
-        <option value="10">Oktober</option>
-        <option value="11">November</option>
-        <option value="12">Desember</option>
-    </select>
-
-    <select id="tahun">
-        @for ($i = date('Y'); $i >= date('Y') - 5; $i--)
-            <option value="{{ $i }}">{{ $i }}</option>
-        @endfor
-    </select>
-</h2>
-
-<div id="absensiTable">
-    <table>
-        <thead>
-            <tr>
-                <th>Tanggal</th>
-                <th>Status</th>
-                <th>Jam Masuk</th>
-                <th>Jam Keluar</th>
-                <th>Keterangan</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($absensiData as $absen)
-                <tr>
-                    <td>{{ $absen->tanggal }}</td>
-                    <td>{{ $absen->status }}</td>
-                    <td>{{ $absen->jam_masuk ?? '-' }}</td>
-                    <td>{{ $absen->jam_keluar ?? '-' }}</td>
-                    <td>{{ $absen->keterangan ?? '-' }}</td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+<div id="liburContainer" class="container" style="display: none;">
+    <p style="font-size: 18px; font-weight: bold;">Hari ini bukan hari kerja atau merupakan hari libur nasional.</p>
+    <img src="/img/liburan.png" alt="Libur" style="max-width: 200px; margin-top: 10px;">
 </div>
 
-    <script>
+<div id="absenContainer" class="container">
+        <h2 class="card-title">Riwayat Absensi - 
+        <select id="bulan">
+            <option value="01">Januari</option>
+            <option value="02">Februari</option>
+            <option value="03">Maret</option>
+            <option value="04">April</option>
+            <option value="05">Mei</option>
+            <option value="06">Juni</option>
+            <option value="07">Juli</option>
+            <option value="08">Agustus</option>
+            <option value="09">September</option>
+            <option value="10">Oktober</option>
+            <option value="11">November</option>
+            <option value="12">Desember</option>
+        </select>
+
+        <select id="tahun">
+            @for ($i = date('Y'); $i >= date('Y') - 5; $i--)
+                <option value="{{ $i }}">{{ $i }}</option>
+            @endfor
+        </select>
+    </h2><div class="stats-card">
+        <div class="stat-item stat-hadir">
+            <h3>Hadir</h3>
+            <span class="stat-icon">✔️</span>
+            <span class="stat-value">{{ $statistik['hadir'] ?? 0 }}</span>
+        </div>
+        <div class="stat-item stat-terlambat">
+            <h3>Terlambat</h3>
+            <span class="stat-icon">⏰</span>
+            <span class="stat-value ">{{ $statistik['terlambat'] ?? 0 }}</span> 
+        </div>
+        <div class="stat-item stat-izin">
+            <h3>Izin</h3>
+            <span class="stat-icon">📝</span>
+            <span class="stat-value">{{ $statistik['izin'] ?? 0 }}</span>
+        </div>  
+        <div class="stat-item stat-sakit">
+            <h3>Sakit</h3>
+            <span class="stat-icon">🤒</span>
+            <span class="stat-value">{{ $statistik['sakit'] ?? 0 }}</span>
+        </div>  
+    </div>
+
+    <div id="absensiTable" class="card p-3">
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Tanggal</th>
+                    <th>Status</th>
+                    <th>Jam Masuk</th>
+                    <th>Jam Keluar</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($absensiData as $absen)
+                    <tr>
+                        <td>{{ $absen->tanggal ?? '' }}</td>
+                        <td>{{ $absen->status ?? '' }}</td>
+                        <td>{{ $absen->absen_masuk ?? '' }}</td>
+                        <td>{{ $absen->jam_keluar ?? '' }}</td>
+                        <td>{{ $absen->keterangan ?? '' }}</td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const closeSidebar = document.getElementById('closeSidebar');
@@ -735,51 +781,332 @@
                 window.location.href = "{{ url('/index') }}";
             }
         }
-    </script>
-    <script>
-        $(document).ready(function () {
-    function getLocation(callback) {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function(position) {
-                const lokasi = position.coords.latitude + ',' + position.coords.longitude;
-                callback(lokasi);
-            });
-        } else {
-            alert("Geolocation tidak didukung oleh browser ini.");
-        }
-    }
+        
 
-    $("#btnMasuk").click(function () {
-        getLocation(function(lokasi) {
+        // Jam Digital
+        function updateTime() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('tanggal').textContent = now.toLocaleDateString('id-ID', options);
+            document.getElementById('jam').textContent = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+        }
+        setInterval(updateTime, 1000);
+        updateTime(); // Panggil sekali untuk inisialisasi
+        
+        $.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+</script>
+<script>
+// Global constants
+const jamMasuk = "07:30";
+const jamPulang = "16:00";
+const hariKerja = ["Senin", "Selasa", "Rabu", "Kamis", "Jumat"];
+
+// Status absen dari localStorage
+let statusAbsen = localStorage.getItem("statusAbsen") || "masuk";
+let sudahAbsenMasuk = localStorage.getItem("sudahAbsenMasuk") === "true";
+let sudahAbsenPulang = localStorage.getItem("sudahAbsenPulang") === "true";
+let sudahIzin = localStorage.getItem("sudahIzin") === "true";
+let lastPosition = null; // untuk menyimpan lokasi GPS terakhir
+
+$(document).ready(function () {
+    cekHariKerjaDanLibur().then((bolehAbsen) => {
+        if (!bolehAbsen) return;
+
+        updateTombol();
+
+        // Event Absen Masuk
+        $("#btnMasuk").click(function () {
+            cekLokasiAktif(async function (position) {
+                const currentTime = getWaktuWIB();
+                if (currentTime < jamMasuk) {
+                    alert("Belum waktunya absen masuk!");
+                    return;
+                }
+
+                const kodeKota = await getKodeKota(position);
+                kirimAbsen("/absen/masuk", position, "masuk", kodeKota);
+            });
+        });
+
+        // Event Absen Pulang
+        $("#btnPulang").click(function () {
+            cekLokasiAktif(async function (position) {
+                const currentTime = getWaktuWIB();
+
+                if (currentTime < jamPulang) {
+                    $("#modalPulangAwal").fadeIn();
+
+                    $("#formPulangAwal").off("submit").on("submit", async function (e) {
+                        e.preventDefault();
+                        const alasan = $("#alasan_pulang_awal").val();
+                        if (!alasan) {
+                            alert("Isi alasan pulang lebih awal.");
+                            return;
+                        }
+
+                        const kodeKota = await getKodeKota(position);
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/absen/pulang-awal",
+                            data: {
+                                alasan_pulang_awal: alasan,
+                                latitude: position.coords.latitude,
+                                longitude: position.coords.longitude,
+                                kode_kota: kodeKota,
+                                _token: $('meta[name="csrf-token"]').attr('content')
+                            },
+                            success: function (response) {
+                                alert(response.message);
+                                $("#modalPulangAwal").fadeOut();
+                                localStorage.setItem("sudahAbsenPulang", "true");
+                                sudahAbsenPulang = true;
+                                updateTombol();
+                            },
+                            error: function (xhr) {
+                                console.error(xhr.responseText);
+                                alert("Gagal kirim data pulang awal.");
+                            }
+                        });
+                    });
+
+                    return;
+                }
+
+                if (currentTime > "19:00") {
+                    alert("Batas absen pulang jam 19:00.");
+                    return;
+                }
+
+                const kodeKota = await getKodeKota(position);
+                kirimAbsen("/absen/pulang", position, "pulang", kodeKota);
+            });
+        });
+
+        // Event Ajukan Izin
+        $("#btnIzin").click(function () {
+            $("#modalIzin").fadeIn();
+        });
+
+        // Submit Izin
+        $("#formIzin").submit(function (e) {
+            e.preventDefault();
+            const jenis = $("#jenis_izin").val();
+            const alasan = $("#alasan_izin").val();
+
+            if (!jenis || !alasan) {
+                alert("Lengkapi semua data!");
+                return;
+            }
+
             $.ajax({
                 type: "POST",
-                url: "/absen/masuk",
-                data: { lokasi: lokasi, _token: $('meta[name="csrf-token"]').attr('content') },
-                success: function (response) {
-                    alert(response.message);
-                    $("#btnMasuk").prop("disabled", true);
-                    $("#btnKeluar").prop("disabled", false);
+                url: "/absen/izin",
+                data: {
+                    status: jenis,
+                    keterangan: alasan,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function () {
+                    alert("Izin berhasil diajukan!");
+                    $("#modalIzin").fadeOut();
+                    localStorage.setItem("sudahIzin", "true");
+                    sudahIzin = true;
+                    updateTombol();
+                },
+                error: function (xhr) {
+                    console.error(xhr.responseText);
+                    alert("Gagal ajukan izin.");
                 }
             });
         });
+
+        // Reset setiap jam 00:00 WIB
+        setInterval(function () {
+            const currentTime = getWaktuWIB();
+            if (currentTime === "00:00") {
+                localStorage.clear();
+                statusAbsen = "masuk";
+                sudahAbsenMasuk = false;
+                sudahAbsenPulang = false;
+                sudahIzin = false;
+                updateTombol();
+            }
+        }, 60000);
+    });
+
+    // Tutup modal
+    $(".close").click(function () {
+        $("#modalIzin, #modalPulangAwal").fadeOut();
+    });
+
+    $(window).click(function (event) {
+        if ($(event.target).is("#modalIzin") || $(event.target).is("#modalPulangAwal")) {
+            $("#modalIzin, #modalPulangAwal").fadeOut();
+        }
     });
 });
-$(document).ready(function () {
-    $("#bulanTahun").change(function () {
-        let bulan = $("#bulan").val();
-        let tahun = $("#tahun").val();
 
-        $.ajax({
-            type: "GET",
-            url: "/riwayat-absensi",
-            data: { bulan: bulan, tahun: tahun },
-            success: function (data) {
-                $("#absensiTable").html(data);
+function getWaktuWIB() {
+    const now = new Date();
+    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+    const wib = new Date(utc + 7 * 3600000);
+    const jam = wib.getHours().toString().padStart(2, "0");
+    const menit = wib.getMinutes().toString().padStart(2, "0");
+    return `${jam}:${menit}`;
+}
+
+function tampilkanLibur(pesan) {
+    $("#absenContainer").hide();
+    $("#liburContainer").html(`
+        <p style="font-size: 18px; font-weight: bold;">${pesan}</p>
+        <img src="/img/liburan.png" alt="Libur" style="max-width: 200px; margin-top: 10px;">
+    `).show();
+    $("#btnMasuk, #btnPulang, #btnIzin").prop("disabled", true);
+}
+
+async function cekHariKerjaDanLibur() {
+    const now = new Date();
+    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+    const wib = new Date(utc + 7 * 3600000);
+
+    const hari = wib.toLocaleDateString("id-ID", { weekday: "long" });
+    const tanggal = wib.getDate();
+    const bulan = wib.getMonth() + 1;
+    const tahun = wib.getFullYear();
+
+    if (!hariKerja.includes(hari)) {
+        tampilkanLibur("Hari ini bukan hari kerja.");
+        return false;
+    }
+
+    try {
+        const response = await $.ajax({
+            url: `https://dayoffapi.vercel.app/api?year=${tahun}&month=${bulan}&day=${tanggal}`,
+            method: "GET",
+            dataType: "json"
+        });
+
+        if (response && response.length > 0 && response[0].is_national_holiday) {
+            tampilkanLibur(`Selamat berlibur: ${response[0].event}`);
+            return false;
+        }
+    } catch (error) {
+        console.warn("Gagal cek libur:", error);
+    }
+
+    $("#absenContainer").show();
+    $("#liburContainer").hide();
+    return true;
+}
+
+function updateTombol() {
+    const currentTime = getWaktuWIB();
+
+    $("#btnMasuk").text("Absen Masuk");
+    $("#btnPulang").text("Absen Pulang");
+    $("#btnIzin").text("Ajukan Izin");
+
+    const disableSemua = currentTime < jamMasuk || currentTime > "19:00";
+    $("#btnMasuk, #btnPulang, #btnIzin").prop("disabled", disableSemua);
+
+    if (!disableSemua) {
+        $("#btnMasuk").prop("disabled", sudahAbsenMasuk || sudahIzin);
+        $("#btnPulang").prop("disabled", !sudahAbsenMasuk || sudahAbsenPulang || sudahIzin);
+        $("#btnIzin").prop("disabled", sudahAbsenMasuk || sudahAbsenPulang || sudahIzin);
+    }
+
+    $("#btnMasuk").toggle(!sudahAbsenMasuk && !sudahIzin);
+    $("#btnPulang").toggle(sudahAbsenMasuk && !sudahAbsenPulang && !sudahIzin);
+
+    if (sudahAbsenMasuk && sudahAbsenPulang) {
+        $("#btnMasuk, #btnPulang, #btnIzin").prop("disabled", true);
+        $("#btnMasuk").text("Anda sudah absen hari ini");
+    } else if (sudahIzin) {
+        $("#btnMasuk, #btnPulang").prop("disabled", true);
+        $("#btnIzin").prop("disabled", true).text("Sudah mengajukan izin");
+    }
+}
+
+function kirimAbsen(url, position, status, kodeKota = "Tidak diketahui") {
+    if (!position || !status) {
+        alert("Data absen tidak valid.");
+        return;
+    }
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            status: status,
+            kode_kota: kodeKota,
+            _token: $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function () {
+            alert(`Absen berhasil (${status})`);
+            if (status === "masuk") {
+                statusAbsen = "pulang";
+                localStorage.setItem("statusAbsen", "pulang");
+                localStorage.setItem("sudahAbsenMasuk", "true");
+                sudahAbsenMasuk = true;
+            } else {
+                localStorage.setItem("sudahAbsenPulang", "true");
+                sudahAbsenPulang = true;
+            }
+            updateTombol();
+        },
+        error: function (xhr) {
+            console.error(xhr.responseText);
+            alert(`Gagal mengirim absen (${status})`);
+        }
+    });
+}
+
+function cekLokasiAktif(callback) {
+    if (!navigator.geolocation) {
+        alert("Perangkat Anda tidak mendukung geolokasi.");
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+        function (position) {
+            console.log("Lokasi didapat:", position.coords.latitude, position.coords.longitude);
+            lastPosition = position;
+            callback(position);
+        },
+        function (error) {
+            alert("Lokasi tidak aktif. Nyalakan GPS!");
+        }
+    );
+}
+
+async function getKodeKota(position) {
+    const lat = position.coords.latitude;
+    const lon = position.coords.longitude;
+
+    try {
+        const response = await $.ajax({
+            url: `https://nominatim.openstreetmap.org/reverse`,
+            data: {
+                format: "json",
+                lat: lat,
+                lon: lon
             }
         });
-    });
-});
 
-    </script>
+        const city = response.address.city || response.address.town || response.address.village || "Tidak diketahui";
+        return city;
+    } catch (error) {
+        console.warn("Gagal ambil kota:", error);
+        return "Tidak diketahui";
+    }
+}
+</script>
 </body>
 </html>

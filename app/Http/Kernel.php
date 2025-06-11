@@ -16,6 +16,7 @@ use App\Http\Middleware\StartSession;
 use App\Http\Middleware\ShareErrorsFromSession;
 use App\Http\Middleware\SubstituteBindings;
 use App\Http\Middleware\SetCacheHeaders;
+use App\Http\Middleware\VerifyCsrfToken; // Tambahkan middleware ini
 
 class Kernel extends HttpKernel
 {
@@ -39,6 +40,7 @@ class Kernel extends HttpKernel
             StartSession::class,
             ShareErrorsFromSession::class,
             SubstituteBindings::class,
+            VerifyCsrfToken::class, // Middleware CSRF ditambahkan ke grup web
         ],
 
         'api' => [
@@ -51,8 +53,8 @@ class Kernel extends HttpKernel
      * Middleware rute yang bisa digunakan secara individu.
      */
     protected $routeMiddleware = [
-    'auth' => \App\Http\Middleware\Authenticate::class,
-    'role' => \App\Http\Middleware\RoleMiddleware::class,
-    'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'auth' => Authenticate::class,
+        'role' => RoleMiddleware::class,
+        'guest' => RedirectIfAuthenticated::class,
     ];
 }

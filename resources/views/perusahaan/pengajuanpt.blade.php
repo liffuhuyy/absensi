@@ -182,7 +182,7 @@ class="sidebar-item">
             <!-- Kolom Pencarian -->
             <div class="form-group me-3">
                 <label for="searchInput">Cari Pengguna</label>
-                <input type="text" class="form-control" id="searchInput" placeholder="Ketik nama pengguana">
+                <input type="text" class="form-control" id="searchInput" placeholder="Ketik nama pengguna">
             </div>
             
             <!-- Dropdown -->
@@ -277,7 +277,7 @@ class="sidebar-item">
                     <td>{{ $data->jurusan }}</td>
                     <td>{{ $data->tanggal_masuk }}</td>
                     <td>{{ $data->tanggal_keluar }}</td>
-                    <td>{{ $data->perusahaan }}</td>
+                    <td>{{ $data->jadwalKerja->nama ?? '-' }}</td>
                     <td>{{ $data->created_at->format('d-m-Y H:i') }}</td>
                     <td>
                         <div class="container text-dark {{ $bgColor }}">

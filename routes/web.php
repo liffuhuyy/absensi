@@ -6,11 +6,11 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\JadwalKerjaController;
-use App\Http\Controllers\PerusahaanController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
@@ -20,9 +20,6 @@ use App\Models\Notifikasi;
 use App\Models\Pengajuan;
 use App\Models\Pengguna;
 use App\Models\JadwalKerja;
-
-
-
 /*
 |--------------------------------------------------------------------------
 | Guest Routes
@@ -79,12 +76,13 @@ Route::middleware(['auth', RoleMiddleware::class.':user'])->group(function () {
     //sistem absensi
     Route::get('/presensi', [AuthController::class, 'presensi']);
     Route::get('/presensi', [AbsensiController::class, 'riwayatAbsensi'])->name('riwayat.absensi');
-    Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
     Route::post('/absen/masuk', [AbsensiController::class, 'absenMasuk'])->name('absen.masuk');
     Route::post('/absen/pulang', [AbsensiController::class, 'absenPulang'])->name('absen.pulang');
-    Route::post('/absen/pulang-awal', [AbsensiController::class, 'pulangAwal'])->name('absen.pulang-awal');
-    Route::post('/izin', [AbsensiController::class, 'izin'])->name('absen.izin');
+    Route::post('/absen/izin', [AbsensiController::class, 'ajukanIzin'])->name('absen.izin');
+    Route::post('/absen/pulang-awal', [AbsensiController::class, 'pulangAwal'])->name('absen.pulang.awal');
     Route::get('/cek-hari-kerja', [AbsensiController::class, 'cekHariKerja'])->name('cek.hari.kerja');
+    Route::get('/get-jadwal-kerja', [AbsensiController::class, 'getJadwalDariPerusahaan']);
+    Route::get('/cek-absensi', [AbsensiController::class, 'cekAbsensi']);
     //sistem ubah kata sandi
     Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
     Route::get('/ubahkatasandiberhasil', [AuthController::class, 'ubahkatasandiberhasil'])->name('ubahkatasandiberhasil');
@@ -119,11 +117,14 @@ Route::middleware(['auth', RoleMiddleware::class.':perusahaan'])->group(function
     Route::get('/managementaksespt', [AuthController::class, 'managementaksespt'])->name('managementaksespt');
     Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
     //profil perusahaan
+    Route::resource('perusahaan', PerusahaanController::class);
     Route::get('/profilpt', [AuthController::class, 'profilpt'])->name('profilpt');
-    Route::get('/profilpt/create', [PerusahaanController::class, 'create'])->name('profilpt.create');
-    Route::post('/profilpt/store', [PerusahaanController::class, 'store'])->name('profilpt.store');
-    Route::get('/profilpt/edit/{profilpt}', [PerusahaanController::class, 'edit'])->name('profilpt.edit');
-    Route::put('/profilpt/update/{profilpt}', [PerusahaanController::class, 'update'])->name('profilpt.update');
+    Route::get('/profilpt', [PerusahaanController::class, 'index'])->name('perusahaan.index');
+    Route::post('/perusahaan/store', [PerusahaanController::class, 'store'])->name('perusahaan.store');
+    Route::get('/perusahaan/{id}', [PerusahaanController::class, 'show'])->name('perusahaan.show');
+    Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
+    Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
+    Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
     //sistem jadwal kerja
     Route::get('/jadwalpt', [AuthController::class, 'jadwalpt'])->name('jadwalpt');
     Route::get('/jadwalpt', [JadwalKerjaController::class, 'index']);
