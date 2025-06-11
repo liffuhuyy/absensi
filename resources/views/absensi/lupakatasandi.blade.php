@@ -104,7 +104,7 @@
             </div>
             
             <button type="submit" class="btn-primary">Konfirmasi</button>
-            <button type="button" class="btn-secondary" id="backButton">Kembali</button>
+            <a href="{{ route('login') }}">Kembali ke Login</a>
         </form>
     </div>
 

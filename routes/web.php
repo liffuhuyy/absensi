@@ -11,7 +11,10 @@ use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\PembimbingController;
+<<<<<<< HEAD
 use App\Models\Absensi;
+=======
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +22,7 @@ use App\Models\Absensi;
 |--------------------------------------------------------------------------
 */
 
+<<<<<<< HEAD
 // Halaman Login & Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -29,11 +33,16 @@ Route::get('/logout', function () {
 });
 
 // Halaman utama (index)
+=======
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
 Route::get('/', function () {
     return view('absensi.index');
 });
 
-// Tes koneksi database
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
 Route::get('/test-db', function () {
     try {
         DB::connection()->getPdo();
@@ -45,6 +54,7 @@ Route::get('/test-db', function () {
 
 /*
 |--------------------------------------------------------------------------
+<<<<<<< HEAD
 | Dashboard (Multi-role)
 |--------------------------------------------------------------------------
 */
@@ -144,3 +154,115 @@ Route::middleware('auth')->group(function () {
     Route::get('/managementaksespt', [AuthController::class, 'managementaksespt'])->name('managementaksespt');
     Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
 });
+=======
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth'])->group(function () {
+
+    // Dashboard dan Reset
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::post('/reset/proses', [AuthController::class, 'prosesReset'])->name('reset.proses');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Siswa Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('siswa')->middleware('role:user')->group(function () {
+        Route::get('/beranda', [AuthController::class, 'beranda'])->name('beranda');
+        Route::get('/index', [AuthController::class, 'index'])->name('index');
+        Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('tentangkami');
+        Route::get('/product', [AuthController::class, 'product'])->name('product');
+        Route::get('/kontak', [AuthController::class, 'kontak'])->name('kontak');
+        Route::get('/profil', [AuthController::class, 'profil'])->name('profil');
+        Route::get('/editprofil', [AuthController::class, 'editprofil'])->name('editprofil');
+
+        // Biodata
+        Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata.index');
+        Route::post('/biodata/store', [BiodataController::class, 'store'])->name('biodata.store');
+        Route::put('/biodata/{id}', [BiodataController::class, 'update'])->name('biodata.update');
+
+        // Absensi
+        Route::get('/riwayatabsen', [AuthController::class, 'riwayatabsen'])->name('riwayatabsen');
+        Route::get('/izinsakit', [AuthController::class, 'izinsakit'])->name('izinsakit');
+        Route::get('/absensi', [AbsensiController::class, 'absensi'])->name('absensi');
+        Route::post('/absensi', [AbsensiController::class, 'store']);
+        Route::post('/absensi/izin', [AbsensiController::class, 'izin']);
+        Route::post('/absensi/simpan', [AbsensiController::class, 'simpan'])->name('simpan.absensi');
+        Route::post('/absensi/pulang-awal', [AbsensiController::class, 'pulangAwal']);
+
+        // Presensi
+        Route::post('/presensi/store', [AbsensiController::class, 'store'])->name('presensi.store');
+
+        // Tugas
+        Route::get('/manajementugas', [AuthController::class, 'showTugas'])->name('manajementugas');
+        Route::post('/manajementugas', [AuthController::class, 'manajementugas']);
+        Route::post('/simpan-tugas', [AuthController::class, 'simpanTugas']);
+
+        // Pengajuan
+        Route::get('/pengajuan1', [AuthController::class, 'pengajuan1'])->name('pengajuan1');
+        Route::get('/pengajuan', [PengajuanController::class, 'index']);
+        Route::post('/pengajuan', [PengajuanController::class, 'store']);
+
+        // Lainnya
+        Route::get('/filter', [AuthController::class, 'filter'])->name('filter');
+        Route::get('/magang', [AuthController::class, 'magang'])->name('magang');
+        Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
+        Route::get('/ubahkatasandiberhasil', [AuthController::class, 'ubahkatasandiberhasil'])->name('ubahkatasandiberhasil');
+        Route::get('/lupakatasandi', [AuthController::class, 'lupakatasandi'])->name('lupakatasandi');
+        Route::get('/resetkatasandi', [AuthController::class, 'resetkatasandi'])->name('resetkatasandi');
+        Route::post('/resetkatasandi', [AuthController::class, 'updatePassword'])->name('resetkatasandi.update');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Admin Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('admin')->middleware('role:admin')->group(function () {
+        Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsen'])->name('ringkasanabsen');
+        Route::get('/datapt', [AuthController::class, 'datapt'])->name('datapt');
+
+        // Pengguna
+        Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+        Route::get('/pengguna/tambah', [PenggunaController::class, 'store'])->name('pengguna.store');
+        Route::post('/pengguna/tambah', [PenggunaController::class, 'store']);
+        Route::delete('/pengguna/hapus/{id}', [PenggunaController::class, 'hapus'])->name('pengguna.hapus');
+
+        // Pembimbing
+        Route::get('/datapembimbing', [PembimbingController::class, 'index'])->name('datapembimbing');
+        Route::post('/pembimbing/tambah', [PembimbingController::class, 'store'])->name('pembimbing.tambah');
+        Route::put('/pembimbing/update/{id}', [PembimbingController::class, 'update'])->name('pembimbing.update');
+        Route::delete('/pembimbing/hapus/{id}', [PembimbingController::class, 'destroy'])->name('pembimbing.hapus');
+
+        Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
+        Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
+
+        // Notifikasi
+        Route::get('/notif', [AuthController::class, 'showNotif'])->name('notif');
+        Route::post('/notif', [AuthController::class, 'storeNotif'])->name('admin.notif');
+        Route::delete('/notifikasi/{id}', [AuthController::class, 'destroy'])->name('notifikasi.destroy');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Perusahaan Routes
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('perusahaan')->middleware('role:perusahaan')->group(function () {
+        Route::get('/dashboard', [AuthController::class, 'dashboardpt'])->name('dashboardpt');
+        Route::get('/pengaturan', [AuthController::class, 'pengaturanpt'])->name('pengaturanpt');
+        Route::get('/nilai', [AuthController::class, 'nilai'])->name('nilai');
+        Route::get('/profil', [AuthController::class, 'profilpt'])->name('profilpt');
+        Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsenpt'])->name('ringkasanabsenpt');
+        Route::get('/pengajuan', [AuthController::class, 'pengajuanpt'])->name('pengajuanpt');
+        Route::post('/pengajuan/updateStatus', [PengajuanController::class, 'updateStatus'])->name('pengajuan.updateStatus');
+        Route::get('/jadwal', [AuthController::class, 'jadwalpt'])->name('jadwalpt');
+        Route::get('/managementpengguna', [AuthController::class, 'managementpenggunapt'])->name('managementpenggunapt');
+        Route::get('/managementakses', [AuthController::class, 'managementaksespt'])->name('managementaksespt');
+        Route::get('/backupdata', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
+    });
+});
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad

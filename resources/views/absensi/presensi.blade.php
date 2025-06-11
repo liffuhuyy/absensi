@@ -552,6 +552,17 @@
                     <img src="{{ url('/profil') }}" alt="Profile Picture">
                 </a>
             </div>            
+<<<<<<< HEAD
+
+
+        <div class="profile-icon">
+            <a href="{{ url('/profil') }}">
+                <img src="{{ url('/profil') }}" alt="Profile Picture">
+            </a>
+        </div>            
+
+=======
+>>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
     </div>
 
     <div class="overlay" id="overlay"></div>
@@ -577,12 +588,45 @@
             <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
         </div>
     </div>
+<<<<<<< HEAD
 <form method="POST" action="{{ url('/absen/masuk') }}">
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+<form method="POST" action="{{ url('/absensi') }}">
+
+
+<body>
+    
+=======
+<form method="POST" action="{{ url('/absensi') }}">
+>>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
+=======
+<form method="POST" action="{{ url('/absen/masuk') }}">
+>>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
     <div class="container">
         <header>
             <h1>Sistem Presensi Siswa</h1>
         </header>       
         <div class="card">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+<<<<<<< HEAD
+        <!-- Tombol untuk kembali ke halaman sebelumnya -->
+<a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
+<a href="{{ url('/dashboard') }}" class="btn btn-primary">Kembali ke Dashboard</a>
+
+        <div class="card"> 
+=======
+>>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
+=======
+>>>>>>> 3edbfbba53ee6f0fb49ddd9c251ef44a41646aa8
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
             <div class="tanggal" id="tanggal"></div>
             <div class="jam-digital" id="jam"></div>        
          <div id="alertBox" class="alert"></div>
@@ -619,6 +663,7 @@
     <div class="stat-item stat-sakit">
         <h3>Sakit</h3>
         <div class="value">{{ $data['sakit'] ?? 0 }}</div>
+<<<<<<< HEAD
     </div>
 </div>
 <tbody>
@@ -641,6 +686,13 @@
    </div>
       </div>
     </form>
+=======
+=======
+<div class="container">
+    <header>
+        <h1>Sistem Presensi Siswa</h1>
+    </header>
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
 
     <!-- Modal Izin / Sakit -->
 <form method="POST" action="{{ url('/izin') }}">
@@ -664,6 +716,7 @@
                 <button type="submit" class="btn-submit">Kirim</button>
             </form>
         </div>
+>>>>>>> d1d392254c622b58447032346056bcba254f97de
     </div>
 </form>
     
@@ -703,6 +756,10 @@
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
         });
+<<<<<<< HEAD
+
+=======
+>>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
         // Fungsi untuk sidebar
         document.addEventListener("DOMContentLoaded", function () {
             const menuToggle = document.getElementById("menuToggle");
@@ -993,6 +1050,7 @@ fetch('/api/absen-masuk', {
         jamKeluar: null,
         status: 'Hadir'
     });
+<<<<<<< HEAD
     localStorage.setItem('absensiData', JSON.stringify(absensiData));
 
     showAlert('Berhasil absen masuk!', 'success');
@@ -1028,6 +1086,160 @@ document.getElementById('formIzin').addEventListener('submit', async function(e)
 
 
      <script>
+=======
+<<<<<<< HEAD
+
+    const data = await response.json();
+    alert(data.message);
+
+    document.getElementById('modalIzin').style.display = 'none';
+    document.getElementById('formIzin').reset();
+});
+     </script>   
+
+
+     <script>
+<<<<<<< HEAD
+        // Event listener untuk form pulang awal
+        document.getElementById('formPulangAwal').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const alasan = document.getElementById('alasan_pulang_cepat').value;
+            const now = new Date();
+            const jam = formatJam(now);
+            const tanggal = now.toISOString().split('T')[0];
+            
+            // Update data presensi
+            updateDataPresensi(tanggal, {
+                jamKeluar: jam,
+                keterangan: alasan
+            });
+            // Sembunyikan modal
+            document.getElementById('modalPulangAwal').style.display = 'none';
+            // Reset form
+            document.getElementById('formPulangAwal').reset();           
+            // Tampilkan pesan
+            showAlert('Berhasil absen keluar dengan keterangan pulang lebih awal!', 'success');
+        });
+        
+        // Modal controls
+        const modalIzin = document.getElementById('modalIzin');
+        const modalPulangAwal = document.getElementById('modalPulangAwal');
+        const spans = document.getElementsByClassName('close');
+        
+        // Tutup modal ketika klik tombol close (×)
+        for (let i = 0; i < spans.length; i++) {
+            spans[i].onclick = function() {
+                modalIzin.style.display = 'none';
+                modalPulangAwal.style.display = 'none';
+            }
+        }
+        
+        // Tutup modal ketika klik di luar modal
+        window.onclick = function(event) {
+            if (event.target == modalIzin) {
+                modalIzin.style.display = 'none';
+            }
+            if (event.target == modalPulangAwal) {
+                modalPulangAwal.style.display = 'none';
+            }
+        }
+        
+        // Inisialisasi tampilan
+        updateTabelPresensi();
+<<<<<<< HEAD
+
+        document.getElementById("btnMasuk").addEventListener("click", function() {
+    let tanggal = new Date().toISOString().split('T')[0];
+    let jamMasuk = new Date().toLocaleTimeString();
+    
+    fetch('/absensi', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            tanggal: tanggal,
+            status: "Hadir",
+            jam_masuk: jamMasuk,
+            jam_keluar: "",
+            keterangan: ""
+        })
+    })
+    .then(response => response.json())
+    .then(data => alert(data.message))
+    .catch(error => console.error("Error:", error));
+});
+fetch("/absensi")
+    .then(response => response.json())
+    .then(data => {
+        let tabel = document.getElementById("tabelPresensi");
+        tabel.innerHTML = "";
+
+        data.forEach(item => {
+            let row = `<tr>
+                <td>${item.tanggal}</td>
+                <td>${item.status}</td>
+                <td>${item.jam_masuk || "-"}</td>
+                <td>${item.jam_keluar || "-"}</td>
+                <td>${item.keterangan || "-"}</td>
+            </tr>`;
+            tabel.innerHTML += row;
+        });
+    })
+    .catch(error => console.error("Error:", error));
+<<<<<<< HEAD
+
+=======
+>>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
+
+    document.getElementById("formIzin").addEventListener("submit", function(event) {
+    event.preventDefault();
+    
+    let jenisIzin = document.getElementById("jenis_izin").value;
+    let alasanIzin = document.getElementById("alasan_izin").value;
+
+    fetch("/absensi/izin", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+        },
+        body: JSON.stringify({ jenis_izin: jenisIzin, alasan_izin: alasanIzin })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();
+    })
+    .catch(error => console.error("Terjadi kesalahan:", error));
+});
+
+document.getElementById("formPulangAwal").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let alasanPulang = document.getElementById("alasan_pulang_cepat").value;
+
+    fetch("/absensi/pulang-awal", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+        },
+        body: JSON.stringify({ alasan_pulang_cepat: alasanPulang })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();
+    })
+    .catch(error => console.error("Terjadi kesalahan:", error));
+});
+
+=======
+        updateStatistik();
+        updateJam();
+>>>>>>> 3edbfbba53ee6f0fb49ddd9c251ef44a41646aa8
+=======
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
        document.getElementById('formPulangAwal').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -1091,6 +1303,14 @@ window.onclick = function(event) {
 updateTabelPresensi();
 updateStatistik();
 updateJam();
+<<<<<<< HEAD
+=======
+>>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
+=======
+});
+
+>>>>>>> d1d392254c622b58447032346056bcba254f97de
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
     </script>
 </body>
 </html>
