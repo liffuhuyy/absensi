@@ -9,7 +9,7 @@ class Pengguna extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'pengguna'; 
+    protected $table = 'pengguna';
     protected $fillable = [
         'nama',
         'email',
@@ -22,7 +22,7 @@ class Pengguna extends Authenticatable
         'remember_token',
     ];
 
-    // Mengecek peran pengguna
+    
     public function isUser()
     {
         return $this->role === 'user';
