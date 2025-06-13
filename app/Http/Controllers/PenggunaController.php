@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Pengguna;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -15,10 +16,11 @@ class PenggunaController extends Controller
             'namaPengguna' => 'required|string|max:255',
             'emailPengguna' => 'required|email|unique:pengguna,email',
             'passwordPengguna' => 'required|string|min:6',
-            'role' => 'required|in:user,perusahaan,admin' // Pastikan role valid
+            'role' => 'required|in:user,perusahaan,admin'
         ]);
 
         Pengguna::create([
+            'pengguna_id' => Auth::id(),
             'nama' => $request->namaPengguna,
             'email' => $request->emailPengguna,
             'password' => Hash::make($request->passwordPengguna),
@@ -29,11 +31,11 @@ class PenggunaController extends Controller
     }
 
     // Menampilkan daftar pengguna
-public function index()
-{
-    $pengguna = Pengguna::all(); // Ambil semua data pengguna
-    return view('admin.pengguna', compact('pengguna')); // Redirect ke halaman
-}
+    public function index()
+    {
+        $pengguna = Pengguna::all(); // Ambil semua data pengguna
+        return view('admin.pengguna', compact('pengguna')); // Redirect ke halaman
+    }
 
     // Proses login dan redirect berdasarkan role
     public function login(Request $request)
@@ -58,7 +60,7 @@ public function index()
         return back()->withErrors(['message' => 'Email atau password salah']);
     }
 
-     public function hapus($id)
+    public function hapus($id)
     {
         try {
             $pengguna = pengguna::findOrFail($id);
@@ -74,11 +76,10 @@ public function index()
         }
     }
 
-        public function getPenggunaPerusahaan()
+    public function getPenggunaPerusahaan()
     {
         $penggunaPerusahaan = Pengguna::where('role', 'perusahaan')->select('id', 'nama')->get();
 
         return response()->json($penggunaPerusahaan);
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -13,16 +14,16 @@ use Illuminate\Support\Facades\Hash;
 use App\Http\Middleware\RoleMiddleware;
 
 use Illuminate\Support\Facades\Auth;
- 
+
 class AuthController extends Controller
 {
 
     public function filter(Request $request)
     {
-    $bulan = $request->bulan;
-    $tugas = UserTugas::whereMonth('tanggal', $bulan)->get();
+        $bulan = $request->bulan;
+        $tugas = UserTugas::whereMonth('tanggal', $bulan)->get();
 
-    return view('absensi.manajementugas', compact('tugas', 'bulan'));
+        return view('absensi.manajementugas', compact('tugas', 'bulan'));
     }
 
     public function simpanTugas(Request $request)
@@ -37,19 +38,18 @@ class AuthController extends Controller
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
 
-        $tugas = UserTugas::all(); 
+        $tugas = UserTugas::all();
         return response()->json($tugas);
-
     }
 
-public function showLoginForm()
-{
-    if (!view()->exists('absensi.login')) {
-        abort(404, 'Halaman login tidak ditemukan.');
-    }
+    public function showLoginForm()
+    {
+        if (!view()->exists('absensi.login')) {
+            abort(404, 'Halaman login tidak ditemukan.');
+        }
 
-    return view('absensi.login');
-}
+        return view('absensi.login');
+    }
 
     public function editprofil()
     {
@@ -105,16 +105,17 @@ public function showLoginForm()
         }
     }
 
-    public function showTugas() {
+    public function showTugas()
+    {
         $tugas = UserTugas::all();
-        return view('absensi.manajementugas', compact('tugas')); 
+        return view('absensi.manajementugas', compact('tugas'));
     }
 
     public function showPengajuan1()
-{
-    $pengajuan = Pengajuan::paginate(10);
-    return view('absensi.magang', compact('pengajuan'));
-}
+    {
+        $pengajuan = Pengajuan::paginate(10);
+        return view('absensi.magang', compact('pengajuan'));
+    }
 
     public function pengajuan1()
     {
@@ -125,14 +126,13 @@ public function showLoginForm()
         }
     }
 
-        public function magang()
+    public function magang()
     {
         if (view()->exists('absensi.magang')) {
             return view('absensi.magang');
         } else {
             return "View tidak ditemukan.";
         }
-    
     }
 
     public function kontak()
@@ -180,10 +180,10 @@ public function showLoginForm()
         }
     }
 
-  public function profil()
+    public function profil()
     {
-    $biodata = Biodata::whereNotNull('nohp')->get();
-      return view('absensi.profil', compact('biodata'));
+        $biodata = Biodata::whereNotNull('nohp')->get();
+        return view('absensi.profil', compact('biodata'));
     }
 
 
@@ -205,17 +205,17 @@ public function showLoginForm()
         }
     }
 
-public function testMiddleware()
-{
-    if (Auth::check()) {
-        return "User sudah login!";
-    } else {
-        return "User belum login!";
+    public function testMiddleware()
+    {
+        if (Auth::check()) {
+            return "User sudah login!";
+        } else {
+            return "User belum login!";
+        }
     }
-}
 
 
- //ADMIN
+    //ADMIN
     public function dashboardmin()
     {
         if (view()->exists('admin.dashboardmin')) {
@@ -234,28 +234,11 @@ public function testMiddleware()
         }
     }
 
-    public function datapt()
-    {
-        if (view()->exists('admin.datapt')) {
-            return view('admin.datapt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
 
     public function pengguna()
     {
         if (view()->exists('admin.pengguna')) {
             return view('admin.pengguna');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function managementakses()
-    {
-        if (view()->exists('admin.managementakses')) {
-            return view('admin.managementakses');
         } else {
             return "View tidak ditemukan.";
         }
@@ -270,7 +253,7 @@ public function testMiddleware()
         }
     }
 
-     public function storeNotif(Request $request)
+    public function storeNotif(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -279,12 +262,21 @@ public function testMiddleware()
         ]);
 
         Notifikasi::create([
+            'pengguna_id' => Auth::id(),
             'name' => $request->name,
             'email' => $request->email,
             'message' => $request->message,
         ]);
 
-        return redirect()->back()->with('success', 'Pesan berhasil dikirim!');
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Pesan telah berhasil dikirim!',
+            ]);
+        }
+
+        // Jika bukan AJAX (fallback)
+        return redirect()->route('beranda')->with('success', 'Pesan telah berhasil dikirim!');
     }
 
     public function showNotif()
@@ -304,16 +296,6 @@ public function testMiddleware()
         $notifikasi->delete();
         return redirect()->back()->with('success', 'Notifikasi berhasil dihapus!');
     }
-
-        public function pengaturan()
-        {
-            if (view()->exists('admin.pengaturan')) {
-                return view('admin.pengaturan');
-            } else {
-                return "View tidak ditemukan.";
-            }
-        }
-
 
 
     //PERUSAHAAN
@@ -381,15 +363,6 @@ public function testMiddleware()
         }
     }
 
-    public function managementaksespt()
-    {
-        if (view()->exists('perusahaan.managementaksespt')) {
-            return view('perusahaan.managementaksespt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
     public function backupdatapt()
     {
         if (view()->exists('perusahaan.backupdatapt')) {
@@ -400,32 +373,32 @@ public function testMiddleware()
     }
 
     // LOGIN DAN DAFTAR
-   public function login(Request $request)
-{
-    // Validasi input agar lebih aman
-    $request->validate([
-        'email' => 'required|email',
-        'password' => 'required|min:6'
-    ]);
+    public function login(Request $request)
+    {
+        // Validasi input agar lebih aman
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
 
-    $credentials = $request->only('email', 'password');
+        $credentials = $request->only('email', 'password');
 
-    $user = Pengguna::where('email', $credentials['email'])->first();
+        $user = Pengguna::where('email', $credentials['email'])->first();
 
-    if ($user && Hash::check($credentials['password'], $user->password)) {
-        Auth::login($user); // Login user
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            Auth::login($user); // Login user
 
-        // Arahkan ke halaman berdasarkan role
-        return match ($user->role) {
-            'admin' => redirect()->route('dashboardmin'),
-            'user' => redirect()->route('beranda'),
-            'perusahaan' => redirect()->route('dashboardpt'),
-            default => tap(Auth::logout(), fn() => redirect()->route('login')->withErrors(['role' => 'Role tidak dikenali.']))
-        };
+            // Arahkan ke halaman berdasarkan role
+            return match ($user->role) {
+                'admin' => redirect()->route('dashboardmin'),
+                'user' => redirect()->route('beranda'),
+                'perusahaan' => redirect()->route('dashboardpt'),
+                default => tap(Auth::logout(), fn() => redirect()->route('login')->withErrors(['role' => 'Role tidak dikenali.']))
+            };
+        }
+
+        return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
     }
-
-    return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
-}
 
     public function logout(Request $request)
     {
@@ -433,4 +406,3 @@ public function testMiddleware()
         return redirect()->route('login');
     }
 }
-

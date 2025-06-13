@@ -12,6 +12,7 @@ use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\JadwalKerjaController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\PenilaianController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\UserTugas;
@@ -20,6 +21,8 @@ use App\Models\Notifikasi;
 use App\Models\Pengajuan;
 use App\Models\Pengguna;
 use App\Models\JadwalKerja;
+use App\Models\Penilaian;
+
 /*
 |--------------------------------------------------------------------------
 | Guest Routes
@@ -36,7 +39,7 @@ Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');
 });
-
+Route::get('/get-jadwal-kerja', [AbsensiController::class, 'getJadwalDariPerusahaan']);
 // Halaman utama (index)
 Route::get('/', function () {
     return view('absensi.index');
@@ -53,7 +56,7 @@ Route::get('/test-db', function () {
 });
 /*
 |--------------------------------------------------------------------------
-| Siswa Routes
+| User/siswa Routes
 |--------------------------------------------------------------------------
 */
 //Bagian tampilan awal
@@ -63,9 +66,9 @@ Route::get('/lupakatasandi', [AuthController::class, 'lupakatasandi'])->name('lu
 Route::get('/resetkatasandi', [AuthController::class, 'resetkatasandi'])->name('resetkatasandi');
 
 // Bagian USER
-Route::middleware(['auth', RoleMiddleware::class.':user'])->group(function () {
+Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () {
     Route::get('/beranda', [AuthController::class, 'beranda'])->name('beranda');
-});
+    Route::post('/admin/notif', [AuthController::class, 'storeNotif'])->name('admin.notif');
     Route::get('/kontak', [AuthController::class, 'kontak'])->name('kontak');
     Route::get('/profil', [AuthController::class, 'profil'])->name('profil');
     //sistem biodata
@@ -81,7 +84,6 @@ Route::middleware(['auth', RoleMiddleware::class.':user'])->group(function () {
     Route::post('/absen/izin', [AbsensiController::class, 'ajukanIzin'])->name('absen.izin');
     Route::post('/absen/pulang-awal', [AbsensiController::class, 'pulangAwal'])->name('absen.pulang.awal');
     Route::get('/cek-hari-kerja', [AbsensiController::class, 'cekHariKerja'])->name('cek.hari.kerja');
-    Route::get('/get-jadwal-kerja', [AbsensiController::class, 'getJadwalDariPerusahaan']);
     Route::get('/cek-absensi', [AbsensiController::class, 'cekAbsensi']);
     //sistem ubah kata sandi
     Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
@@ -98,24 +100,23 @@ Route::middleware(['auth', RoleMiddleware::class.':user'])->group(function () {
     Route::get('/magang', [AuthController::class, 'showPengajuan1'])->name('pengajuan1');
     Route::get('/pengajuan1', [AuthController::class, 'pengajuan1'])->name('pengajuan1');
     Route::get('/pengajuan1', [PengajuanController::class, 'create']);
+    //Sistem Penilaian
+    Route::get('/penilaian', [PenilaianController::class, 'penilaian'])->name('penilaian');
+});
 /*
 |--------------------------------------------------------------------------
 | Perusahaan Routes
 |--------------------------------------------------------------------------
 */
 //Bagian PERUSAHAAN
-Route::middleware(['auth', RoleMiddleware::class.':perusahaan'])->group(function () {
+Route::middleware(['auth', RoleMiddleware::class . ':perusahaan'])->group(function () {
     Route::get('/dashboardpt', [AuthController::class, 'dashboardpt'])->name('dashboardpt');
-});
     Route::get('/pengaturanpt', [AuthController::class, 'pengaturanpt'])->name('pengaturanpt');
     Route::get('/nilai', [AuthController::class, 'nilai'])->name('nilai');
     Route::get('/ringkasanabsenpt', [AuthController::class, 'ringkasanabsenpt'])->name('ringkasanabsenpt');
     //sistem riwayat pengajuan magang perusahaan
     Route::get('/pengajuanpt', [AuthController::class, 'pengajuanpt'])->name('pengajuanpt');
     Route::post('/pengajuan/updateStatus', [PengajuanController::class, 'updateStatus'])->name('pengajuan.updateStatus');
-    
-    Route::get('/managementaksespt', [AuthController::class, 'managementaksespt'])->name('managementaksespt');
-    Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
     //profil perusahaan
     Route::resource('perusahaan', PerusahaanController::class);
     Route::get('/profilpt', [AuthController::class, 'profilpt'])->name('profilpt');
@@ -133,25 +134,26 @@ Route::middleware(['auth', RoleMiddleware::class.':perusahaan'])->group(function
     Route::get('/jadwalpt/edit/{id}', [JadwalKerjaController::class, 'edit'])->name('jadwal.edit');
     Route::put('/jadwalpt/update/{id}', [JadwalKerjaController::class, 'update'])->name('jadwal.update');
     Route::delete('/jadwalpt/hapus/{id}', [JadwalKerjaController::class, 'destroy'])->name('jadwal.destroy');
+});
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
 |--------------------------------------------------------------------------
 */
 // Bagian ADMIN
-Route::middleware(['auth', RoleMiddleware::class.':admin'])->group(function () {
+Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
     Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
-});
-    Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsen'])->name('ringkasanabsen');
-    Route::get('/datapt', [AuthController::class, 'datapt'])->name('datapt');
+    //sistem akun pengguna
     Route::get('/pengguna', [AuthController::class, 'pengguna'])->name('pengguna');
-    Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
-    Route::get('/notif', [AuthController::class, 'notif'])->name('notif');
-    Route::post('/admin/notif', [AuthController::class, 'storeNotif'])->name('admin.notif');
-    Route::get('/notif', [AuthController::class, 'showNotif'])->name('notif');
     Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
     Route::delete('/pengguna/hapus/{id}', [PenggunaController::class, 'hapus'])->name('pengguna.hapus');
     Route::post('/pengguna/tambah', [PenggunaController::class, 'store'])->name('pengguna.tambah');
+    //sistem nitofikasi
+    Route::get('/notif', [AuthController::class, 'notif'])->name('notif');
+    Route::get('/notif', [AuthController::class, 'showNotif'])->name('notif');
     Route::delete('/notifikasi/{id}', [AuthController::class, 'destroy'])->name('notifikasi.destroy');
+    //pengaturan
     Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
+    //sistem jadwal
     Route::get('/cek-hari-kerja', [JadwalKerjaController::class, 'cekHariKerja'])->name('jadwal.cekHariKerja');
+});

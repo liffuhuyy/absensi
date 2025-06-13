@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -8,8 +9,9 @@ class Pengguna extends Authenticatable
 {
     use Notifiable;
 
-    protected $table = 'pengguna'; 
+    protected $table = 'pengguna';
     protected $fillable = [
+        'pengguna_id',
         'nama',
         'email',
         'password',
@@ -36,6 +38,4 @@ class Pengguna extends Authenticatable
     {
         return $this->role === 'perusahaan';
     }
-
-
 }

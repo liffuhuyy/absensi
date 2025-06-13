@@ -14,78 +14,60 @@ use App\Models\Pengajuan;
 
 class AbsensiController extends Controller
 {
-    // Cek apakah hari ini adalah hari kerja
-    public function cekHariKerja()
+    // Absen masuk
+    public function absenMasuk(Request $request)
     {
-        $pengguna = Auth::user();
+        Log::info('Request absen masuk: ', $request->all());
 
-        if (!$pengguna) {
-            return response()->json(['error' => 'Pengguna tidak ditemukan'], 404);
+        $request->validate([
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
+
+        $user = Auth::user();
+        if (!$user) {
+            return response()->json(['error' => 'Pengguna tidak terautentikasi'], 401);
         }
 
-        $jadwal = JadwalKerja::where('pengguna_id', $pengajuan->perusahaan_id)->first();
+        // Setting timezone Jakarta (WIB)
+        $waktuSekarang = now()->timezone('Asia/Jakarta');
 
-        if (!$jadwal || !$jadwal->isHariKerja()) {
-            return view('libur', ['message' => 'Selamat berlibur! Hari ini bukan hari kerja']);
+        // Jadwal masuk dan pulang (format 24 jam)
+        $jamMasuk = '07:30';
+        $jamPulang = '16:00';
+
+        // Buat objek Carbon untuk jadwal masuk dan pulang di hari ini
+        $jadwalMasuk = Carbon::createFromFormat('Y-m-d H:i', $waktuSekarang->format('Y-m-d') . ' ' . $jamMasuk, 'Asia/Jakarta');
+        $jadwalPulang = Carbon::createFromFormat('Y-m-d H:i', $waktuSekarang->format('Y-m-d') . ' ' . $jamPulang, 'Asia/Jakarta');
+
+        // Tentukan status: terlambat jika absen lewat dari jam masuk
+        $status = $waktuSekarang->greaterThan($jadwalMasuk) ? 'terlambat' : 'tepat waktu';
+
+        // Cari atau buat record absensi hari ini untuk user
+        $absensi = Absensi::firstOrNew([
+            'pengguna_id' => $user->id,
+            'tanggal' => $waktuSekarang->startOfDay(),  // tanggal hari ini WIB
+        ]);
+
+        if ($absensi->absen_masuk) {
+            return response()->json(['error' => 'Sudah absen masuk hari ini'], 400);
         }
 
-        return view('presensi', ['jadwal' => $jadwal]);
-    }
+        // Simpan data absen masuk dengan waktu WIB tapi simpan di DB sesuai timezone server (biasanya UTC)
+        $absensi->absen_masuk = $waktuSekarang->copy()->setTimezone('UTC'); // simpan UTC
+        $absensi->lokasi_masuk_latitude = $request->latitude;
+        $absensi->lokasi_masuk_longitude = $request->longitude;
+        $absensi->status = $status;
 
-// Absen masuk
-public function absenMasuk(Request $request)
-{
-    Log::info('Request absen masuk: ', $request->all());
-
-    $request->validate([
-        'latitude' => 'required|numeric',
-        'longitude' => 'required|numeric',
-    ]);
-
-    $user = Auth::user();
-    if (!$user) {
-        return response()->json(['error' => 'Pengguna tidak terautentikasi'], 401);
-    }
-
-    // Setting timezone Jakarta (WIB)
-    $waktuSekarang = now()->timezone('Asia/Jakarta');
-
-    // Jadwal masuk dan pulang (format 24 jam)
-    $jamMasuk = '07:30';
-    $jamPulang = '16:00';
-
-    // Buat objek Carbon untuk jadwal masuk dan pulang di hari ini
-    $jadwalMasuk = Carbon::createFromFormat('Y-m-d H:i', $waktuSekarang->format('Y-m-d') . ' ' . $jamMasuk, 'Asia/Jakarta');
-    $jadwalPulang = Carbon::createFromFormat('Y-m-d H:i', $waktuSekarang->format('Y-m-d') . ' ' . $jamPulang, 'Asia/Jakarta');
-
-    // Tentukan status: terlambat jika absen lewat dari jam masuk
-    $status = $waktuSekarang->greaterThan($jadwalMasuk) ? 'terlambat' : 'tepat waktu';
-
-    // Cari atau buat record absensi hari ini untuk user
-    $absensi = Absensi::firstOrNew([
-        'pengguna_id' => $user->id,
-        'tanggal' => $waktuSekarang->startOfDay(),  // tanggal hari ini WIB
-    ]);
-
-    if ($absensi->absen_masuk) {
-        return response()->json(['error' => 'Sudah absen masuk hari ini'], 400);
-    }
-
-    // Simpan data absen masuk dengan waktu WIB tapi simpan di DB sesuai timezone server (biasanya UTC)
-    $absensi->absen_masuk = $waktuSekarang->copy()->setTimezone('UTC'); // simpan UTC
-    $absensi->lokasi_masuk_latitude = $request->latitude;
-    $absensi->lokasi_masuk_longitude = $request->longitude;
-    $absensi->status = $status;
-
-    $absensi->save();
-    Log::info('Absensi masuk berhasil', [
-        'pengguna_id' => $user->id,
-        'tanggal' => $waktuSekarang->toDateString(),
-        'absen_masuk' => $absensi->absen_masuk->toDateTimeString(),
-        'status' => $status,
-        'lokasi_masuk_latitude' => $absensi->lokasi_masuk_latitude,
-        'lokasi_masuk_longitude' => $absensi->lokasi_masuk_longitude,
-    ]); 
+        $absensi->save();
+        Log::info('Absensi masuk berhasil', [
+            'pengguna_id' => $user->id,
+            'tanggal' => $waktuSekarang->toDateString(),
+            'absen_masuk' => $absensi->absen_masuk->toDateTimeString(),
+            'status' => $status,
+            'lokasi_masuk_latitude' => $absensi->lokasi_masuk_latitude,
+            'lokasi_masuk_longitude' => $absensi->lokasi_masuk_longitude,
+        ]);
         return response()->json(['message' => 'Absen masuk berhasil'], 200);
     }
 
@@ -129,49 +111,47 @@ public function absenMasuk(Request $request)
     }
 
 
-public function pulangAwal(Request $request)
-{
-    $validator = Validator::make($request->all(), [
-        'alasan_pulang_awal' => 'required|string|max:255',
-        'latitude' => 'required|numeric',
-        'longitude' => 'required|numeric',
-    ]);
+    public function pulangAwal(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'alasan_pulang_awal' => 'required|string|max:255',
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+        ]);
 
-    if ($validator->fails()) {
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Harap isi semua data dengan benar!',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        // Cek apakah user sudah absen masuk hari ini
+        $absensi = Absensi::where('pengguna_id', Auth::id())
+            ->whereDate('tanggal', now()->toDateString())
+            ->whereNull('absen_pulang') // Pastikan belum pulang
+            ->first();
+
+        if (!$absensi) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Anda belum melakukan absen masuk hari ini!'
+            ], 404);
+        }
+        // Simpan data pulang awal
+        $absensi->pulang_awal = true;
+        $absensi->keterangan = $request->alasan_pulang_awal;
+        $absensi->absen_pulang = now()->format('H:i:s');
+        $absensi->lokasi_pulang_latitude = $request->latitude;
+        $absensi->lokasi_pulang_longitude = $request->longitude;
+        $absensi->save();
+
         return response()->json([
-            'success' => false,
-            'message' => 'Harap isi semua data dengan benar!',
-            'errors' => $validator->errors()
-        ], 422);
+            'success' => true,
+            'message' => 'Pulang awal berhasil dicatat!',
+            'data' => $absensi
+        ]);
     }
-
-    // Cek apakah user sudah absen masuk hari ini
-    $absensi = Absensi::where('pengguna_id', Auth::id())
-        ->whereDate('tanggal', now()->toDateString())
-        ->whereNull('absen_pulang') // Pastikan belum pulang
-        ->first();
-
-    if (!$absensi) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Anda belum melakukan absen masuk hari ini!'
-        ], 404);
-    }
-
-    // Simpan data pulang awal
-    $absensi->pulang_awal = true;
-    $absensi->keterangan = $request->alasan_pulang_awal;
-    $absensi->absen_pulang = now()->format('H:i:s');
-    $absensi->lokasi_pulang_latitude = $request->latitude;
-    $absensi->lokasi_pulang_longitude = $request->longitude;
-    $absensi->save();
-
-    return response()->json([
-        'success' => true,
-        'message' => 'Pulang awal berhasil dicatat!',
-        'data' => $absensi
-    ]);
-}
 
     public function ajukanIzin(Request $request)
     {
@@ -269,21 +249,5 @@ public function pulangAwal(Request $request)
             'latitude' => $jadwal->latitude,
             'longitude' => $jadwal->longitude,
         ]);
-    }
-
-    public function cekAbsensi(Request $request)
-    {
-        $tanggal = $request->query('tanggal');
-        $pengguna = Auth::user();
-
-        if (!$pengguna) {
-            return response()->json(['error' => 'Pengguna tidak ditemukan'], 404);
-        } // Ambil ID user saat ini
-
-        $sudahAbsen = Absensi::where('pengguna_id', $userId)
-                            ->whereDate('tanggal', $tanggal)
-                            ->exists();
-
-        return response()->json(['sudahAbsen' => $sudahAbsen]);
     }
 }
