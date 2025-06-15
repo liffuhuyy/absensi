@@ -108,4 +108,13 @@ class JadwalKerjaController extends Controller
         $perusahaanList = JadwalKerja::select('pengguna_id')->distinct()->get();
         return view('absensi.pengajuan1', compact('perusahaanList'));
     }
+
+    public function jadwalpt()
+    {
+        if (view()->exists('perusahaan.jadwalpt')) {
+            return view('perusahaan.jadwalpt');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
 }

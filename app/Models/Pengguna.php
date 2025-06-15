@@ -38,4 +38,8 @@ class Pengguna extends Authenticatable
     {
         return $this->role === 'perusahaan';
     }
+    public function biodata()
+    {
+        return $this->hasOne(Biodata::class, 'pengguna_id');
+    }
 }

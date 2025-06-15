@@ -82,4 +82,13 @@ class PenggunaController extends Controller
 
         return response()->json($penggunaPerusahaan);
     }
+
+    public function pengguna()
+    {
+        if (view()->exists('admin.pengguna')) {
+            return view('admin.pengguna');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
 }

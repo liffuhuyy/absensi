@@ -5,6 +5,7 @@
 
        <div class="menu-group">
            <a href="{{ url('/beranda') }}" class="menu-item">Beranda</a>
+           <a href="{{ url('/profil') }}" class="menu-item">Profil</a>
        </div>
 
        <div class="menu-group">

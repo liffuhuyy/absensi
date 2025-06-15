@@ -161,6 +161,23 @@
             color: #e74c3c;
             margin-left: 3px;
         }
+
+        .alert {
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
     </style>
     </head>
 
@@ -175,6 +192,8 @@
                     @if (isset($biodata))
                         @method('PUT')
                     @endif
+
+                    <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
                     <!-- Nama dan NISN -->
                     <div class="form-row">
                         <div class="form-col">

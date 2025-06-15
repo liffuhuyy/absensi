@@ -14,6 +14,14 @@ use App\Models\Pengajuan;
 
 class AbsensiController extends Controller
 {
+    public function presensi()
+    {
+        if (view()->exists('absensi.presensi')) {
+            return view('absensi.presensi');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
     // Absen masuk
     public function absenMasuk(Request $request)
     {

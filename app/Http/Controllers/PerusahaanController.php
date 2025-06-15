@@ -96,4 +96,13 @@ class PerusahaanController extends Controller
         $perusahaan = Perusahaan::findOrFail($id);
         return response()->json($perusahaan);
     }
+
+    public function profilpt()
+    {
+        if (view()->exists('perusahaan.profilpt')) {
+            return view('perusahaan.profilpt');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
 }

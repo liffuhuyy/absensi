@@ -103,7 +103,7 @@
             background: white;
             border-radius: 10px;
             padding: 20px;
-            width: 400px;
+            width: 500px;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
@@ -174,6 +174,58 @@
             object-fit: cover;
             transition: opacity 0.3s ease;
         }
+
+        .upload-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-group input[type="file"] {
+            flex: 1;
+            padding: 6px;
+        }
+
+        .upload-group button {
+            padding: 5px 10px;
+            background-color: #000000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .upload-group button:hover {
+            background-color: #2c4e82;
+        }
+
+        .alert {
+            padding: 12px 20px;
+            border-radius: 4px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .btn-close {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #000;
+        }
     </style>
 </head>
 
@@ -190,13 +242,61 @@
     <!-- Kontainer Profil Pengguna -->
     <div class="container" id="profileContainer">
         <div class="profile-photo">
-            <img id="profileImage" src="default-avatar.png" alt="Foto Profil" class="fade-in" />
+            <img id="profileImage"
+                src="{{ Auth::user()->biodata && Auth::user()->biodata->foto ? asset('storage/' . Auth::user()->biodata->foto) : asset('default-avatar.png') }}"
+                alt="Foto Profil" class="fade-in" width="150">
         </div>
-        <input type="file" id="fileInput" accept="image/*" style="display: none;">
-        <button class="change-photo" onclick="document.getElementById('fileInput').click()">Ubah foto profil</button>
-        </br>
+        <div class="mb-1">
+            <div class="info">
+                <span class="label">Foto Profil</span>
+            </div>
+            @php
+                $biodataLengkap =
+                    Auth::user()->biodata &&
+                    Auth::user()->biodata->nama &&
+                    Auth::user()->biodata->nisn &&
+                    Auth::user()->biodata->alamat; // tambahkan validasi kolom lain sesuai kebutuhan
+            @endphp
+            {{-- Notifikasi --}}
+            @if (session('success'))
+                <div class="alert alert-success" style="position: relative;">
+                    {{ session('success') }}
+                    <button onclick="this.parentElement.style.display='none';"
+                        style="position: absolute; top: 5px; right: 10px; background: none; border: none; font-size: 20px; font-weight: bold; cursor: pointer;">×</button>
+                </div>
+            @endif
 
-        <br>
+            @if (session('error'))
+                <div class="alert alert-danger" style="position: relative;">
+                    {{ session('error') }}
+                    <button onclick="this.parentElement.style.display='none';"
+                        style="position: absolute; top: 5px; right: 10px; background: none; border: none; font-size: 20px; font-weight: bold; cursor: pointer;">×</button>
+                </div>
+            @endif
+
+            <form action="{{ route('foto.upload') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="upload-group">
+                    <input type="file" name="foto" accept="image/*" required
+                        {{ !$biodataLengkap ? 'disabled' : '' }}>
+
+                    <script>
+                        const inputFoto = document.querySelector('input[name="foto"]');
+                        if (inputFoto) {
+                            inputFoto.addEventListener('change', function(e) {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    document.getElementById('profileImage').src = URL.createObjectURL(file);
+                                }
+                            });
+                        }
+                    </script>
+
+                    <button type="submit" {{ !$biodataLengkap ? 'disabled' : '' }}>Simpan</button>
+                </div>
+            </form>
+
+        </div>
         @foreach ($biodata as $data)
             <div class="info">
                 <span class="label">Nama:</span>
@@ -212,8 +312,9 @@
             </div>
         @endforeach
 
-        <br><br>
+        <br>
         <div class="button-container">
+            <label>Lengkapi Profil dan Biodata anda dibawah sini!</label>
             <a href="{{ url('/biodata') }}" class="button">Biodata</a>
             <a href="{{ url('/ubahkatasandi') }}" class="change-password">Ubah Kata Sandi</a><br>
         </div><br><br><br><br><br>

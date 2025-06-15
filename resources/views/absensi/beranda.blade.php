@@ -27,9 +27,10 @@
                     <div class="stat-icon">
                         <a href="{{ url('/penilaian') }}" class="stat-icon">📋</a>
                     </div>
-                    <div class="stat-value">0</div>
+                    <div class="stat-value">{{ $totalNilai }}</div>
                     <div class="stat-label">Nilai akhir</div>
                 </div>
+
                 <div class="view-more-container">
                     <a href="{{ url('/manajementugas') }}" class="btn btn-primary">Lihat Selengkapnya</a>
                 </div>

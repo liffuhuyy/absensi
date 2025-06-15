@@ -13,8 +13,14 @@ class Penilaian extends Model
 
     protected $fillable = [
         'pengguna_id',
+        'nama',
         'tanggal_keluar',
         'nilai',
         'keterangan',
     ];
+
+    public function pengguna()
+    {
+        return $this->belongsTo(Pengguna::class, 'pengguna_id');
+    }
 }

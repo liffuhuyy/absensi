@@ -14,6 +14,18 @@
     <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
 </head>
 <style>
+    .btn-izin {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .btn-izin:hover {
+        background-color: #0056b3;
+    }
 </style>
 
 <body>
@@ -55,14 +67,79 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">Nama Siswa</th>
-                                        <th class="text-center">Tanggal Selesai</th>
-                                        <th class="text-center">Nilai</th>
-                                        <th class="text-center">Keterangan</th>
-                                        <th class="text-center">Aksi</th>
+                                        <th>Nama Siswa</th>
+                                        <th>Tanggal Selesai</th>
+                                        <th>Nilai</th>
+                                        <th>Keterangan</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @forelse ($penilaian as $nilai)
+                                        <tr>
+                                            <td>{{ $nilai->nama }}</td>
+                                            <td>{{ $nilai->tanggal_keluar }}</td>
+                                            <td>{{ $nilai->nilai ?? '-' }}</td>
+                                            <td>{{ $nilai->keterangan ?? '-' }}</td>
+                                            <td>
+                                                <button class="btn-izin" data-bs-toggle="modal"
+                                                    data-bs-target="#modal-{{ $nilai->id }}">
+                                                    Penilaian
+                                                </button>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Modal per siswa -->
+                                        <div class="modal fade" id="modal-{{ $nilai->id }}" tabindex="-1"
+                                            aria-labelledby="modalLabel-{{ $nilai->id }}" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <form action="{{ route('penilaian.update', $nilai->id) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <div class="modal-header">
+                                                            <h1 class="modal-title fs-5"
+                                                                id="modalLabel-{{ $nilai->id }}">Penilaian Siswa</h1>
+                                                            <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal" aria-label="Tutup"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="mb-3">
+                                                                <label>Nama:</label>
+                                                                <input type="text" class="form-control"
+                                                                    value="{{ $nilai->nama }}" readonly>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>Tanggal Selesai:</label>
+                                                                <input type="date" class="form-control"
+                                                                    value="{{ $nilai->tanggal_keluar }}" readonly>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>Nilai:</label>
+                                                                <input type="number" class="form-control"
+                                                                    name="nilai" value="{{ $nilai->nilai ?? '' }}">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>Keterangan:</label>
+                                                                <textarea class="form-control" name="keterangan">{{ $nilai->keterangan ?? '' }}</textarea>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Batal</button>
+                                                            <button type="submit"
+                                                                class="btn btn-primary">Simpan</button>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <tr>
+                                            <td colspan="5" class="text-center">Belum ada penilaian</td>
+                                        </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>
