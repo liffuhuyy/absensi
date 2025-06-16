@@ -11,6 +11,7 @@ class Pengguna extends Authenticatable
 
     protected $table = 'pengguna';
     protected $fillable = [
+        'pengguna_id',
         'nama',
         'email',
         'password',
@@ -37,6 +38,13 @@ class Pengguna extends Authenticatable
     {
         return $this->role === 'perusahaan';
     }
+<<<<<<< HEAD
 
 
+=======
+    public function biodata()
+    {
+        return $this->hasOne(Biodata::class, 'pengguna_id');
+    }
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 }

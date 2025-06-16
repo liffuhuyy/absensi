@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Presensi</title>
+@extends('siswa.layout.siswa_layout')
+@section('content')
     <style>
+<<<<<<< HEAD
         * {
             margin: 0;
             padding: 0;
@@ -119,6 +115,8 @@
             display: block;
         }
 
+=======
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
         .container {
             max-width: 1000px;
             margin: 20px auto;
@@ -128,10 +126,10 @@
         header {
             background-color: #0a192f;
             color: white;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            border-radius: 4px;
+            margin-bottom: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
@@ -243,6 +241,7 @@
             border: 1px solid #f5c6cb;
         }
 
+<<<<<<< HEAD
         .modal {
             display: none;
             position: fixed;
@@ -271,6 +270,8 @@
             to {opacity: 1; transform: translateY(0);}
         }
 
+=======
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
         .close {
             color: #aaa;
             float: right;
@@ -323,7 +324,12 @@
             margin-top: 20px;
         }
 
+<<<<<<< HEAD
         table th, table td {
+=======
+        table th,
+        table td {
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -365,13 +371,31 @@
         .stat-item .value {
             font-size: 2rem;
             font-weight: bold;
-            color:  #0a192f;
+            color: #0a192f;
         }
 
+<<<<<<< HEAD
         .stat-hadir .value { color:  #0a192f; }
         .stat-terlambat .value { color:  #0a192f; }
         .stat-izin .value { color:  #0a192f; }
         .stat-sakit .value { color:  #0a192f; }
+=======
+        .stat-hadir .value {
+            color: #0a192f;
+        }
+
+        .stat-terlambat .value {
+            color: #0a192f;
+        }
+
+        .stat-izin .value {
+            color: #0a192f;
+        }
+
+        .stat-sakit .value {
+            color: #0a192f;
+        }
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
         .status-badge {
             display: inline-block;
@@ -382,10 +406,28 @@
             color: white;
         }
 
+<<<<<<< HEAD
         .status-hadir { background-color: #0a192f; }
         .status-terlambat { background-color:  #0a192f; }
         .status-izin { background-color:  #0a192f; }
         .status-sakit { background-color: #0a192f; }
+=======
+        .status-hadir {
+            background-color: #0a192f;
+        }
+
+        .status-terlambat {
+            background-color: #0a192f;
+        }
+
+        .status-izin {
+            background-color: #0a192f;
+        }
+
+        .status-sakit {
+            background-color: #0a192f;
+        }
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
         @media (max-width: 768px) {
             .button-group {
@@ -409,6 +451,7 @@
                 font-size: 2rem;
             }
         }
+<<<<<<< HEAD
         .header {
             display: flex;
             justify-content: space-between;
@@ -563,17 +606,33 @@
     font-size: 20px;
     cursor: pointer;
 }
+=======
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
     </style>
-</head>
-<body>
-<div class="header">
-        <div class="menu-toggle" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <h3>SMKN 1 SUBANG</h3>
+    </head>
 
+    <body>
+        <div class="container">
+            <header>
+                <h2>Sistem Presensi Siswa</h2>
+            </header>
+
+            <div class="card">
+                <div class="tanggal" id="tanggal"></div>
+                <div class="jam-digital" id="jam"></div>
+                <div id="alertBox" class="alert"></div>
+
+                <!-- Tombol Absensi -->
+                <div class="button-group">
+                    <button id="btnMasuk" class="btn-masuk">Absen Masuk</button>
+                    <button id="btnPulang" class="btn-pulang">Absen Pulang</button>
+                    <button id="btnIzin" class="btn-izin" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                        data-bs-whatever="@mdo">Ajukan Izin</button>
+                </div>
+            </div>
+        </div>
+
+<<<<<<< HEAD
             <div class="profile-icon">
                 <a href="{{ url('/profil') }}">
                     <img src="{{ url('/profil') }}" alt="Profile Picture">
@@ -586,9 +645,12 @@
             </a>
         </div>
     </div>
+=======
+        <!-- Modal Pulang Awal -->
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
-    <div class="overlay" id="overlay"></div>
 
+<<<<<<< HEAD
     <div class="sidebar" id="sidebar">
         <div class="close-sidebar" id="closeSidebar">×</div>
 
@@ -667,56 +729,115 @@
     <header>
         <h1>Sistem Presensi Siswa</h1>
     </header>
-
-    <div class="card">
-        <div class="tanggal" id="tanggal"></div>
-        <div class="jam-digital" id="jam"></div>
-        <div id="alertBox" class="alert"></div>
-
-        <!-- Tombol Absensi -->
-        <div class="button-group">
-            <button id="btnMasuk" class="btn-masuk">Absen Masuk</button>
-            <button id="btnPulang" class="btn-pulang" style="display: none;">Absen Pulang</button>
-            <button id="btnIzin" class="btn-izin">Ajukan Izin</button>
+=======
+        <!-- Modal Izin -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Pengajuan Izin/Sakit</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="recipient-name" class="col-form-label">Jenis Izin</label>
+                                <select class="form-select" id="statusIzin">
+                                    <option value="Izin">Izin</option>
+                                    <option value="Sakit">Sakit</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="keterangan" class="col-form-label">Keterangan:</label>
+                                <textarea class="form-control" id="keterangan"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Send message</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
-<!-- Modal Izin / Sakit -->
-<div id="modalIzin" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Form Izin / Sakit</h2>
-        <form id="formIzin" method="POST" action="{{ route('absen.izin') }}">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="form-group">
-                <label for="jenis_izin">Jenis Izin</label>
-                <select name="jenis_izin" id="jenis_izin" class="form-control" required>
-                    <option value="Izin">Izin</option>
-                    <option value="Sakit">Sakit</option>
+        <div id="absenContainer" class="container p-3">
+            <h2 class="card-title text-center">Riwayat Absensi</h2>
+
+            <div class="d-flex justify-content-center mb-3">
+                <select class="form-select me-2" id="bulan">
+                    <option value="01">Januari</option>
+                    <option value="02">Februari</option>
+                    <option value="03">Maret</option>
+                    <option value="04">April</option>
+                    <option value="05">Mei</option>
+                    <option value="06">Juni</option>
+                    <option value="07">Juli</option>
+                    <option value="08">Agustus</option>
+                    <option value="09">September</option>
+                    <option value="10">Oktober</option>
+                    <option value="11">November</option>
+                    <option value="12">Desember</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="alasan_izin">Alasan</label>
-                <textarea name="alasan_izin" id="alasan_izin" class="form-control" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn-submit">Kirim</button>
-        </form>
-    </div>
-</div>
 
-<!-- Modal Pulang Awal -->
-<div id="modalPulangAwal" class="modal">
-    <div class="modal-content">
-        <span class="close">&times;</span>
-        <h2>Konfirmasi Pulang Awal</h2>
-        <p>Anda mencoba melakukan absen pulang sebelum waktu yang ditentukan. Harap berikan alasan.</p>
-        <form id="formPulangAwal" method="POST" action="{{ route('absen.pulang.awal') }}">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <div class="form-group">
-                <label for="alasan_pulang_awal">Alasan Pulang Awal</label>
-                <textarea name="alasan_pulang_awal" id="alasan_pulang_awal" class="form-control" rows="4" required></textarea>
+                <select class="form-select me-2" id="tahun">
+                    @for ($i = date('Y'); $i <= date('Y') + 5; $i++)
+                        <option value="{{ $i }}">{{ $i }}</option>
+                    @endfor
+                </select>
+
+                <button class="btn btn-primary" id="cariData">Cari Data</button>
             </div>
+
+            <div class="stats-card d-flex justify-content-around mb-3">
+                <div class="stat-item text-center">
+                    <h3>Hadir</h3>
+                    <span class="stat-icon">✔️</span>
+                    <span class="stat-value">{{ $statistik['hadir'] ?? 0 }}</span>
+                </div>
+                <div class="stat-item text-center">
+                    <h3>Terlambat</h3>
+                    <span class="stat-icon">⏰</span>
+                    <span class="stat-value">{{ $statistik['terlambat'] ?? 0 }}</span>
+                </div>
+                <div class="stat-item text-center">
+                    <h3>Izin</h3>
+                    <span class="stat-icon">📝</span>
+                    <span class="stat-value">{{ $statistik['izin'] ?? 0 }}</span>
+                </div>
+                <div class="stat-item text-center">
+                    <h3>Sakit</h3>
+                    <span class="stat-icon">🤒</span>
+                    <span class="stat-value">{{ $statistik['sakit'] ?? 0 }}</span>
+                </div>
+            </div>
+
+            <div id="absensiTable" class="card p-3">
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Status</th>
+                            <th>Jam Masuk</th>
+                            <th>Jam Keluar</th>
+                            <th>Keterangan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($absensiData as $absen)
+                            <tr>
+                                <td>{{ $absen->tanggal ?? '' }}</td>
+                                <td>{{ $absen->status ?? '' }}</td>
+                                <td>{{ $absen->absen_masuk ?? '' }}</td>
+                                <td>{{ $absen->jam_keluar ?? '' }}</td>
+                                <td>{{ $absen->keterangan ?? '' }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+<<<<<<< HEAD
             <button type="submit" class="btn-submit">Kirim</button>
         </form>
     </div>
@@ -771,74 +892,36 @@
             <span class="stat-value">{{ $statistik['sakit'] ?? 0 }}</span>
         </div>
     </div>
+=======
+        </div>
+        <div id="modalPulangAwal">
+            <input type="text" id="alasanPulangAwal" placeholder="Alasan pulang awal">
+            <button id="submitPulangAwal">Submit</button>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous">
+        </script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
-    <div id="absensiTable" class="card p-3">
-        <table class="table table-bordered table-striped">
-            <thead class="table-dark">
-                <tr>
-                    <th>Tanggal</th>
-                    <th>Status</th>
-                    <th>Jam Masuk</th>
-                    <th>Jam Keluar</th>
-                    <th>Keterangan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach($absensiData as $absen)
-                    <tr>
-                        <td>{{ $absen->tanggal ?? '' }}</td>
-                        <td>{{ $absen->status ?? '' }}</td>
-                        <td>{{ $absen->absen_masuk ?? '' }}</td>
-                        <td>{{ $absen->jam_keluar ?? '' }}</td>
-                        <td>{{ $absen->keterangan ?? '' }}</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-        const menuToggle = document.getElementById('menuToggle');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('closeSidebar');
-        const overlay = document.getElementById('overlay');
-        menuToggle.addEventListener('click', () => {
-            sidebar.classList.toggle('active');
-            overlay.classList.toggle('active');
-        });
-        closeSidebar.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-        overlay.addEventListener('click', () => {
-            sidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-        // Fungsi untuk sidebar
-        document.addEventListener("DOMContentLoaded", function () {
-            const menuToggle = document.getElementById("menuToggle");
-            const sidebar = document.getElementById("sidebar");
-            const overlay = document.getElementById("overlay");
-            const closeSidebar = document.getElementById("closeSidebar");
-            menuToggle.addEventListener("click", function () {
-                sidebar.classList.add("active");
-                overlay.classList.add("active");
-            });
-            closeSidebar.addEventListener("click", function () {
-                sidebar.classList.remove("active");
-                overlay.classList.remove("active");
-            });
-            overlay.addEventListener("click", function () {
-                sidebar.classList.remove("active");
-                overlay.classList.remove("active");
-            });
-        });
-        function confirmLogout() {
-            let confirmAction = confirm("Apakah Anda yakin ingin logout?");
-            if (confirmAction) {
-                window.location.href = "{{ url('/index') }}";
+        <script>
+            // Jam Digital
+            function updateTime() {
+                const now = new Date();
+                const options = {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                };
+                document.getElementById('tanggal').textContent = now.toLocaleDateString('id-ID', options);
+                document.getElementById('jam').textContent = now.toLocaleTimeString('id-ID', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
             }
+<<<<<<< HEAD
         }
 
 
@@ -1374,3 +1457,12 @@ updateJam();
 
 </body>
 </html>
+=======
+            setInterval(updateTime, 1000);
+            updateTime(); // Panggil sekali untuk inisialisasi
+        </script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    </body>
+@endsection
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79

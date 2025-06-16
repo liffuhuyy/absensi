@@ -1,8 +1,6 @@
-<<<<<<< HEAD
-<?php
-
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +10,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family:'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
         body {
@@ -44,16 +42,17 @@
         }
 
         .profile-icon a {
-             display: block; 
-             width: 100%;
-             height: 100%;
+            display: block;
+            width: 100%;
+            height: 100%;
         }
+
         .profile-icon img {
-             width: 40px;
-             height: 40px;
-             border-radius: 50%;
-             object-fit: cover;
-             cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            cursor: pointer;
         }
 
         .sidebar {
@@ -221,91 +220,46 @@
             .action-buttons {
                 flex-direction: column;
             }
-            
+
             .stat-item {
                 min-width: 100%;
             }
         }
     </style>
 </head>
-<body>
-    <div class="header">
-        <div class="menu-toggle" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <h3>SMKN 1 SUBANG</h3>
 
-            <div class="profile-icon">
-                <a href="{{ url('/profil') }}">
-                    <img src="{{ url('/profil') }}" alt="Profile Picture">
-                </a>
-            </div>            
-    </div>
+@include('siswa.layout.header')
+@include('siswa.layout.sidebar')
+@yield('content')
 
-    <div class="overlay" id="overlay"></div>
+<script>
+    function confirmLogout() {
+        let confirmAction = confirm("Apakah Anda yakin ingin logout?");
+        if (confirmAction) {
+            window.location.href = "{{ url('/index') }}"; // Ganti '/index' dengan URL logout sebenarnya
+        }
+    }
+    // Menu toggle functionality
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('closeSidebar');
+    const overlay = document.getElementById('overlay');
 
-    <div class="sidebar" id="sidebar">
-        <div class="close-sidebar" id="closeSidebar">×</div>
-        
-        <div class="menu-group">
-            <a href="{{ url('/beranda') }}" class="menu-item">Beranda</a>
-            <a href="{{ url('/profil') }}" class="menu-item">Profil Saya</a>
-        </div>
-        
-        <div class="menu-group">
-            <div class="menu-title">Menu Utama</div>
-            <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
-            <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
-            <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
-        </div>
-        
-        <div class="menu-group">
-            <div class="menu-title">Lainnya</div>
-            <a href="{{ url('/kontak') }}" class="menu-item">Kontak</a>
-            <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
-        </div>
-    </div>
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.add('active');
+        overlay.classList.add('active');
+    });
 
-=======
-@extends('siswa.layout.siswa_layout')
-@section('content')
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
-    <div class="container">
-        <div class="welcome-card">
-            <h3 class="welcome-title">Selamat Datang!</h3>
-            <p class="welcome-subtitle">Selamat datang di portal siswa SMK NEGERI 1 SUBANG. Silahkan lengkapi biodata Anda
-                dan ajukan program magang untuk memulai perjalanan pendidikan Anda.</p>
-            <div class="action-buttons">
-                <a href="{{ url('/biodata') }}" class="btn btn-primary">Lengkapi Biodata</a>
-                <a href="{{ url('/magang') }}" class="btn btn-secondary">Ajukan Magang</a>
-            </div>
-        </div>
+    closeSidebar.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    });
 
-        <div class="stats-card">
-            <div class="stat-item">
-                <div>
-                    <a href="{{ url('/manajementugas') }}" class="stat-icon">📚</a>
-                </div>
-                <div class="stat-value">
-                    <?php
-                    use App\Models\UserTugas;
-                    $tugas = UserTugas::all();
-                    echo 'Tugas: ' . $tugas->count();
-                    ?>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-icon">
-                        <a href="{{ url('/penilaian') }}" class="stat-icon">📋</a>
-                    </div>
-                    <div class="stat-value">{{ $totalNilai }}</div>
-                    <div class="stat-label">Nilai akhir</div>
-                </div>
+    overlay.addEventListener('click', function() {
+        sidebar.classList.remove('active');
+        overlay.classList.remove('active');
+    });
+</script>
+</body>
 
-                <div class="view-more-container">
-                    <a href="{{ url('/manajementugas') }}" class="btn btn-primary">Lihat Selengkapnya</a>
-                </div>
-            </div>
-        </div>
-    @endsection
+</html>

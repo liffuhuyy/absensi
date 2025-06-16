@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,15 +16,16 @@
         body {
             background-color: #f5f5f5;
         }
+
         .container {
             max-width: 500px;
             background-color: white;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             overflow: hidden;
-            
+
         }
-        
+
         .header h1 {
             margin: 0;
             font-size: 24px;
@@ -101,18 +103,21 @@
         .menu-item:hover {
             background-color: #172a46;
         }
+
         .menu-title {
             padding: 10px 20px;
             font-weight: bold;
             color: #bdc3c7;
         }
+
         .container {
             max-width: 1200px;
             margin: 2rem auto;
             padding: 0 1rem;
         }
 
-        .welcome-card, .stats-card {
+        .welcome-card,
+        .stats-card {
             background-color: white;
             border-radius: 10px;
             padding: 2rem;
@@ -158,13 +163,13 @@
             display: block;
         }
 
-.header h1 {
-    flex: 1;
-    text-align: center;
-    margin: 0;
-}
+        .header h1 {
+            flex: 1;
+            text-align: center;
+            margin: 0;
+        }
 
-.container {
+        .container {
             background: white;
             padding: 30px;
             border-radius: 10px;
@@ -190,7 +195,8 @@
             font-weight: bold;
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
@@ -242,150 +248,113 @@
                 gap: 1rem;
             }
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        th, td {
+
+        th,
+        td {
             padding: 12px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
+
         th {
             background-color: #f2f2f2;
             color: #333;
         }
+
         td {
             color: #555;
         }
+
         .text-dark {
             color: #333;
         }
+
+        .menu-toggle {
+            color: #ffffff;
+        }
     </style>
 </head>
+
 <body>
-<div class="header">
-        <div class="menu-toggle" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
+    <div class="header">
+        <a href="{{ url('/magang') }}" class="menu-toggle" id="menuToggle">
+            <i class="fas fa-arrow-left"></i>
+        </a>
         <h3>SMKN 1 SUBANG</h3>
-
-            <div class="profile-icon">
-                <a href="{{ url('/profil') }}">
-                    <img src="{{ url('/profil') }}" alt="Profile Picture">
-                </a>
-            </div>            
-    </div>
-
-    <div class="overlay" id="overlay"></div>
-
-    <div class="sidebar" id="sidebar">
-        <div class="close-sidebar" id="closeSidebar">×</div>
-        
-        <div class="menu-group">
-            <a href="{{ url('/beranda') }}" class="menu-item">Beranda</a>
-            <a href="{{ url('/profil') }}" class="menu-item">Profil Saya</a>
-        </div>
-        
-        <div class="menu-group">
-            <div class="menu-title">Menu Utama</div>
-            <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
-            <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
-            <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
-        </div>
-        
-        <div class="menu-group">
-            <div class="menu-title">Lainnya</div>
-            <a href="{{ url('/kontak') }}" class="menu-item">Kontak</a>
-            <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
+        <div class="profile-icon">
         </div>
     </div>
 
- <div class="container">
-<h1>Form Pengajuan Magang</h1>
-<div class="form-group">
-<form method="POST" action="{{ route('pengajuan.store') }}">
-    @csrf
-    <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
-    <div class="form-group">
-        <label for="nama">Nama Lengkap</label>
-        <input type="text" id="nama" name="nama" required>
-    </div>
+    @include('siswa.layout.sidebar')
+    <div class="container">
+        <h1>Form Pengajuan Magang</h1>
+        <div class="form-group">
+            <form method="POST" action="{{ route('pengajuan.store') }}">
+                @csrf
+                <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" name="nama" required>
+                </div>
 
-    <div class="form-group">
-        <label for="jurusan">Jurusan</label>
-        <select id="jurusan" name="jurusan" required>
-            <option value="">Pilih Jurusan</option>
-            <option value="AKL">Akuntansi Keuangan dan Lembaga</option>
-            <option value="RPL">Rekayasa Perangkat Lunak</option>
-            <option value="TKJ">Teknik Jaringan dan Komputer</option>
-            <option value="KL">Kuliner</option>
-            <option value="TL">Teknik Logistik</option>
-            <option value="MPLB">Manajemen Perkantoran dan Layanan Bisnis</option>
-            <option value="TO">Teknik Otomotif</option>
-            <option value="TPM">Teknik Permesinan</option>
-            <option value="DKV">Desain Komunikasi Visual</option>
-            <option value="PM">Pemasaran</option>
-        </select>
-    </div>
+                <div class="form-group">
+                    <label for="jurusan">Jurusan</label>
+                    <select id="jurusan" name="jurusan" required>
+                        <option value="">Pilih Jurusan</option>
+                        <option value="AKL">Akuntansi Keuangan dan Lembaga</option>
+                        <option value="RPL">Rekayasa Perangkat Lunak</option>
+                        <option value="TKJ">Teknik Jaringan dan Komputer</option>
+                        <option value="KL">Kuliner</option>
+                        <option value="TL">Teknik Logistik</option>
+                        <option value="MPLB">Manajemen Perkantoran dan Layanan Bisnis</option>
+                        <option value="TO">Teknik Otomotif</option>
+                        <option value="TPM">Teknik Permesinan</option>
+                        <option value="DKV">Desain Komunikasi Visual</option>
+                        <option value="PM">Pemasaran</option>
+                    </select>
+                </div>
 
-    <div class="form-group">
-        <label for="tanggal_masuk">Tanggal Mulai Magang</label>
-        <input type="date" id="tanggal_masuk" name="tanggal_masuk" required>
-    </div>
+                <div class="form-group">
+                    <label for="tanggal_masuk">Tanggal Mulai Magang</label>
+                    <input type="date" id="tanggal_masuk" name="tanggal_masuk" required>
+                </div>
 
-    <div class="form-group">
-        <label for="tanggal_keluar">Tanggal Selesai Magang</label>
-        <input type="date" id="tanggal_keluar" name="tanggal_keluar" required>
-    </div>
+                <div class="form-group">
+                    <label for="tanggal_keluar">Tanggal Selesai Magang</label>
+                    <input type="date" id="tanggal_keluar" name="tanggal_keluar" required>
+                </div>
 
-    <div class="form-group">
-        <label for="perusahaan">Perusahaan:</label>
-        <select name="perusahaan_id" id="perusahaan" required>
-            <option>Pilih Perusahaan</option>
-            @foreach($perusahaanList as $jadwal)
-                <option value="{{ $jadwal->pengguna_id }}">{{ $jadwal->pengguna->nama }}</option>
-            @endforeach
-        </select>
-    </div>
+                <div class="form-group">
+                    <label for="perusahaan">Perusahaan:</label>
+                    <select name="perusahaan_id" id="perusahaan" required>
+                        <option>Pilih Perusahaan</option>
+                        @foreach ($perusahaanList as $jadwal)
+                            <option value="{{ $jadwal->pengguna_id }}">{{ $jadwal->pengguna->nama }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
-    <div class="button-container">
-        <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
-    </div>
-</form>
-    </div>
+                <div class="button-container">
+                    <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
+                </div>
+            </form>
+        </div>
 
-    <script>
-    function confirmLogout() {
-        let confirmAction = confirm("Apakah Anda yakin ingin logout?");
-        if (confirmAction) {
-            window.location.href = "{{ url('/index') }}";
-        }
-    }
-    
-    // Menu toggle functionality
-    const menuToggle = document.getElementById('menuToggle');
-    const sidebar = document.getElementById('sidebar');
-    const closeSidebar = document.getElementById('closeSidebar');  
-    const overlay = document.getElementById('overlay');
-
-    menuToggle.addEventListener('click', function() {
-        sidebar.classList.add('active');
-        overlay.classList.add('active');
-    });
-
-    closeSidebar.addEventListener('click', function() {
-        sidebar.classList.remove('active');
-        overlay.classList.remove('active');
-    });
-
-    overlay.addEventListener('click', function() {
-        sidebar.classList.remove('active');
-        overlay.classList.remove('active');
-    });
-    </script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <script>
+            function confirmLogout() {
+                let confirmAction = confirm("Apakah Anda yakin ingin logout?");
+                if (confirmAction) {
+                    window.location.href = "{{ url('/index') }}";
+                }
+            }
+        </script>
 </body>
+
 </html>

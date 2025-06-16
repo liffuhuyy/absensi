@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\JadwalKerjaController;
@@ -11,7 +12,7 @@ use Illuminate\Http\Request;
 
 class PengajuanController extends Controller
 {
- public function store(Request $request)
+    public function store(Request $request)
     {
         $pengguna = Auth::user();
 
@@ -44,36 +45,59 @@ class PengajuanController extends Controller
         }
     }
 
-public function create()
-{
-    $perusahaanList = JadwalKerja::select('pengguna_id')->distinct()->get();
-    return view('absensi.pengajuan1', compact('perusahaanList'));
-}
-
-public function show($id)
-{
-    $pengajuan = Pengajuan::findOrFail($id); // Ambil data pengajuan berdasarkan ID
-    return view('absensi.magang', compact('pengajuan')); // Tampilkan detail pengajuan
-}
-
-   public function updateStatus(Request $request)
-{
-    $pengajuan = Pengajuan::find($request->id);
-
-    if ($pengajuan && $pengajuan->status == 'Menunggu') {
-        $pengajuan->status = $request->status;
-        $pengajuan->save();
-        return response()->json(['success' => true, 'message' => 'Status berhasil diperbarui']);
+    public function create()
+    {
+        $perusahaanList = JadwalKerja::select('pengguna_id')->distinct()->get();
+        return view('absensi.pengajuan1', compact('perusahaanList'));
     }
 
-    return response()->json(['success' => false, 'message' => 'Status sudah diperbarui sebelumnya']);
-}
+    public function show($id)
+    {
+        $pengajuan = Pengajuan::findOrFail($id); // Ambil data pengajuan berdasarkan ID
+        return view('absensi.magang', compact('pengajuan')); // Tampilkan detail pengajuan
+    }
 
-public function create2()
-{
-    $perusahaanList = JadwalKerja::select('pengguna_id')->distinct()->get();
-    return view('absensi.magang', compact('perusahaanList'));
-}
+    public function updateStatus(Request $request)
+    {
+        $pengajuan = Pengajuan::find($request->id);
 
+        if ($pengajuan && $pengajuan->status == 'Menunggu') {
+            $pengajuan->status = $request->status;
+            $pengajuan->save();
+            return response()->json(['success' => true, 'message' => 'Status berhasil diperbarui']);
+        }
 
+        return response()->json(['success' => false, 'message' => 'Status sudah diperbarui sebelumnya']);
+    }
+
+    public function create2()
+    {
+        $perusahaanList = JadwalKerja::select('pengguna_id')->distinct()->get();
+        return view('absensi.magang', compact('perusahaanList'));
+    }
+
+    public function pengajuanpt()
+    {
+        if (view()->exists('perusahaan.pengajuanpt')) {
+            $pengajuan = Pengajuan::all();
+            return view('perusahaan.pengajuanpt', compact('pengajuan'));
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+    public function showPengajuan1()
+    {
+        $pengajuan = Pengajuan::paginate(10);
+        return view('absensi.magang', compact('pengajuan'));
+    }
+
+    public function pengajuan1()
+    {
+        if (view()->exists('absensi.pengajuan1')) {
+            return view('absensi.pengajuan1');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
 }
