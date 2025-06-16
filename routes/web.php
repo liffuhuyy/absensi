@@ -10,7 +10,6 @@ use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PenggunaController;
-<<<<<<< HEAD
 
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\PembimbingController;
@@ -20,15 +19,11 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\UserTugas;
-use App\Models\Absensi;
 use App\Models\Notifikasi;
 use App\Models\Pengajuan;
 use App\Models\Pengguna;
 use App\Models\JadwalKerja;
-=======
-use App\Http\Controllers\PresensiController;
-use App\Http\Controllers\PembimbingController;
->>>>>>> 84e2654294087cac1211415410a44418b73f26ad
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +31,6 @@ use App\Http\Controllers\PembimbingController;
 |--------------------------------------------------------------------------
 */
 
-<<<<<<< HEAD
 // Halaman Login & Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -45,8 +39,6 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Halaman utama (index)
-=======
->>>>>>> 84e2654294087cac1211415410a44418b73f26ad
 Route::get('/', function () {
     return view('absensi.index');
 });
@@ -163,7 +155,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/jadwalpt/edit/{id}', [JadwalKerjaController::class, 'edit'])->name('jadwal.edit');
     Route::put('/jadwalpt/update/{id}', [JadwalKerjaController::class, 'update'])->name('jadwal.update');
     Route::delete('/jadwalpt/hapus/{id}', [JadwalKerjaController::class, 'destroy'])->name('jadwal.destroy');
->>>>>>> 67f9bbe9181646bf2bcc270fd7c2d2d83b1e4285
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -207,10 +199,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/managementaksespt', [AuthController::class, 'managementaksespt'])->name('managementaksespt');
     Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
 });
-=======
-| Authenticated Routes
-|--------------------------------------------------------------------------
-*/
 
 Route::middleware(['auth'])->group(function () {
 
@@ -318,4 +306,4 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/backupdata', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
     });
 });
->>>>>>> 84e2654294087cac1211415410a44418b73f26ad
+

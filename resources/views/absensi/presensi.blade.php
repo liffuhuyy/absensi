@@ -12,13 +12,13 @@
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
         }
-        
+
         body {
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
         }
-        
+
         .header {
             display: flex;
             justify-content: space-between;
@@ -92,7 +92,7 @@
         }
 
         .profile-icon a {
-             display: block; 
+             display: block;
              width: 100%;
              height: 100%;
         }
@@ -124,7 +124,7 @@
             margin: 20px auto;
             padding: 20px;
         }
-        
+
         header {
             background-color: #0a192f;
             color: white;
@@ -134,7 +134,7 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
         .jam-digital {
             font-size: 2.5rem;
             font-weight: bold;
@@ -145,13 +145,13 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
         .tanggal {
             font-size: 1.2rem;
             text-align: center;
             margin-bottom: 20px;
         }
-        
+
         .card {
             background-color: #fff;
             border-radius: 8px;
@@ -159,7 +159,7 @@
             margin-bottom: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        
+
         .card-title {
             font-size: 1.5rem;
             font-weight: bold;
@@ -168,13 +168,13 @@
             border-bottom: 2px solid #ecf0f1;
             padding-bottom: 10px;
         }
-        
+
         .button-group {
             display: flex;
             justify-content: space-around;
             margin: 20px 0;
         }
-        
+
         button {
             padding: 12px 25px;
             border: none;
@@ -184,39 +184,39 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-        
+
         button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
         }
-        
+
         .btn-masuk {
             background-color: #0a192f;
             color: white;
         }
-        
+
         .btn-masuk:hover:not(:disabled) {
             background-color: #27ae60;
         }
-        
+
         .btn-pulang {
             background-color: #e74c3c;
             color: white;
         }
-        
+
         .btn-pulang:hover:not(:disabled) {
             background-color: #c0392b;
         }
-        
+
         .btn-izin {
             background-color: #f39c12;
             color: white;
         }
-        
+
         .btn-izin:hover:not(:disabled) {
             background-color: #d35400;
         }
-        
+
         .alert {
             padding: 15px;
             border-radius: 6px;
@@ -224,25 +224,25 @@
             font-weight: bold;
             display: none;
         }
-        
+
         .alert-success {
             background-color: #d4edda;
             color: #155724;
             border: 1px solid #c3e6cb;
         }
-        
+
         .alert-warning {
             background-color: #fff3cd;
             color: #856404;
             border: 1px solid #ffeeba;
         }
-        
+
         .alert-danger {
             background-color: #f8d7da;
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
-        
+
         .modal {
             display: none;
             position: fixed;
@@ -254,7 +254,7 @@
             overflow: auto;
             background-color: rgba(0, 0, 0, 0.5);
         }
-        
+
         .modal-content {
             background-color: #fefefe;
             margin: 15% auto;
@@ -265,12 +265,12 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             animation: modalFadeIn 0.3s;
         }
-        
+
         @keyframes modalFadeIn {
             from {opacity: 0; transform: translateY(-50px);}
             to {opacity: 1; transform: translateY(0);}
         }
-        
+
         .close {
             color: #aaa;
             float: right;
@@ -278,23 +278,23 @@
             font-weight: bold;
             cursor: pointer;
         }
-        
+
         .close:hover,
         .close:focus {
             color: black;
             text-decoration: none;
         }
-        
+
         .form-group {
             margin-bottom: 15px;
         }
-        
+
         .form-group label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-        
+
         .form-control {
             width: 100%;
             padding: 10px;
@@ -302,7 +302,7 @@
             border-radius: 4px;
             font-size: 1rem;
         }
-        
+
         .btn-submit {
             background-color: #3498db;
             color: white;
@@ -312,39 +312,39 @@
             cursor: pointer;
             font-size: 1rem;
         }
-        
+
         .btn-submit:hover {
             background-color: #2980b9;
         }
-        
+
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        
+
         table th, table td {
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
         }
-        
+
         table th {
             background-color: #f2f2f2;
             color: #333;
         }
-        
+
         table tr:hover {
             background-color: #f5f5f5;
         }
-        
+
         .statistik {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
             margin-top: 20px;
         }
-        
+
         .stat-item {
             flex: 1;
             min-width: 120px;
@@ -355,24 +355,24 @@
             text-align: center;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .stat-item h3 {
             margin-bottom: 10px;
             font-size: 1.2rem;
             color: #555;
         }
-        
+
         .stat-item .value {
             font-size: 2rem;
             font-weight: bold;
             color:  #0a192f;
         }
-        
+
         .stat-hadir .value { color:  #0a192f; }
         .stat-terlambat .value { color:  #0a192f; }
         .stat-izin .value { color:  #0a192f; }
         .stat-sakit .value { color:  #0a192f; }
-        
+
         .status-badge {
             display: inline-block;
             padding: 5px 10px;
@@ -381,30 +381,30 @@
             font-weight: bold;
             color: white;
         }
-        
+
         .status-hadir { background-color: #0a192f; }
         .status-terlambat { background-color:  #0a192f; }
         .status-izin { background-color:  #0a192f; }
         .status-sakit { background-color: #0a192f; }
-        
+
         @media (max-width: 768px) {
             .button-group {
                 flex-direction: column;
                 gap: 10px;
             }
-            
+
             button {
                 width: 100%;
             }
-            
+
             .statistik {
                 flex-direction: column;
             }
-            
+
             .stat-item {
                 margin: 5px 0;
             }
-            
+
             .jam-digital {
                 font-size: 2rem;
             }
@@ -578,77 +578,57 @@
                 <a href="{{ url('/profil') }}">
                     <img src="{{ url('/profil') }}" alt="Profile Picture">
                 </a>
-            </div>            
-<<<<<<< HEAD
-
+            </div>
 
         <div class="profile-icon">
             <a href="{{ url('/profil') }}">
                 <img src="{{ url('/profil') }}" alt="Profile Picture">
             </a>
-        </div>            
-
-=======
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
+        </div>
     </div>
 
     <div class="overlay" id="overlay"></div>
 
     <div class="sidebar" id="sidebar">
         <div class="close-sidebar" id="closeSidebar">×</div>
-        
+
         <div class="menu-group">
             <a href="{{ url('/beranda') }}" class="menu-item">Beranda</a>
             <a href="{{ url('/profil') }}" class="menu-item">Profil Saya</a>
         </div>
-        
+
         <div class="menu-group">
             <div class="menu-title">Menu Utama</div>
             <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
             <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
             <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
         </div>
-        
+
         <div class="menu-group">
             <div class="menu-title">Lainnya</div>
             <a href="{{ url('/kontak') }}" class="menu-item">Kontak</a>
             <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
         </div>
     </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 <form method="POST" action="{{ url('/absensi') }}">
 
 
 <body>
-    
-=======
 <form method="POST" action="{{ url('/absensi') }}">
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
-=======
 <form method="POST" action="{{ url('/absen/masuk') }}">
->>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
     <div class="container">
         <header>
             <h1>Sistem Presensi Siswa</h1>
-        </header>       
+        </header>
         <div class="card">
-<<<<<<< HEAD
-
-<<<<<<< HEAD
         <!-- Tombol untuk kembali ke halaman sebelumnya -->
 <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
 <a href="{{ url('/dashboard') }}" class="btn btn-primary">Kembali ke Dashboard</a>
 
-        <div class="card"> 
-=======
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
-=======
->>>>>>> 3edbfbba53ee6f0fb49ddd9c251ef44a41646aa8
+        <div class="card">
             <div class="tanggal" id="tanggal"></div>
-            <div class="jam-digital" id="jam"></div>        
+            <div class="jam-digital" id="jam"></div>
          <div id="alertBox" class="alert"></div>
               <div class="button-group">
 <form method="POST" action="{{ url('/absen/masuk') }}">
@@ -664,7 +644,7 @@
       <button id="btnIzin" class="btn-izin">Izin / Sakit</button>
 </form>
          </div>
-        </div> 
+        </div>
      <div class="card">
    <h2 class="card-title">Riwayat Absensi - <span id="bulanTahun"></span></h2>
 <div class="statistik">
@@ -683,7 +663,6 @@
     <div class="stat-item stat-sakit">
         <h3>Sakit</h3>
         <div class="value">{{ $data['sakit'] ?? 0 }}</div>
-=======
 <div class="container">
     <header>
         <h1>Sistem Presensi Siswa</h1>
@@ -700,7 +679,6 @@
             <button id="btnPulang" class="btn-pulang" style="display: none;">Absen Pulang</button>
             <button id="btnIzin" class="btn-izin">Ajukan Izin</button>
         </div>
->>>>>>> d1d392254c622b58447032346056bcba254f97de
     </div>
 </div>
 
@@ -750,7 +728,7 @@
 </div>
 
 <div id="absenContainer" class="container">
-        <h2 class="card-title">Riwayat Absensi - 
+        <h2 class="card-title">Riwayat Absensi -
         <select id="bulan">
             <option value="01">Januari</option>
             <option value="02">Februari</option>
@@ -780,18 +758,18 @@
         <div class="stat-item stat-terlambat">
             <h3>Terlambat</h3>
             <span class="stat-icon">⏰</span>
-            <span class="stat-value ">{{ $statistik['terlambat'] ?? 0 }}</span> 
+            <span class="stat-value ">{{ $statistik['terlambat'] ?? 0 }}</span>
         </div>
         <div class="stat-item stat-izin">
             <h3>Izin</h3>
             <span class="stat-icon">📝</span>
             <span class="stat-value">{{ $statistik['izin'] ?? 0 }}</span>
-        </div>  
+        </div>
         <div class="stat-item stat-sakit">
             <h3>Sakit</h3>
             <span class="stat-icon">🤒</span>
             <span class="stat-value">{{ $statistik['sakit'] ?? 0 }}</span>
-        </div>  
+        </div>
     </div>
 
     <div id="absensiTable" class="card p-3">
@@ -837,10 +815,6 @@
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
         });
-<<<<<<< HEAD
-
-=======
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
         // Fungsi untuk sidebar
         document.addEventListener("DOMContentLoaded", function () {
             const menuToggle = document.getElementById("menuToggle");
@@ -866,7 +840,7 @@
                 window.location.href = "{{ url('/index') }}";
             }
         }
-        
+
 
         // Jam Digital
         function updateTime() {
@@ -877,7 +851,7 @@
         }
         setInterval(updateTime, 1000);
         updateTime(); // Panggil sekali untuk inisialisasi
-        
+
         $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -1194,30 +1168,25 @@ async function getKodeKota(position) {
     }
 }
 </script>
-=======
-    });
-<<<<<<< HEAD
 
     const data = await response.json();
     alert(data.message);
 
     document.getElementById('modalIzin').style.display = 'none';
-    document.getElementById('formIzin').reset();
-});
-     </script>   
+    document.getElementById('formIzin').reset(); 
+     </script>
 
 
      <script>
-<<<<<<< HEAD
         // Event listener untuk form pulang awal
         document.getElementById('formPulangAwal').addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const alasan = document.getElementById('alasan_pulang_cepat').value;
             const now = new Date();
             const jam = formatJam(now);
             const tanggal = now.toISOString().split('T')[0];
-            
+
             // Update data presensi
             updateDataPresensi(tanggal, {
                 jamKeluar: jam,
@@ -1226,16 +1195,16 @@ async function getKodeKota(position) {
             // Sembunyikan modal
             document.getElementById('modalPulangAwal').style.display = 'none';
             // Reset form
-            document.getElementById('formPulangAwal').reset();           
+            document.getElementById('formPulangAwal').reset();
             // Tampilkan pesan
             showAlert('Berhasil absen keluar dengan keterangan pulang lebih awal!', 'success');
         });
-        
+
         // Modal controls
         const modalIzin = document.getElementById('modalIzin');
         const modalPulangAwal = document.getElementById('modalPulangAwal');
         const spans = document.getElementsByClassName('close');
-        
+
         // Tutup modal ketika klik tombol close (×)
         for (let i = 0; i < spans.length; i++) {
             spans[i].onclick = function() {
@@ -1243,7 +1212,7 @@ async function getKodeKota(position) {
                 modalPulangAwal.style.display = 'none';
             }
         }
-        
+
         // Tutup modal ketika klik di luar modal
         window.onclick = function(event) {
             if (event.target == modalIzin) {
@@ -1253,15 +1222,14 @@ async function getKodeKota(position) {
                 modalPulangAwal.style.display = 'none';
             }
         }
-        
+
         // Inisialisasi tampilan
         updateTabelPresensi();
-<<<<<<< HEAD
 
         document.getElementById("btnMasuk").addEventListener("click", function() {
     let tanggal = new Date().toISOString().split('T')[0];
     let jamMasuk = new Date().toLocaleTimeString();
-    
+
     fetch('/absensi', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -1295,14 +1263,10 @@ fetch("/absensi")
         });
     })
     .catch(error => console.error("Error:", error));
-<<<<<<< HEAD
-
-=======
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
 
     document.getElementById("formIzin").addEventListener("submit", function(event) {
     event.preventDefault();
-    
+
     let jenisIzin = document.getElementById("jenis_izin").value;
     let alasanIzin = document.getElementById("alasan_izin").value;
 
@@ -1343,11 +1307,6 @@ document.getElementById("formPulangAwal").addEventListener("submit", function(ev
     .catch(error => console.error("Terjadi kesalahan:", error));
 });
 
-=======
-        updateStatistik();
-        updateJam();
->>>>>>> 3edbfbba53ee6f0fb49ddd9c251ef44a41646aa8
-=======
        document.getElementById('formPulangAwal').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -1411,12 +1370,7 @@ window.onclick = function(event) {
 updateTabelPresensi();
 updateStatistik();
 updateJam();
->>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
-=======
-});
-
->>>>>>> d1d392254c622b58447032346056bcba254f97de
     </script>
->>>>>>> 84e2654294087cac1211415410a44418b73f26ad
+
 </body>
 </html>
