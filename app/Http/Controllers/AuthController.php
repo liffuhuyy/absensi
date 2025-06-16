@@ -60,24 +60,7 @@ class AuthController extends Controller
         return $this->loadView('absensi.editprofil');
     }
 
-    public function biodata()
-    {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-        return $this->loadView('absensi.biodata');
-    }
 
-    // ... (halaman lain yang perlu auth bisa ditambah pengecekan sama)
-
-    public function profil()
-    {
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-        $biodata = Biodata::whereNotNull('nohp')->get();
-        return view('absensi.profil', compact('biodata'));
-    }
 
     // === Manajemen Tugas ===
 
@@ -129,14 +112,13 @@ class AuthController extends Controller
         return view('absensi.lupakatasandi');  // perbaikan typo
     }
 
-<<<<<<< HEAD
+
     public function biodata()
     {
-        if (view()->exists('absensi.biodata')) {
-            return view('absensi.biodata');
-        } else {
-            return "View tidak ditemukan.";
+        if (!Auth::check()) {
+            return redirect()->route('login');
         }
+        return $this->loadView('absensi.biodata');
     }
 
     public function izinsakit()
@@ -166,25 +148,14 @@ class AuthController extends Controller
         }
     }
 
-    public function beranda()
-    {
-        if (view()->exists('absensi.beranda')) {
-            return view('absensi.beranda');
-        } else {
-            return "View beranda tidak ditemukan.";
-        }
-    }
 
-    public function showTugas() {
-        $tugas = UserTugas::all();
-        return view('absensi.manajementugas', compact('tugas')); 
-    }
+
 
     public function showPengajuan1()
-{
-    $pengajuan = Pengajuan::paginate(10);
-    return view('absensi.magang', compact('pengajuan'));
-}
+    {
+        $pengajuan = Pengajuan::paginate(10);
+        return view('absensi.magang', compact('pengajuan'));
+    }
 
     public function pengajuan1()
     {
@@ -195,14 +166,13 @@ class AuthController extends Controller
         }
     }
 
-        public function magang()
+    public function magang()
     {
         if (view()->exists('absensi.magang')) {
             return view('absensi.magang');
         } else {
             return "View tidak ditemukan.";
         }
-    
     }
 
     public function kontak()
@@ -250,21 +220,14 @@ class AuthController extends Controller
         }
     }
 
-  public function profil()
+    public function profil()
     {
-    $biodata = Biodata::whereNotNull('nohp')->get();
-      return view('absensi.profil', compact('biodata'));
+        $biodata = Biodata::whereNotNull('nohp')->get();
+        return view('absensi.profil', compact('biodata'));
     }
 
 
-    public function index()
-    {
-        if (view()->exists('absensi.index')) {
-            return view('absensi.index');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
+
 
     public function tentangkami()
     {
@@ -275,17 +238,17 @@ class AuthController extends Controller
         }
     }
 
-public function testMiddleware()
-{
-    if (Auth::check()) {
-        return "User sudah login!";
-    } else {
-        return "User belum login!";
+    public function testMiddleware()
+    {
+        if (Auth::check()) {
+            return "User sudah login!";
+        } else {
+            return "User belum login!";
+        }
     }
-}
 
 
- //ADMIN
+    //ADMIN
     public function dashboardmin()
     {
         if (view()->exists('admin.dashboardmin')) {
@@ -349,10 +312,10 @@ public function testMiddleware()
         }
     }
 
-     public function storeNotif(Request $request)
-=======
+    public function storeNotif(Request $request) {}
+
     public function kirimLinkReset(Request $request)
->>>>>>> 84e2654294087cac1211415410a44418b73f26ad
+
     {
         $request->validate([
             'email' => 'required|email|exists:penggunas,email', // pastikan tabel dan kolom benar

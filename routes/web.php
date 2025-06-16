@@ -11,18 +11,13 @@ use App\Http\Controllers\BiodataController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\PresensiController;
 use App\Http\Controllers\PembimbingController;
-<<<<<<< HEAD
 use App\Models\Absensi;
-=======
->>>>>>> 84e2654294087cac1211415410a44418b73f26ad
-
 /*
 |--------------------------------------------------------------------------
 | Guest Routes
 |--------------------------------------------------------------------------
 */
 
-<<<<<<< HEAD
 // Halaman Login & Logout
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -33,8 +28,6 @@ Route::get('/logout', function () {
 });
 
 // Halaman utama (index)
-=======
->>>>>>> 84e2654294087cac1211415410a44418b73f26ad
 Route::get('/', function () {
     return view('absensi.index');
 });
@@ -135,7 +128,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/pembimbing/tambah', [PembimbingController::class, 'store'])->name('pembimbing.tambah');
     Route::put('/pembimbing/update/{id}', [PembimbingController::class, 'update'])->name('pembimbing.update');
     Route::delete('/pembimbing/hapus/{id}', [PembimbingController::class, 'destroy'])->name('pembimbing.hapus');
-    });
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -154,11 +147,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/managementaksespt', [AuthController::class, 'managementaksespt'])->name('managementaksespt');
     Route::get('/backupdatapt', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
 });
-=======
-| Authenticated Routes
-|--------------------------------------------------------------------------
-*/
-
 Route::middleware(['auth'])->group(function () {
 
     // Dashboard dan Reset
@@ -265,4 +253,3 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/backupdata', [AuthController::class, 'backupdatapt'])->name('backupdatapt');
     });
 });
->>>>>>> 84e2654294087cac1211415410a44418b73f26ad
