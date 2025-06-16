@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+<<<<<<< HEAD
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+=======
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
 class AuthController extends Controller
 {
@@ -73,8 +76,9 @@ class AuthController extends Controller
         return view('absensi.manajementugas', compact('tugas'));
     }
 
-    public function filter(Request $request)
+    public function showLoginForm()
     {
+<<<<<<< HEAD
         if (!Auth::check()) {
             return redirect()->route('login');
         }
@@ -129,6 +133,15 @@ class AuthController extends Controller
             return "View tidak ditemukan.";
         }
     }
+=======
+        if (!view()->exists('absensi.login')) {
+            abort(404, 'Halaman login tidak ditemukan.');
+        }
+
+        return view('absensi.login');
+    }
+
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
     public function riwayatabsen()
     {
@@ -139,6 +152,7 @@ class AuthController extends Controller
         }
     }
 
+<<<<<<< HEAD
     public function presensi()
     {
         if (view()->exists('absensi.presensi')) {
@@ -183,6 +197,8 @@ class AuthController extends Controller
             return "View tidak ditemukan.";
         }
     }
+=======
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
     public function resetkatasandi()
     {
@@ -220,12 +236,15 @@ class AuthController extends Controller
         }
     }
 
+<<<<<<< HEAD
     public function profil()
     {
         $biodata = Biodata::whereNotNull('nohp')->get();
         return view('absensi.profil', compact('biodata'));
     }
 
+=======
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
 
 
@@ -267,6 +286,7 @@ class AuthController extends Controller
         }
     }
 
+<<<<<<< HEAD
     public function datapt()
     {
         if (view()->exists('admin.datapt')) {
@@ -373,6 +393,8 @@ class AuthController extends Controller
         ]);
 
         DB::table('password_resets')->where('email', $request->email)->delete();
+=======
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
         return redirect()->route('login')->with('status', 'Password berhasil diubah!');
     }
@@ -403,11 +425,53 @@ class AuthController extends Controller
         return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
     }
 
+<<<<<<< HEAD
+=======
+    public function ringkasanabsenpt()
+    {
+        if (view()->exists('perusahaan.ringkasanabsenpt')) {
+            return view('perusahaan.ringkasanabsenpt');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+
+    // LOGIN DAN DAFTAR
+    public function login(Request $request)
+    {
+        // Validasi input agar lebih aman
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6'
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        $user = Pengguna::where('email', $credentials['email'])->first();
+
+        if ($user && Hash::check($credentials['password'], $user->password)) {
+            Auth::login($user); // Login user
+
+            // Arahkan ke halaman berdasarkan role
+            return match ($user->role) {
+                'admin' => redirect()->route('dashboardmin'),
+                'user' => redirect()->route('beranda'),
+                'perusahaan' => redirect()->route('dashboardpt'),
+                default => tap(Auth::logout(), fn() => redirect()->route('login')->withErrors(['role' => 'Role tidak dikenali.']))
+            };
+        }
+
+        return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
+    }
+
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
     public function logout(Request $request)
     {
         Auth::logout();
         return redirect()->route('login');
     }
+<<<<<<< HEAD
 
     // === Helper ===
 
@@ -419,4 +483,6 @@ class AuthController extends Controller
         // Redirect ke halaman error 404 atau halaman khusus
         abort(404, $errorMsg);
     }
+=======
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 }

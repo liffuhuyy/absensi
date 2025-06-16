@@ -1,110 +1,133 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-    <link rel="stylesheet" href="assets/css/main.css" />
-    <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+@extends('siswa.layout.siswa_layout')
+@section('content')
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Gaya umum */
         body {
-            background-color: rgba(19, 19, 37, 0.69) !important;
-            color: rgb(255, 255, 255) !important;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f0f0;
         }
 
-        /* Section Contact */
         #contact {
-            background-color: white;
-            color: black;
+            background-color: #fff;
             padding: 50px 20px;
-            text-align: center;
+            max-width: 800px;
+            margin: 50px auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
-        #contact header {
-            margin-bottom: 20px;
-        }
-
-        #contact h2,
-        #contact p,
-        #contact label {
-            color: black !important;
-        }
-
-        #contact h2 {
-            font-size: 2em;
+        #contact header h2 {
             margin-bottom: 10px;
+            font-size: 2em;
         }
 
-        #contact p {
-            font-size: 1.1em;
+        #contact header p {
+            margin-bottom: 30px;
+            color: #666;
         }
 
-        #contact .cta {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
         }
 
-        /* Input dan Textarea */
-        #contact input[type="text"],
-        #contact input[type="email"],
-        #contact textarea {
+        .col-6 {
+            flex: 1 1 48%;
+        }
+
+        .col-12 {
+            flex: 1 1 100%;
+        }
+
+        input,
+        textarea {
             width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 20px;
+            padding: 12px;
             font-size: 1em;
-            background-color: #f0f0f0 !important;
-            color: black !important;
-            font-weight: bold !important;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            box-sizing: border-box;
         }
 
-        #contact textarea {
-            resize: none;
+        textarea {
+            resize: vertical;
         }
 
-        #contact label {
-            font-weight: bold;
-        }
-
-        /* Placeholder warna gelap */
-        #contact input::placeholder,
-        #contact textarea::placeholder {
-            color: #333 !important;
-        }
-
-        /* Tombol Submit dan Kembali */
-        #contact input[type="submit"],
-        .back-button {
-            background: black !important;
-            color: white !important;
-            border: none;
-            padding: 10px 20px;
+        input[type="submit"] {
+            background-color: #000000;
+            color: white;
             cursor: pointer;
-            font-size: 1.1em;
-            border-radius: 20px;
-            transition: background 0.3s ease;
+            border: none;
+            transition: background-color 0.3s ease;
         }
 
-        #contact input[type="submit"]:hover,
-        .back-button:hover {
-            background: black !important;
+        input[type="submit"]:hover {
+            background-color: #172a46;
         }
-        /* Tombol Kembali */    
-        .btn-back {
-            background: none;
-            border: none;
-            color: #000022;
-            font-size: 20px;
-            cursor: pointer;
+
+        #alert-success {
+            margin-top: 15px;
+            color: #2e7d32;
+            background-color: #d0f0c0;
+            border: 1px solid #a5d6a7;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        #footer {
+            background: #222;
+            color: #ccc;
+            padding: 40px 20px;
+            text-align: center;
+            font-size: 0.95em;
+        }
+
+        #footer .icons {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        #footer .icons li a {
+            color: #ccc;
+            font-size: 1.4em;
+            display: inline-block;
+            transition: color 0.3s ease;
+        }
+
+        #footer .icons li a:hover {
+            color: #ffffff;
+        }
+
+        #footer .copyright {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            color: #999;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #footer .copyright a {
+            color: #aaa;
             text-decoration: none;
-            margin-top: 10px;
+            transition: color 0.3s ease;
+        }
+
+        #footer .copyright a:hover {
+            color: #fff;
         }
     </style>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 </head>
@@ -117,6 +140,16 @@
                 <p>Silakan isi formulir di bawah untuk menghubungi kami</p>
             </header>
             <form method="post" action="#" class="cta">
+=======
+    <section id="contact" class="wrapper style2 special fade">
+        <div class="container">
+            <header>
+                <h2 class="text-center">Kontak</h2>
+                <p>Silakan isi formulir di bawah untuk menghubungi kami jika kamu mengalami kendala</p>
+            </header>
+            <form method="post" action="{{ route('admin.notif') }}" class="cta">
+                @csrf
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
                 <div class="row gtr-uniform gtr-50">
                     <div class="col-6 col-12-xsmall">
                         <input type="text" name="name" id="name" placeholder="Nama Anda" required />
@@ -131,6 +164,7 @@
                         <input type="submit" value="Kirim Pesan" class="fit primary" />
                     </div>
                 </div>
+<<<<<<< HEAD
                 <br />
                 <button type="button" class="back-button" onclick="window.location.href='beranda.php'">Kembali</button>
             </form>
@@ -225,3 +259,40 @@
 >>>>>>> 9efacede5cf82b2f0e797a68fb66b0d148dfb85d
 =======
 >>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
+=======
+                <br>
+            </form>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer id="footer">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+        <ul class="icons">
+            <li>
+                <a href="https://www.tiktok.com/@nesasofficial?_t=ZS-8wVHHLRIbsf&_r=1" target="_blank" title="TikTok">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://youtube.com/@nesasceren?si=g22qqpOl365lYpfo" target="_blank" title="YouTube">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.facebook.com/share/19qyo1W1i1/" target="_blank" title="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+            </li>
+            <li>
+                <a href="https://www.instagram.com/officialsmkn1subang" target="_blank" title="Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="copyright">
+            <li>&copy; SMK Negeri 1 Subang. All rights reserved.</li>
+        </ul>
+    </footer>
+@endsection
+>>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79

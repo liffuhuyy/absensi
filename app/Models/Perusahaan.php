@@ -3,19 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\Pengguna;
 use Illuminate\Database\Eloquent\Model;
 
-class JadwalKerja extends Model
+class Perusahaan extends Model
 {
-    protected $table = 'jadwal_kerja';
+    use HasFactory;
+
+    protected $table = 'perusahaan';
+
     protected $fillable = [
         'pengguna_id',
-        'jam_masuk',
-        'jam_keluar',
-        'hari_kerja',
-        'latitude',
-        'longitude'
+        'nama_perusahaan',
+        'alamat',
+        'email',
+        'telepon',
+        'logo',
+        'deskripsi',
     ];
 
     public function pengguna()
