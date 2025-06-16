@@ -154,7 +154,6 @@
                                     <th>Jurusan</th>
                                     <th>Tanggal Mulai</th>
                                     <th>Tanggal Selesai</th>
-                                    <th>Perusahaan</th>
                                     <th>Tanggal pengajuan</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
@@ -175,7 +174,6 @@
                                         <td>{{ $data->jurusan }}</td>
                                         <td>{{ $data->tanggal_masuk }}</td>
                                         <td>{{ $data->tanggal_keluar }}</td>
-                                        <td>{{ $data->jadwalKerja->nama ?? '-' }}</td>
                                         <td>{{ $data->created_at->format('d-m-Y H:i') }}</td>
                                         <td>
                                             <div class="container text-dark {{ $bgColor }}">
