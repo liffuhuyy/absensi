@@ -31,7 +31,7 @@ class AuthController extends Controller
             'new_password' => 'required|min:6|confirmed',
         ]);
 
-        $user = User::where('email', $request->email)->first();
+        $user = Pengguna::where('email', $request->email)->first();
 
         if (!$user) {
             return back()->withErrors(['email' => 'Email tidak ditemukan.']);
