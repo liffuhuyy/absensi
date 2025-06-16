@@ -86,44 +86,135 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
-    public function dashboardmin() { return $this->renderView('admin.dashboardmin'); }
-    public function ringkasanabsen() { return $this->renderView('admin.ringkasanabsen'); }
-    public function datapt() { return $this->renderView('admin.datapt'); }
-    public function pengguna() { return $this->renderView('admin.pengguna'); }
-    public function datapembimbing() { return $this->renderView('admin.datapembimbing'); }
-    public function managementakses() { return $this->renderView('admin.managementakses'); }
-    public function pengaturan() { return $this->renderView('admin.pengaturan'); }
+    public function dashboardmin()
+    {
+        return $this->renderView('admin.dashboardmin');
+    }
+    public function ringkasanabsen()
+    {
+        return $this->renderView('admin.ringkasanabsen');
+    }
+    public function datapt()
+    {
+        return $this->renderView('admin.datapt');
+    }
+    public function pengguna()
+    {
+        return $this->renderView('admin.pengguna');
+    }
+    public function datapembimbing()
+    {
+        return $this->renderView('admin.datapembimbing');
+    }
+    public function managementakses()
+    {
+        return $this->renderView('admin.managementakses');
+    }
+    public function pengaturan()
+    {
+        return $this->renderView('admin.pengaturan');
+    }
 
-    public function dashboardpt() { return $this->renderView('perusahaan.dashboardpt'); }
-    public function pengaturanpt() { return $this->renderView('perusahaan.pengaturanpt'); }
-    public function nilai() { return $this->renderView('perusahaan.nilai'); }
-    public function profilpt() { return $this->renderView('perusahaan.profilpt'); }
-    public function ringkasanabsenpt() { return $this->renderView('perusahaan.ringkasanabsenpt'); }
-    public function jadwalpt() { return $this->renderView('perusahaan.jadwalpt'); }
-    public function managementaksespt() { return $this->renderView('perusahaan.managementaksespt'); }
-    public function backupdatapt() { return $this->renderView('perusahaan.backupdatapt'); }
+    public function dashboardpt()
+    {
+        return $this->renderView('perusahaan.dashboardpt');
+    }
+    public function pengaturanpt()
+    {
+        return $this->renderView('perusahaan.pengaturanpt');
+    }
+    public function nilai()
+    {
+        return $this->renderView('perusahaan.nilai');
+    }
+    public function profilpt()
+    {
+        return $this->renderView('perusahaan.profilpt');
+    }
+    public function ringkasanabsenpt()
+    {
+        return $this->renderView('perusahaan.ringkasanabsenpt');
+    }
+    public function jadwalpt()
+    {
+        return $this->renderView('perusahaan.jadwalpt');
+    }
+    public function managementaksespt()
+    {
+        return $this->renderView('perusahaan.managementaksespt');
+    }
+    public function backupdatapt()
+    {
+        return $this->renderView('perusahaan.backupdatapt');
+    }
 
-    public function beranda() { return $this->renderView('absensi.beranda'); }
-    public function presensi() { return $this->renderView('absensi.presensi'); }
-    public function biodata() { return $this->renderView('absensi.biodata'); }
-    public function izinsakit() { return $this->renderView('absensi.izinsakit'); }
-    public function riwayatabsen() { return $this->renderView('absensi.riwayatabsen'); }
-    public function editprofil() { return $this->renderView('absensi.editprofil'); }
+    public function beranda()
+    {
+        return $this->renderView('absensi.beranda');
+    }
+    public function presensi()
+    {
+        return $this->renderView('absensi.presensi');
+    }
+    public function biodata()
+    {
+        return $this->renderView('absensi.biodata');
+    }
+    public function izinsakit()
+    {
+        return $this->renderView('absensi.izinsakit');
+    }
+    public function riwayatabsen()
+    {
+        return $this->renderView('absensi.riwayatabsen');
+    }
+    public function editprofil()
+    {
+        return $this->renderView('absensi.editprofil');
+    }
 
-    public function profil() {
+    public function profil()
+    {
         $biodata = Biodata::whereNotNull('nohp')->get();
         return $this->renderView('absensi.profil', compact('biodata'));
     }
 
-    public function pengajuan1() { return $this->renderView('absensi.pengajuan1'); }
-    public function magang() { return $this->renderView('absensi.magang'); }
-    public function kontak() { return $this->renderView('absensi.kontak'); }
-    public function resetkatasandi() { return $this->renderView('absensi.resetkatasandi'); }
-    public function ubahkatasandiberhasil() { return $this->renderView('absensi.ubahkatasandiberhasil'); }
-    public function lupakatasandi() { return $this->renderView('absensi.lupakatasandi'); }
-    public function ubahkatasandi() { return $this->renderView('absensi.ubahkatasandi'); }
-    public function index() { return $this->renderView('absensi.index'); }
-    public function tentangkami() { return $this->renderView('absensi.tentangkami'); }
+    public function pengajuan1()
+    {
+        return $this->renderView('absensi.pengajuan1');
+    }
+    public function magang()
+    {
+        return $this->renderView('absensi.magang');
+    }
+    public function kontak()
+    {
+        return $this->renderView('absensi.kontak');
+    }
+    public function resetkatasandi()
+    {
+        return $this->renderView('absensi.resetkatasandi');
+    }
+    public function ubahkatasandiberhasil()
+    {
+        return $this->renderView('absensi.ubahkatasandiberhasil');
+    }
+    public function lupakatasandi()
+    {
+        return $this->renderView('absensi.lupakatasandi');
+    }
+    public function ubahkatasandi()
+    {
+        return $this->renderView('absensi.ubahkatasandi');
+    }
+    public function index()
+    {
+        return $this->renderView('absensi.index');
+    }
+    public function tentangkami()
+    {
+        return $this->renderView('absensi.tentangkami');
+    }
 
     public function showTugas()
     {

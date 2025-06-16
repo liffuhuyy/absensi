@@ -71,7 +71,7 @@
             border: none;
             cursor: pointer;
             padding: 0;
-            display: none; /* Hidden by default */
+            display: none;
         }
         .btn-primary {
             background-color: #0f172a;
@@ -115,7 +115,8 @@
 
         <form action="{{ route('reset.proses') }}" method="POST" id="resetPasswordForm">
             @csrf
-            <input type="hidden" name="token" value="{{ $token }}">
+            {{-- Jika kamu tidak menggunakan token reset via email, baris di bawah tidak diperlukan --}}
+            {{-- <input type="hidden" name="token" value="{{ $token }}"> --}}
 
             <div class="form-group">
                 <label class="form-label" for="password">Kata Sandi</label>
@@ -152,7 +153,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // Cek email di localStorage
             const resetEmail = localStorage.getItem('resetEmail');
             if (!resetEmail) {
                 alert('Silakan masukkan email terlebih dahulu');
@@ -163,17 +163,12 @@
             function setupPasswordField(inputId, toggleId) {
                 const passwordInput = document.getElementById(inputId);
                 const toggleButton = document.getElementById(toggleId);
-
-                // Tampilkan tombol toggle jika ada isi input
                 passwordInput.addEventListener('input', function () {
                     toggleButton.style.display = this.value.length > 0 ? 'block' : 'none';
                 });
-
-                // Toggle type password/text
                 toggleButton.addEventListener('click', function () {
                     const type = passwordInput.type === 'password' ? 'text' : 'password';
                     passwordInput.type = type;
-
                     const eyeIcon = this.querySelector('.eye-icon');
                     if (type === 'password') {
                         eyeIcon.innerHTML = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle>';
@@ -182,7 +177,6 @@
                             '<path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line>';
                     }
                 });
-
                 if (passwordInput.value.length > 0) {
                     toggleButton.style.display = 'block';
                 }
@@ -193,13 +187,10 @@
 
             const form = document.getElementById('resetPasswordForm');
             form.addEventListener('submit', function (e) {
-                // Validasi client side sebelum submit form
                 const password = document.getElementById('password').value.trim();
                 const confirmPassword = document.getElementById('confirmPassword').value.trim();
-
                 document.getElementById('passwordError').style.display = 'none';
                 document.getElementById('confirmPasswordError').style.display = 'none';
-
                 if (password.length < 8) {
                     const err = document.getElementById('passwordError');
                     err.textContent = 'Kata sandi minimal harus 8 karakter';
@@ -214,7 +205,6 @@
                     e.preventDefault();
                     return false;
                 }
-                // validasi oke, form submit ke Laravel
             });
 
             document.getElementById('backButton').addEventListener('click', function () {

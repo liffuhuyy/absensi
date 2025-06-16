@@ -106,6 +106,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsen'])->name('ringkasanabsen');
         Route::get('/datapt', [AuthController::class, 'datapt'])->name('datapt');
+        Route::get('/dashboard', [AuthController::class, 'dashboardAdmin'])->name('dashboardmin');
 
         // Pengguna
         Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
@@ -118,7 +119,6 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/pembimbing/tambah', [PembimbingController::class, 'store'])->name('pembimbing.tambah');
         Route::put('/pembimbing/update/{id}', [PembimbingController::class, 'update'])->name('pembimbing.update');
         Route::delete('/pembimbing/hapus/{id}', [PembimbingController::class, 'destroy'])->name('pembimbing.hapus');
-
         Route::get('/managementakses', [AuthController::class, 'managementakses'])->name('managementakses');
         Route::get('/pengaturan', [AuthController::class, 'pengaturan'])->name('pengaturan');
 
