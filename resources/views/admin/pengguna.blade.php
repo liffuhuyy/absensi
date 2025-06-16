@@ -128,8 +128,7 @@
                     </div>
                 </div>
             </div>
-            =======
-            >>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
+
 
 
             <!-- Modal Tambah Siswa -->
@@ -259,7 +258,10 @@
                     });
 
                     <<
-                    << << < HEAD
+                    <<
+                    <<
+                    <
+                    HEAD
                     // Pencarian berdasarkan teks input
                     $('#searchBox').on('input', function() {
                         let query = $(this).val().toLowerCase();
@@ -279,7 +281,8 @@
                             }
                         });
                     }); ===
-                    === =
+                    ===
+                    =
                 }
                 // Panggil fungsi saat halaman dimuat
                 loadData();
@@ -309,8 +312,7 @@
                             $(this).toggle($(this).find('td.role').text().toLowerCase() === selectedRole);
                         }
                     });
-                }); >>>
-                >>> > d7390f319b47b889a80ef08f85da0dc72aacab79
+                });
 
 
                 // Tangani submit formulir tambah pengguna
