@@ -11,6 +11,7 @@ class Pengguna extends Authenticatable
 
     protected $table = 'pengguna';
     protected $fillable = [
+        'pengguna_id',
         'nama',
         'email',
         'password',
@@ -22,7 +23,7 @@ class Pengguna extends Authenticatable
         'remember_token',
     ];
 
-    
+    // Mengecek peran pengguna
     public function isUser()
     {
         return $this->role === 'user';
@@ -37,6 +38,8 @@ class Pengguna extends Authenticatable
     {
         return $this->role === 'perusahaan';
     }
-
-
+    public function biodata()
+    {
+        return $this->hasOne(Biodata::class, 'pengguna_id');
+    }
 }

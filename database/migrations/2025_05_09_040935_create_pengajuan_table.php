@@ -9,6 +9,7 @@ return new class extends Migration
     {
         Schema::create('pengajuan', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('pengguna_id');
             $table->string('nama');// Nama
             $table->string('jurusan'); // Jurusan
             $table->date('tanggal_masuk'); // Tanggal masuk
@@ -16,6 +17,9 @@ return new class extends Migration
             $table->unsignedBigInteger('perusahaan_id');
             $table->string('status')->default('Menunggu');
             $table->timestamps();
+
+            $table->foreign('pengguna_id')->references('id')->on('pengguna')->onDelete('cascade');
+            $table->foreign('perusahaan_id')->references('id')->on('pengguna')->onDelete('cascade');
         });
     }
 
