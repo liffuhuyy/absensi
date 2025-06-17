@@ -58,85 +58,6 @@
                 </div>
             </div>
         </div>
-<<<<<<< HEAD
-    </div>
-    <div class="sidebar-menu">
-      <ul class="menu">
-            <li class="sidebar-title">Menu</li>
-            
-            <li
-            class="sidebar-item">
-            <a href="{{ url('/dashboardmin') }}" class='sidebar-link'>
-                <i class="bi bi-grid-fill"></i>
-                <span>Dashboard</span>
-            </a>
-        </li>
-        <li
-        class="sidebar-item">
-        <a href="{{ url('/ringkasanabsen') }}" class='sidebar-link'>
-            <i class="bi bi-journal-check"></i>
-            <span>Ringkasan Absen</span>
-        </a>
-    </li>
-<li
-    class="sidebar-item">
-    <a href="{{ url('/pengguna') }}" class='sidebar-link'>
-        <i class="bi bi-journal-check"></i>
-        <span>Data Pengguna</span>
-    </a>
-</li>
-<li
-    class="sidebar-item">
-    <a href="{{ url('/datapembimbing') }}" class='sidebar-link'>
-        <i class="bi bi-journal-check"></i>
-        <span>Data Pembimbing</span>
-    </a>
-</li>
-    <li
-    class="sidebar-item">
-    <a href="{{ url('/notif') }}" class='sidebar-link'>
-        <i class="bi bi-bell"></i>
-        <span>Notifikasi</span>
-    </a>
-    </li>
-        <li
-        class="sidebar-item">
-        <a href="{{ url('/pengaturan') }}" class='sidebar-link'>
-            <i class="bi bi-gear"></i>
-            <span>Pengaturan</span>
-        </a>
-    </li>
-        </ul>
-    </div>
-</div>
-        </div>
-        <div id="main">
-            <header class="mb-3">
-                <a href="#" class="burger-btn d-block d-xl-none">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-            </header>
-            
-            
-<div class="page-heading">
-    <div class="page-title">
-        <div class="row">
-            <div class="col-12 col-md-6 order-md-1 order-last">
-                <h3>Data Pengguna</h3>
-                <p class="text-subtitle text-muted">Kelola akun siswa dan perusahaan dengan mudah!</p>
-            </div>
-            <div class="col-12 col-md-6 order-md-2 order-first">
-                <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ url('/dashboardmin') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Data pengguna</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
-=======
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
 
         <!-- Modal Tambah Siswa -->
@@ -263,27 +184,6 @@
                     console.log("Tipe data:", typeof data);
                 });
 
-<<<<<<< HEAD
-    // Pencarian berdasarkan teks input
-    $('#searchBox').on('input', function () {
-        let query = $(this).val().toLowerCase();
-        $('#dataPengguna tr').filter(function () {
-            $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
-        });
-    });
-
-    // Pencarian berdasarkan dropdown role
-    $('#roleFilter').on('change', function () {
-        let selectedRole = $(this).val().toLowerCase();
-        $('#dataPengguna tr').filter(function () {
-            if (selectedRole === 'all') {
-                $(this).show(); // Tampilkan semua jika pilih "All"
-            } else {
-                $(this).toggle($(this).find('td.role').text().toLowerCase() === selectedRole);
-            } 
-        });
-    });
-=======
             }
             // Panggil fungsi saat halaman dimuat
             loadData();
@@ -314,7 +214,6 @@
                     }
                 });
             });
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
 
             // Tangani submit formulir tambah pengguna
