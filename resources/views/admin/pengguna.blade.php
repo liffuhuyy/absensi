@@ -1,3 +1,4 @@
+]
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,349 +59,253 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="sidebar-menu">
-        <ul class="menu">
-            <li class="sidebar-title">Menu</li>
 
-            <li class="sidebar-item">
-                <a href="{{ url('/dashboardmin') }}" class='sidebar-link'>
-                    <i class="bi bi-grid-fill"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="{{ url('/ringkasanabsen') }}" class='sidebar-link'>
-                    <i class="bi bi-journal-check"></i>
-                    <span>Ringkasan Absen</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="{{ url('/pengguna') }}" class='sidebar-link'>
-                    <i class="bi bi-journal-check"></i>
-                    <span>Data Pengguna</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="{{ url('/datapembimbing') }}" class='sidebar-link'>
-                    <i class="bi bi-journal-check"></i>
-                    <span>Data Pembimbing</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="{{ url('/notif') }}" class='sidebar-link'>
-                    <i class="bi bi-bell"></i>
-                    <span>Notifikasi</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="{{ url('/pengaturan') }}" class='sidebar-link'>
-                    <i class="bi bi-gear"></i>
-                    <span>Pengaturan</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    </div>
-    </div>
-    <div id="main">
-        <header class="mb-3">
-            <a href="#" class="burger-btn d-block d-xl-none">
-                <i class="bi bi-justify fs-3"></i>
-            </a>
-        </header>
 
-        <div class="page-heading">
-            <div class="page-title">
-                <div class="row">
-                    <div class="col-12 col-md-6 order-md-1 order-last">
-                        <h3>Data Pengguna</h3>
-                        <p class="text-subtitle text-muted">Kelola akun siswa dan perusahaan dengan mudah!</p>
+        <!-- Modal Tambah Siswa -->
+        <div id="addModal" class="modal fade" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tambah Pengguna</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
-                    <div class="col-12 col-md-6 order-md-2 order-first">
-                        <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="{{ url('/dashboardmin') }}">Dashboard</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Data pengguna siswa</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
-            </div>
-
-
-
-            <!-- Modal Tambah Siswa -->
-            <div id="addModal" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">Tambah Pengguna</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="addForm">
-                                <div class="form-group">
-                                    <label>Nama Pengguna</label>
-                                    <input type="text" id="namaPengguna" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Email</label>
-                                    <input type="email" id="emailPengguna" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label>Password</label>
-                                    <input type="password" id="passwordPengguna" class="form-control" required
-                                        minlength="6">
-                                </div>
-                                <div class="form-group">
-                                    <label>Role</label>
-                                    <select id="rolePengguna" class="form-control">
-                                        <option value="user">User</option>
-                                        <option value="perusahaan">Perusahaan</option>
-                                        <option value="admin">Admin</option>
-                                    </select>
-                                </div>
-                                <form id="addForm">
-                                    <button type="submit" class="btn btn-primary" id="saveButton">Simpan</button>
-                                </form>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Basic Tables start -->
-            <section class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title">Kelola Data pengguna </h5>
-                        <div class="d-flex align##-items-center justify-content-between mb-3">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <input type="text" id="searchBox" class="form-control form-control-sm"
-                                        placeholder="Cari berdasarkan nama">
-                                </div>
+                    <div class="modal-body">
+                        <form id="addForm">
+                            <div class="form-group">
+                                <label>Nama Pengguna</label>
+                                <input type="text" id="namaPengguna" class="form-control" required>
                             </div>
-                            <a href="#" class="btn btn-sm btn-outline-primary ms-2" id="openAddModal">Tambah
-                                Data</a>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            @if (isset($pengguna) && $pengguna->count())
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama</th>
-                                            <th>Email</th>
-                                            <th>Password</th>
-                                            <th>Role</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="dataPengguna">
-                                        @foreach ($pengguna as $user)
-                                            <tr>
-                                                <td>{{ $user->nama }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->password }}</td>
-                                                <td>{{ $user->role }}</td>
-                                                <td>
-                                                    <form method="POST"
-                                                        action="/pengguna/hapus/{{ $user->id }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <a href="#" class="btn btn-sm btn-danger deleteButton"
-                                                            data-id="{{ $user->id }}">Hapus</a>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            @else
-                                <div class="center-text">
-                                    <p>Belum ada pengguna yang terdaftar.</p>
-                                </div>
-                            @endif
-                        </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" id="emailPengguna" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password" id="passwordPengguna" class="form-control" required
+                                    minlength="6">
+                            </div>
+                            <div class="form-group">
+                                <label>Role</label>
+                                <select id="rolePengguna" class="form-control">
+                                    <option value="user">User</option>
+                                    <option value="perusahaan">Perusahaan</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <form id="addForm">
+                                <button type="submit" class="btn btn-primary" id="saveButton">Simpan</button>
+                            </form>
+                        </form>
                     </div>
                 </div>
-            </section>
+            </div>
+        </div>
 
-            @include('admin.layout.footer')
-            <script src="assets/static/js/components/dark.js"></script>
-            <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-            <!-- SCRIPT DITARUH SEBELUM </BODY> -->
-            <script src="assets/extensions/jquery/jquery.min.js"></script>
-            <script src="assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
-            <script src="assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
-            <script src="assets/static/js/pages/datatables.js"></script>
-            <!-- Tambahkan Bootstrap Bundle (JS + Popper.js) -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <!-- Bootstrap JavaScript -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Basic Tables start -->
+        <section class="section">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Kelola Data pengguna </h5>
+                    <div class="d-flex align##-items-center justify-content-between mb-3">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <input type="text" id="searchBox" class="form-control form-control-sm"
+                                    placeholder="Cari berdasarkan nama">
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-sm btn-outline-primary ms-2" id="openAddModal">Tambah Data</a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        @if (isset($pengguna) && $pengguna->count())
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Email</th>
+                                        <th>Password</th>
+                                        <th>Role</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dataPengguna">
+                                    @foreach ($pengguna as $user)
+                                        <tr>
+                                            <td>{{ $user->nama }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->password }}</td>
+                                            <td>{{ $user->role }}</td>
+                                            <td>
+                                                <form method="POST" action="/pengguna/hapus/{{ $user->id }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <a href="#" class="btn btn-sm btn-danger deleteButton"
+                                                        data-id="{{ $user->id }}">Hapus</a>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        @else
+                            <div class="center-text">
+                                <p>Belum ada pengguna yang terdaftar.</p>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <script>
-                $('.close').click(function() {
-                    $('#addModal').modal('hide');
+        @include('admin.layout.footer')
+        <script src="assets/static/js/components/dark.js"></script>
+        <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+        <!-- SCRIPT DITARUH SEBELUM </BODY> -->
+        <script src="assets/extensions/jquery/jquery.min.js"></script>
+        <script src="assets/extensions/datatables.net/js/jquery.dataTables.min.js"></script>
+        <script src="assets/extensions/datatables.net-bs5/js/dataTables.bootstrap5.min.js"></script>
+        <script src="assets/static/js/pages/datatables.js"></script>
+        <!-- Tambahkan Bootstrap Bundle (JS + Popper.js) -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <!-- Bootstrap JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            $('.close').click(function() {
+                $('#addModal').modal('hide');
+            });
+            // Fungsi untuk memuat data pengguna ke dalam tabel
+            function loadData() {
+                $.get('/pengguna', function(data) {
+                    console.log("Data yang diterima:", data);
+                    console.log("Tipe data:", typeof data);
                 });
-                // Fungsi untuk memuat data pengguna ke dalam tabel
-                function loadData() {
-                    $.get('/pengguna', function(data) {
-                        console.log("Data yang diterima:", data);
-                        console.log("Tipe data:", typeof data);
-                    });
 
-                    <<
-                    <<
-                    <<
-                    <
-                    HEAD
-                    // Pencarian berdasarkan teks input
-                    $('#searchBox').on('input', function() {
-                        let query = $(this).val().toLowerCase();
-                        $('#dataPengguna tr').filter(function() {
-                            $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
-                        });
-                    });
+            }
+            // Panggil fungsi saat halaman dimuat
+            loadData();
+            // Tangani pencarian pengguna
+            $('#searchBox').on('input', function() {
+                let query = $(this).val().toLowerCase();
+                $('#dataPengguna tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
+                });
+            });
 
-                    // Pencarian berdasarkan dropdown role
-                    $('#roleFilter').on('change', function() {
-                        let selectedRole = $(this).val().toLowerCase();
-                        $('#dataPengguna tr').filter(function() {
-                            if (selectedRole === 'all') {
-                                $(this).show(); // Tampilkan semua jika pilih "All"
-                            } else {
-                                $(this).toggle($(this).find('td.role').text().toLowerCase() === selectedRole);
-                            }
-                        });
-                    });
+            // Pencarian berdasarkan teks input
+            $('#searchBox').on('input', function() {
+                let query = $(this).val().toLowerCase();
+                $('#dataPengguna tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
+                });
+            });
+
+            // Pencarian berdasarkan dropdown role
+            $('#roleFilter').on('change', function() {
+                let selectedRole = $(this).val().toLowerCase();
+                $('#dataPengguna tr').filter(function() {
+                    if (selectedRole === 'all') {
+                        $(this).show(); // Tampilkan semua jika pilih "All"
+                    } else {
+                        $(this).toggle($(this).find('td.role').text().toLowerCase() === selectedRole);
+                    }
+                });
+            });
+
+
+            // Tangani submit formulir tambah pengguna
+            $('#addForm').submit(function(e) {
+                e.preventDefault();
+
+                let data = {
+                    _token: '{{ csrf_token() }}',
+                    namaPengguna: $('#namaPengguna').val(),
+                    emailPengguna: $('#emailPengguna').val(),
+                    passwordPengguna: $('#passwordPengguna').val(),
+                    role: $('#rolePengguna').val()
+                };
+
+                $.post('/pengguna/tambah', data, function(response) {
+                    alert(response.message);
+                    $('#addModal').modal('hide'); // Tutup modal setelah simpan
+                    location.reload(); // Perbarui tabel pengguna
+                }).fail(function(xhr) {
+                    alert('Terjadi kesalahan: ' + xhr.responseText);
+                });
+            });
+
+            // Tangani klik tombol tambah pengguna
+            $('#openAddModal').click(function() {
+                $('#addModal').modal('show');
+            });
+
+            // Tangani klik tombol hapus pengguna
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
-                // Panggil fungsi saat halaman dimuat
-                loadData();
-                // Tangani pencarian pengguna
-                $('#searchBox').on('input', function() {
-                    let query = $(this).val().toLowerCase();
-                    $('#dataPengguna tr').filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
-                    });
-                });
+            });
 
-                // Pencarian berdasarkan teks input
-                $('#searchBox').on('input', function() {
-                    let query = $(this).val().toLowerCase();
-                    $('#dataPengguna tr').filter(function() {
-                        $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
-                    });
-                });
+            $(document).on('click', '.deleteButton', function(e) {
+                e.preventDefault();
+                let id = $(this).data('id');
 
-                // Pencarian berdasarkan dropdown role
-                $('#roleFilter').on('change', function() {
-                    let selectedRole = $(this).val().toLowerCase();
-                    $('#dataPengguna tr').filter(function() {
-                        if (selectedRole === 'all') {
-                            $(this).show(); // Tampilkan semua jika pilih "All"
-                        } else {
-                            $(this).toggle($(this).find('td.role').text().toLowerCase() === selectedRole);
+                if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
+                    $.ajax({
+                        url: '/pengguna/hapus/' + id,
+                        type: 'DELETE',
+                        success: function(response) {
+                            alert(response.message);
+                            location.reload();
+                        },
+                        error: function(xhr) {
+                            alert('Terjadi kesalahan: ' + xhr.responseText);
                         }
                     });
-                });
+                }
+            });
 
+            $.ajax({
+                url: '/pengguna/hapus/' + id,
+                type: 'DELETE',
+                data: {
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function(response) {
+                    alert(response.message);
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert('Terjadi kesalahan: ' + xhr.responseText);
+                }
+            });
 
-                // Tangani submit formulir tambah pengguna
-                $('#addForm').submit(function(e) {
-                    e.preventDefault();
+            $(document).ready(function() {
+                function filterUsers() {
+                    let query = $('#searchBox').val().toLowerCase();
+                    let selectedRole = $('#roleFilter').val().toLowerCase();
 
-                    let data = {
-                        _token: '{{ csrf_token() }}',
-                        namaPengguna: $('#namaPengguna').val(),
-                        emailPengguna: $('#emailPengguna').val(),
-                        passwordPengguna: $('#passwordPengguna').val(),
-                        role: $('#rolePengguna').val()
-                    };
+                    $('#dataPengguna tr').each(function() {
+                        let textMatch = $(this).find('td:first-child').text().toLowerCase().indexOf(query) > -
+                            1; // Cari berdasarkan nama
+                        let roleMatch = selectedRole === 'all' || $(this).find('td:nth-child(4)').text()
+                            .toLowerCase() === selectedRole; // Cari berdasarkan role
 
-                    $.post('/pengguna/tambah', data, function(response) {
-                        alert(response.message);
-                        $('#addModal').modal('hide'); // Tutup modal setelah simpan
-                        location.reload(); // Perbarui tabel pengguna
-                    }).fail(function(xhr) {
-                        alert('Terjadi kesalahan: ' + xhr.responseText);
+                        $(this).toggle(textMatch && roleMatch); // Tampilkan hanya yang sesuai
                     });
-                });
+                }
 
-                // Tangani klik tombol tambah pengguna
-                $('#openAddModal').click(function() {
-                    $('#addModal').modal('show');
-                });
+                // Pencarian berdasarkan teks input
+                $('#searchBox').on('input', filterUsers);
 
-                // Tangani klik tombol hapus pengguna
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-
-                $(document).on('click', '.deleteButton', function(e) {
-                    e.preventDefault();
-                    let id = $(this).data('id');
-
-                    if (confirm('Apakah Anda yakin ingin menghapus pengguna ini?')) {
-                        $.ajax({
-                            url: '/pengguna/hapus/' + id,
-                            type: 'DELETE',
-                            success: function(response) {
-                                alert(response.message);
-                                location.reload();
-                            },
-                            error: function(xhr) {
-                                alert('Terjadi kesalahan: ' + xhr.responseText);
-                            }
-                        });
-                    }
-                });
-
-                $.ajax({
-                    url: '/pengguna/hapus/' + id,
-                    type: 'DELETE',
-                    data: {
-                        _token: '{{ csrf_token() }}'
-                    },
-                    success: function(response) {
-                        alert(response.message);
-                        location.reload();
-                    },
-                    error: function(xhr) {
-                        alert('Terjadi kesalahan: ' + xhr.responseText);
-                    }
-                });
-
-                $(document).ready(function() {
-                    function filterUsers() {
-                        let query = $('#searchBox').val().toLowerCase();
-                        let selectedRole = $('#roleFilter').val().toLowerCase();
-
-                        $('#dataPengguna tr').each(function() {
-                            let textMatch = $(this).find('td:first-child').text().toLowerCase().indexOf(query) > -
-                                1; // Cari berdasarkan nama
-                            let roleMatch = selectedRole === 'all' || $(this).find('td:nth-child(4)').text()
-                                .toLowerCase() === selectedRole; // Cari berdasarkan role
-
-                            $(this).toggle(textMatch && roleMatch); // Tampilkan hanya yang sesuai
-                        });
-                    }
-
-                    // Pencarian berdasarkan teks input
-                    $('#searchBox').on('input', filterUsers);
-
-                    // Filter berdasarkan role
-                    $('#roleFilter').on('change', filterUsers);
-                });
-            </script>
+                // Filter berdasarkan role
+                $('#roleFilter').on('change', filterUsers);
+            });
+        </script>
 </body>
 
 </html>

@@ -104,7 +104,7 @@
             <div class="container mt-">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="mb-3">Tambah Perusahaan</h5>
+                        <h5 class="mb-3">Tambah Data Perusahaan</h5>
                         <form id="formTambahPerusahaan" method="POST" action="{{ route('perusahaan.store') }}"
                             enctype="multipart/form-data">
                             @csrf
