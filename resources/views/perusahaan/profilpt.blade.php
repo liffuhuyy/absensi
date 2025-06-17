@@ -104,7 +104,7 @@
             <div class="container mt-">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="mb-3">Tambah Perusahaan</h5>
+                        <h5 class="mb-3">Tambah Data Perusahaan</h5>
                         <form id="formTambahPerusahaan" method="POST" action="{{ route('perusahaan.store') }}"
                             enctype="multipart/form-data">
                             @csrf
@@ -283,7 +283,9 @@
 
                 let tableBody = "";
                 data.forEach(function(perusahaan) {
-                    const logoUrl = perusahaan.logo ? `/storage/${perusahaan.logo}` :
+                    const logoUrl = perusahaan.logo ? /storage/$ {
+                            perusahaan.logo
+                        } :
                         "/images/default-logo.png";
                     tableBody += `
                     <tr>
@@ -344,7 +346,9 @@
     function bukaModalEdit(id) {
         $.ajax({
             type: "GET",
-            url: `/perusahaan/${id}`,
+            url: /perusahaan/$ {
+                id
+            },
             success: function(data) {
                 if (!data || data.error) {
                     alert("Data perusahaan tidak ditemukan!");
@@ -357,7 +361,9 @@
                 $("#editEmail").val(data.email);
                 $("#editTelepon").val(data.telepon);
                 $("#editDeskripsi").val(data.deskripsi);
-                const logoUrl = data.logo ? `/storage/${data.logo}` : "/images/default-logo.png";
+                const logoUrl = data.logo ? /storage/$ {
+                    data.logo
+                } : "/images/default-logo.png";
                 $("#editLogoPreview").attr("src", logoUrl);
                 $("#modalEditPerusahaan").fadeIn();
             },
@@ -382,7 +388,9 @@
 
         $.ajax({
             type: "POST",
-            url: `/perusahaan/${id}`,
+            url: /perusahaan/$ {
+                id
+            },
             data: formData,
             processData: false,
             contentType: false,
@@ -406,7 +414,9 @@
 
         $.ajax({
             type: "POST",
-            url: `/perusahaan/${id}`,
+            url: /perusahaan/$ {
+                id
+            },
             data: {
                 _method: "DELETE",
                 _token: $('meta[name="csrf-token"]').attr("content")
