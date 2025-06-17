@@ -57,7 +57,11 @@
                     </li>
                     <li class="sidebar-item">
                         <a href="{{ url('/pembimbing') }}" class='sidebar-link'>
+<<<<<<< HEAD
                             <i class="bi bi-juournal-check"></i>
+=======
+                            <i class="bi bi-journal-check"></i>
+>>>>>>> 161ba64c64d00f9a43d8547d5d805a738ffa1b5a
                             <span>Data Pembimbing</span>
                         </a>
                     </li>

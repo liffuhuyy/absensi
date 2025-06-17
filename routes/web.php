@@ -16,6 +16,26 @@ use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\TugasController;
 use App\Http\Middleware\RoleMiddleware;
+use App\Http\Controllers\PembimbingController;
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Models\UserTugas;
+use App\Models\Absensi;
+use App\Models\Biodata;
+use App\Models\Notifikasi;
+use App\Models\Pengajuan;
+use App\Models\Pengguna;
+use App\Models\JadwalKerja;
+use App\Models\Penilaian;
+
+
+/*
+|--------------------------------------------------------------------------
+| Guest Routes
+|--------------------------------------------------------------------------
+*/
+
+// Halaman Login & Logout
 
 // ==============================
 // AUTH / RESET PASSWORD ROUTE
@@ -81,6 +101,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () 
 
     // Penilaian
     Route::get('/penilaian', [PenilaianController::class, 'penilaian'])->name('penilaian');
+    //sistem ubah kata sandi
+    Route::post('/ubah-password', [PenggunaController::class, 'ubahPassword'])->name('ubah.password')->middleware('auth');
+    //sisten penilaian
+    Route::get('/penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
     Route::post('/penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
     Route::delete('/penilaian/{id}', [PenilaianController::class, 'destroy'])->name('penilaian.destroy');
 
@@ -139,4 +163,15 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
 
     // Ringkasan Absen Admin
     Route::get('/ringkasanabsen', [AuthController::class, 'ringkasanabsen'])->name('ringkasanabsen');
+    //sistem nitofikasi
+    Route::get('/notif', [NotifikasiController::class, 'notif'])->name('notif');
+    Route::get('/notif', [NotifikasiController::class, 'showNotif'])->name('notif');
+    Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
+    //sistem jadwal
+    Route::get('/cek-hari-kerja', [JadwalKerjaController::class, 'cekHariKerja'])->name('jadwal.cekHariKerja');
+    //sistem pembimbing
+    Route::get('/pembimbing', [PembimbingController::class, 'index'])->name('pembimbing.index');
+    Route::post('/pembimbing/tambah', [PembimbingController::class, 'store'])->name('pembimbing.store');
+    Route::put('/pembimbing/update/{id}', [PembimbingController::class, 'update'])->name('pembimbing.update');
+    Route::delete('/pembimbing/hapus/{id}', [PembimbingController::class, 'destroy'])->name('pembimbing.destroy');
 });
