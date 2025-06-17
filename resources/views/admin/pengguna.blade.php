@@ -110,7 +110,6 @@
             </a>
         </header>
 
-
         <div class="page-heading">
             <div class="page-title">
                 <div class="row">
@@ -280,9 +279,7 @@
                                 $(this).toggle($(this).find('td.role').text().toLowerCase() === selectedRole);
                             }
                         });
-                    }); ===
-                    ===
-                    =
+                    });
                 }
                 // Panggil fungsi saat halaman dimuat
                 loadData();

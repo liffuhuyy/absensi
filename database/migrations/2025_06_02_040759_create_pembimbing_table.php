@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamps();
-            
+
             // Index untuk pencarian yang lebih cepat
             $table->index(['nama', 'nip', 'jurusan']);
         });

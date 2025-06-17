@@ -65,55 +65,59 @@
                 <div class="sidebar-menu">
                     <ul class="menu">
                         <li class="sidebar-title">Menu</li>
-
-                        <li class="sidebar-item">
-                            <a href="{{ url('/dashboardmin') }}" class='sidebar-link'>
-                                <i class="bi bi-grid-fill"></i>
-                                <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ url('/ringkasanabsen') }}" class='sidebar-link'>
-                                <i class="bi bi-journal-check"></i>
-                                <span>Ringkasan Absen</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ url('/pengguna') }}" class='sidebar-link'>
-                                <i class="bi bi-journal-check"></i>
-                                <span>Data Pengguna</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ url('/datapembimbing') }}" class='sidebar-link'>
-                                <i class="bi bi-journal-check"></i>
-                                <span>Data Pembimbing</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ url('/notif') }}" class='sidebar-link'>
-                                <i class="bi bi-bell"></i>
-                                <span>Notifikasi</span>
-                            </a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="{{ url('/pengaturan') }}" class='sidebar-link'>
-                                <i class="bi bi-gear"></i>
-                                <span>Pengaturan</span>
-                            </a>
-                        </li>
-                    </ul>
+                        @extends('admin.layout.admin_layout')
+                        @section('content')
+                            <div class="page-heading">
+                                <h3>Dashboard</h3>
+                            </div>
+                            <li class="sidebar-item">
+                                <a href="{{ url('/dashboardmin') }}" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ url('/ringkasanabsen') }}" class='sidebar-link'>
+                                    <i class="bi bi-journal-check"></i>
+                                    <span>Ringkasan Absen</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ url('/pengguna') }}" class='sidebar-link'>
+                                    <i class="bi bi-journal-check"></i>
+                                    <span>Data Pengguna</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ url('/datapembimbing') }}" class='sidebar-link'>
+                                    <i class="bi bi-journal-check"></i>
+                                    <span>Data Pembimbing</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ url('/notif') }}" class='sidebar-link'>
+                                    <i class="bi bi-bell"></i>
+                                    <span>Notifikasi</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item">
+                                <a href="{{ url('/pengaturan') }}" class='sidebar-link'>
+                                    <i class="bi bi-gear"></i>
+                                    <span>Pengaturan</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div id="main">
-                <header class="mb-3">
-                    <a href="#" class="burger-btn d-block d-xl-none">
-                        <i class="bi bi-justify fs-3"></i>
-                    </a>
-                </header>
+                <div id="main">
+                    <header class="mb-3">
+                        <a href="#" class="burger-btn d-block d-xl-none">
+                            <i class="bi bi-justify fs-3"></i>
+                        </a>
+                    </header>
 
 
-                @extends('admin.layout.admin_layout')
+                    @extends('admin.layout.admin_layout')
                 @section('content')
                     <div class="page-heading">
                         <h3>Dashboard</h3>

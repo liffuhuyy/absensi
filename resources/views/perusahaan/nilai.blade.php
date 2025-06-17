@@ -64,7 +64,7 @@
                 <div class="container mt-1">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table">
+                            <table class="table" id="tableSiswa">
                                 <thead>
                                     <tr>
                                         <th>Nama Siswa</th>
@@ -150,6 +150,22 @@
     </div>
 
     @include('admin.layout.footer')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const table = document.querySelector('#tableSiswa tbody');
+            const rows = table.querySelectorAll('tr');
+
+            searchInput.addEventListener('keyup', function() {
+                const query = this.value.toLowerCase();
+
+                rows.forEach(row => {
+                    const namaSiswa = row.querySelector('td')?.textContent.toLowerCase();
+                    row.style.display = namaSiswa.includes(query) ? '' : 'none';
+                });
+            });
+        });
+    </script>
     <script src="assets/static/js/components/dark.js"></script>
     <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="assets/compiled/js/app.js"></script>

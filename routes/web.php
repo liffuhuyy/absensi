@@ -15,6 +15,7 @@ use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\TugasController;
+use App\Http\Controllers\PembimbingController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\UserTugas;
@@ -34,8 +35,10 @@ use App\Models\Penilaian;
 */
 
 // Halaman Login & Logout
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/logout', function () {
     Auth::logout();
@@ -92,8 +95,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () 
     Route::get('/cek-hari-kerja', [AbsensiController::class, 'cekHariKerja'])->name('cek.hari.kerja');
     Route::get('/cek-absensi', [AbsensiController::class, 'cekAbsensi']);
     //sistem ubah kata sandi
-    Route::get('/ubahkatasandi', [AuthController::class, 'ubahkatasandi'])->name('ubahkatasandi');
-    Route::get('/ubahkatasandiberhasil', [AuthController::class, 'ubahkatasandiberhasil'])->name('ubahkatasandiberhasil');
+    Route::post('/ubah-password', [PenggunaController::class, 'ubahPassword'])->name('ubah.password')->middleware('auth');
     //sisten penilaian
     Route::get('/penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
     Route::post('/penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
@@ -163,4 +165,10 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
     //sistem jadwal
     Route::get('/cek-hari-kerja', [JadwalKerjaController::class, 'cekHariKerja'])->name('jadwal.cekHariKerja');
+
+    //sistem pembimbing
+    Route::get('/pembimbing', [PembimbingController::class, 'index'])->name('pembimbing.index');
+    Route::post('/pembimbing/tambah', [PembimbingController::class, 'store'])->name('pembimbing.store');
+    Route::put('/pembimbing/update/{id}', [PembimbingController::class, 'update'])->name('pembimbing.update');
+    Route::delete('/pembimbing/hapus/{id}', [PembimbingController::class, 'destroy'])->name('pembimbing.destroy');
 });

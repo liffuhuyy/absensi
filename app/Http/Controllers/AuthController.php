@@ -52,14 +52,6 @@ class AuthController extends Controller
         }
     }
 
-    public function ubahkatasandiberhasil()
-    {
-        if (view()->exists('absensi.ubahkatasandiberhasil')) {
-            return view('absensi.ubahkatasandiberhasil');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
 
     public function lupakatasandi()
     {
@@ -70,14 +62,6 @@ class AuthController extends Controller
         }
     }
 
-    public function ubahkatasandi()
-    {
-        if (view()->exists('absensi.ubahkatasandi')) {
-            return view('absensi.ubahkatasandi');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
 
 
     public function index()
@@ -118,14 +102,6 @@ class AuthController extends Controller
         }
     }
 
-    public function ringkasanabsen()
-    {
-        if (view()->exists('admin.ringkasanabsen')) {
-            return view('admin.ringkasanabsen');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
 
 
     //PERUSAHAAN
