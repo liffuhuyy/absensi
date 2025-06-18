@@ -16,6 +16,17 @@ use App\Http\Controllers\PenilaianController;
 use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\TugasController;
 use App\Http\Controllers\PembimbingController;
+use App\Http\Middleware\Authenticate;
+use App\Http\Middleware\RedirectIfAuthenticated;
+use App\Models\UserTugas;
+use App\Models\Absensi;
+use App\Models\Biodata;
+use App\Models\Notifikasi;
+use App\Models\Pengajuan;
+use App\Models\Pengguna;
+use App\Models\JadwalKerja;
+use App\Models\Penilaian;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -23,108 +34,148 @@ use App\Http\Controllers\PembimbingController;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', fn() => view('absensi.index'))->name('beranda');
+// Halaman Login & Logout
+
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/logout', fn() => tap(Auth::logout(), fn() => redirect('/')));
-Route::get('/get-jadwal-kerja', [AbsensiController::class, 'getJadwalDariPerusahaan']);
-Route::get('/test-db', fn() => DB::connection()->getPdo() ? 'Koneksi ke database berhasil!' : 'Gagal koneksi.');
 
-Route::view('/index', 'auth.index')->name('index');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+});
+Route::get('/get-jadwal-kerja', [AbsensiController::class, 'getJadwalDariPerusahaan']);
+// Halaman utama (index)
+Route::get('/', function () {
+    return view('absensi.index');
+});
+
+// Tes koneksi database
+Route::get('/test-db', function () {
+    try {
+        DB::connection()->getPdo();
+        return "Koneksi ke database berhasil!";
+    } catch (\Exception $e) {
+        return "Gagal terhubung: " . $e->getMessage();
+    }
+});
+
+//Bagian tampilan awal
+Route::get('/index', [AuthController::class, 'index'])->name('index');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('tentangkami');
 Route::get('/lupakatasandi', [AuthController::class, 'lupakatasandi'])->name('lupakatasandi');
 Route::get('/resetkatasandi', [AuthController::class, 'resetkatasandi'])->name('resetkatasandi');
-
 /*
 |--------------------------------------------------------------------------
-| User Routes
+| User/siswa Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', RoleMiddleware::class . ':user'])->prefix('user')->group(function () {
-    Route::get('/beranda', [AuthController::class, 'beranda'])->name('absensi.beranda');
-
-    Route::get('/kontak', [NotifikasiController::class, 'kontak'])->name('user.kontak');
-    Route::post('/notif', [NotifikasiController::class, 'storeNotif'])->name('user.notif');
-
-    Route::get('/profil', [BiodataController::class, 'profil'])->name('user.profil');
-    Route::get('/biodata', [BiodataController::class, 'index'])->name('user.biodata.index');
-    Route::post('/biodata/store', [BiodataController::class, 'store'])->name('user.biodata.store');
-    Route::put('/biodata/{id}', [BiodataController::class, 'update'])->name('user.biodata.update');
-    Route::post('/upload-foto', [BiodataController::class, 'upload'])->name('user.foto.upload');
-
-    Route::get('/presensi', [AbsensiController::class, 'presensi'])->name('user.presensi');
-    Route::get('/riwayat-absensi', [AbsensiController::class, 'riwayatAbsensi'])->name('user.riwayat.absensi');
+// Bagian USER
+Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () {
+    Route::get('/beranda', [AuthController::class, 'beranda'])->name('beranda');
+    //sistem konta
+    Route::post('/admin/notif', [NotifikasiController::class, 'storeNotif'])->name('admin.notif');
+    Route::get('/kontak', [NotifikasiController::class, 'kontak'])->name('kontak');
+    //sistem biodata dan profil
+    Route::post('/upload-foto', [BiodataController::class, 'upload'])->name('foto.upload');
+    Route::get('/profil', [BiodataController::class, 'profil'])->name('profil');
+    Route::get('/biodata', [BiodataController::class, 'index'])->name('biodata.index');
+    Route::post('/biodata/store', [BiodataController::class, 'store'])->name('biodata.store');
+    Route::put('/biodata/{id}', [BiodataController::class, 'update'])->name('biodata.update');
+    //sistem absensi
+    Route::get('/presensi', [AbsensiController::class, 'presensi']);
+    Route::get('/presensi', [AbsensiController::class, 'riwayatAbsensi'])->name('riwayat.absensi');
     Route::get('/riwayat-absensi/ajax', [AbsensiController::class, 'riwayatAbsensiAjax']);
     Route::get('/get-jadwal-kerja', [AbsensiController::class, 'getJadwalKerja']);
     Route::post('/absen/masuk', [AbsensiController::class, 'absenMasuk']);
     Route::post('/absen/pulang', [AbsensiController::class, 'absenPulang']);
     Route::post('/absen/pulang-awal', [AbsensiController::class, 'pulangAwal']);
     Route::post('/absen/izin', [AbsensiController::class, 'ajukanIzin']);
-    Route::get('/absen-hari-ini', fn() => response()->json(\App\Models\Absensi::where('pengguna_id', Auth::id())->whereDate('tanggal', now()->toDateString())->first() ?? []));
+    Route::get('/get-absen-hari-ini', function () {
+        $user = Auth::user();
+        $absen = \App\Models\Absensi::where('pengguna_id', $user->id)
+            ->whereDate('tanggal', now()->toDateString())
+            ->first();
 
-    Route::post('/ubah-password', [PenggunaController::class, 'ubahPassword'])->name('user.ubah.password');
-
-    Route::get('/penilaian', [PenilaianController::class, 'tampil'])->name('user.penilaian.index');
-    Route::post('/penilaian', [PenilaianController::class, 'store'])->name('user.penilaian.store');
-    Route::delete('/penilaian/{id}', [PenilaianController::class, 'destroy'])->name('user.penilaian.destroy');
-
-    Route::get('/tugas/filter', [TugasController::class, 'filter'])->name('user.tugas.filter');
-    Route::get('/tugas', [TugasController::class, 'showTugas'])->name('user.tugas.index');
-    Route::post('/tugas', [TugasController::class, 'simpanTugas'])->name('user.tugas.store');
-
-    Route::get('/pengajuan', [PengajuanController::class, 'showPengajuan1'])->name('user.pengajuan.index');
-    Route::get('/pengajuan/tambah', [PengajuanController::class, 'create'])->name('user.pengajuan.create');
-    Route::post('/pengajuan', [PengajuanController::class, 'store'])->name('user.pengajuan.store');
+        return response()->json($absen ?? []);
+    });
+    //sistem ubah kata sandi
+    Route::post('/ubah-password', [PenggunaController::class, 'ubahPassword'])->name('ubah.password')->middleware('auth');
+    //sisten penilaian
+    Route::get('/penilaian', [PenilaianController::class, 'tampil'])->name('penilaian.index');
+    Route::post('/penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
+    Route::delete('/penilaian/{id}', [PenilaianController::class, 'destroy'])->name('penilaian.destroy');
+    //sistem manajemen tugas
+    Route::get('/filter', [TugasController::class, 'filter'])->name('filter');
+    Route::get('/manajementugas', [TugasController::class, 'showTugas']);
+    Route::post('/simpan-tugas', [TugasController::class, 'simpanTugas']);
+    //sistem pengajuan magang
+    Route::post('/pengajuan/tambah', [PengajuanController::class, 'store'])->name('pengajuan.store');
+    Route::get('/pengajuan/tambah', [PengajuanController::class, 'create'])->name('pengajuan.create');
+    Route::get('/magang', [PengajuanController::class, 'showPengajuan1'])->name('pengajuan1');
+    Route::get('/pengajuan1', [PengajuanController::class, 'pengajuan1'])->name('pengajuan1');
+    Route::get('/pengajuan1', [PengajuanController::class, 'create']);
+    //Sistem Penilaian
+    Route::get('/penilaian', [PenilaianController::class, 'penilaian'])->name('penilaian');
 });
-
 /*
 |--------------------------------------------------------------------------
 | Perusahaan Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', RoleMiddleware::class . ':perusahaan'])->prefix('perusahaan')->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'dashboardpt'])->name('perusahaan.dashboard');
-
-    Route::get('/absensi', [RingkasanAbsenController::class, 'ringkasanabsenpt'])->name('perusahaan.absensi');
-    Route::get('/riwayat-absensi', [RingkasanAbsenController::class, 'riwayatAbsensi'])->name('perusahaan.riwayat.absensi');
+//Bagian PERUSAHAAN
+Route::middleware(['auth', RoleMiddleware::class . ':perusahaan'])->group(function () {
+    Route::get('/dashboardpt', [AuthController::class, 'dashboardpt'])->name('dashboardpt');
+    //sistem ringkasan absensi
+    Route::get('/ringkasanabsenpt', [RingkasanAbsenController::class, 'riwayatAbsensi'])->name('riwayat.absensi');
     Route::get('/riwayat-absensi/ajax', [RingkasanAbsenController::class, 'riwayatAbsensiAjax']);
-
-    Route::get('/penilaian', [PenilaianController::class, 'nilai'])->name('perusahaan.penilaian');
-    Route::patch('/penilaian/{id}', [PenilaianController::class, 'update'])->name('perusahaan.penilaian.update');
-
-    Route::get('/pengajuan', [PengajuanController::class, 'pengajuanpt'])->name('perusahaan.pengajuan');
-    Route::post('/pengajuan/update-status', [PengajuanController::class, 'updateStatus'])->name('perusahaan.pengajuan.updateStatus');
-
-    Route::resource('profil', PerusahaanController::class);
-    Route::get('/profil', [PerusahaanController::class, 'profilpt'])->name('perusahaan.profil');
-
-    Route::get('/jadwal', [JadwalKerjaController::class, 'index'])->name('perusahaan.jadwal.index');
-    Route::post('/jadwal', [JadwalKerjaController::class, 'store'])->name('perusahaan.jadwal.store');
-    Route::get('/jadwal/edit/{id}', [JadwalKerjaController::class, 'edit'])->name('perusahaan.jadwal.edit');
-    Route::put('/jadwal/update/{id}', [JadwalKerjaController::class, 'update'])->name('perusahaan.jadwal.update');
-    Route::delete('/jadwal/delete/{id}', [JadwalKerjaController::class, 'destroy'])->name('perusahaan.jadwal.destroy');
+    Route::get('/ringkasanabsenpt', [RingkasanAbsenController::class, 'ringkasanabsenpt'])->name('ringkasanabsenpt');
+    //sistem penilaian
+    Route::patch('/penilaian/{id}', [PenilaianController::class, 'update'])->name('penilaian.update');
+    Route::get('/nilai', [PenilaianController::class, 'nilai'])->name('nilai');
+    //sistem riwayat pengajuan magang perusahaan
+    Route::get('/pengajuanpt', [PengajuanController::class, 'pengajuanpt'])->name('pengajuanpt');
+    Route::post('/pengajuan/updateStatus', [PengajuanController::class, 'updateStatus'])->name('pengajuan.updateStatus');
+    //profil perusahaan
+    Route::resource('perusahaan', PerusahaanController::class);
+    Route::get('/profilpt', [PerusahaanController::class, 'profilpt'])->name('profilpt');
+    Route::get('/profilpt', [PerusahaanController::class, 'index'])->name('perusahaan.index');
+    Route::post('/perusahaan/store', [PerusahaanController::class, 'store'])->name('perusahaan.store');
+    Route::get('/perusahaan/{id}', [PerusahaanController::class, 'show'])->name('perusahaan.show');
+    Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
+    Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
+    Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
+    //sistem jadwal kerja
+    Route::get('/jadwalpt', [JadwalKerjaController::class, 'jadwalpt'])->name('jadwalpt');
+    Route::get('/jadwalpt', [JadwalKerjaController::class, 'index']);
+    Route::get('/jadwal-perusahaan', [JadwalKerjaController::class, 'index'])->name('perusahaan.jadwalpt');
+    Route::post('/jadwalpt/tambah', [JadwalKerjaController::class, 'store'])->name('jadwal.store');
+    Route::get('/jadwalpt/edit/{id}', [JadwalKerjaController::class, 'edit'])->name('jadwal.edit');
+    Route::put('/jadwalpt/update/{id}', [JadwalKerjaController::class, 'update'])->name('jadwal.update');
+    Route::delete('/jadwalpt/hapus/{id}', [JadwalKerjaController::class, 'destroy'])->name('jadwal.destroy');
 });
-
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
 |--------------------------------------------------------------------------
 */
-Route::middleware(['auth', RoleMiddleware::class . ':admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'dashboardmin'])->name('admin.dashboard');
-
-    Route::get('/pengguna', [PenggunaController::class, 'index'])->name('admin.pengguna.index');
-    Route::post('/pengguna', [PenggunaController::class, 'store'])->name('admin.pengguna.store');
-    Route::delete('/pengguna/{id}', [PenggunaController::class, 'hapus'])->name('admin.pengguna.delete');
-
-    Route::get('/notifikasi', [NotifikasiController::class, 'showNotif'])->name('admin.notifikasi.index');
-    Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])->name('admin.notifikasi.destroy');
-
-    Route::get('/jadwal/cek-hari-kerja', [JadwalKerjaController::class, 'cekHariKerja'])->name('admin.jadwal.cek');
-
-    Route::get('/pembimbing', [PembimbingController::class, 'index'])->name('admin.pembimbing.index');
-    Route::post('/pembimbing', [PembimbingController::class, 'store'])->name('admin.pembimbing.store');
-    Route::put('/pembimbing/{id}', [PembimbingController::class, 'update'])->name('admin.pembimbing.update');
-    Route::delete('/pembimbing/{id}', [PembimbingController::class, 'destroy'])->name('admin.pembimbing.destroy');
+// Bagian ADMIN
+Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
+    Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
+    //sistem akun pengguna
+    Route::get('/pengguna', [PenggunaController::class, 'pengguna'])->name('pengguna');
+    Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
+    Route::delete('/pengguna/hapus/{id}', [PenggunaController::class, 'hapus'])->name('pengguna.hapus');
+    Route::post('/pengguna/tambah', [PenggunaController::class, 'store'])->name('pengguna.tambah');
+    //sistem nitofikasi
+    Route::get('/notif', [NotifikasiController::class, 'notif'])->name('notif');
+    Route::get('/notif', [NotifikasiController::class, 'showNotif'])->name('notif');
+    Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
+    //sistem jadwal
+    Route::get('/cek-hari-kerja', [JadwalKerjaController::class, 'cekHariKerja'])->name('jadwal.cekHariKerja');
+    //sistem pembimbing
+    Route::get('/pembimbing', [PembimbingController::class, 'index'])->name('pembimbing.index');
+    Route::post('/pembimbing/tambah', [PembimbingController::class, 'store'])->name('pembimbing.store');
+    Route::put('/pembimbing/update/{id}', [PembimbingController::class, 'update'])->name('pembimbing.update');
+    Route::delete('/pembimbing/hapus/{id}', [PembimbingController::class, 'destroy'])->name('pembimbing.destroy');
 });
