@@ -94,18 +94,6 @@ class JadwalKerjaController extends Controller
         return redirect()->route('perusahaan.jadwalpt')->with('success', 'Jadwal kerja berhasil diperbarui');
     }
 
-
-<<<<<<< HEAD
-
-public function destroy($id)
-{
-    $jadwal = JadwalKerja::findOrFail($id);
-    $jadwal->delete();
-
-    return redirect()->route('perusahaan.jadwalpt')->with('success', 'Jadwal kerja berhasil dihapus');
-}
-}
-=======
     public function destroy($id)
     {
         $jadwal = JadwalKerja::findOrFail($id);
@@ -128,5 +116,4 @@ public function destroy($id)
             return "View tidak ditemukan.";
         }
     }
-}
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
+};

@@ -62,6 +62,13 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a href="{{ route('admin.ringkasanabsen') }}" class="sidebar-link">
+                            <i class="bi bi-clipboard-data"></i>
+                            <span>Ringkasan Absen</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item">
                         <a href="{{ url('/notif') }}" class='sidebar-link'>
                             <i class="bi bi-bell"></i>
                             <span>Notifikasi</span>
