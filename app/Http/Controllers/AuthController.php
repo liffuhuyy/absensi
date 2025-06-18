@@ -15,21 +15,17 @@ use App\Http\Middleware\RoleMiddleware;
 
 use Illuminate\Support\Facades\Auth;
 
-
 class AuthController extends Controller
 {
 
-
     public function showLoginForm()
     {
-
         if (!view()->exists('absensi.login')) {
             abort(404, 'Halaman login tidak ditemukan.');
         }
 
         return view('absensi.login');
     }
-
 
 
     public function riwayatabsen()
@@ -40,7 +36,6 @@ class AuthController extends Controller
             return "View tidak ditemukan.";
         }
     }
-
 
 
     public function resetkatasandi()
@@ -62,7 +57,14 @@ class AuthController extends Controller
         }
     }
 
-
+    public function beranda()
+    {
+        if (view()->exists('absensi.beranda')) {
+            return view('absensi.beranda');
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
 
     public function index()
     {
@@ -115,15 +117,6 @@ class AuthController extends Controller
     }
 
 
-    public function ringkasanabsenpt()
-    {
-        if (view()->exists('perusahaan.ringkasanabsenpt')) {
-            return view('perusahaan.ringkasanabsenpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
 
     // LOGIN DAN DAFTAR
     public function login(Request $request)
@@ -152,7 +145,6 @@ class AuthController extends Controller
 
         return redirect()->route('login')->withErrors(['login' => 'Email atau password salah.']);
     }
-
 
     public function logout(Request $request)
     {
