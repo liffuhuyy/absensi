@@ -6,38 +6,46 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Tugas;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\UserTugas;
 
 class TugasController extends Controller
 {
-
     public function showTugas()
     {
-        $tugas = UserTugas::all();
+        $tugas = Tugas::where('pengguna_id', Auth::id())->get(); // hanya data user login
         return view('absensi.manajementugas', compact('tugas'));
-    }
-
-    public function filter(Request $request)
-    {
-        $bulan = $request->bulan;
-        $tugas = UserTugas::whereMonth('tanggal', $bulan)->get();
-
-        return view('absensi.manajementugas', compact('tugas', 'bulan'));
     }
 
     public function simpanTugas(Request $request)
     {
         try {
-            UserTugas::create([
+            Tugas::create([
                 'tanggal' => $request->tanggal,
-                'tugas' => $request->tugas
+                'tugas' => $request->tugas,
+                'pengguna_id' => Auth::id(), // menyimpan id user login
             ]);
+
             return redirect()->back()->with('success', 'Data berhasil disimpan!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Error: ' . $e->getMessage());
         }
+    }
 
-        $tugas = UserTugas::all();
-        return response()->json($tugas);
+    public function filter(Request $request)
+    {
+        $bulan = $request->bulan;
+
+        $tugas = Tugas::whereMonth('tanggal', $bulan)
+            ->where('pengguna_id', Auth::id()) // hanya data milik user login
+            ->get();
+
+        return view('absensi.manajementugas', compact('tugas', 'bulan'));
+    }
+
+    public function destroy($id)
+    {
+        $tugas = Tugas::findOrFail($id);
+        $tugas->delete();
+
+        return redirect()->route('absensi.manajementugas')->with('success', 'Tugas berhasil dihapus.');
     }
 }

@@ -11,7 +11,9 @@ class PerusahaanController extends Controller
     // Menampilkan daftar semua perusahaan
     public function index()
     {
-        $perusahaan = Perusahaan::all();
+        $pengguna = Auth::id(); // ID pengguna yang sedang login
+        $perusahaan = Perusahaan::where('pengguna_id', $pengguna)->get();
+
         return view('perusahaan.profilpt', compact('perusahaan'));
     }
 
@@ -89,12 +91,6 @@ class PerusahaanController extends Controller
         $perusahaan->delete();
 
         return redirect()->route('perusahaan.index')->with('success', 'Data perusahaan berhasil dihapus!');
-    }
-
-    public function show($id)
-    {
-        $perusahaan = Perusahaan::findOrFail($id);
-        return response()->json($perusahaan);
     }
 
     public function profilpt()

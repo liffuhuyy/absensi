@@ -42,4 +42,9 @@ class Pengguna extends Authenticatable
     {
         return $this->hasOne(Biodata::class, 'pengguna_id');
     }
+
+    public function jadwalKerja()
+    {
+        return $this->hasMany(JadwalKerja::class, 'pengguna_id', 'pengguna_id');
+    }
 }

@@ -4,7 +4,7 @@
            <span></span>
            <span></span>
        </div>
-       <h3>SMKN 1 SUBANG</h3>
+       <h4>SMKN 1 SUBANG</h4>
 
        <div class="profile-icon">
            <a href="{{ url('/profil') }}">

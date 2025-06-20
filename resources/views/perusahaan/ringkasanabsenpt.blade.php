@@ -13,6 +13,41 @@
     <link rel="stylesheet" href="./assets/compiled/css/app.css">
     <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
 </head>
+<style>
+    /* Layout wrapper */
+
+    #bulan,
+    #tahun {
+        min-width: 140px;
+    }
+
+    #cariData {
+        min-width: 120px;
+    }
+
+    .stats-card {
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .stat-item h6 {
+        margin-bottom: 5px;
+        font-weight: 600;
+    }
+
+    .stat-item span {
+        display: block;
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: #0d6efd;
+    }
+
+    .table>tbody>tr>td,
+    .table>thead>tr>th {
+        vertical-align: middle;
+        text-align: center;
+    }
+</style>
 
 <body>
     @include('perusahaan.layout.sidebar')
@@ -21,8 +56,8 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Ringkasan Absen</h3>
-                    <p class="text-subtitle text-muted">Ringkasan absen siswa magang.</p>
+                    <h3>Riwayat Absen</h3>
+                    <p class="text-subtitle text-muted">Riwayat absensi siswa yang sedang melaksanakan magang.</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -37,140 +72,164 @@
 
         <section class="section">
             <div class="row" id="basic-table">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-8 align-kiri"> {{-- Perbaikan di sini --}}
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="card-title">Ringkasan Kehadiran Siswa</h4>
+                            <h4 class="card-title">Riwayat Kehadiran Siswa</h4>
                         </div>
-                        <div class="card-content">
-                            <div class="card-body">
-                                <div class="btn-group mb-1">
-                                    <button class="btn btn-primary dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown">Jurusan</button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">AKL</a>
-                                        <a class="dropdown-item" href="#">MPLB</a>
-                                        <a class="dropdown-item" href="#">BDP</a>
-                                        <a class="dropdown-item" href="#">RPL</a>
-                                        <a class="dropdown-item" href="#">TKJ</a>
-                                        <a class="dropdown-item" href="#">DKV</a>
-                                        <a class="dropdown-item" href="#">TO</a>
-                                        <a class="dropdown-item" href="#">TM</a>
-                                        <a class="dropdown-item" href="#">TL</a>
-                                        <a class="dropdown-item" href="#">KL</a>
+                        <div class="card-body">
+                            {{-- Filter Bulan & Tahun --}}
+                            <p class="text-muted mb-3">Pilih bulan dan tahun untuk melihat riwayat absensi siswa
+                                magang.</p>
+                            <form method="GET" action="{{ route('ringkasanabsenpt.index') }}" id="filterForm">
+                                <div class="row mb-4">
+                                    @php
+                                        $daftarBulan = [
+                                            '01' => 'Januari',
+                                            '02' => 'Februari',
+                                            '03' => 'Maret',
+                                            '04' => 'April',
+                                            '05' => 'Mei',
+                                            '06' => 'Juni',
+                                            '07' => 'Juli',
+                                            '08' => 'Agustus',
+                                            '09' => 'September',
+                                            '10' => 'Oktober',
+                                            '11' => 'November',
+                                            '12' => 'Desember',
+                                        ];
+                                    @endphp
+
+                                    <div class="col-md-4 mb-2">
+                                        <select class="form-select" name="bulan" id="bulan" required>
+                                            <option value="">Pilih Bulan</option>
+                                            @foreach ($daftarBulan as $val => $nama)
+                                                <option value="{{ $val }}"
+                                                    {{ request('bulan') == $val ? 'selected' : '' }}>
+                                                    {{ $nama }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <select class="form-select" name="tahun" id="tahun" required>
+                                            <option value="">Pilih Tahun</option>
+                                            @for ($i = date('Y'); $i <= date('Y') + 5; $i++)
+                                                <option value="{{ $i }}"
+                                                    {{ request('tahun') == $i ? 'selected' : '' }}>
+                                                    {{ $i }}
+                                                </option>
+                                            @endfor
+                                        </select>
+                                    </div>
+
+                                    <div class="col-md-4 mb-2">
+                                        <button class="btn btn-primary w-100" type="submit">Cari Data</button>
                                     </div>
                                 </div>
-                                <div class="btn-group mb-1">
-                                    <button class="btn btn-primary dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown">Bulan</button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">Januari</a>
-                                        <a class="dropdown-item" href="#">Februari</a>
-                                        <a class="dropdown-item" href="#">Maret</a>
-                                        <a class="dropdown-item" href="#">April</a>
-                                        <a class="dropdown-item" href="#">Mei</a>
-                                        <a class="dropdown-item" href="#">Juni</a>
-                                        <a class="dropdown-item" href="#">Juli</a>
-                                        <a class="dropdown-item" href="#">Agustus</a>
-                                        <a class="dropdown-item" href="#">September</a>
-                                        <a class="dropdown-item" href="#">Oktober</a>
-                                        <a class="dropdown-item" href="#">November</a>
-                                        <a class="dropdown-item" href="#">Desember</a>
-                                    </div>
-                                </div>
-                                <div class="btn-group mb-1">
-                                    <button class="btn btn-primary dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown">Tahun</button>
-                                    <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="#">2025</a>
-                                        <a class="dropdown-item" href="#">2026</a>
-                                        <a class="dropdown-item" href="#">2027</a>
-                                        <a class="dropdown-item" href="#">2028</a>
-                                        <a class="dropdown-item" href="#">2029</a>
-                                        <a class="dropdown-item" href="#">2030</a>
-                                    </div>
-                                </div>
-                                <div class="container mt-3">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <div class="card p-3 mb-2" onclick="toggleDetails(this)">
-                                                <h5>Lucian - TKJ</h5>
-                                                <p>Hadir: 26 | Tidak Hadir: 5 | Izin/Sakit: 3 | Terlambat: 3</p>
-                                                <div class="details" style="display: none;">
-                                                    <p><strong>Detail Ketidakhadiran:</strong></p>
-                                                    <p> 02-03-2025 : Tidak Hadir </p>
-                                                    <p> 10-03-2025 : Tidak Hadir </p>
-                                                    <p> 15-03-2025 : Tidak Hadir </p>
-                                                    <p> 20-03-2025 : Tidak Hadir </p>
-                                                    <p> 03-03-2025 : Sakit </p>
-                                                    <p> 06-03-2025 : Izin </p>
-                                                    <p> 11-03-2025 : Sakit </p>
-                                                    <p> 04-03-2025 : Terlambat </p>
-                                                    <p> 07-03-2025 : Terlambat </p>
-                                                    <p> 17-03-2025 : Terlambat </p>
-                                                </div>
-                                            </div>
-                                            <div class="card p-3 mb-2" onclick="toggleDetails(this)">
-                                                <h5>Rina - RPL</h5>
-                                                <p>Hadir: 28 | Tidak Hadir: 0 | Izin/Sakit: 1 | Terlambat: 0
-                                                </p>
-                                                <div class="details" style="display: none;">
-                                                    <p><strong>Detail Ketidakhadiran:</strong></p>
-                                                    <p> 03-03-2025 : Sakit </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                            </form>
+
+                            <div class="card p-3">
+                                <div style="overflow-x: auto; width: 100%;">
+                                    <table class="table " style="min-width: 1000px; white-space: nowrap;">
+                                        <thead class="table-dark text-center">
+                                            <tr>
+                                                <th>Nama</th>
+                                                <th>Tanggal</th>
+                                                <th>Status</th>
+                                                <th>Jam Masuk</th>
+                                                <th>Jam Keluar</th>
+                                                <th>Lokasi Masuk</th>
+                                                <th>Lokasi Pulang</th>
+                                                <th>Keterangan</th>
+                                                <th>Pulang Awal</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="text-center" id="absensiBody">
+                                            @forelse ($ringkasanabsenpt as $absen)
+                                                <tr>
+                                                    <td>{{ $absen->pengguna->nama ?? '-' }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($absen->tanggal)->format('d-m-Y') }}
+                                                    </td>
+                                                    <td>{{ $absen->status ?? '-' }}</td>
+                                                    <td>{{ $absen->absen_masuk ?? '-' }}</td>
+                                                    <td>{{ $absen->absen_pulang ?? '-' }}</td>
+
+                                                    <td>
+                                                        @if ($absen->lokasi_masuk_latitude && $absen->lokasi_masuk_longitude)
+                                                            <a href="https://www.google.com/maps?q={{ $absen->lokasi_masuk_latitude }},{{ $absen->lokasi_masuk_longitude }}"
+                                                                target="_blank">
+                                                                {{ $absen->lokasi_masuk_latitude }},
+                                                                {{ $absen->lokasi_masuk_longitude }}
+                                                            </a>
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+
+                                                    <td>
+                                                        @if ($absen->lokasi_pulang_latitude && $absen->lokasi_pulang_longitude)
+                                                            <a href="https://www.google.com/maps?q={{ $absen->lokasi_pulang_latitude }},{{ $absen->lokasi_pulang_longitude }}"
+                                                                target="_blank">
+                                                                {{ $absen->lokasi_pulang_latitude }},
+                                                                {{ $absen->lokasi_pulang_longitude }}
+                                                            </a>
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+
+                                                    <td>{{ $absen->keterangan ?? '-' }}</td>
+                                                    <td>{{ $absen->pulang_awal ? 'Ya' : '-' }}</td>
+                                                </tr>
+                                            @empty
+                                                <tr>
+                                                    <td colspan="9">Belum ada data absensi.</td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </section>
+
         @include('admin.layout.footer')
+
         <script>
-            // Tunggu hingga DOM selesai dimuat
-            document.addEventListener("DOMContentLoaded", function() {
-                const dropdownItems = document.querySelectorAll('.dropdown-item'); // Ambil semua opsi dropdown
-                const table = document.getElementById('table1'); // Ambil tabel
+            $(document).ready(function() {
+                $('#filterForm').on('submit', function(e) {
+                    e.preventDefault();
 
-                // Tambahkan event listener untuk setiap item dropdown
-                dropdownItems.forEach(item => {
-                    item.addEventListener('click', function() {
-                        const filter = this.textContent
-                            .toUpperCase(); // Ambil teks filter dari dropdown
-                        const rows = table.getElementsByTagName('tr'); // Ambil semua baris tabel
+                    let bulan = $('#bulan').val();
+                    let tahun = $('#tahun').val();
 
-                        // Iterasi melalui semua baris kecuali header
-                        for (let i = 1; i < rows.length; i++) {
-                            const statusCell = rows[i].getElementsByTagName('td')[
-                                5]; // Ambil kolom ke-6 (Status)
-
-                            if (statusCell) {
-                                const statusText = statusCell.innerText.toUpperCase();
-
-                                // Tampilkan/Sembunyikan baris berdasarkan filter
-                                if (filter === "SEMUA STATUS" || statusText.includes(filter)) {
-                                    rows[i].style.display = '';
-                                } else {
-                                    rows[i].style.display = 'none';
-                                }
-                            }
+                    $.ajax({
+                        url: '{{ route('ringkasanabsenpt.filter') }}',
+                        method: 'GET',
+                        data: {
+                            bulan: bulan,
+                            tahun: tahun
+                        },
+                        beforeSend: function() {
+                            $('#absensiBody').html('<tr><td colspan="6">Memuat data...</td></tr>');
+                        },
+                        success: function(response) {
+                            $('#absensiBody').html(response.html);
+                        },
+                        error: function(xhr) {
+                            $('#absensiBody').html(
+                                '<tr><td colspan="6">Terjadi kesalahan.</td></tr>');
+                            console.error(xhr.responseText);
                         }
                     });
                 });
             });
-        </script>
-        <script>
-            function toggleDetails(element) {
-                var details = element.querySelector('.details');
-                if (details.style.display === 'none') {
-                    details.style.display = 'block';
-                } else {
-                    details.style.display = 'none';
-                }
-            }
         </script>
         <script src="assets/static/js/components/dark.js"></script>
         <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
@@ -178,7 +237,9 @@
         <script src="assets/compiled/js/app.js"></script>
         <script src="assets/extensions/sweetalert2/sweetalert2.min.js"></script>
         <script src="assets/static/js/pages/sweetalert2.js"></script>
-
+        <script src="assets/extensions/jquery/jquery.min.js"></script>
+        <script src="assets/extensions/jquery/jquery-3.6.0.min.js"></script>
+        <script src="assets/extensions/jquery/jquery-3.6.0.js"></script>
 </body>
 
 </html>

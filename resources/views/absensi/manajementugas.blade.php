@@ -2,40 +2,41 @@
 @section('content')
     <style>
         .container {
-            background-color: #f9f9f9;
-            border-radius: 10px;
-            padding: 50px;
-            width: 200%;
-            max-width: 700px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
         }
 
         .header {
             text-align: center;
             margin-bottom: 20px;
-            color: #1a252f;
+            color: #ffffff;
         }
 
         .input-section {
             display: flex;
+            flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 20px;
         }
 
-        select,
-        input,
-        button {
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            font-size: 16px;
+        .input-section input[type="date"],
+        .input-section input[type="text"] {
+            flex: 1 1 200px;
+            padding: 8px;
+            font-size: 1rem;
         }
 
-        select,
-        input {
-            flex-grow: 1;
-            background-color: white;
-            color: #333;
+        .input-section button {
+            padding: 8px 16px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        form select {
+            margin-top: 1px;
+            width: 50%;
+            padding: 8px;
         }
 
         button {
@@ -129,12 +130,31 @@
         }
 
         table th {
-            background-color: #f2f2f2;
-            color: #333;
+            background-color: #000000;
+            color: #ffffff;
         }
 
         table tr:hover {
             background-color: #f5f5f5;
+        }
+
+        .btn-hapus {
+            background-color: #cb1919;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            border: none;
+        }
+
+        .btn-hapus:hover {
+            background-color: #651515;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
         }
     </style>
     <div class="container">
@@ -143,51 +163,79 @@
         </div>
 
         <form method="POST" action="{{ url('/simpan-tugas') }}">
-            @csrf <!-- Token keamanan Laravel -->
+            @csrf
             <div class="input-section">
+                <input type="hidden" name="user_id" value="{{ Auth::id() }}">
                 <input type="date" name="tanggal" id="tanggal" required>
                 <script>
                     document.getElementById('tanggal').value = new Date().toISOString().split('T')[0];
                 </script>
-                <input type="text" name="tugas" required>
-                <button type="submit">Tambah Tugas</button>
+                <input type="text" name="tugas" required placeholder="Tugas...">
+                <button type="submit" class="btn btn-primary mt-2">Tambah Tugas</button>
             </div>
         </form>
 
-        <br>
         <h2>Daftar Tugas</h2>
         <br>
         <form method="GET" action="{{ route('filter') }}">
             <select name="bulan" id="bulan" class="form-select">
                 <option value="">Pilih Bulan</option>
-                @foreach (range(1, 12) as $bulan)
-                    <option value="{{ $bulan }}">{{ date('F', mktime(0, 0, 0, $bulan, 1)) }}</option>
+                @php
+                    $bulanIndonesia = [
+                        1 => 'Januari',
+                        2 => 'Februari',
+                        3 => 'Maret',
+                        4 => 'April',
+                        5 => 'Mei',
+                        6 => 'Juni',
+                        7 => 'Juli',
+                        8 => 'Agustus',
+                        9 => 'September',
+                        10 => 'Oktober',
+                        11 => 'November',
+                        12 => 'Desember',
+                    ];
+                @endphp
+
+                @foreach ($bulanIndonesia as $angka => $nama)
+                    <option value="{{ $angka }}">{{ $nama }}</option>
                 @endforeach
             </select>
             <button type="submit" class="btn btn-primary mt-2">Cari</button>
         </form>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Tanggal</th>
-                    <th>Tugas</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($tugas as $item)
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>{{ $item->tanggal }}</td>
-                        <td>{{ $item->tugas }}</td>
+                        <th>Tanggal</th>
+                        <th>Tugas</th>
+                        <th>Aksi</th>
                     </tr>
-                @endforeach
-
-                @if ($tugas->isEmpty())
-                    <tr>
-                        <td colspan="2" style="text-align: center; color: red;">Belum ada data tugas bulan ini.</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
-        </body>
-    @endsection
+                </thead>
+                <tbody>
+                    @forelse ($tugas as $item)
+                        <tr>
+                            <td>{{ $item->tanggal }}</td>
+                            <td>{{ $item->tugas }}</td>
+                            <td>
+                                <form action="{{ route('tugas.destroy', $item->id) }}" method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn-hapus">Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3" style="text-align: center; color: red;">
+                                Belum ada data tugas bulan ini.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+@endsection

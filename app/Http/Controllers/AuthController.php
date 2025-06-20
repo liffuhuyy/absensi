@@ -28,16 +28,6 @@ class AuthController extends Controller
     }
 
 
-    public function riwayatabsen()
-    {
-        if (view()->exists('absensi.riwayatabsen')) {
-            return view('absensi.riwayatabsen');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-
     public function resetkatasandi()
     {
         if (view()->exists('absensi.resetkatasandi')) {
@@ -56,7 +46,6 @@ class AuthController extends Controller
             return "View tidak ditemukan.";
         }
     }
-
 
 
     public function index()
@@ -83,38 +72,6 @@ class AuthController extends Controller
             return "User sudah login!";
         } else {
             return "User belum login!";
-        }
-    }
-
-
-    //ADMIN
-    public function dashboardmin()
-    {
-        if (view()->exists('admin.dashboardmin')) {
-            return view('admin.dashboardmin');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-
-
-    //PERUSAHAAN
-    public function dashboardpt()
-    {
-        if (view()->exists('perusahaan.dashboardpt')) {
-            return view('perusahaan.dashboardpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function ringkasanabsenpt()
-    {
-        if (view()->exists('perusahaan.ringkasanabsenpt')) {
-            return view('perusahaan.ringkasanabsenpt');
-        } else {
-            return "View tidak ditemukan.";
         }
     }
 
