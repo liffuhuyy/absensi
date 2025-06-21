@@ -17,200 +17,219 @@
 
         html,
         body {
-            min-height: 100vh;
+            display: grid;
+            height: 100%;
             width: 100%;
+            place-items: center;
             background: #f2f2f2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            /* Kurangi padding */
+            /* background: linear-gradient(-135deg, #c850c0, #4158d0); */
+        }
+
+        ::selection {
+            background: #4158d0;
+            color: #fff;
         }
 
         .wrapper {
-            width: 95%;
-            /* Hampir penuh, agar tidak jauh dari sisi layar */
-            max-width: 500px;
-            /* Lebih besar di layar lebar */
+            width: 380px;
             background: #fff;
             border-radius: 15px;
-            box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
         }
 
         .wrapper .title {
-            font-size: 30px;
+            font-size: 35px;
+            font-weight: 600;
             text-align: center;
-            line-height: 75px;
-            background: linear-gradient(-135deg, #011023, #042857);
+            line-height: 100px;
             color: #fff;
+            user-select: none;
             border-radius: 15px 15px 0 0;
+            background: linear-gradient(-135deg, #011023, #042857);
         }
 
         .wrapper form {
-            padding: 20px;
+            padding: 10px 30px 50px 30px;
         }
 
         .wrapper form .field {
+            height: 50px;
+            width: 100%;
+            margin-top: 20px;
             position: relative;
-            margin-bottom: 18px;
         }
 
         .wrapper form .field input {
+            height: 100%;
             width: 100%;
-            padding: 14px 20px;
-            font-size: 18px;
-            border: 1px solid #ccc;
+            outline: none;
+            font-size: 17px;
+            padding-left: 20px;
+            border: 1px solid lightgrey;
             border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .wrapper form .field input:focus,
+        form .field input:valid {
+            border-color: #4158d0;
         }
 
         .wrapper form .field label {
             position: absolute;
-            left: 20px;
             top: 50%;
-            transform: translateY(-50%);
-            font-size: 16px;
-            color: #999;
+            left: 20px;
+            color: #999999;
+            font-weight: 400;
+            font-size: 17px;
             pointer-events: none;
-            transition: 0.3s;
+            transform: translateY(-50%);
+            transition: all 0.3s ease;
         }
 
-        .wrapper form .field input:focus,
-        .wrapper form .field input:valid {
-            border-color: #4158d0;
-        }
-
-        .wrapper form .field input:focus~label,
-        .wrapper form .field input:valid~label {
-            top: 0;
-            font-size: 13px;
-            background: #fff;
-            padding: 0 5px;
+        form .field input:focus~label,
+        form .field input:valid~label {
+            top: 0%;
+            font-size: 16px;
             color: #4158d0;
-        }
-
-        .wrapper form .field input[type="submit"] {
-            background: linear-gradient(-135deg, #011023, #042857);
-            color: #fff;
-            font-size: 20px;
-            font-weight: 600;
-            cursor: pointer;
-            border: none;
-            transition: 0.3s;
-        }
-
-        .wrapper form .field input[type="submit"]:active {
-            transform: scale(0.97);
+            background: #fff;
+            transform: translateY(-50%);
         }
 
         form .content {
-            text-align: center;
-            font-size: 15px;
-            margin-top: 10px;
+            display: flex;
+            width: 100%;
+            height: 50px;
+            font-size: 16px;
+            align-items: center;
+            justify-content: space-around;
         }
 
-        form .pass-link a {
+        form .content .checkbox {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        form .content input {
+            width: 15px;
+            height: 15px;
+            background: red;
+        }
+
+        form .content label {
+            color: #262626;
+            user-select: none;
+            padding-left: 5px;
+        }
+
+        form .content .pass-link {
+            color: "";
+        }
+
+        form .field input[type="submit"] {
+            color: #fff;
+            border: none;
+            padding-left: 0;
+            margin-top: -10px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            background: linear-gradient(-135deg, #011023, #042857);
+            transition: all 0.3s ease;
+        }
+
+        form .field input[type="submit"]:active {
+            transform: scale(0.95);
+        }
+
+        form .signup-link {
+            color: #262626;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        form .pass-link a,
+        form .signup-link a {
             color: #4158d0;
             text-decoration: none;
         }
 
-        form .pass-link a:hover {
+        form .pass-link a:hover,
+        form .signup-link a:hover {
             text-decoration: underline;
         }
 
+        .password-field {
+            position: relative;
+        }
 
-        /* ✅ Tambahan agar lebih enak di HP */
-        @media (max-width: 480px) {
-            .wrapper .title {
-                font-size: 24px;
-                line-height: 60px;
-            }
-
-            .wrapper form {
-                padding: 15px;
-            }
-
-            .wrapper form .field input {
-                font-size: 15px;
-                padding: 10px 16px;
-            }
-
-            .wrapper form .field label {
-                font-size: 14px;
-            }
-
-            .wrapper form .field input:focus~label,
-            .wrapper form .field input:valid~label {
-                font-size: 12px;
-            }
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: none;
+            /* Sembunyikan ikon secara default */
         }
     </style>
 </head>
 
-<body style="margin: 10; padding: 10;">
+<body>
     <div class="wrapper">
         <div class="title">
-            LOGIN
+            Login
         </div>
 
-        {{-- Notifikasi Error --}}
         @if ($errors->any())
-            <div class="alert alert-danger text-center px-3" style="color: red; margin-top: 10px;">
+            <div style="color: red; text-align: center; margin-top: 10px;">
                 @foreach ($errors->all() as $error)
-                    <div>{{ $error }}</div>
+                    <p>{{ $error }}</p>
                 @endforeach
             </div>
         @endif
 
-        <form action="{{ url('/login') }}" method="POST">
-            @csrf
-            {{-- Email --}}
+        <form action="{{ url('/login') }}" method="POST"> <!-- Gunakan POST -->
+            @csrf <!-- Penting untuk hindari error 419 -->
+
             <div class="field">
-                <input type="text" name="email" id="email" value="{{ old('email') }}" required>
-                <label for="email">Email</label>
+                <input type="text" name="email" id="email" required>
+                <label>Email</label>
             </div>
 
-            {{-- Password --}}
             <div class="field">
                 <input type="password" name="password" id="password" required>
-                <label for="password">Password</label>
+                <label>Password</label>
             </div>
 
-            {{-- Tombol Login --}}
-            <div class="field mt-3">
-                <input type="submit" value="masuk">
+            <br>
+            <div class="field">
+                <input type="submit" id="loginButton" value="Masuk">
             </div>
 
-            {{-- Lupa Password --}}
-            <div class="content mt-2">
+            <div class="content">
                 <div class="pass-link">
                     <a href="{{ url('/lupakatasandi') }}">Lupa kata sandi?</a>
                 </div>
             </div>
         </form>
-    </div>
-</body>
 
-<!-- Script untuk mengatur fungsi toggle password dan tampilan ikon -->
-<script>
-    function validateFields() {
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        const loginButton = document.getElementById('loginButton');
 
-        // Enable the login button only if both fields are not empty
-        if (emailInput.value.trim() !== '' && passwordInput.value.trim() !== '') {
-            loginButton.disabled = false;
-        } else {
-            loginButton.disabled = true;
-        }
-    }
+        <!-- Script untuk mengatur fungsi toggle password dan tampilan ikon -->
+        <script>
+            function validateFields() {
+                const emailInput = document.getElementById('email');
+                const passwordInput = document.getElementById('password');
+                const loginButton = document.getElementById('loginButton');
 
-    // Event listeners for the input fields
-    document.getElementById('email').addEventListener('input', validateFields);
-    document.getElementById('password').addEventListener('input', validateFields);
-</script>
+                if (emailInput.value.trim() !== '' && passwordInput.value.trim() !== '') {
+                    loginButton.disabled = false;
+                } else {
+                    loginButton.disabled = true;
+                }
+            }
 
-</body>
-
-</html>
+            document.getElementById('email').addEventListener('input', validateFields);
+            document.getElementById('password').addEventListener('input', validateFields);
+        </script>

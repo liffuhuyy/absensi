@@ -54,8 +54,12 @@ Route::get('/index', [AuthController::class, 'index'])->name('index');
 Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('tentangkami');
 
 //Lupa kata sandi dan reset kata sandi
-Route::get('/lupakatasandi', [AuthController::class, 'lupakatasandi'])->name('lupakatasandi');
-Route::get('/resetkatasandi', [AuthController::class, 'resetkatasandi'])->name('resetkatasandi');
+Route::get('/lupakatasandi', [AuthController::class, 'showFormEmail'])->name('lupakatasandi');
+Route::post('/lupakatasandi', [AuthController::class, 'cekEmail'])->name('lupakatasandi.cek');
+
+Route::get('/resetkatasandi', [AuthController::class, 'showFormReset'])->name('resetkatasandi');
+Route::post('/resetkatasandi', [AuthController::class, 'prosesReset'])->name('resetkatasandi.proses');
+
 
 //kontak ALL
 Route::post('/simpan', [NotifikasiController::class, 'kontakAll'])->name('simpan.kontak');
