@@ -125,7 +125,6 @@
                                     <tr>
                                         <th>Nama</th>
                                         <th>Email</th>
-                                        <th>Password</th>
                                         <th>Role</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -135,7 +134,6 @@
                                         <tr>
                                             <td>{{ $user->nama }}</td>
                                             <td>{{ $user->email }}</td>
-                                            <td>{{ $user->password }}</td>
                                             <td>{{ $user->role }}</td>
                                             <td>
                                                 <form method="POST" action="/pengguna/hapus/{{ $user->id }}">

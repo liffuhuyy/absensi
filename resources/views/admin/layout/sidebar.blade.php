@@ -69,8 +69,8 @@
                     </li>
                     <li class="sidebar-item">
                         <a href="{{ url('/notif') }}" class='sidebar-link'>
-                            <i class="bi bi-bell"></i>
-                            <span>Notifikasi</span>
+                            <i class="bi bi-chat"></i>
+                            <span>Kotak Masuk</span>
                         </a>
                     </li>
                     <li class="sidebar-item">

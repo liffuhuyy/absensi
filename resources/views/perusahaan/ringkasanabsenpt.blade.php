@@ -55,11 +55,11 @@
     <div class="page-heading">
         <div class="page-title">
             <div class="row">
-                <div class="col-12 col-md-6 order-md-1 order-last">
+                <div class="col-12 order-md-1 order-last">
                     <h3>Riwayat Absen</h3>
                     <p class="text-subtitle text-muted">Riwayat absensi siswa yang sedang melaksanakan magang.</p>
                 </div>
-                <div class="col-12 col-md-6 order-md-2 order-first">
+                <div class="col-12 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboardpt') }}">Dashboard</a></li>
@@ -72,7 +72,7 @@
 
         <section class="section">
             <div class="row" id="basic-table">
-                <div class="col-12 col-md-8 align-kiri"> {{-- Perbaikan di sini --}}
+                <div class="col-12 align-kiri"> {{-- Perbaikan di sini --}}
                     <div class="card">
                         <div class="card-header">
                             <h4 class="card-title">Riwayat Kehadiran Siswa</h4>

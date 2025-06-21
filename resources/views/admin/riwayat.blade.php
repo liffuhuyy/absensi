@@ -4,14 +4,14 @@
         <div class="page-title">
             <div class="row mb-3">
                 <!-- Judul -->
-                <div class="col-md-6 col-12">
+                <div class="col-12">
                     <h3>Riwayat absen</h3>
                     <p class="text-subtitle text-muted">Memperlihatkan riwayat absensi seluruh siswa yang sedang melaksanakan
                         magang.</p>
                 </div>
 
                 <!-- Breadcrumb kanan -->
-                <div class="col-md-6 col-12 d-flex justify-content-md-end justify-content-start align-items-center">
+                <div class="col-12 d-flex justify-content-md-end justify-content-start align-items-center">
                     <nav aria-label="breadcrumb" class="breadcrumb-header">
                         <ol class="breadcrumb mb-0">
                             <li class="breadcrumb-item"><a href="{{ url('/dashboardpt') }}">Dashboard</a></li>
@@ -23,7 +23,7 @@
 
             <section class="section">
                 <div class="row" id="basic-table">
-                    <div class="col-12 col-md-8 align-kiri"> {{-- Perbaikan di sini --}}
+                    <div class="col-12 align-kiri"> {{-- Perbaikan di sini --}}
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Riwayat Kehadiran Siswa</h4>
@@ -106,7 +106,7 @@
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="6">Belum ada data absensi.</td>
+                                                    <td colspan="7">Belum ada data absensi.</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>

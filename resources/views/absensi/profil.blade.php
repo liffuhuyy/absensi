@@ -288,7 +288,7 @@
     <div class="container" id="profileContainer">
         <div class="profile-photo">
             <img id="profileImage"
-                src="{{ Auth::user()->biodata && Auth::user()->biodata->foto ? asset('storage/' . Auth::user()->biodata->foto) : asset('default-avatar.png') }}"
+                src="{{ Auth::user()->biodata && Auth::user()->biodata->foto ? asset('storage/' . Auth::user()->biodata->foto) : 'https://ui-avatars.com/api/?name=' . Auth::user()->nama . '&background=random' }}"
                 alt="Foto Profil" class="fade-in" width="150">
         </div>
         <div class="mb-1">
