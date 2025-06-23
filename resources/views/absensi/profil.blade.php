@@ -102,12 +102,9 @@
         }
 
         .container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            width: 500px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
         }
 
         .profile-pic {
@@ -144,16 +141,43 @@
             /* Hindari perubahan ukuran karena padding */
         }
 
+        .logout-wrapper {
+            text-align: center;
+            margin-top: 20px;
+        }
+
         .logout-link {
             text-decoration: none;
-            color: black;
+            color: white;
+            background-color: #000000;
+            padding: 10px 20px;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-link:hover {
+            background-color: #172a46;
+        }
+
+        .info-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .info {
+            text-align: center;
+            margin-bottom: 15px;
         }
 
         .label {
             font-weight: bold;
+            color: #555;
             display: block;
             margin-bottom: 5px;
-            color: #555;
         }
 
         .profile-photo {
@@ -177,29 +201,40 @@
             transition: opacity 0.3s ease;
         }
 
+        .upload-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
         .upload-group {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 10px;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .upload-group input[type="file"] {
-            flex: 1;
-            padding: 6px;
+            flex: 1 1 60%;
+            padding: 5px;
         }
 
         .upload-group button {
-            padding: 5px 10px;
+            flex: 1 1 35%;
+            padding: 8px 12px;
             background-color: #000000;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .upload-group button:hover {
-            background-color: #2c4e82;
+            background-color: #172a46;
         }
+
 
         .alert {
             padding: 12px 20px;
@@ -228,6 +263,14 @@
             cursor: pointer;
             color: #000;
         }
+
+        @media (max-width: 768px) {
+
+            #absensiTable th,
+            #absensiTable td {
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 
@@ -245,7 +288,7 @@
     <div class="container" id="profileContainer">
         <div class="profile-photo">
             <img id="profileImage"
-                src="{{ Auth::user()->biodata && Auth::user()->biodata->foto ? asset('storage/' . Auth::user()->biodata->foto) : asset('default-avatar.png') }}"
+                src="{{ Auth::user()->biodata && Auth::user()->biodata->foto ? asset('storage/' . Auth::user()->biodata->foto) : 'https://ui-avatars.com/api/?name=' . Auth::user()->nama . '&background=random' }}"
                 alt="Foto Profil" class="fade-in" width="150">
         </div>
         <div class="mb-1">
@@ -283,24 +326,28 @@
             </form>
 
         </div>
-        @foreach ($biodata as $data)
-            <div class="info">
-                <span class="label">Nama:</span>
-                <p>{{ $data->nama }}</p>
-            </div>
-            <div class="info">
-                <span class="label">Email:</span>
-                <p>{{ $data->email }}</p>
-            </div>
-            <div class="info">
-                <span class="label">No HP:</span>
-                <p>{{ $data->nohp }}</p>
-            </div>
-        @endforeach
+        @if (!empty($biodata) && $biodata->count())
+            @foreach ($biodata as $data)
+                <div class="info">
+                    <span class="label">Nama:</span>
+                    <p>{{ $data->nama }}</p>
+                </div>
+                <div class="info">
+                    <span class="label">Email:</span>
+                    <p>{{ $data->email }}</p>
+                </div>
+                <div class="info">
+                    <span class="label">No HP:</span>
+                    <p>{{ $data->nohp }}</p>
+                </div>
+            @endforeach
+        @else
+            <p class="text-muted">Isi biodata terlebih dahulu!!!</p>
+        @endif
 
         <br>
         <div class="button-container">
-            <label>Lengkapi Profil dan Biodata anda dibawah sini!</label>
+            <label>Lengkapi Profil dan Biodata anda dibawah sini👇🏻</label>
             <button class="btn btn-secondary" onclick="window.location.href='{{ url('/biodata') }}'">Biodata</button>
             <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
                 data-bs-whatever="@mdo">
@@ -325,7 +372,9 @@
         @endif
 
         <br><br><br><br><br><br>
-        <p><a href="javascript:void(0)" class="label" onclick="confirmLogout()">Logout</a></p>
+        <div class="logout-wrapper">
+            <p><a href="javascript:void(0)" class="link" onclick="confirmLogout()">Logout</a></p>
+        </div>
     </div>
 
 

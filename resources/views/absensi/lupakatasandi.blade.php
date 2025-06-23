@@ -133,7 +133,7 @@
             </div>
 
             <button type="submit" class="btn-primary">Konfirmasi</button>
-            <a href="{{ route('login') }}">Kembali ke Login</a>
+            <a href="{{ route('login') }}">Kembali</a>
         </form>
     </div>
 </body>

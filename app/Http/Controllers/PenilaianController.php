@@ -5,12 +5,19 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Penilaian;
 use App\Models\Pengguna;
+use App\Models\Pengajuan;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PenilaianController extends Controller
 {
     public function penilaian()
     {
-        $penilaian = Penilaian::orderBy('created_at', 'desc')->get();
+        $pengguna = Auth::user();
+        $penilaian = Penilaian::where('pengguna_id', $pengguna->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
         return view('absensi.penilaian', compact('penilaian'));
     }
 
@@ -36,7 +43,18 @@ class PenilaianController extends Controller
     public function nilai()
     {
         if (view()->exists('perusahaan.nilai')) {
-            $penilaian = Penilaian::all();
+            $perusahaanId = Auth::user()->id;
+
+            // Ambil pengguna (siswa) yang magang di perusahaan ini dan sudah diterima
+            $pengguna = Pengajuan::where('perusahaan_id', $perusahaanId)
+                ->where('status', 'diterima')
+                ->pluck('pengguna_id');
+
+            // Ambil data penilaian untuk siswa tersebut
+            $penilaian = Penilaian::with('pengguna') // pastikan relasi pengguna ada di model Penilaian
+                ->whereIn('pengguna_id', $pengguna)
+                ->get();
+
             return view('perusahaan.nilai', compact('penilaian'));
         } else {
             return "View tidak ditemukan.";
@@ -54,11 +72,5 @@ class PenilaianController extends Controller
         $penilaian->update($validated);
 
         return redirect()->back()->with('success', 'Nilai siswa berhasil diperbarui.');
-    }
-
-    public function index()
-    {
-        $totalNilai = Penilaian::whereNotNull('nilai')->sum('nilai') ?? 0;
-        return view('absensi.beranda', compact('totalNilai'));
     }
 }

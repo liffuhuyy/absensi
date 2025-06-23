@@ -12,9 +12,15 @@
         }
 
         h1 {
+            color: rgb(255, 255, 255);
             text-align: center;
-            color: #333333;
-            margin-bottom: 30px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            color: rgb(0, 0, 0);
+            text-align: center;
+            margin: 0 auto;
         }
 
         .form-group {
@@ -80,34 +86,40 @@
             font-family: 'Segoe UI', sans-serif;
         }
 
-        .table {
+        table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-top: 20px;
         }
 
-        .table th,
-        .table td {
+        table th,
+        table td {
             padding: 12px 15px;
-            border: 1px solid #ddd;
-            text-align: center;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
         }
 
-        .table thead {
-            background-color: #343a40;
+        table th {
+            background-color: #000000;
             color: #ffffff;
         }
 
-        .table tbody tr:nth-child(even) {
-            background-color: #f2f2f2;
+        table tr:hover {
+            background-color: #ffffff;
         }
 
-        .table tbody tr:hover {
-            background-color: #e9f5ff;
+        @media (max-width: 768px) {
+
+            #penilaianTable table th,
+            #penilaianTable table td {
+                white-space: nowrap;
+            }
         }
     </style>
     <div class="container">
-        <h1>Penilaian Akhir Magang</h1>
+        <div class="header">
+            <h1>Penilaian akhir</h1>
+        </div>
         <form method="POST" action="{{ route('penilaian.store') }}">
             @csrf
             <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
@@ -128,42 +140,45 @@
         </form>
     </div>
 
-    <h1 class="text-center">Daftar Penilaian</h1>
+    <h2 class="text-center">Daftar Penilaian</h2>
 
     <div id="penilaianTable" class="card p-2">
-        <label colspan="5">Untuk pengisian nilai dilakukan oleh perusahaan!!</label>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Nama Lengkap</th>
-                    <th>Tanggal Penilaian</th>
-                    <th>Nilai</th>
-                    <th>Keterangan</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($penilaian as $nilai)
+        <label class="mb-3">Untuk pengisian nilai dilakukan oleh perusahaan!!</label>
+
+        <div style="overflow-x: auto;">
+            <table class="table table-bordered" style="min-width: 600px;">
+                <thead class="table-dark">
                     <tr>
-                        <td>{{ $nilai->nama }}</td>
-                        <td>{{ $nilai->tanggal_keluar }}</td>
-                        <td>{{ $nilai->nilai ?? '-' }}</td>
-                        <td>{{ $nilai->keterangan ?? '-' }}</td>
-                        <td>
-                            <form action="{{ route('penilaian.destroy', $nilai->id) }}" method="POST"
-                                onsubmit="return confirm('Yakin ingin menghapus?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn-danger">Hapus</button>
-                            </form>
-                        </td>
+                        <th>Nama Lengkap</th>
+                        <th>Tanggal Penilaian</th>
+                        <th>Nilai</th>
+                        <th>Keterangan</th>
+                        <th>Aksi</th>
                     </tr>
-                @empty
-                    <tr>
-                        <td colspan="5" class="text-center">Belum ada penilaian</td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @forelse ($penilaian as $nilai)
+                        <tr>
+                            <td>{{ $nilai->nama }}</td>
+                            <td>{{ $nilai->tanggal_keluar }}</td>
+                            <td>{{ $nilai->nilai ?? '-' }}</td>
+                            <td>{{ $nilai->keterangan ?? '-' }}</td>
+                            <td>
+                                <form action="{{ route('penilaian.destroy', $nilai->id) }}" method="POST"
+                                    onsubmit="return confirm('Yakin ingin menghapus?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-sm btn-danger">Hapus</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center">Belum ada penilaian</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 @endsection

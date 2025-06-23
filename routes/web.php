@@ -5,8 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AbsensiController;
+use App\Http\Controllers\RingkasanAbsenController;
 use App\Http\Controllers\PerusahaanController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\BiodataController;
@@ -17,6 +17,7 @@ use App\Http\Controllers\NotifikasiController;
 use App\Http\Controllers\TugasController;
 use App\Http\Middleware\RoleMiddleware;
 use App\Http\Controllers\PembimbingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Middleware\Authenticate;
 use App\Http\Middleware\RedirectIfAuthenticated;
 use App\Models\UserTugas;
@@ -27,7 +28,11 @@ use App\Models\Pengajuan;
 use App\Models\Pengguna;
 use App\Models\JadwalKerja;
 use App\Models\Penilaian;
+<<<<<<< HEAD
 
+=======
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +41,7 @@ use App\Models\Penilaian;
 */
 
 // Halaman Login & Logout
+<<<<<<< HEAD
 
 // ==============================
 // AUTH / RESET PASSWORD ROUTE
@@ -45,12 +51,33 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::get('/logout', fn() => tap(Auth::logout(), fn() => redirect('/')));
 
+=======
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', function () {
+    Auth::logout();
+    return redirect('/');
+});
+
+
+// Halaman utama (index)
+Route::get('/', function () {
+    return view('absensi.index');
+});
+//Bagian tampilan awal
+Route::get('/index', [AuthController::class, 'index'])->name('index');
+Route::get('/tentangkami', [AuthController::class, 'tentangkami'])->name('tentangkami');
+
+//Lupa kata sandi dan reset kata sandi
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
 Route::get('/lupakatasandi', [AuthController::class, 'showFormEmail'])->name('lupakatasandi');
 Route::post('/lupakatasandi', [AuthController::class, 'cekEmail'])->name('lupakatasandi.cek');
 
 Route::get('/resetkatasandi', [AuthController::class, 'showFormReset'])->name('resetkatasandi');
 Route::post('/resetkatasandi', [AuthController::class, 'prosesReset'])->name('resetkatasandi.proses');
 
+<<<<<<< HEAD
 Route::get('/ubahkatasandiberhasil', fn() => view('ubahkatasandiberhasil'))->name('ubahkatasandiberhasil');
 
 // ==============================
@@ -77,6 +104,21 @@ Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () 
     Route::get('/beranda', [PenilaianController::class, 'index'])->name('beranda');
 
     // Kontak / Notifikasi
+=======
+
+//kontak ALL
+Route::post('/simpan', [NotifikasiController::class, 'kontakAll'])->name('simpan.kontak');
+/*
+|--------------------------------------------------------------------------
+| User/siswa Routes
+|--------------------------------------------------------------------------
+*/
+// Bagian USER
+Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () {
+    Route::get('/beranda', [DashboardController::class, 'beranda'])->name('beranda');
+    //sistem kontaK
+    Route::post('/admin/notif', [NotifikasiController::class, 'storeNotif'])->name('admin.notif');
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     Route::get('/kontak', [NotifikasiController::class, 'kontak'])->name('kontak');
     Route::post('/admin/notif', [NotifikasiController::class, 'storeNotif'])->name('admin.notif');
 
@@ -89,6 +131,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () 
 
     // Absensi
     Route::get('/presensi', [AbsensiController::class, 'riwayatAbsensi'])->name('riwayat.absensi');
+<<<<<<< HEAD
     Route::post('/absen/masuk', [AbsensiController::class, 'absenMasuk'])->name('absen.masuk');
     Route::post('/absen/pulang', [AbsensiController::class, 'absenPulang'])->name('absen.pulang');
     Route::post('/absen/izin', [AbsensiController::class, 'ajukanIzin'])->name('absen.izin');
@@ -101,22 +144,46 @@ Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () 
 
     // Penilaian
     Route::get('/penilaian', [PenilaianController::class, 'penilaian'])->name('penilaian');
+=======
+    Route::get('/riwayat-absensi/ajax', [AbsensiController::class, 'riwayatAbsensiAjax']);
+    Route::get('/get-jadwal-kerja', [AbsensiController::class, 'getJadwalKerja']);
+    Route::post('/absen/masuk', [AbsensiController::class, 'absenMasuk']);
+    Route::post('/absen/pulang', [AbsensiController::class, 'absenPulang']);
+    Route::post('/absen/pulang-awal', [AbsensiController::class, 'pulangAwal']);
+    Route::post('/absen/izin', [AbsensiController::class, 'absenIzin']);
+    Route::get('/get-absen-hari-ini', function () {
+        $user = Auth::user();
+        $absen = \App\Models\Absensi::where('pengguna_id', $user->id)
+            ->whereDate('tanggal', now()->toDateString())
+            ->first();
+
+        return response()->json($absen ?? []);
+    });
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     //sistem ubah kata sandi
     Route::post('/ubah-password', [PenggunaController::class, 'ubahPassword'])->name('ubah.password')->middleware('auth');
     //sisten penilaian
-    Route::get('/penilaian', [PenilaianController::class, 'index'])->name('penilaian.index');
+    Route::get('/penilaian', [PenilaianController::class, 'penilaian'])->name('penilaian');
     Route::post('/penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
     Route::delete('/penilaian/{id}', [PenilaianController::class, 'destroy'])->name('penilaian.destroy');
+<<<<<<< HEAD
 
     // Manajemen Tugas
     Route::get('/manajementugas', [TugasController::class, 'showTugas']);
     Route::get('/filter', [TugasController::class, 'filter'])->name('filter');
+=======
+    //sistem manajemen tugas
+    Route::delete('/tugas/{id}', [TugasController::class, 'destroy'])->name('tugas.destroy');
+    Route::get('/filter', [TugasController::class, 'filter'])->name('filter');
+    Route::get('/manajementugas', [TugasController::class, 'showTugas'])->name('absensi.manajementugas');
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     Route::post('/simpan-tugas', [TugasController::class, 'simpanTugas']);
 
     // Pengajuan Magang
     Route::post('/pengajuan/tambah', [PengajuanController::class, 'store'])->name('pengajuan.store');
     Route::get('/pengajuan/tambah', [PengajuanController::class, 'create'])->name('pengajuan.create');
     Route::get('/magang', [PengajuanController::class, 'showPengajuan1'])->name('pengajuan1');
+<<<<<<< HEAD
     Route::get('/pengajuan1/create', [PengajuanController::class, 'create'])->name('pengajuan1.create');
 });
 
@@ -128,6 +195,24 @@ Route::middleware(['auth', RoleMiddleware::class . ':perusahaan'])->group(functi
     Route::get('/ringkasanabsenpt', [AuthController::class, 'ringkasanabsenpt'])->name('ringkasanabsenpt');
 
     // Penilaian oleh perusahaan
+=======
+    Route::get('/pengajuan1', [PengajuanController::class, 'pengajuan1'])->name('pengajuan1');
+    Route::get('/pengajuan1', [PengajuanController::class, 'create']);
+});
+/*
+|--------------------------------------------------------------------------
+| Perusahaan Routes
+|--------------------------------------------------------------------------
+*/
+//Bagian PERUSAHAAN
+Route::middleware(['auth', RoleMiddleware::class . ':perusahaan'])->group(function () {
+    Route::get('/dashboardpt', [DashboardController::class, 'perusahaan'])->name('dashboardpt');
+    //sistem ringkasan absensi
+    Route::get('/ringkasanabsenpt', [RingkasanAbsenController::class, 'index'])->name('ringkasanabsenpt.index');
+    Route::get('/ringkasanabsenpt/filter', [RingkasanAbsenController::class, 'filter'])->name('ringkasanabsenpt.filter');
+    //sistem penilaian
+    Route::patch('/penilaian/{id}', [PenilaianController::class, 'update'])->name('penilaian.update');
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     Route::get('/nilai', [PenilaianController::class, 'nilai'])->name('nilai');
     Route::patch('/penilaian/{id}', [PenilaianController::class, 'update'])->name('penilaian.update');
 
@@ -138,9 +223,21 @@ Route::middleware(['auth', RoleMiddleware::class . ':perusahaan'])->group(functi
     // Profil perusahaan
     Route::resource('perusahaan', PerusahaanController::class);
     Route::get('/profilpt', [PerusahaanController::class, 'profilpt'])->name('profilpt');
+<<<<<<< HEAD
 
     // Jadwal kerja
     Route::get('/jadwalpt', [JadwalKerjaController::class, 'index'])->name('jadwalpt');
+=======
+    Route::get('/profilpt', [PerusahaanController::class, 'index'])->name('perusahaan.index');
+    Route::post('/perusahaan/store', [PerusahaanController::class, 'store'])->name('perusahaan.store');
+    Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
+    Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
+    Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
+    //sistem jadwal kerja
+    Route::get('/jadwalpt', [JadwalKerjaController::class, 'jadwalpt'])->name('jadwalpt');
+    Route::get('/jadwalpt', [JadwalKerjaController::class, 'index']);
+    Route::get('/jadwal-perusahaan', [JadwalKerjaController::class, 'index'])->name('perusahaan.jadwalpt');
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     Route::post('/jadwalpt/tambah', [JadwalKerjaController::class, 'store'])->name('jadwal.store');
     Route::get('/jadwalpt/edit/{id}', [JadwalKerjaController::class, 'edit'])->name('jadwal.edit');
     Route::put('/jadwalpt/update/{id}', [JadwalKerjaController::class, 'update'])->name('jadwal.update');
@@ -151,9 +248,15 @@ Route::middleware(['auth', RoleMiddleware::class . ':perusahaan'])->group(functi
 // ADMIN ROUTES
 // ==============================
 Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function () {
+<<<<<<< HEAD
     Route::get('/dashboardmin', [AuthController::class, 'dashboardmin'])->name('dashboardmin');
 
     // Pengguna
+=======
+    Route::get('/dashboardmin', [DashboardController::class, 'admin'])->name('dashboardmin');
+    //sistem akun pengguna
+    Route::get('/pengguna', [PenggunaController::class, 'pengguna'])->name('pengguna');
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     Route::get('/pengguna', [PenggunaController::class, 'index'])->name('pengguna.index');
     Route::post('/pengguna/tambah', [PenggunaController::class, 'store'])->name('pengguna.tambah');
     Route::delete('/pengguna/hapus/{id}', [PenggunaController::class, 'destroy'])->name('pengguna.hapus');
@@ -167,6 +270,8 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::get('/notif', [NotifikasiController::class, 'notif'])->name('notif');
     Route::get('/notif', [NotifikasiController::class, 'showNotif'])->name('notif');
     Route::delete('/notifikasi/{id}', [NotifikasiController::class, 'destroy'])->name('notifikasi.destroy');
+    //sistem riwayat absen
+    Route::get('/riwayat', [RingkasanAbsenController::class, 'riwayatAbsen'])->name('riwayat.index');
     //sistem jadwal
     Route::get('/cek-hari-kerja', [JadwalKerjaController::class, 'cekHariKerja'])->name('jadwal.cekHariKerja');
     //sistem pembimbing
@@ -174,4 +279,18 @@ Route::middleware(['auth', RoleMiddleware::class . ':admin'])->group(function ()
     Route::post('/pembimbing/tambah', [PembimbingController::class, 'store'])->name('pembimbing.store');
     Route::put('/pembimbing/update/{id}', [PembimbingController::class, 'update'])->name('pembimbing.update');
     Route::delete('/pembimbing/hapus/{id}', [PembimbingController::class, 'destroy'])->name('pembimbing.destroy');
+<<<<<<< HEAD
+=======
+});
+
+
+// Tes koneksi database
+Route::get('/test-db', function () {
+    try {
+        DB::connection()->getPdo();
+        return "Koneksi ke database berhasil!";
+    } catch (\Exception $e) {
+        return "Gagal terhubung: " . $e->getMessage();
+    }
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
 });

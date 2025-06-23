@@ -38,7 +38,8 @@
                 <!-- Judul -->
                 <div class="col-md-6 col-12">
                     <h3>Penilaian</h3>
-                    <p class="text-subtitle text-muted">Melakukan penilaian kepada siswa yang sudah selesai magang.</p>
+                    <p class="text-subtitle text-muted">Melakukan penilaian kepada siswa yang sudah menyelesaikan
+                        magang.</p>
                 </div>
 
                 <!-- Breadcrumb kanan -->

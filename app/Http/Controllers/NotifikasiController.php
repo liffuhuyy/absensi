@@ -74,4 +74,30 @@ class NotifikasiController extends Controller
         // Jika bukan AJAX (fallback)
         return redirect()->route('beranda')->with('success', 'Pesan telah berhasil dikirim!');
     }
+
+    // Kontak All
+    public function kontakAll(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+            'message' => 'required|string'
+        ]);
+
+        Notifikasi::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'message' => $request->message,
+        ]);
+
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Pesan telah berhasil dikirim!',
+            ]);
+        }
+
+        // Jika bukan AJAX (fallback)
+        return redirect()->route('index')->with('success', 'Pesan telah berhasil dikirim!');
+    }
 }

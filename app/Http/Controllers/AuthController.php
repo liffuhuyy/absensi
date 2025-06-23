@@ -11,11 +11,20 @@ use App\Models\Notifikasi;
 use App\Models\Pengajuan;
 use App\Models\JadwalKerja;
 use Illuminate\Support\Facades\Hash;
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Session;
+=======
+use App\Http\Middleware\RoleMiddleware;
+
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     public function showLoginForm()
     {
         if (!view()->exists('absensi.login')) {
@@ -25,6 +34,7 @@ class AuthController extends Controller
         return view('absensi.login');
     }
 
+<<<<<<< HEAD
     public function riwayatabsen()
     {
         if (view()->exists('absensi.riwayatabsen')) {
@@ -54,6 +64,8 @@ class AuthController extends Controller
     }
 
 
+=======
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     public function index()
     {
         if (view()->exists('absensi.index')) {
@@ -81,6 +93,7 @@ class AuthController extends Controller
         }
     }
 
+<<<<<<< HEAD
     //ADMIN
     public function dashboardmin()
     {
@@ -110,10 +123,16 @@ class AuthController extends Controller
             return "View tidak ditemukan.";
         }
     }
+=======
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
 
     // LOGIN DAN DAFTAR
     public function login(Request $request)
     {
+<<<<<<< HEAD
+=======
+        // Validasi input agar lebih aman
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
         $request->validate([
             'email' => 'required|email',
             'password' => 'required|min:6'
@@ -124,8 +143,14 @@ class AuthController extends Controller
         $user = Pengguna::where('email', $credentials['email'])->first();
 
         if ($user && Hash::check($credentials['password'], $user->password)) {
+<<<<<<< HEAD
             Auth::login($user);
 
+=======
+            Auth::login($user); // Login user
+
+            // Arahkan ke halaman berdasarkan role
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
             return match ($user->role) {
                 'admin' => redirect()->route('dashboardmin'),
                 'user' => redirect()->route('beranda'),
@@ -143,10 +168,17 @@ class AuthController extends Controller
         return redirect()->route('login');
     }
 
+<<<<<<< HEAD
     // ========================
     // RESET PASSWORD
     // ========================
 
+=======
+
+
+
+    // RESET PASSWORD
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     // Form input email
     public function showFormEmail()
     {
@@ -185,7 +217,11 @@ class AuthController extends Controller
     public function prosesReset(Request $request)
     {
         $request->validate([
+<<<<<<< HEAD
             'password' => 'required|min:8|confirmed',
+=======
+            'password' => 'required|min:6|confirmed',
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
         ]);
 
         $email = session('reset_email');
@@ -200,7 +236,11 @@ class AuthController extends Controller
 
         session()->forget('reset_email');
 
+<<<<<<< HEAD
         // ✅ Langsung tampilkan view yang tersedia
         return redirect()->route('ubahkatasandiberhasil');
+=======
+        return redirect()->route('login')->with('success', 'Password berhasil diubah. Silakan login kembali.');
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     }
 }

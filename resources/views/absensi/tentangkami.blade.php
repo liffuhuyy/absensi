@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,8 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
-		}
+        }
+
         body {
             background-color: #f5f5f5;
             color: #333;
@@ -104,17 +106,21 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="header">
-        <br><h1>SMK Negeri 1 Subang</h1><br><br>
+        <br>
+        <h1>SMK Negeri 1 Subang</h1><br><br>
         <p>The school of "CEREN +4CT" Models <br> We are the first, and our commitment is your satisfaction!</p><br>
     </div>
 
     <div class="container">
         <div class="card">
             <h2><i class="fa-solid fa-eye icon"></i> Visi</h2><br>
-            <p>Menjadi Lembaga Pendidikan yang Terdepan dalam Menyiapkan Lulusan yang Berkarakter Agamis, Berjiwa Wirausaha, Mampu Beradaptasi dengan Perkembangan Zaman, Profesional di Bidangnya dan Peduli Terhadap Lingkungan Sekitar baik Nasional maupun Regional pada Tahun 2024</p>
+            <p>Menjadi lembaga pendidikan yang terdepan dalam menyiapkan lulusan yang berkarakter agamis, Berjiwa
+                wirausaha, Mampu beradaptasi dengan perkembangan zaman, Profesional di bidangnya dan peduli terhadap
+                lingkungan sekitar baik Nasional maupun Regional.</p>
         </div>
 
         <div class="card">
@@ -122,26 +128,49 @@
             <ul class="list">
                 <li><i class="fa-solid fa-check"></i> Menyiapkan lulusan yang berkarakter agamis.</li>
                 <li><i class="fa-solid fa-check"></i> Menyiapkan lulusan yang berjiwa wirausaha.</li>
-                <li><i class="fa-solid fa-check"></i> Menyiapkan lulusan yang mampu beradaptasi dengan perkembangan zaman.</li>
+                <li><i class="fa-solid fa-check"></i> Menyiapkan lulusan yang mampu beradaptasi dengan perkembangan
+                    zaman.</li>
                 <li><i class="fa-solid fa-check"></i> Menyiapkan lulusan yang profesional di bidang keahliannya.</li>
-                <li><i class="fa-solid fa-check"></i> Menyiapkan lulusan yang peduli terhadap lingkungan sekitar baik Nasional maupun Global.</li>
+                <li><i class="fa-solid fa-check"></i> Menyiapkan lulusan yang peduli terhadap lingkungan sekitar baik
+                    Nasional maupun Global.</li>
             </ul>
         </div>
 
         <div class="program-keahlian">
             <h2><i class="fa-solid fa-graduation-cap icon"></i> Program Keahlian</h2><br>
-            <div class="program"><i class="fa-solid fa-calculator"></i> <p>Akuntansi dan Keuangan Lembaga</p></div>
-            <div class="program"><i class="fa-solid fa-chart-line"></i> <p>Pemasaran</p></div>
-            <div class="program"><i class="fa-solid fa-file-invoice"></i> <p>Manajemen Perkantoran</p></div>
-            <div class="program"><i class="fa-solid fa-code"></i> <p>Pengembangan Perangkat Lunak dan Gim</p></div>
-            <div class="program"><i class="fa-solid fa-network-wired"></i> <p>Teknik Jaringan dan Komputer</p></div>
-            <div class="program"><i class="fa-solid fa-paint-brush"></i> <p>Desain Komunikasi Visual</p></div>
-            <div class="program"><i class="fa-solid fa-cogs"></i> <p>Teknik Mesin</p></div>
-            <div class="program"><i class="fa-solid fa-car"></i> <p>Teknik Otomotif</p></div>
-            <div class="program"><i class="fa-solid fa-truck"></i> <p>Teknik Logistik</p></div>
-            <div class="program"><i class="fa-solid fa-utensils"></i> <p>Kuliner</p></div>
+            <div class="program"><i class="fa-solid fa-calculator"></i>
+                <p>Akuntansi dan Keuangan Lembaga</p>
+            </div>
+            <div class="program"><i class="fa-solid fa-chart-line"></i>
+                <p>Pemasaran</p>
+            </div>
+            <div class="program"><i class="fa-solid fa-file-invoice"></i>
+                <p>Manajemen Perkantoran</p>
+            </div>
+            <div class="program"><i class="fa-solid fa-code"></i>
+                <p>Pengembangan Perangkat Lunak dan Gim</p>
+            </div>
+            <div class="program"><i class="fa-solid fa-network-wired"></i>
+                <p>Teknik Jaringan dan Komputer</p>
+            </div>
+            <div class="program"><i class="fa-solid fa-paint-brush"></i>
+                <p>Desain Komunikasi Visual</p>
+            </div>
+            <div class="program"><i class="fa-solid fa-cogs"></i>
+                <p>Teknik Mesin</p>
+            </div>
+            <div class="program"><i class="fa-solid fa-car"></i>
+                <p>Teknik Otomotif</p>
+            </div>
+            <div class="program"><i class="fa-solid fa-truck"></i>
+                <p>Teknik Logistik</p>
+            </div>
+            <div class="program"><i class="fa-solid fa-utensils"></i>
+                <p>Kuliner</p>
+            </div>
         </div>
     </div>
 
 </body>
+
 </html>

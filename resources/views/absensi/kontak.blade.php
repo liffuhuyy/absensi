@@ -130,6 +130,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 </head>
 <body>
     <!-- Contact Section -->
@@ -141,6 +142,8 @@
             </header>
             <form method="post" action="#" class="cta">
 =======
+=======
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     <section id="contact" class="wrapper style2 special fade">
         <div class="container">
             <header>
@@ -149,7 +152,10 @@
             </header>
             <form method="post" action="{{ route('admin.notif') }}" class="cta">
                 @csrf
+<<<<<<< HEAD
 >>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
+=======
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
                 <div class="row gtr-uniform gtr-50">
                     <div class="col-6 col-12-xsmall">
                         <input type="text" name="name" id="name" placeholder="Nama Anda" required />
@@ -164,6 +170,7 @@
                         <input type="submit" value="Kirim Pesan" class="fit primary" />
                     </div>
                 </div>
+<<<<<<< HEAD
 <<<<<<< HEAD
                 <br />
                 <button type="button" class="back-button" onclick="window.location.href='beranda.php'">Kembali</button>
@@ -260,6 +267,8 @@
 =======
 >>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
 =======
+=======
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
                 <br>
             </form>
         </div>
@@ -295,4 +304,7 @@
         </ul>
     </footer>
 @endsection
+<<<<<<< HEAD
 >>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
+=======
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796

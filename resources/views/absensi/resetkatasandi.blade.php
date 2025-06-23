@@ -128,7 +128,12 @@
                     placeholder="Konfirmasi kata sandi baru" required>
             </div>
 
+<<<<<<< HEAD
             <button type="submit" class="btn-primary">Ubah Kata Sandi</button>
+=======
+            <button type="submit" class="btn-primary">Konfirmasi</button>
+            <a href="{{ route('lupakatasandi') }}">Kembali</a>
+>>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
         </form>
     </div>
 </body>

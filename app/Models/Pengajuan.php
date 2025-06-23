@@ -17,12 +17,12 @@ class Pengajuan extends Model
 
     public function perusahaan()
     {
-        return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
+        return $this->belongsTo(\App\Models\Pengguna::class, 'perusahaan_id');
     }
 
     public function jadwal()
     {
-        return $this->belongsTo(JadwalKerja::class, 'pengguna_id');
+        return $this->hasMany(JadwalKerja::class, 'pengguna_id', 'perusahaan_id');
     }
 
     public function pengguna()
