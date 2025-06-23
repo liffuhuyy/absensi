@@ -1,28 +1,44 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
 
-namespace App\Http\Controllers;
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil Perusahaan</title>
+    <link rel="shortcut icon" href="./assets/compiled/svg/favicon.svg" type="image/x-icon">
+    <link rel="shortcut icon"
+        href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACEAAAAiCAYAAADRcLDBAAAEs2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD94cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS41LjAiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgIHhtbG5zOnBob3Rvc2hvcD0iaHR0cDovL25zLmFkb2JlLmNvbS9waG90b3Nob3AvMS4wLyIKICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIKICAgIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIgogICAgeG1sbnM6c3RFdnQ9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZUV2ZW50IyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjMzIgogICBleGlmOlBpeGVsWURpbWVuc2lvbj0iMzQiCiAgIGV4aWY6Q29sb3JTcGFjZT0iMSIKICAgdGlmZjpJbWFnZVdpZHRoPSIzMyIKICAgdGlmZjpJbWFnZUxlbmd0aD0iMzQiCiAgIHRpZmY6UmVzb2x1dGlvblVuaXQ9IjIiCiAgIHRpZmY6WFJlc29sdXRpb249Ijk2LjAiCiAgIHRpZmY6WVJlc29sdXRpb249Ijk2LjAiCiAgIHBob3Rvc2hvcDpDb2xvck1vZGU9IjMiCiAgIHBob3Rvc2hvcDpJQ0NQcm9maWxlPSJzUkdCIElFQzYxOTY2LTIuMSIKICAgeG1wOk1vZGlmeURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiCiAgIHhtcDpNZXRhZGF0YURhdGU9IjIwMjItMDMtMzFUMTA6NTA6MjMrMDI6MDAiPgogICA8eG1wTU06SGlzdG9yeT4KICAgIDxyZGY6U2VxPgogICAgIDxyZGY6bGkKICAgICAgc3RFdnQ6YWN0aW9uPSJwcm9kdWNlZCIKICAgICAgc3RFdnQ6c29mdHdhcmVBZ2VudD0iQWZmaW5pdHkgRGVzaWduZXIgMS4xMC4xIgogICAgICBzdEV2dDp3aGVuPSIyMDIyLTAzLTMxVDEwOjUwOjIzKzAyOjAwIi8+CiAgICA8L3JkZjpTZXE+CiAgIDwveG1wTU06SGlzdG9yeT4KICA8L3JkZjpEZXNjcmlwdGlvbj4KIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+Cjw/eHBhY2tldCBlbmQ9InIiPz5V57uAAAABgmlDQ1BzUkdCIElFQzYxOTY2LTIuMQAAKJF1kc8rRFEUxz9maORHo1hYKC9hISNGTWwsRn4VFmOUX5uZZ36oeTOv954kW2WrKLHxa8FfwFZZK0WkZClrYoOe87ypmWTO7dzzud97z+nec8ETzaiaWd4NWtYyIiNhZWZ2TvE946WZSjqoj6mmPjE1HKWkfdxR5sSbgFOr9Ll/rXoxYapQVik8oOqGJTwqPL5i6Q5vCzeo6dii8KlwpyEXFL519LjLLw6nXP5y2IhGBsFTJ6ykijhexGra0ITl5bRqmWU1fx/nJTWJ7PSUxBbxJkwijBBGYYwhBgnRQ7/MIQIE6ZIVJfK7f/MnyUmuKrPOKgZLpEhj0SnqslRPSEyKnpCRYdXp/9++msneoFu9JgwVT7b91ga+LfjetO3PQ9v+PgLvI1xkC/m5A+h7F32zoLXug38dzi4LWnwHzjeg8UGPGbFfySvuSSbh9QRqZ6H+Gqrm3Z7l9zm+h+iafNUV7O5Bu5z3L/wAdthn7QIme0YAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAJTSURBVFiF7Zi9axRBGIefEw2IdxFBRQsLWUTBaywSK4ubdSGVIY1Y6HZql8ZKCGIqwX/AYLmCgVQKfiDn7jZeEQMWfsSAHAiKqPiB5mIgELWYOW5vzc3O7niHhT/YZvY37/swM/vOzJbIqVq9uQ04CYwCI8AhYAlYAB4Dc7HnrOSJWcoJcBS4ARzQ2F4BZ2LPmTeNuykHwEWgkQGAet9QfiMZjUSt3hwD7psGTWgs9pwH1hC1enMYeA7sKwDxBqjGnvNdZzKZjqmCAKh+U1kmEwi3IEBbIsugnY5avTkEtIAtFhBrQCX2nLVehqyRqFoCAAwBh3WGLAhbgCRIYYinwLolwLqKUwwi9pxV4KUlxKKKUwxC6ZElRCPLYAJxGfhSEOCz6m8HEXvOB2CyIMSk6m8HoXQTmMkJcA2YNTHm3congOvATo3tE3A29pxbpnFzQSiQPcB55IFmFNgFfEQeahaAGZMpsIJIAZWAHcDX2HN+2cT6r39GxmvC9aPNwH5gO1BOPFuBVWAZue0vA9+A12EgjPadnhCuH1WAE8ivYAQ4ohKaagV4gvxi5oG7YSA2vApsCOH60WngKrA3R9IsvQUuhIGY00K4flQG7gHH/mLytB4C42EgfrQb0mV7us8AAMeBS8mGNMR4nwHamtBB7B4QRNdaS0M8GxDEog7iyoAguvJ0QYSBuAOcAt71Kfl7wA8DcTvZ2KtOlJEr+ByyQtqqhTyHTIeB+ONeqi3brh+VgIN0fohUgWGggizZFTplu12yW8iy/YLOGWMpDMTPXnl+Az9vj2HERYqPAAAAAElFTkSuQmCC"
+        type="image/png">
+    <link rel="stylesheet" href="assets/extensions/datatables.net-bs5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="./assets/compiled/css/table-datatable-jquery.css">
+    <link rel="stylesheet" href="./assets/compiled/css/app.css">
+    <link rel="stylesheet" href="./assets/compiled/css/app-dark.css">
+</head>
+<style>
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
 
-use App\Models\Perusahaan;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Http\Request;
-
-class PerusahaanController extends Controller
-{
-    // Menampilkan daftar semua perusahaan
-    public function index()
-    {
-        $perusahaan = Perusahaan::all();
-        return view('perusahaan.index', compact('perusahaan'));
     }
 
-    // Menampilkan form tambah data
-    public function create()
-    {
-        return view('perusahaan.create');
+    .modal-content {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 600px;
+        border-radius: 10px;
     }
 
-<<<<<<< HEAD
-=======
     .close {
         color: #aaa;
         float: right;
@@ -85,7 +101,7 @@ class PerusahaanController extends Controller
             </div>
 
             <!-- Form Tambah Perusahaan -->
-            <div class="container mt-">
+            <div class="container mt-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="mb-3">Tambah data Perusahaan</h5>
@@ -267,7 +283,9 @@ class PerusahaanController extends Controller
 
                 let tableBody = "";
                 data.forEach(function(perusahaan) {
-                    const logoUrl = perusahaan.logo ? `/storage/${perusahaan.logo}` :
+                    const logoUrl = perusahaan.logo ? /storage/$ {
+                            perusahaan.logo
+                        } :
                         "/images/default-logo.png";
                     tableBody += `
                     <tr>
@@ -298,94 +316,121 @@ class PerusahaanController extends Controller
         loadPerusahaan();
     });
 
->>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
     // Simpan data perusahaan baru
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nama_perusahaan' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'email' => 'required|email|unique:perusahaan,email',
-            'telepon' => 'required|string',
-            'deskripsi' => 'nullable|string',
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+    $("#formTambahPerusahaan").submit(function(e) {
+        e.preventDefault();
+        let formData = new FormData(this);
 
-        $logoPath = $request->hasFile('logo') ? $request->file('logo')->store('logos', 'public') : null;
+        $.ajax({
+            type: "POST",
+            url: "/perusahaan",
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr("content")
+            },
+            success: function(response) {
+                alert(response.message || "Data perusahaan berhasil disimpan.");
+                $("#formTambahPerusahaan")[0].reset();
+                location.reload(); // Refresh halaman setelah menyimpan
+            },
+            error: function(xhr) {
+                console.error("Error saat menyimpan:", xhr.responseText);
+                alert(xhr.responseJSON?.message || "Gagal menyimpan data perusahaan.");
+            }
+        });
+    });
 
-        Perusahaan::create([
-            'pengguna_id' => Auth::id(),
-            'nama_perusahaan' => $request->nama_perusahaan,
-            'alamat' => $request->alamat,
-            'email' => $request->email,
-            'telepon' => $request->telepon,
-            'deskripsi' => $request->deskripsi,
-            'logo' => $logoPath,
-        ]);
+    // Tampilkan form edit perusahaan
+    function bukaModalEdit(id) {
+        $.ajax({
+            type: "GET",
+            url: /perusahaan/$ {
+                id
+            },
+            success: function(data) {
+                if (!data || data.error) {
+                    alert("Data perusahaan tidak ditemukan!");
+                    return;
+                }
 
-        return redirect()->route('perusahaan.index')->with('success', 'Data perusahaan berhasil disimpan!');
+                $("#editId").val(data.id);
+                $("#editNamaPerusahaan").val(data.nama_perusahaan);
+                $("#editAlamat").val(data.alamat);
+                $("#editEmail").val(data.email);
+                $("#editTelepon").val(data.telepon);
+                $("#editDeskripsi").val(data.deskripsi);
+                const logoUrl = data.logo ? /storage/$ {
+                    data.logo
+                } : "/images/default-logo.png";
+                $("#editLogoPreview").attr("src", logoUrl);
+                $("#modalEditPerusahaan").fadeIn();
+            },
+            error: function(xhr) {
+                console.error("Gagal mengambil data:", xhr.responseText);
+                alert("Gagal mengambil data perusahaan.");
+            }
+        });
     }
 
-    // Tampilkan form edit
-    public function edit($id)
-    {
-        $perusahaan = Perusahaan::findOrFail($id);
-        return view('perusahaan.edit', compact('perusahaan'));
+    function tutupModalEdit() {
+        $("#modalEditPerusahaan").fadeOut();
     }
 
     // Update data perusahaan
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'nama_perusahaan' => 'required|string|max:255',
-            'alamat' => 'required|string',
-            'email' => 'required|email|unique:perusahaan,email,' . $id,
-            'telepon' => 'required|string',
-            'deskripsi' => 'nullable|string',
-            'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
+    $("#formEditPerusahaan").submit(function(e) {
+        e.preventDefault();
+        let id = $("#editId").val();
+        let formData = new FormData(this);
 
-        $perusahaan = Perusahaan::findOrFail($id);
-        $logoPath = $request->hasFile('logo') ? $request->file('logo')->store('logos', 'public') : $perusahaan->logo;
+        formData.append('_method', 'PUT'); // Simulasikan PUT via POST
 
-        $perusahaan->update([
-            'nama_perusahaan' => $request->nama_perusahaan,
-            'alamat' => $request->alamat,
-            'email' => $request->email,
-            'telepon' => $request->telepon,
-            'deskripsi' => $request->deskripsi,
-            'logo' => $logoPath,
-        ]);
-
-        return redirect()->route('perusahaan.index')->with('success', 'Data perusahaan berhasil diperbarui!');
-    }
+        $.ajax({
+            type: "POST",
+            url: /perusahaan/$ {
+                id
+            },
+            data: formData,
+            processData: false,
+            contentType: false,
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr("content")
+            },
+            success: function(response) {
+                alert(response.message || "Data perusahaan berhasil diperbarui.");
+                location.reload(); // Refresh halaman setelah update
+            },
+            error: function(xhr) {
+                console.error("Error saat update:", xhr.responseText);
+                alert(xhr.responseJSON?.message || "Gagal memperbarui data perusahaan.");
+            }
+        });
+    });
 
     // Hapus perusahaan
-    public function destroy($id)
-    {
-        $perusahaan = Perusahaan::findOrFail($id);
-        $perusahaan->delete();
+    function hapusPerusahaan(id) {
+        if (!confirm("Apakah Anda yakin ingin menghapus perusahaan ini?")) return;
 
-        return redirect()->route('perusahaan.index')->with('success', 'Data perusahaan berhasil dihapus!');
+        $.ajax({
+            type: "POST",
+            url: /perusahaan/$ {
+                id
+            },
+            data: {
+                _method: "DELETE",
+                _token: $('meta[name="csrf-token"]').attr("content")
+            },
+            success: function(response) {
+                alert(response.message || "Data perusahaan berhasil dihapus.");
+                location.reload(); // Refresh halaman setelah hapus
+            },
+            error: function(xhr) {
+                console.error("Error saat menghapus:", xhr.responseText);
+                alert("Gagal menghapus data perusahaan.");
+            }
+        });
     }
+</script>
 
-    // Tampilkan data perusahaan untuk detail AJAX
-    public function show($id)
-    {
-        $perusahaan = Perusahaan::findOrFail($id);
-        return response()->json($perusahaan);
-    }
-
-    // Tampilkan profil perusahaan milik user login
-    public function profilpt()
-    {
-        $perusahaan = Perusahaan::where('pengguna_id', Auth::id())->first();
-
-        // Tambahkan pengecekan agar tidak error saat $perusahaan null
-        if (!$perusahaan) {
-            return redirect()->route('perusahaan.create')->with('warning', 'Silakan lengkapi data perusahaan Anda terlebih dahulu.');
-        }
-
-        return view('perusahaan.profilpt', compact('perusahaan'));
-    }
-}
+</html>

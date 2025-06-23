@@ -127,151 +127,77 @@
             color: #fff;
         }
     </style>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-</head>
-<body>
-    <!-- Contact Section -->
-    <section id="contact" class="wrapper style2 special fade">
-        <div class="container">
-            <header>
-                <h2>Hubungi Kami</h2>
-                <p>Silakan isi formulir di bawah untuk menghubungi kami</p>
-            </header>
-            <form method="post" action="#" class="cta">
-=======
-=======
->>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
-    <section id="contact" class="wrapper style2 special fade">
-        <div class="container">
-            <header>
-                <h2 class="text-center">Kontak</h2>
-                <p>Silakan isi formulir di bawah untuk menghubungi kami jika kamu mengalami kendala</p>
-            </header>
-            <form method="post" action="{{ route('admin.notif') }}" class="cta">
-                @csrf
-<<<<<<< HEAD
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
-=======
->>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
-                <div class="row gtr-uniform gtr-50">
-                    <div class="col-6 col-12-xsmall">
-                        <input type="text" name="name" id="name" placeholder="Nama Anda" required />
-                    </div>
-                    <div class="col-6 col-12-xsmall">
-                        <input type="email" name="email" id="email" placeholder="Alamat Email" required />
-                    </div>
-                    <div class="col-12">
-                        <textarea name="message" id="message" placeholder="Pesan Anda" rows="4" required></textarea>
-                    </div>
-                    <div class="col-12">
-                        <input type="submit" value="Kirim Pesan" class="fit primary" />
-                    </div>
-                </div>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                <br />
-                <button type="button" class="back-button" onclick="window.location.href='beranda.php'">Kembali</button>
-            </form>
-        </div>
-    </section>
+    </head>
 
-    <!-- Footer -->
-    <footer id="footer">
-        <ul class="icons">
-            <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-            <li><a href="https://www.facebook.com/share/19qyo1W1i1/" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-            <li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-            <li><a href="https://www.instagram.com/officialsmkn1subang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-            <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-        </ul>
-        <ul class="copyright">
-            <li>&copy; SMK Negeri 1 Subang. All rights reserved.</li>
-            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-        </ul>
-    </footer>
-</body>
-</html>
-=======
-=======
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
-    			   <!-- Contact Section -->
-			   <section id="contact" class="wrapper style2 special fade">
-				<div class="container">
-                
-					<header>
-						<h2>Hubungi Kami</h2>
-<<<<<<< HEAD
-						<p>Silakan isi formulir di bawah untuk menghubungi kami</p>
-=======
-						<p>Silakan isi formulir di bawah untuk menghubungi kami jika kamu mengalami kendala</p>
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
-					</header>
-         <form method="post" action="{{ route('admin.notif') }}" class="cta">
-    @csrf
-    <div class="row gtr-uniform gtr-50">
-        <div class="col-6 col-12-xsmall">
-            <input type="text" name="name" id="name" placeholder="Nama Anda" required />
-        </div>
-        <div class="col-6 col-12-xsmall">
-            <input type="email" name="email" id="email" placeholder="Alamat Email" required />
-        </div>
-        <div class="col-12">
-            <textarea name="message" id="message" placeholder="Pesan Anda" rows="4" required></textarea>
-        </div>
-        <div class="col-12">
-            <input type="submit" value="Kirim Pesan" class="fit primary" />
-        </div>
-    </div>
+    <body>
+        <!-- Contact Section -->
+        <section id="contact" class="wrapper style2 special fade">
+            <div class="container">
+                <header>
+                    <h2>Hubungi Kami</h2>
+                    <p>Silakan isi formulir di bawah untuk menghubungi kami</p>
+                </header>
+                <form method="post" action="#" class="cta">
+                    <section id="contact" class="wrapper style2 special fade">
+                        <div class="container">
+                            <header>
+                                <h2 class="text-center">Kontak</h2>
+                                <p>Silakan isi formulir di bawah untuk menghubungi kami jika kamu mengalami kendala</p>
+                            </header>
+                            <form method="post" action="{{ route('admin.notif') }}" class="cta">
+                                @csrf
+                                <div class="row gtr-uniform gtr-50">
+                                    <div class="col-6 col-12-xsmall">
+                                        <input type="text" name="name" id="name" placeholder="Nama Anda"
+                                            required />
+                                    </div>
+                                    <div class="col-6 col-12-xsmall">
+                                        <input type="email" name="email" id="email" placeholder="Alamat Email"
+                                            required />
+                                    </div>
+                                    <div class="col-12">
+                                        <textarea name="message" id="message" placeholder="Pesan Anda" rows="4" required></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <input type="submit" value="Kirim Pesan" class="fit primary" />
+                                    </div>
+                                </div>
+                                <br />
+                                <button type="button" class="back-button"
+                                    onclick="window.location.href='beranda.php'">Kembali</button>
+                            </form>
+                        </div>
+                    </section>
+
+                    <!-- Footer -->
+                    <footer id="footer">
+                        <ul class="icons">
+                            <li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a>
+                            </li>
+                            <li><a href="https://www.facebook.com/share/19qyo1W1i1/"
+                                    class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
+                            <li><a href="#" class="icon brands alt fa-linkedin-in"><span
+                                        class="label">LinkedIn</span></a></li>
+                            <li><a href="https://www.instagram.com/officialsmkn1subang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                                    class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
+                            <li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a>
+                            </li>
+                        </ul>
+                        <ul class="copyright">
+                            <li>&copy; SMK Negeri 1 Subang. All rights reserved.</li>
+                            <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+                        </ul>
+                    </footer>
+    </body>
+
+    </html>
+    </body>
+
+    </html>
+
     <br>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    <button class="back-button" onclick="window.location.href='beranda.php'">Kembali</button>
-=======
-    <button class="back-button" onclick="window.location.href='{{ url('/beranda') }}'">Kembali</button>
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
-=======
-    <a href="{{ url('/beranda') }}" class="btn-back">Kembali</a>
->>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
-</form>
-      </div>
-			</section>
-            			<!-- Footer -->
-			<footer id="footer">
-				<ul class="icons">
-<<<<<<< HEAD
-					<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="https://www.facebook.com/share/19qyo1W1i1/" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-					<li><a href="https://www.instagram.com/officialsmkn1subang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-					<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-=======
-					<li><a href="https://www.tiktok.com/@nesasofficial?_t=ZS-8wVHHLRIbsf&_r=1" class="icon brands alt fa-tiktok"><span class="label">TikTok</span></a></li>				
-					<li><a href="https://youtube.com/@nesasceren?si=g22qqpOl365lYpfo" class="icon brands alt fa-youtube"><span class="label">Youtube</span></a></li>
-					<li><a href="https://www.facebook.com/share/19qyo1W1i1/" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-					<li><a href="https://www.instagram.com/officialsmkn1subang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
-				</ul>
-				<ul class="copyright">
-					<li>&copy; SMK Negeri 1 Subang. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-				</ul>
-			</footer>
-        
-                
-            </body>
-            </html>
-<<<<<<< HEAD
->>>>>>> 9efacede5cf82b2f0e797a68fb66b0d148dfb85d
-=======
->>>>>>> 609387950bd37071a356c5d6c67352d34da61e06
-=======
-=======
->>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
-                <br>
-            </form>
-        </div>
+    </form>
+    </div>
     </section>
     <!-- Footer -->
     <footer id="footer">
@@ -304,7 +230,3 @@
         </ul>
     </footer>
 @endsection
-<<<<<<< HEAD
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
-=======
->>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
