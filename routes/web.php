@@ -138,6 +138,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':perusahaan'])->group(functi
     Route::get('/profilpt', [PerusahaanController::class, 'index'])->name('perusahaan.index');
     Route::post('/perusahaan/store', [PerusahaanController::class, 'store'])->name('perusahaan.store');
     Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
+    Route::get('/perusahaan/{id}/data', [PerusahaanController::class, 'getData']);
     Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
     Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
     //sistem jadwal kerja

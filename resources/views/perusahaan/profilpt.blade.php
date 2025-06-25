@@ -256,20 +256,6 @@
             <script src="assets/static/js/pages/datatables.js"></script>
 </body>
 <script>
-    document.getElementById("editLogo").addEventListener("change", function(event) {
-        let file = event.target.files[0]; // Ambil file yang dipilih
-
-        if (file) {
-            let reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById("editLogoPreview").src = e.target.result;
-                document.getElementById("editLogoPreview").style.display =
-                    "block"; // Pastikan gambar terlihat
-            };
-            reader.readAsDataURL(file); // Baca file dan tampilkan sebagai gambar
-        }
-    });
-
     // Menampilkan data di tabel
     function loadPerusahaan() {
         $.ajax({
@@ -314,6 +300,22 @@
         loadPerusahaan();
     });
 
+
+    document.getElementById("editLogo").addEventListener("change", function(event) {
+        let file = event.target.files[0]; // Ambil file yang dipilih
+
+        if (file) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById("editLogoPreview").src = e.target.result;
+                document.getElementById("editLogoPreview").style.display =
+                    "block"; // Pastikan gambar terlihat
+            };
+            reader.readAsDataURL(file); // Baca file dan tampilkan sebagai gambar
+        }
+    });
+
+
     // Simpan data perusahaan baru
     $("#formTambahPerusahaan").submit(function(e) {
         e.preventDefault();
@@ -344,7 +346,7 @@
     function bukaModalEdit(id) {
         $.ajax({
             type: "GET",
-            url: `/perusahaan/${id}`,
+            url: `/perusahaan/${id}/data`,
             success: function(data) {
                 if (!data || data.error) {
                     alert("Data perusahaan tidak ditemukan!");

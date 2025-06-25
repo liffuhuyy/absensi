@@ -784,26 +784,40 @@
                         return;
                     }
 
-                    const jenis = $('#statusIzin').val();
+                    let jenis = $('#statusIzin').val().trim();
                     const keterangan = $('#keterangan').val().trim();
 
                     if (!jenis) return alert("Pilih jenis izin.");
                     if (!keterangan) return alert("Isi keterangan izin.");
 
+                    // Force jenis to Capital-case
+                    jenis = jenis.charAt(0).toUpperCase() + jenis.slice(1).toLowerCase();
+
+                    const csrfToken = $('meta[name="csrf-token"]').attr('content');
+
                     getLocation((lat, long) => {
-                        $.post('/absen/izin', {
-                            _token: '{{ csrf_token() }}',
-                            jenis: jenis,
-                            keterangan: keterangan,
-                            latitude: lat,
-                            longitude: long
-                        }).done(res => {
-                            alert(res.message);
-                            $('#exampleModal').modal('hide');
-                            location.reload();
-                        }).fail(err => {
-                            const error = err.responseJSON?.error || "Gagal mengirim izin.";
-                            alert(error);
+                        $.ajax({
+                            url: '/absen/izin',
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': csrfToken
+                            },
+                            data: {
+                                jenis: jenis,
+                                keterangan: keterangan,
+                                latitude: lat,
+                                longitude: long
+                            },
+                            success: function(res) {
+                                alert(res.message);
+                                $('#exampleModal').modal('hide');
+                                location.reload();
+                            },
+                            error: function(err) {
+                                const error = err.responseJSON?.error ||
+                                    "Gagal mengirim izin.";
+                                alert(error);
+                            }
                         });
                     });
                 });

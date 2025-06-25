@@ -297,7 +297,7 @@
                                             </td>
                                         @else
                                         <tr>
-                                            <td colspan="6" class="text-center">Tidak ada jadwal kerja tersedia
+                                            <td colspan="7" class="text-center">Tidak ada jadwal kerja tersedia
                                             </td>
                                         </tr>
                                     @endif

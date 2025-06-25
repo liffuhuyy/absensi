@@ -101,4 +101,13 @@ class PerusahaanController extends Controller
             return "View tidak ditemukan.";
         }
     }
+
+    public function getData($id)
+    {
+        $perusahaan = Perusahaan::find($id);
+        if (!$perusahaan) {
+            return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        }
+        return response()->json($perusahaan);
+    }
 }

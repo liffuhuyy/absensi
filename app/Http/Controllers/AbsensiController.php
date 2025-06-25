@@ -176,33 +176,40 @@ class AbsensiController extends Controller
         $pengguna = Auth::user();
 
         if (!$pengguna) {
-            return response()->json(['error' => 'Pengguna tidak ditemukan'], 404);
+            return response()->json(['error' => 'Pengguna tidak ditemukan.'], 404);
         }
 
-        // Validasi jenis izin yang dipilih
-        $status = $request->input('jenis'); // ← ini berasal dari <select id="statusIzin">
-        if (!in_array($status, ['Izin', 'Sakit'])) {
-            return response()->json(['error' => 'Status izin tidak valid'], 400);
-        }
+        // Validasi request secara keseluruhan
+        $validated = $request->validate([
+            'jenis' => 'required|in:Izin,Sakit',
+            'keterangan' => 'required|string|max:255',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+        ]);
 
-        // Cek apakah sudah absen hari ini
+        // Cek apakah sudah melakukan absensi hari ini
         $sudahAbsen = Absensi::where('pengguna_id', $pengguna->id)
-            ->whereDate('tanggal', Carbon::now('Asia/Jakarta')->format('Y-m-d'))
+            ->whereDate('tanggal', Carbon::now('Asia/Jakarta'))
             ->exists();
 
         if ($sudahAbsen) {
-            return response()->json(['error' => 'Sudah melakukan absensi hari ini'], 400);
+            return response()->json(['error' => 'Sudah melakukan absensi hari ini.'], 400);
         }
 
-        // Simpan data izin/sakit
+        // Simpan data izin atau sakit
         $absensi = new Absensi();
         $absensi->pengguna_id = $pengguna->id;
-        $absensi->status = $status; // 'Izin' atau 'Sakit'
-        $absensi->tanggal = Carbon::now('Asia/Jakarta')->format('Y-m-d');
-        $absensi->keterangan = $request->input('keterangan');
+        $absensi->status = $validated['jenis'];
+        $absensi->tanggal = Carbon::now('Asia/Jakarta');
+        $absensi->keterangan = $validated['keterangan'];
+        $absensi->lokasi_masuk_latitude = $validated['latitude'] ?? null;
+        $absensi->lokasi_masuk_longitude = $validated['longitude'] ?? null;
         $absensi->save();
 
-        return response()->json(['message' => "Absen $status berhasil", 'absensi' => $absensi], 200);
+        return response()->json([
+            'message' => "Absen {$validated['jenis']} berhasil.",
+            'absensi' => $absensi
+        ], 200);
     }
 
     //GET JADWAL KERJA

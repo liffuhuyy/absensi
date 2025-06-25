@@ -203,9 +203,14 @@
                 <label>Password</label>
             </div>
 
-            <br>
             <div class="field">
                 <input type="submit" id="loginButton" value="Masuk">
+            </div>
+
+            <div class="content">
+                <div>
+                    <a href="{{ route('index') }}">Kembali</a>
+                </div>
             </div>
 
             <div class="content">
