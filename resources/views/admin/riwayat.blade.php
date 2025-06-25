@@ -91,6 +91,7 @@
                                                 <th>Jam Masuk</th>
                                                 <th>Jam Keluar</th>
                                                 <th>Pulang Awal</th>
+                                                <th>Perusahaan</th>
                                             </tr>
                                         </thead>
                                         <tbody class="text-center" id="absensiBody">
@@ -103,10 +104,11 @@
                                                     <td>{{ $absen->absen_masuk ?? '-' }}</td>
                                                     <td>{{ $absen->absen_pulang ?? '-' }}</td>
                                                     <td>{{ $absen->pulang_awal ? 'Ya' : '-' }}</td>
+                                                    <td>{{ $absen->pengguna->pengajuan->perusahaan->nama ?? '-' }}</td>
                                                 </tr>
                                             @empty
                                                 <tr>
-                                                    <td colspan="7">Belum ada data absensi.</td>
+                                                    <td colspan="8">Belum ada data absensi.</td>
                                                 </tr>
                                             @endforelse
                                         </tbody>

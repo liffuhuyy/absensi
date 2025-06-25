@@ -47,4 +47,10 @@ class Pengguna extends Authenticatable
     {
         return $this->hasMany(JadwalKerja::class, 'pengguna_id', 'pengguna_id');
     }
+
+    public function pengajuan()
+    {
+        return $this->hasOne(Pengajuan::class, 'pengguna_id');
+        // Ganti ke ->hasMany(...) jika satu pengguna bisa punya banyak pengajuan
+    }
 }

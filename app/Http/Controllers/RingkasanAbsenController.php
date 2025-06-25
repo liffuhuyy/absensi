@@ -44,6 +44,7 @@ class RingkasanAbsenController extends Controller
         return response()->json(['html' => $html]);
     }
 
+
     public function index(Request $request)
     {
         $bulan = $request->input('bulan');
@@ -73,17 +74,15 @@ class RingkasanAbsenController extends Controller
         return view('perusahaan.ringkasanabsenpt', compact('ringkasanabsenpt', 'bulan', 'tahun'));
     }
 
-
-
-
-
     //sistem riwayat absen admin
     public function riwayatAbsen(Request $request)
     {
+
         $bulan = $request->input('bulan');
         $tahun = $request->input('tahun');
 
-        $query = Absensi::with('pengguna');
+        // Tambahkan eager loading untuk 'pengajuan.perusahaan'
+        $query = Absensi::with('pengguna.pengajuan.perusahaan');
 
         if ($bulan) {
             $query->whereMonth('tanggal', $bulan);
