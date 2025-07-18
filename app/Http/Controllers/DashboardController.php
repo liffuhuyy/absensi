@@ -105,36 +105,43 @@ class DashboardController extends Controller
         $bulanIni = $sekarang->month;
         $tahunIni = $sekarang->year;
 
-        $pengguna = Auth::user(); // Asumsikan login sebagai perusahaan
-        $pengguna = Pengajuan::where('perusahaan_id', $pengguna->id)
-            ->where('status', 'diterima') // pastikan status pengajuan diterima
+        $perusahaan = Auth::user(); // Login sebagai perusahaan
+
+        // Ambil semua pengguna magang yang sudah diterima
+        $penggunaDiterima = Pengajuan::where('perusahaan_id', $perusahaan->id)
+            ->where('status', 'diterima')
             ->pluck('pengguna_id');
 
-        // Total siswa magang di perusahaan ini
-        $totalSiswa = $pengguna->count();
+        // Total siswa magang diterima
+        $totalSiswa = $penggunaDiterima->count();
 
-        // Absensi bulan ini hanya dari siswa yang magang di perusahaan tersebut
+        // Total siswa menunggu konfirmasi
+        $totalSiswaMenunggu = Pengajuan::where('perusahaan_id', $perusahaan->id)
+            ->where('status', 'menunggu')
+            ->count();
+
+        // Statistik absensi bulan ini
         $jumlahHadir = Absensi::whereMonth('tanggal', $bulanIni)
             ->whereYear('tanggal', $tahunIni)
-            ->whereIn('pengguna_id', $pengguna)
+            ->whereIn('pengguna_id', $penggunaDiterima)
             ->whereIn('status', ['Hadir', 'Terlambat'])
             ->count();
 
         $jumlahTerlambat = Absensi::whereMonth('tanggal', $bulanIni)
             ->whereYear('tanggal', $tahunIni)
-            ->whereIn('pengguna_id', $pengguna)
+            ->whereIn('pengguna_id', $penggunaDiterima)
             ->where('status', 'Terlambat')
             ->count();
 
         $jumlahIzin = Absensi::whereMonth('tanggal', $bulanIni)
             ->whereYear('tanggal', $tahunIni)
-            ->whereIn('pengguna_id', $pengguna)
+            ->whereIn('pengguna_id', $penggunaDiterima)
             ->where('status', 'Izin')
             ->count();
 
         $jumlahSakit = Absensi::whereMonth('tanggal', $bulanIni)
             ->whereYear('tanggal', $tahunIni)
-            ->whereIn('pengguna_id', $pengguna)
+            ->whereIn('pengguna_id', $penggunaDiterima)
             ->where('status', 'Sakit')
             ->count();
 
@@ -147,40 +154,33 @@ class DashboardController extends Controller
             $label = $bulan->format('M Y');
             $bulanLabels[] = $label;
 
-            $hadir = Absensi::whereMonth('tanggal', $bulan->month)
-                ->whereYear('tanggal', $bulan->year)
-                ->whereIn('pengguna_id', $pengguna)
-                ->where('status', 'Hadir')
-                ->count();
-
-            $terlambat = Absensi::whereMonth('tanggal', $bulan->month)
-                ->whereYear('tanggal', $bulan->year)
-                ->whereIn('pengguna_id', $pengguna)
-                ->where('status', 'Terlambat')
-                ->count();
-
-            $izin = Absensi::whereMonth('tanggal', $bulan->month)
-                ->whereYear('tanggal', $bulan->year)
-                ->whereIn('pengguna_id', $pengguna)
-                ->where('status', 'Izin')
-                ->count();
-
-            $sakit = Absensi::whereMonth('tanggal', $bulan->month)
-                ->whereYear('tanggal', $bulan->year)
-                ->whereIn('pengguna_id', $pengguna)
-                ->where('status', 'Sakit')
-                ->count();
-
             $dataGrafik[] = [
-                'hadir' => $hadir,
-                'terlambat' => $terlambat,
-                'izin' => $izin,
-                'sakit' => $sakit,
+                'hadir' => Absensi::whereMonth('tanggal', $bulan->month)
+                    ->whereYear('tanggal', $bulan->year)
+                    ->whereIn('pengguna_id', $penggunaDiterima)
+                    ->where('status', 'Hadir')
+                    ->count(),
+                'terlambat' => Absensi::whereMonth('tanggal', $bulan->month)
+                    ->whereYear('tanggal', $bulan->year)
+                    ->whereIn('pengguna_id', $penggunaDiterima)
+                    ->where('status', 'Terlambat')
+                    ->count(),
+                'izin' => Absensi::whereMonth('tanggal', $bulan->month)
+                    ->whereYear('tanggal', $bulan->year)
+                    ->whereIn('pengguna_id', $penggunaDiterima)
+                    ->where('status', 'Izin')
+                    ->count(),
+                'sakit' => Absensi::whereMonth('tanggal', $bulan->month)
+                    ->whereYear('tanggal', $bulan->year)
+                    ->whereIn('pengguna_id', $penggunaDiterima)
+                    ->where('status', 'Sakit')
+                    ->count(),
             ];
         }
 
         return view('perusahaan.dashboardpt', compact(
             'totalSiswa',
+            'totalSiswaMenunggu',
             'jumlahHadir',
             'jumlahTerlambat',
             'jumlahIzin',
@@ -189,7 +189,6 @@ class DashboardController extends Controller
             'bulanLabels'
         ));
     }
-
 
     //USER/SISWA
     public function beranda()

@@ -186,6 +186,17 @@
             <div class="form-card">
                 <h2 class="form-title">Biodata Siswa</h2>
 
+                <!-- Tampilkan error validasi -->
+                @if ($errors->any())
+                    <div class="alert alert-danger mb-3">
+                        <ul class="mb-0">
+                            @foreach ($errors->all() as $e)
+                                <li>{{ $e }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
                 <form method="POST"
                     action="{{ isset($biodata) ? route('biodata.update', $biodata->id) : route('biodata.store') }}">
                     @csrf
@@ -193,7 +204,6 @@
                         @method('PUT')
                     @endif
 
-                    <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
                     <!-- Nama dan NISN -->
                     <div class="form-row">
                         <div class="form-col">
@@ -201,14 +211,14 @@
                                 <label for="nama" class="form-label">Nama Lengkap<span
                                         class="required-mark">*</span></label>
                                 <input type="text" id="nama" name="nama" class="form-input"
-                                    placeholder="Masukkan nama lengkap" value="{{ $biodata->nama ?? '' }}">
+                                    placeholder="Masukkan nama lengkap" value="{{ old('nama', $biodata->nama ?? '') }}">
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="nisn" class="form-label">NISN<span class="required-mark">*</span></label>
                                 <input type="text" id="nisn" name="nisn" class="form-input"
-                                    placeholder="Masukkan NISN" value="{{ $biodata->nisn ?? '' }}">
+                                    placeholder="Masukkan NISN" value="{{ old('nisn', $biodata->nisn ?? '') }}">
                             </div>
                         </div>
                     </div>
@@ -220,14 +230,14 @@
                                 <label for="nohp" class="form-label">Nomor HP<span
                                         class="required-mark">*</span></label>
                                 <input type="tel" id="nohp" name="nohp" class="form-input"
-                                    placeholder="Contoh: 08123456789" value="{{ $biodata->nohp ?? '' }}">
+                                    placeholder="Contoh: 08123456789" value="{{ old('nohp', $biodata->nohp ?? '') }}">
                             </div>
                         </div>
                         <div class="form-col">
                             <div class="form-group">
                                 <label for="email" class="form-label">Email<span class="required-mark">*</span></label>
                                 <input type="email" id="email" name="email" class="form-input"
-                                    placeholder="contoh@email.com" value="{{ $biodata->email ?? '' }}">
+                                    placeholder="contoh@email.com" value="{{ old('email', $biodata->email ?? '') }}">
                             </div>
                         </div>
                     </div>
@@ -238,11 +248,13 @@
                         <div class="radio-group">
                             <label class="radio-item">
                                 <input type="radio" name="jenis_kelamin" value="laki-laki" class="form-radio"
-                                    {{ old('jenis_kelamin', $biodata->jenis_kelamin ?? '') == 'laki-laki' ? 'checked' : '' }}>Laki-laki
+                                    {{ old('jenis_kelamin', $biodata->jenis_kelamin ?? '') == 'laki-laki' ? 'checked' : '' }}>
+                                Laki-laki
                             </label>
                             <label class="radio-item">
                                 <input type="radio" name="jenis_kelamin" value="perempuan" class="form-radio"
-                                    {{ old('jenis_kelamin', $biodata->jenis_kelamin ?? '') == 'perempuan' ? 'checked' : '' }}>Perempuan
+                                    {{ old('jenis_kelamin', $biodata->jenis_kelamin ?? '') == 'perempuan' ? 'checked' : '' }}>
+                                Perempuan
                             </label>
                         </div>
                     </div>
@@ -254,7 +266,8 @@
                                 <label for="tempat_lahir" class="form-label">Tempat Lahir<span
                                         class="required-mark">*</span></label>
                                 <input type="text" id="tempat_lahir" name="tempat_lahir" class="form-input"
-                                    placeholder="Masukkan kota kelahiran" value="{{ $biodata->tempat_lahir ?? '' }}">
+                                    placeholder="Masukkan kota kelahiran"
+                                    value="{{ old('tempat_lahir', $biodata->tempat_lahir ?? '') }}">
                             </div>
                         </div>
                         <div class="form-col">
@@ -262,7 +275,7 @@
                                 <label for="tanggal_lahir" class="form-label">Tanggal Lahir<span
                                         class="required-mark">*</span></label>
                                 <input type="date" id="tanggal_lahir" name="tanggal_lahir" class="form-input"
-                                    value="{{ $biodata->tanggal_lahir ?? '' }}">
+                                    value="{{ old('tanggal_lahir', $biodata->tanggal_lahir ?? '') }}">
                             </div>
                         </div>
                     </div>
@@ -273,38 +286,28 @@
                             <div class="form-group">
                                 <label for="jurusan" class="form-label">Jurusan<span class="required-mark">*</span></label>
                                 <select id="jurusan" name="jurusan" class="form-select" required>
-                                    <option value="" disabled {{ empty($biodata->jurusan) ? 'selected' : '' }}>Pilih
-                                        Jurusan</option>
-                                    <option value="akuntansi"
-                                        {{ isset($biodata) && $biodata->jurusan == 'akuntansi' ? 'selected' : '' }}>
-                                        Akuntansi Keuangan dan Lembaga</option>
-                                    <option value="pemasaran"
-                                        {{ isset($biodata) && $biodata->jurusan == 'pemasaran' ? 'selected' : '' }}>
-                                        Pemasaran</option>
-                                    <option value="manajemen"
-                                        {{ isset($biodata) && $biodata->jurusan == 'manajemen' ? 'selected' : '' }}>
-                                        Manajemen Perkantoran dan Layanan Bisnis</option>
-                                    <option value="rpl"
-                                        {{ isset($biodata) && $biodata->jurusan == 'rpl' ? 'selected' : '' }}>Rekayasa
-                                        Perangkat Lunak</option>
-                                    <option value="tkj"
-                                        {{ isset($biodata) && $biodata->jurusan == 'tkj' ? 'selected' : '' }}>Teknik
-                                        Komputer dan Jaringan</option>
-                                    <option value="dkv"
-                                        {{ isset($biodata) && $biodata->jurusan == 'dkv' ? 'selected' : '' }}>Desain
-                                        Komunikasi Visual</option>
-                                    <option value="mesin"
-                                        {{ isset($biodata) && $biodata->jurusan == 'mesin' ? 'selected' : '' }}>Teknik
-                                        Mesin</option>
-                                    <option value="otomotif"
-                                        {{ isset($biodata) && $biodata->jurusan == 'otomotif' ? 'selected' : '' }}>Teknik
-                                        Otomotif</option>
-                                    <option value="logistik"
-                                        {{ isset($biodata) && $biodata->jurusan == 'logistik' ? 'selected' : '' }}>Teknik
-                                        Logistik</option>
-                                    <option value="kuliner"
-                                        {{ isset($biodata) && $biodata->jurusan == 'kuliner' ? 'selected' : '' }}>Kuliner
+                                    <option value="" disabled
+                                        {{ old('jurusan', $biodata->jurusan ?? '') == '' ? 'selected' : '' }}>Pilih Jurusan
                                     </option>
+                                    @php
+                                        $jurusanList = [
+                                            'akuntansi' => 'Akuntansi Keuangan dan Lembaga',
+                                            'pemasaran' => 'Pemasaran',
+                                            'manajemen' => 'Manajemen Perkantoran dan Layanan Bisnis',
+                                            'rpl' => 'Rekayasa Perangkat Lunak',
+                                            'tkj' => 'Teknik Komputer dan Jaringan',
+                                            'dkv' => 'Desain Komunikasi Visual',
+                                            'mesin' => 'Teknik Mesin',
+                                            'otomotif' => 'Teknik Otomotif',
+                                            'logistik' => 'Teknik Logistik',
+                                            'kuliner' => 'Kuliner',
+                                        ];
+                                    @endphp
+                                    @foreach ($jurusanList as $key => $value)
+                                        <option value="{{ $key }}"
+                                            {{ old('jurusan', $biodata->jurusan ?? '') == $key ? 'selected' : '' }}>
+                                            {{ $value }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -313,12 +316,14 @@
                                 <label for="kelas" class="form-label">Kelas<span
                                         class="required-mark">*</span></label>
                                 <select id="kelas" name="kelas" class="form-select" required>
-                                    <option value="" disabled selected>Pilih Kelas</option>
+                                    <option value="" disabled
+                                        {{ old('kelas', $biodata->kelas ?? '') == '' ? 'selected' : '' }}>Pilih Kelas
+                                    </option>
                                     <option value="11"
-                                        {{ isset($biodata) && $biodata->kelas == '11' ? 'selected' : '' }}>Kelas 11
+                                        {{ old('kelas', $biodata->kelas ?? '') == '11' ? 'selected' : '' }}>Kelas 11
                                     </option>
                                     <option value="12"
-                                        {{ isset($biodata) && $biodata->kelas == '12' ? 'selected' : '' }}>Kelas 12
+                                        {{ old('kelas', $biodata->kelas ?? '') == '12' ? 'selected' : '' }}>Kelas 12
                                     </option>
                                 </select>
                             </div>
@@ -329,32 +334,29 @@
                     <div class="form-group">
                         <label for="agama" class="form-label">Agama<span class="required-mark">*</span></label>
                         <select id="agama" name="agama" class="form-select" required>
-                            <option value="" disabled {{ empty($biodata->agama) ? 'selected' : '' }}>Pilih Agama
-                            </option>
-                            <option value="islam" {{ isset($biodata) && $biodata->agama == 'islam' ? 'selected' : '' }}>
-                                Islam</option>
-                            <option value="kristen"
-                                {{ isset($biodata) && $biodata->agama == 'kristen' ? 'selected' : '' }}>Kristen</option>
-                            <option value="buddha" {{ isset($biodata) && $biodata->agama == 'buddha' ? 'selected' : '' }}>
-                                Buddha</option>
-                            <option value="hindu" {{ isset($biodata) && $biodata->agama == 'hindu' ? 'selected' : '' }}>
-                                Hindu</option>
-                            <option value="konghucu"
-                                {{ isset($biodata) && $biodata->agama == 'konghucu' ? 'selected' : '' }}>
-                                konghucu</option>
-                            <option value="katolik"
-                                {{ isset($biodata) && $biodata->agama == 'katolik' ? 'selected' : '' }}>
-                                katolik</option>
+                            <option value="" disabled
+                                {{ old('agama', $biodata->agama ?? '') == '' ? 'selected' : '' }}>Pilih Agama</option>
+                            @php
+                                $agamaList = ['islam', 'kristen', 'katolik', 'hindu', 'buddha', 'konghucu'];
+                            @endphp
+                            @foreach ($agamaList as $agama)
+                                <option value="{{ $agama }}"
+                                    {{ old('agama', $biodata->agama ?? '') == $agama ? 'selected' : '' }}>
+                                    {{ ucfirst($agama) }}
+                                </option>
+                            @endforeach
                         </select>
                     </div>
 
                     <!-- Alamat Rumah -->
                     <div class="form-group">
                         <label for="alamat" class="form-label">Alamat Rumah<span class="required-mark">*</span></label>
-                        <textarea id="alamat" name="alamat" class="form-textarea">{{ old('alamat', optional($biodata)->alamat) }}</textarea>
+                        <textarea id="alamat" name="alamat" class="form-textarea">{{ old('alamat', $biodata->alamat ?? '') }}</textarea>
                     </div>
+
                     <button type="submit" class="btn btn-save">Simpan Data</button>
                 </form>
+
                 <div id="notif" style="display: none;"></div>
             </div>
         </div>

@@ -69,6 +69,7 @@
                                 <thead>
                                     <tr>
                                         <th>Nama Siswa</th>
+                                        <th>NISN</th>
                                         <th>Tanggal Selesai</th>
                                         <th>Nilai</th>
                                         <th>Keterangan</th>
@@ -79,6 +80,7 @@
                                     @forelse ($penilaian as $nilai)
                                         <tr>
                                             <td>{{ $nilai->nama }}</td>
+                                            <td>{{ $nilai->nisn }}</td>
                                             <td>{{ $nilai->tanggal_keluar }}</td>
                                             <td>{{ $nilai->nilai ?? '-' }}</td>
                                             <td>{{ $nilai->keterangan ?? '-' }}</td>
@@ -101,7 +103,8 @@
                                                         @method('PATCH')
                                                         <div class="modal-header">
                                                             <h1 class="modal-title fs-5"
-                                                                id="modalLabel-{{ $nilai->id }}">Penilaian Siswa</h1>
+                                                                id="modalLabel-{{ $nilai->id }}">Penilaian Siswa
+                                                            </h1>
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-label="Tutup"></button>
                                                         </div>
@@ -110,6 +113,11 @@
                                                                 <label>Nama:</label>
                                                                 <input type="text" class="form-control"
                                                                     value="{{ $nilai->nama }}" readonly>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>NISN:</label>
+                                                                <input type="text" class="form-control"
+                                                                    value="{{ $nilai->nisn }}" readonly>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label>Tanggal Selesai:</label>
@@ -138,7 +146,7 @@
                                         </div>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center">Belum ada penilaian</td>
+                                            <td colspan="6" class="text-center">Belum ada penilaian</td>
                                         </tr>
                                     @endforelse
                                 </tbody>

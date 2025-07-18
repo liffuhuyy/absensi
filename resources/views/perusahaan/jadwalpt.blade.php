@@ -361,7 +361,7 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-success">Simpan</button>
+                                        <button type="submit" class="btn btn-primary w-100">Simpan Perubahan</button>
                                     </div>
                                 </div>
                             </form>
@@ -399,12 +399,12 @@
                                 console.log("Data dari server:", data);
                                 $('#editForm').attr('action', '/jadwalpt/update/' + id);
 
-                                if ($('#edit_jam_masuk').length) {
-                                    $('#edit_jam_masuk').val(data.jam_masuk);
+                                if ($('#jam_masuk').length) {
+                                    $('#jam_masuk').val(data.jam_masuk);
                                 } else {
                                     console.warn("Elemen #edit_jam_masuk tidak ditemukan.");
                                 }
-                                if ($('#edit_jam_keluar').length) $('#edit_jam_keluar').val(data
+                                if ($('#jam_keluar').length) $('#jam_keluar').val(data
                                     .jam_keluar);
                                 if ($('#edit_latitude').length) $('#edit_latitude').val(data.latitude ||
                                     '');

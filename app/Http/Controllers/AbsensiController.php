@@ -234,7 +234,7 @@ class AbsensiController extends Controller
 
         if (!$jadwalHariIni) {
             return response()->json([
-                'error' => 'Hari ini libur dan tidak dapat melakukan absen, SELAMAT BERLIBUR!!.'
+                'error' => 'Tidak ada jadwal saat ini!.'
             ], 403);
         }
 

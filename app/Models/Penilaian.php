@@ -14,6 +14,7 @@ class Penilaian extends Model
     protected $fillable = [
         'pengguna_id',
         'nama',
+        'nisn',
         'tanggal_keluar',
         'nilai',
         'keterangan',

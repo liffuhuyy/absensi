@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Biodata;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+
 
 class BiodataController extends Controller
 {
@@ -33,9 +35,9 @@ class BiodataController extends Controller
     {
         $request->validate([
             'nama' => 'required|string',
-            'nisn' => 'required|unique:biodata,nisn,' . Auth::id() . ',pengguna_id',
+            'nisn' => 'required|unique:biodata,nisn',
             'nohp' => 'required|string',
-            'email' => 'required|unique:biodata,email,' . Auth::id() . ',pengguna_id',
+            'email' => 'required|unique:biodata,email',
             'jenis_kelamin' => 'required|string',
             'tempat_lahir' => 'required|string',
             'tanggal_lahir' => 'required|date',
@@ -45,21 +47,67 @@ class BiodataController extends Controller
             'alamat' => 'required|string',
         ]);
 
-        $data = $request->all();
+        $data = $request->only([
+            'nama',
+            'nisn',
+            'nohp',
+            'email',
+            'jenis_kelamin',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'jurusan',
+            'kelas',
+            'agama',
+            'alamat'
+        ]);
         $data['pengguna_id'] = Auth::id();
-        // Update jika sudah ada, atau create jika belum
-        Biodata::updateOrCreate(
-            ['pengguna_id' => Auth::id()],
-            $data
-        );
 
-        return redirect()->route('profil')->with('success', 'Data biodata berhasil diperbarui!');
+        Biodata::create($data);
+
+        return redirect()->route('profil')->with('success', 'Data berhasil disimpan!');
     }
 
     public function update(Request $request, $id)
     {
         $biodata = Biodata::findOrFail($id);
-        $biodata->update($request->all());
+
+        if ($biodata->pengguna_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $request->validate([
+            'nama' => 'required|string',
+            'nisn' => [
+                'required',
+                Rule::unique('biodata')->ignore($biodata->id),
+            ],
+            'nohp' => 'required|string',
+            'email' => [
+                'required',
+                Rule::unique('biodata')->ignore($biodata->id),
+            ],
+            'jenis_kelamin' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|date',
+            'jurusan' => 'required|string',
+            'kelas' => 'required|string',
+            'agama' => 'required|string',
+            'alamat' => 'required|string',
+        ]);
+
+        $biodata->update($request->only([
+            'nama',
+            'nisn',
+            'nohp',
+            'email',
+            'jenis_kelamin',
+            'tempat_lahir',
+            'tanggal_lahir',
+            'jurusan',
+            'kelas',
+            'agama',
+            'alamat'
+        ]));
 
         return redirect()->route('profil')->with('success', 'Data biodata berhasil diperbarui!');
     }

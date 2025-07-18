@@ -69,7 +69,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-4 d-flex justify-content-start">
                                         <div class="stats-icon purple mb-2" style="font-size: 2rem;">
-                                            <i class="iconly-boldShow"></i>
+                                            <i class="iconly-boldProfile"></i>
                                         </div>
                                     </div>
                                     <div class="col-8">
@@ -90,7 +90,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-4 d-flex justify-content-start">
                                         <div class="stats-icon blue mb-2" style="font-size: 2rem;">
-                                            <i class="iconly-boldProfile"></i>
+                                            <i class="bi bi-building"></i>
                                         </div>
                                     </div>
                                     <div class="col-8">

@@ -299,10 +299,10 @@
                 @csrf
                 <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
                 <div class="form-group">
-                    <label for="nama">Nama Lengkap</label>
-                    <input type="text" id="nama" name="nama" required>
+                    <label>Nama</label>
+                    <input type="text" name="nama" class="form-control"
+                        value="{{ old('nama', optional($biodata)->nama) }}" readonly>
                 </div>
-
                 <div class="form-group">
                     <label for="jurusan">Jurusan</label>
                     <select id="jurusan" name="jurusan" required>
