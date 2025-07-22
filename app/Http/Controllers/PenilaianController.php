@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Penilaian;
 use App\Models\Pengguna;
+use App\Models\Biodata;
+use App\Models\Pengajuan;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PenilaianController extends Controller
 {
@@ -12,17 +16,33 @@ class PenilaianController extends Controller
     {
         $penilaian = Penilaian::orderBy('created_at', 'desc')->get();
         return view('absensi.penilaian', compact('penilaian'));
+        $pengguna = Auth::user();
+
+        $penilaian = Penilaian::where('pengguna_id', $pengguna->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $biodata = Biodata::where('pengguna_id', $pengguna->id)->first();
+
+        return view('absensi.penilaian', compact('penilaian', 'biodata'));
     }
 
     public function store(Request $request)
     {
+        // Validasi data dari form
         $validated = $request->validate([
-            'pengguna_id' => 'required|integer',
             'nama' => 'required|string|max:255',
-            'tanggal_keluar' => 'required|date'
+            'nisn' => 'required|digits_between:8,12', // asumsi NISN 8-12 digit
+            'tanggal_keluar' => 'required|date',
         ]);
 
+        // Tambahkan ID pengguna yang sedang login
+        $validated['pengguna_id'] = Auth::id();
+
+        // Simpan ke database
         Penilaian::create($validated);
+
+        // Redirect dengan pesan sukses
         return redirect()->route('penilaian')->with('success', 'Penilaian berhasil ditambahkan.');
     }
 

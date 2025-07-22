@@ -91,6 +91,8 @@
             padding: 12px 15px;
             border: 1px solid #ddd;
             text-align: center;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
         }
 
         .table thead {
@@ -113,8 +115,15 @@
             <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
 
             <div class="form-group">
-                <label for="nama">Nama Lengkap</label>
-                <input type="text" name="nama" required>
+                <label>Nama</label>
+                <input type="text" name="nama" class="form-control" value="{{ old('nama', optional($biodata)->nama) }}"
+                    readonly>
+            </div>
+
+            <div class="form-group">
+                <label>NISN</label>
+                <input type="text" name="nisn" class="form-control"
+                    value="{{ old('nisn', optional($biodata)->nisn) }}" readonly>
             </div>
 
             <div class="form-group">
@@ -165,5 +174,38 @@
                 @endforelse
             </tbody>
         </table>
+        <th>Nama</th>
+        <th>Tanggal Penilaian</th>
+        <th>NISN</th>
+        <th>Nilai</th>
+        <th>Keterangan</th>
+        <th>Aksi</th>
+        </tr>
+        </thead>
+        <tbody>
+            @forelse ($penilaian as $nilai)
+                <tr>
+                    <td>{{ $nilai->nama }}</td>
+                    <td>{{ $nilai->tanggal_keluar }}</td>
+                    <td>{{ $nilai->nisn }}</td>
+                    <td>{{ $nilai->nilai ?? '-' }}</td>
+                    <td>{{ $nilai->keterangan ?? '-' }}</td>
+                    <td>
+                        <form action="{{ route('penilaian.destroy', $nilai->id) }}" method="POST"
+                            onsubmit="return confirm('Yakin ingin menghapus?')">
+                            @csrf
+                            @method('DELETE')
+                            <button class="btn btn-sm btn-danger">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6" class="text-center">Belum ada penilaian</td>
+                </tr>
+            @endforelse
+        </tbody>
+        </table>
+    </div>
     </div>
 @endsection

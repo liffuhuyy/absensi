@@ -23,6 +23,11 @@ return new class extends Migration {
             $table->decimal('lokasi_pulang_latitude', 10, 7)->nullable(); // Lokasi pulang
             $table->decimal('lokasi_pulang_longitude', 10, 7)->nullable();
             $table->enum('status', ['Hadir', 'Terlambat', 'Izin', 'Tanpa Keterangan'])->default('Tanpa Keterangan');
+            $table->decimal('lokasi_masuk_latitude', 10, 7)->nullable(); // Koordinat lokasi masuk
+            $table->decimal('lokasi_masuk_longitude', 10, 7)->nullable(); // Koordinat lokasi masuk
+            $table->decimal('lokasi_pulang_latitude', 10, 7)->nullable(); // Koordinat lokasi pulang
+            $table->decimal('lokasi_pulang_longitude', 10, 7)->nullable(); // Koordinat lokasi pulang
+            $table->enum('status', ['Hadir', 'Terlambat', 'Izin', 'Sakit', 'Tanpa Keterangan'])->default('Tanpa Keterangan');
             $table->foreign('pengguna_id')->references('id')->on('pengguna')->onDelete('cascade');
             $table->timestamps();
         });

@@ -291,89 +291,84 @@
         </div>
     </div>
 
-<<<<<<< HEAD
- <div class="container">
-<h1>Form Pengajuan Magang</h1>
-<div class="form-group">
-<form method="POST" action="{{ url('/pengajuan/tambah') }}">
-    @csrf
-    <div class="form-group">
-        <label for="nama">Nama Lengkap</label>
-        <input type="text" id="nama" name="nama" required>
-    </div>
-=======
-    @include('siswa.layout.sidebar')
-    <div class="container">
+    <<<<<<< HEAD <div class="container">
         <h1>Form Pengajuan Magang</h1>
         <div class="form-group">
-            <form method="POST" action="{{ route('pengajuan.store') }}">
+            <form method="POST" action="{{ url('/pengajuan/tambah') }}">
                 @csrf
-                <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
                 <div class="form-group">
                     <label for="nama">Nama Lengkap</label>
                     <input type="text" id="nama" name="nama" required>
                 </div>
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
+                =======
+                @include('siswa.layout.sidebar')
+                <div class="container">
+                    <h1>Form Pengajuan Magang</h1>
+                    <div class="form-group">
+                        <form method="POST" action="{{ route('pengajuan.store') }}">
+                            @csrf
+                            <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
+                            <div class="form-group">
+                                <label>Nama</label>
+                                <input type="text" name="nama" class="form-control"
+                                    value="{{ old('nama', optional($biodata)->nama) }}" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="jurusan">Jurusan</label>
+                                <select id="jurusan" name="jurusan" required>
+                                    <option value="">Pilih Jurusan</option>
+                                    <option value="AKL">Akuntansi Keuangan dan Lembaga</option>
+                                    <option value="RPL">Rekayasa Perangkat Lunak</option>
+                                    <option value="TKJ">Teknik Jaringan dan Komputer</option>
+                                    <option value="KL">Kuliner</option>
+                                    <option value="TL">Teknik Logistik</option>
+                                    <option value="MPLB">Manajemen Perkantoran dan Layanan Bisnis</option>
+                                    <option value="TO">Teknik Otomotif</option>
+                                    <option value="TPM">Teknik Permesinan</option>
+                                    <option value="DKV">Desain Komunikasi Visual</option>
+                                    <option value="PM">Pemasaran</option>
+                                </select>
+                            </div>
 
-                <div class="form-group">
-                    <label for="jurusan">Jurusan</label>
-                    <select id="jurusan" name="jurusan" required>
-                        <option value="">Pilih Jurusan</option>
-                        <option value="AKL">Akuntansi Keuangan dan Lembaga</option>
-                        <option value="RPL">Rekayasa Perangkat Lunak</option>
-                        <option value="TKJ">Teknik Jaringan dan Komputer</option>
-                        <option value="KL">Kuliner</option>
-                        <option value="TL">Teknik Logistik</option>
-                        <option value="MPLB">Manajemen Perkantoran dan Layanan Bisnis</option>
-                        <option value="TO">Teknik Otomotif</option>
-                        <option value="TPM">Teknik Permesinan</option>
-                        <option value="DKV">Desain Komunikasi Visual</option>
-                        <option value="PM">Pemasaran</option>
-                    </select>
-                </div>
+                            <div class="form-group">
+                                <label for="tanggal_masuk">Tanggal Mulai Magang</label>
+                                <input type="date" id="tanggal_masuk" name="tanggal_masuk" required>
+                            </div>
 
-                <div class="form-group">
-                    <label for="tanggal_masuk">Tanggal Mulai Magang</label>
-                    <input type="date" id="tanggal_masuk" name="tanggal_masuk" required>
-                </div>
+                            <div class="form-group">
+                                <label for="tanggal_keluar">Tanggal Selesai Magang</label>
+                                <input type="date" id="tanggal_keluar" name="tanggal_keluar" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="perusahaan">Perusahaan:</label>
+                                <input type="text" name="perusahaan" id="perusahaan" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="perusahaan">Perusahaan:</label>
+                                <select name="perusahaan_id" id="perusahaan" required>
+                                    <option>Pilih Perusahaan</option>
+                                    @foreach ($perusahaanList as $jadwal)
+                                        <option value="{{ $jadwal->pengguna_id }}">{{ $jadwal->pengguna->nama }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="button-container">
+                                <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
+                            </div>
+                        </form>
+                    </div>
 
-                <div class="form-group">
-                    <label for="tanggal_keluar">Tanggal Selesai Magang</label>
-                    <input type="date" id="tanggal_keluar" name="tanggal_keluar" required>
-                </div>
-
-<<<<<<< HEAD
-    <div class="form-group">
-        <label for="perusahaan">Perusahaan:</label>
-        <input type="text" name="perusahaan" id="perusahaan" required>
-    </div>
-=======
-                <div class="form-group">
-                    <label for="perusahaan">Perusahaan:</label>
-                    <select name="perusahaan_id" id="perusahaan" required>
-                        <option>Pilih Perusahaan</option>
-                        @foreach ($perusahaanList as $jadwal)
-                            <option value="{{ $jadwal->pengguna_id }}">{{ $jadwal->pengguna->nama }}</option>
-                        @endforeach
-                    </select>
-                </div>
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
-
-                <div class="button-container">
-                    <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>
-                </div>
-            </form>
-        </div>
-
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-        <script>
-            function confirmLogout() {
-                let confirmAction = confirm("Apakah Anda yakin ingin logout?");
-                if (confirmAction) {
-                    window.location.href = "{{ url('/index') }}";
-                }
-            }
-        </script>
+                    <link rel="stylesheet"
+                        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+                    <script>
+                        function confirmLogout() {
+                            let confirmAction = confirm("Apakah Anda yakin ingin logout?");
+                            if (confirmAction) {
+                                window.location.href = "{{ url('/index') }}";
+                            }
+                        }
+                    </script>
 </body>
 
 </html>

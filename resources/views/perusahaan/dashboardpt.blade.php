@@ -88,17 +88,40 @@
                                 <div class="row align-items-center">
                                     <div class="col-4 d-flex justify-content-start">
                                         <div class="stats-icon purple mb-2" style="font-size: 2rem;">
-                                            <i class="iconly-boldShow"></i>
+                                            <i class="bi bi-people-fill"></i> {{-- Icon pengguna --}}
                                         </div>
                                     </div>
                                     <div class="col-8">
                                         <h6 class="text-muted font-semibold">Total Siswa</h6>
                                         <h4 class="font-extrabold mb-0" style="font-size: 2rem;">380</h4>
+                                        <h6 class="text-muted font-semibold">Total Peserta Magang Aktif</h6>
+                                        <h4 class="font-extrabold mb-0" style="font-size: 2rem;">{{ $totalSiswa }}
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <div class="col-6 col-md-3 col-lg-6">
+                        <div class="card">
+                            <div class="card-body px-4 py-4-5">
+                                <div class="row align-items-center">
+                                    <div class="col-4 d-flex justify-content-start">
+                                        <div class="stats-icon purple mb-2" style="font-size: 2rem;">
+                                            <i class="iconly-boldShow"></i> {{-- Sama seperti ikon sebelumnya --}}
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
+                                        <h6 class="text-muted font-semibold">Pesert Magang Menunggu</h6>
+                                        <h4 class="font-extrabold mb-0" style="font-size: 2rem;">
+                                            {{ $totalSiswaMenunggu }}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Tambahan item lain bisa disisipkan di sini -->
                 </div>
             </div>

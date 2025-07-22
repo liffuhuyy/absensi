@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\JadwalKerjaController;
 use App\Models\JadwalKerja;
 use App\Models\Pengajuan;
+use App\Models\Pengguna;
+use App\Models\Biodata;
 use Illuminate\Http\Request;
 
 class PengajuanController extends Controller
@@ -46,8 +48,10 @@ class PengajuanController extends Controller
 
     public function create()
     {
+        $pengguna = Auth::user();
         $perusahaanList = JadwalKerja::select('pengguna_id')->distinct()->get();
-        return view('absensi.pengajuan1', compact('perusahaanList'));
+        $biodata = Biodata::where('pengguna_id', $pengguna->id)->first();
+        return view('absensi.pengajuan1', compact('perusahaanList', 'biodata'));
     }
 
     public function show($id)

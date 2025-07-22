@@ -105,6 +105,7 @@ Route::middleware(['auth', RoleMiddleware::class . ':user'])->group(function () 
     Route::get('/penilaian', [PenilaianController::class, 'tampil'])->name('penilaian.index');
     Route::post('/penilaian', [PenilaianController::class, 'store'])->name('penilaian.store');
     Route::delete('/penilaian/{id}', [PenilaianController::class, 'destroy'])->name('penilaian.destroy');
+    Route::get('/penilaian/create', [PenilaianController::class, 'create'])->name('penilaian.create');
     //sistem manajemen tugas
     Route::get('/filter', [TugasController::class, 'filter'])->name('filter');
     Route::get('/manajementugas', [TugasController::class, 'showTugas']);
@@ -138,13 +139,19 @@ Route::middleware(['auth', RoleMiddleware::class . ':perusahaan'])->group(functi
     Route::post('/pengajuan/updateStatus', [PengajuanController::class, 'updateStatus'])->name('pengajuan.updateStatus');
     //profil perusahaan
     Route::resource('perusahaan', PerusahaanController::class);
-    Route::get('/profilpt', [PerusahaanController::class, 'profilpt'])->name('profilpt');
     Route::get('/profilpt', [PerusahaanController::class, 'index'])->name('perusahaan.index');
     Route::post('/perusahaan/store', [PerusahaanController::class, 'store'])->name('perusahaan.store');
     Route::get('/perusahaan/{id}', [PerusahaanController::class, 'show'])->name('perusahaan.show');
     Route::get('/perusahaan/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
     Route::put('/perusahaan/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
     Route::delete('/perusahaan/{id}', [PerusahaanController::class, 'destroy'])->name('perusahaan.destroy');
+    Route::post('/profilpt', [PerusahaanController::class, 'store'])->name('perusahaan.store');
+    Route::get('/pprofilpt/{id}/edit', [PerusahaanController::class, 'edit'])->name('perusahaan.edit');
+    Route::put('/profilpt/{id}', [PerusahaanController::class, 'update'])->name('perusahaan.update');
+
+    // Endpoint untuk AJAX
+    Route::get('/perusahaan/json', [PerusahaanController::class, 'json']);
+    Route::get('/perusahaan/{id}/data', [PerusahaanController::class, 'getData']);
     //sistem jadwal kerja
     Route::get('/jadwalpt', [JadwalKerjaController::class, 'jadwalpt'])->name('jadwalpt');
     Route::get('/jadwalpt', [JadwalKerjaController::class, 'index']);
