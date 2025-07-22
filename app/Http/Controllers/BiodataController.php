@@ -14,7 +14,9 @@ class BiodataController extends Controller
     //Profil
     public function profil()
     {
-        $biodata = Biodata::whereNotNull('nohp')->get();
+        $pengguna = Auth::user();
+        $biodata = Biodata::where('pengguna_id', $pengguna->id)->get();
+
         return view('absensi.profil', compact('biodata'));
     }
 
@@ -22,10 +24,13 @@ class BiodataController extends Controller
     //Biodata
     public function index()
     {
-        // Ambil data biodata pertama yang ada
-        $biodata = Biodata::first();
+        $pengguna = Auth::user();
+
+        $biodata = Biodata::where('pengguna_id', $pengguna->id)->first();
+
         return view('absensi.biodata', compact('biodata'));
     }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -41,14 +46,7 @@ class BiodataController extends Controller
             'agama' => 'required|string',
             'alamat' => 'required|string',
         ]);
-        $data = $request->all();
-        $data['pengguna_id'] = Auth::id(); // Tambahkan ID pengguna yang sedang login
 
-        // Update jika sudah ada, atau create jika belum
-        Biodata::updateOrCreate(
-            ['pengguna_id' => Auth::id()],
-            $data
-        );
         $data = $request->only([
             'nama',
             'nisn',
@@ -63,6 +61,7 @@ class BiodataController extends Controller
             'alamat'
         ]);
         $data['pengguna_id'] = Auth::id();
+
         Biodata::create($data);
 
         return redirect()->route('profil')->with('success', 'Data berhasil disimpan!');
@@ -111,12 +110,6 @@ class BiodataController extends Controller
         ]));
 
         return redirect()->route('profil')->with('success', 'Data biodata berhasil diperbarui!');
-    }
-
-    public function show($id)
-    {
-        $biodata = Biodata::findOrFail($id);
-        return view('absensi.profil', compact('biodata'));
     }
 
     public function upload(Request $request)

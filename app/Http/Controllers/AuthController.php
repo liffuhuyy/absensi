@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\UserTugas;
+use App\Models\User;
 use App\Models\Pengguna;
 use App\Models\Absensi;
 use App\Models\Biodata;

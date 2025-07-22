@@ -102,12 +102,9 @@
         }
 
         .container {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            width: 500px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 15px;
         }
 
         .profile-pic {
@@ -144,16 +141,43 @@
             /* Hindari perubahan ukuran karena padding */
         }
 
+        .logout-wrapper {
+            text-align: center;
+            margin-top: 20px;
+        }
+
         .logout-link {
             text-decoration: none;
-            color: black;
+            color: white;
+            background-color: #000000;
+            padding: 10px 20px;
+            border-radius: 6px;
+            display: inline-block;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .logout-link:hover {
+            background-color: #172a46;
+        }
+
+        .info-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 30px;
+        }
+
+        .info {
+            text-align: center;
+            margin-bottom: 15px;
         }
 
         .label {
             font-weight: bold;
+            color: #555;
             display: block;
             margin-bottom: 5px;
-            color: #555;
         }
 
         .profile-photo {
@@ -177,29 +201,40 @@
             transition: opacity 0.3s ease;
         }
 
+        .upload-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
         .upload-group {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
             gap: 10px;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .upload-group input[type="file"] {
-            flex: 1;
-            padding: 6px;
+            flex: 1 1 60%;
+            padding: 5px;
         }
 
         .upload-group button {
-            padding: 5px 10px;
+            flex: 1 1 35%;
+            padding: 8px 12px;
             background-color: #000000;
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .upload-group button:hover {
-            background-color: #2c4e82;
+            background-color: #172a46;
         }
+
 
         .alert {
             padding: 12px 20px;
@@ -228,275 +263,261 @@
             cursor: pointer;
             color: #000;
         }
+
+        @media (max-width: 768px) {
+
+            #absensiTable th,
+            #absensiTable td {
+                white-space: nowrap;
+            }
+        }
     </style>
 </head>
 
 <body>
+    <div class="header">
+        <a href="{{ url('/beranda') }}" class="menu-toggle" id="menuToggle">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <h4>SMKN 1 SUBANG</h4>
+        <div class="profile-icon">
+        </div>
+    </div>
+
     <!-- Kontainer Profil Pengguna -->
     <div class="container" id="profileContainer">
-        <div class="profile-pic"></div>
-        <p>Nama: </p>
-        <p>Email: </p>
-        <p>No HP: </p>
-        @foreach ($biodata as $data)
-            <p>Nama: {{ $data->nama }}</p>
-            <p>No Hp: {{ $data->nohp }}</p>
-            <p>{{ $data->nama }}</p>
-            <p>{{ $data->email }}</p>
-            <p>{{ $data->nohp }}</p>
-        @endforeach
-        <br><br><br>
-        <div class="button-container">
-            <a href="{{ url('/editprofil') }}" class="button">Edit Akun</a>
-            <a href="{{ url('/biodata') }}" class="button">Biodata</a>
-        </div><br><br><br><br><br>
-        <p><a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a></p>
-
-        <body>
-            <div class="header">
-                <a href="{{ url('/beranda') }}" class="menu-toggle" id="menuToggle">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
-                <h4>SMKN 1 SUBANG</h4>
-                <div class="profile-icon">
-                </div>
+        <div class="profile-photo">
+            <img id="profileImage"
+                src="{{ Auth::user()->biodata && Auth::user()->biodata->foto ? asset('storage/' . Auth::user()->biodata->foto) : 'https://ui-avatars.com/api/?name=' . Auth::user()->nama . '&background=random' }}"
+                alt="Foto Profil" class="fade-in" width="150">
+        </div>
+        <div class="mb-1">
+            <div class="info">
+                <span class="label">Foto Profil</span>
             </div>
+            @php
+                $biodataLengkap =
+                    Auth::user()->biodata &&
+                    Auth::user()->biodata->nama &&
+                    Auth::user()->biodata->nisn &&
+                    Auth::user()->biodata->alamat; // tambahkan validasi kolom lain sesuai kebutuhan
+            @endphp
 
-            <!-- Kontainer Profil Pengguna -->
-            <div class="container" id="profileContainer">
-                <div class="profile-photo">
-                    <img id="profileImage"
-                        src="{{ Auth::user()->biodata && Auth::user()->biodata->foto ? asset('storage/' . Auth::user()->biodata->foto) : asset('default-avatar.png') }}"
-                        alt="Foto Profil" class="fade-in" width="150">
-                </div>
-                <div class="mb-1">
-                    <div class="info">
-                        <span class="label">Foto Profil</span>
-                    </div>
-                    @php
-                        $biodataLengkap =
-                            Auth::user()->biodata &&
-                            Auth::user()->biodata->nama &&
-                            Auth::user()->biodata->nisn &&
-                            Auth::user()->biodata->alamat; // tambahkan validasi kolom lain sesuai kebutuhan
-                    @endphp
+            <form action="{{ route('foto.upload') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="upload-group">
+                    <input type="file" name="foto" accept="image/*" required
+                        {{ !$biodataLengkap ? 'disabled' : '' }}>
 
-                    <form action="{{ route('foto.upload') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="upload-group">
-                            <input type="file" name="foto" accept="image/*" required
-                                {{ !$biodataLengkap ? 'disabled' : '' }}>
-
-                            <script>
-                                const inputFoto = document.querySelector('input[name="foto"]');
-                                if (inputFoto) {
-                                    inputFoto.addEventListener('change', function(e) {
-                                        const file = e.target.files[0];
-                                        if (file) {
-                                            document.getElementById('profileImage').src = URL.createObjectURL(file);
-                                        }
-                                    });
+                    <script>
+                        const inputFoto = document.querySelector('input[name="foto"]');
+                        if (inputFoto) {
+                            inputFoto.addEventListener('change', function(e) {
+                                const file = e.target.files[0];
+                                if (file) {
+                                    document.getElementById('profileImage').src = URL.createObjectURL(file);
                                 }
-                            </script>
+                            });
+                        }
+                    </script>
 
-                            <button type="submit" {{ !$biodataLengkap ? 'disabled' : '' }}>Simpan</button>
-                        </div>
-                    </form>
-
+                    <button type="submit" {{ !$biodataLengkap ? 'disabled' : '' }}>Simpan</button>
                 </div>
-                @foreach ($biodata as $data)
-                    <div class="info">
-                        <span class="label">Nama:</span>
-                        <p>{{ $data->nama }}</p>
-                    </div>
-                    <div class="info">
-                        <span class="label">Email:</span>
-                        <p>{{ $data->email }}</p>
-                    </div>
-                    <div class="info">
-                        <span class="label">No HP:</span>
-                        <p>{{ $data->nohp }}</p>
-                    </div>
-                @endforeach
+            </form>
 
-                <br>
-                <div class="button-container">
-                    <label>Lengkapi Profil dan Biodata anda dibawah sini!</label>
-                    <button class="btn btn-secondary"
-                        onclick="window.location.href='{{ url('/biodata') }}'">Biodata</button>
-                    <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                        data-bs-whatever="@mdo">
-                        Ubah Kata Sandi
-                    </button>
+        </div>
+        @if (!empty($biodata) && $biodata->count())
+            @foreach ($biodata as $data)
+                <div class="info">
+                    <span class="label">Nama:</span>
+                    <p>{{ $data->nama }}</p>
                 </div>
+                <div class="info">
+                    <span class="label">Email:</span>
+                    <p>{{ $data->email }}</p>
+                </div>
+                <div class="info">
+                    <span class="label">No HP:</span>
+                    <p>{{ $data->nohp }}</p>
+                </div>
+            @endforeach
+        @else
+            <p class="text-muted">Isi biodata terlebih dahulu!!!</p>
+        @endif
 
-                @if (session('success'))
-                    <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center"
-                        role="alert">
-                        <div>{{ session('success') }}</div>
-                        <span class="ms-3 text-dark fw-bold" style="cursor: pointer;"
-                            onclick="closeAlert(this)">x</span>
-                    </div>
-                @endif
+        <br>
+        <div class="button-container">
+            <label>Lengkapi Profil dan Biodata anda dibawah sini👇🏻</label>
+            <button class="btn btn-secondary" onclick="window.location.href='{{ url('/biodata') }}'">Biodata</button>
+            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@mdo">
+                Ubah Kata Sandi
+            </button>
+        </div>
 
-                @if (session('error'))
-                    <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center"
-                        role="alert">
-                        <div>{{ session('error') }}</div>
-                        <span class="ms-3 text-dark fw-bold" style="cursor: pointer;"
-                            onclick="closeAlert(this)">x</span>
-                    </div>
-                @endif
-
-                <br><br><br><br><br><br>
-                <p><a href="javascript:void(0)" class="label" onclick="confirmLogout()">Logout</a></p>
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show d-flex justify-content-between align-items-center"
+                role="alert">
+                <div>{{ session('success') }}</div>
+                <span class="ms-3 text-dark fw-bold" style="cursor: pointer;" onclick="closeAlert(this)">x</span>
             </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show d-flex justify-content-between align-items-center"
+                role="alert">
+                <div>{{ session('error') }}</div>
+                <span class="ms-3 text-dark fw-bold" style="cursor: pointer;" onclick="closeAlert(this)">x</span>
+            </div>
+        @endif
+
+        <br><br><br><br><br><br>
+        <div class="logout-wrapper">
+            <p><a href="javascript:void(0)" class="link" onclick="confirmLogout()">Logout</a></p>
+        </div>
+    </div>
 
 
 
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="exampleModalLabel">Pengubahan Kata Sandi</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                aria-label="Close">x</button>
-                        </div>
-                        <div class="modal-body">
-                            <form action="{{ route('ubah.password') }}" method="POST">
-                                @csrf
-                                <div class="mb-3 position-relative">
-                                    <label for="current-password" class="form-label">Kata sandi saat ini</label>
-                                    <div class="input-group">
-                                        <input type="password" name="current_password" class="form-control"
-                                            id="current-password" required>
-                                        <button class="btn btn-outline-secondary" type="button"
-                                            onclick="togglePassword('current-password', this)">
-                                            <i class="fas fa-eye-slash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 position-relative">
-                                    <label for="new-password" class="form-label">Kata sandi baru</label>
-                                    <div class="input-group">
-                                        <input type="password" name="new_password" class="form-control"
-                                            id="new-password" oninput="checkPasswordMatch()" required>
-                                        <button class="btn btn-outline-secondary" type="button"
-                                            onclick="togglePassword('new-password', this)">
-                                            <i class="fas fa-eye-slash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div class="mb-3 position-relative">
-                                    <label for="confirm-password" class="form-label">Konfirmasi kata sandi
-                                        baru</label>
-                                    <div class="input-group">
-                                        <input type="password" name="confirm_password" class="form-control"
-                                            id="confirm-password" oninput="checkPasswordMatch()" required>
-                                        <button class="btn btn-outline-secondary" type="button"
-                                            onclick="togglePassword('confirm-password', this)">
-                                            <i class="fas fa-eye-slash"></i>
-                                        </button>
-                                    </div>
-                                    <div id="password-error" class="form-text text-danger d-none">
-                                        Kata sandi tidak cocok!
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary">Ubah Kata Sandi</button>
-                            </form>
-                        </div>
-                    </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Pengubahan Kata Sandi</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">x</button>
                 </div>
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-                <link rel="stylesheet"
-                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-                <script>
-                    function closeAlert(el) {
-                        const alert = el.parentElement;
-                        alert.classList.remove('show');
-                        setTimeout(() => {
-                            alert.classList.add('d-none');
-                        }, 300); // waktu fade sesuai bootstrap
-                    }
-                </script>
-                <script>
-                    function togglePassword(id, el) {
-                        const input = document.getElementById(id);
-                        const icon = el.querySelector('i');
+                <div class="modal-body">
+                    <form action="{{ route('ubah.password') }}" method="POST">
+                        @csrf
+                        <div class="mb-3 position-relative">
+                            <label for="current-password" class="form-label">Kata sandi saat ini</label>
+                            <div class="input-group">
+                                <input type="password" name="current_password" class="form-control"
+                                    id="current-password" required>
+                                <button class="btn btn-outline-secondary" type="button"
+                                    onclick="togglePassword('current-password', this)">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
+                        </div>
 
-                        if (input.type === 'password') {
-                            input.type = 'text';
-                            icon.classList.remove('fa-eye-slash');
-                            icon.classList.add('fa-eye');
-                        } else {
-                            input.type = 'password';
-                            icon.classList.remove('fa-eye');
-                            icon.classList.add('fa-eye-slash');
-                        }
-                    }
-                </script>
-                <script>
-                    function togglePassword(inputId, btn) {
-                        const input = document.getElementById(inputId);
-                        const icon = btn.querySelector('i');
-                        if (input.type === "password") {
-                            input.type = "text";
-                            icon.classList.remove('fa-eye-slash');
-                            icon.classList.add('fa-eye');
-                        } else {
-                            input.type = "password";
-                            icon.classList.remove('fa-eye');
-                            icon.classList.add('fa-eye-slash');
-                        }
-                    }
+                        <div class="mb-3 position-relative">
+                            <label for="new-password" class="form-label">Kata sandi baru</label>
+                            <div class="input-group">
+                                <input type="password" name="new_password" class="form-control" id="new-password"
+                                    oninput="checkPasswordMatch()" required>
+                                <button class="btn btn-outline-secondary" type="button"
+                                    onclick="togglePassword('new-password', this)">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
+                        </div>
 
-                    function checkPasswordMatch() {
-                        const newPassword = document.getElementById('new-password').value;
-                        const confirmPassword = document.getElementById('confirm-password').value;
-                        const error = document.getElementById('password-error');
+                        <div class="mb-3 position-relative">
+                            <label for="confirm-password" class="form-label">Konfirmasi kata sandi baru</label>
+                            <div class="input-group">
+                                <input type="password" name="confirm_password" class="form-control"
+                                    id="confirm-password" oninput="checkPasswordMatch()" required>
+                                <button class="btn btn-outline-secondary" type="button"
+                                    onclick="togglePassword('confirm-password', this)">
+                                    <i class="fas fa-eye-slash"></i>
+                                </button>
+                            </div>
+                            <div id="password-error" class="form-text text-danger d-none">
+                                Kata sandi tidak cocok!
+                            </div>
+                        </div>
 
-                        if (confirmPassword && newPassword !== confirmPassword) {
-                            error.classList.remove('d-none');
-                        } else {
-                            error.classList.add('d-none');
-                        }
-                    }
-                </script>
-                <script>
-                    // Menu toggle functionality
-                    const menuToggle = document.getElementById('menuToggle');
-                    const sidebar = document.getElementById('sidebar');
-                    const closeSidebar = document.getElementById('closeSidebar');
-                    const overlay = document.getElementById('overlay');
+                        <button type="submit" class="btn btn-primary">Ubah Kata Sandi</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+        <script>
+            function closeAlert(el) {
+                const alert = el.parentElement;
+                alert.classList.remove('show');
+                setTimeout(() => {
+                    alert.classList.add('d-none');
+                }, 300); // waktu fade sesuai bootstrap
+            }
+        </script>
+        <script>
+            function togglePassword(id, el) {
+                const input = document.getElementById(id);
+                const icon = el.querySelector('i');
 
-                    menuToggle.addEventListener('click', function() {
-                        sidebar.classList.add('active');
-                        overlay.classList.add('active');
-                    });
+                if (input.type === 'password') {
+                    input.type = 'text';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                } else {
+                    input.type = 'password';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+            }
+        </script>
+        <script>
+            function togglePassword(inputId, btn) {
+                const input = document.getElementById(inputId);
+                const icon = btn.querySelector('i');
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                } else {
+                    input.type = "password";
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                }
+            }
 
-                    closeSidebar.addEventListener('click', function() {
-                        sidebar.classList.remove('active');
-                        overlay.classList.remove('active');
-                    });
+            function checkPasswordMatch() {
+                const newPassword = document.getElementById('new-password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                const error = document.getElementById('password-error');
 
-                    overlay.addEventListener('click', function() {
-                        sidebar.classList.remove('active');
-                        overlay.classList.remove('active');
-                    });
+                if (confirmPassword && newPassword !== confirmPassword) {
+                    error.classList.remove('d-none');
+                } else {
+                    error.classList.add('d-none');
+                }
+            }
+        </script>
+        <script>
+            // Menu toggle functionality
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const closeSidebar = document.getElementById('closeSidebar');
+            const overlay = document.getElementById('overlay');
 
-                    function confirmLogout() {
-                        let confirmAction = confirm("Apakah Anda yakin ingin logout?");
-                        if (confirmAction) {
-                            window.location.href =
-                                "{{ url('/index') }}"; // Ganti dengan halaman atau logika logout sesuai kebutuhan
-                        }
-                        return false; // Mencegah link langsung berpindah jika pengguna membatalkan
-                    }
-                </script>
-        </body>
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.add('active');
+                overlay.classList.add('active');
+            });
+
+            closeSidebar.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            overlay.addEventListener('click', function() {
+                sidebar.classList.remove('active');
+                overlay.classList.remove('active');
+            });
+
+            function confirmLogout() {
+                let confirmAction = confirm("Apakah Anda yakin ingin logout?");
+                if (confirmAction) {
+                    window.location.href =
+                        "{{ url('/index') }}"; // Ganti dengan halaman atau logika logout sesuai kebutuhan
+                }
+                return false; // Mencegah link langsung berpindah jika pengguna membatalkan
+            }
+        </script>
+</body>
 
 </html>
