@@ -22,4 +22,9 @@ class JadwalKerja extends Model
     {
         return $this->belongsTo(Pengguna::class, 'pengguna_id');
     }
+
+    public function perusahaan()
+    {
+        return $this->belongsTo(Perusahaan::class, 'perusahaan_id');
+    }
 }
