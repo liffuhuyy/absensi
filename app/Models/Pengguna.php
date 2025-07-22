@@ -23,7 +23,6 @@ class Pengguna extends Authenticatable
         'remember_token',
     ];
 
-
     public function isUser()
     {
         return $this->role === 'user';
@@ -38,13 +37,11 @@ class Pengguna extends Authenticatable
     {
         return $this->role === 'perusahaan';
     }
-
-
-
     public function biodata()
     {
         return $this->hasOne(Biodata::class, 'pengguna_id');
     }
+
     public function jadwalKerja()
     {
         return $this->hasMany(JadwalKerja::class, 'pengguna_id', 'pengguna_id');
@@ -53,6 +50,5 @@ class Pengguna extends Authenticatable
     public function pengajuan()
     {
         return $this->hasOne(Pengajuan::class, 'pengguna_id');
-        // Ganti ke ->hasMany(...) jika satu pengguna bisa punya banyak pengajuan
     }
 }

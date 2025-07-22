@@ -27,45 +27,6 @@ class AuthController extends Controller
         return view('absensi.login');
     }
 
-
-    public function riwayatabsen()
-    {
-        if (view()->exists('absensi.riwayatabsen')) {
-            return view('absensi.riwayatabsen');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-
-    public function resetkatasandi()
-    {
-        if (view()->exists('absensi.resetkatasandi')) {
-            return view('absensi.resetkatasandi');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-
-    public function lupakatasandi()
-    {
-        if (view()->exists('absensi.lupakatasandi')) {
-            return view('absensi.lupakatasandi');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function beranda()
-    {
-        if (view()->exists('absensi.beranda')) {
-            return view('absensi.beranda');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
     public function index()
     {
         if (view()->exists('absensi.index')) {
@@ -92,30 +53,6 @@ class AuthController extends Controller
             return "User belum login!";
         }
     }
-
-
-    //ADMIN
-    public function dashboardmin()
-    {
-        if (view()->exists('admin.dashboardmin')) {
-            return view('admin.dashboardmin');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-
-
-    //PERUSAHAAN
-    public function dashboardpt()
-    {
-        if (view()->exists('perusahaan.dashboardpt')) {
-            return view('perusahaan.dashboardpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
 
 
     // LOGIN DAN DAFTAR
@@ -150,5 +87,65 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect()->route('login');
+    }
+
+
+
+
+    // RESET PASSWORD
+    // Form input email
+    public function showFormEmail()
+    {
+        return view('absensi.lupakatasandi');
+    }
+
+    // Cek email yang dimasukkan
+    public function cekEmail(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+        ]);
+
+        $user = Pengguna::where('email', $request->email)->first();
+
+        if (!$user) {
+            return back()->withErrors(['email' => 'Email tidak ditemukan.']);
+        }
+
+        session(['reset_email' => $request->email]);
+
+        return redirect()->route('resetkatasandi');
+    }
+
+    // Tampilkan form reset password
+    public function showFormReset()
+    {
+        if (!session()->has('reset_email')) {
+            return redirect()->route('lupakatasandi')->withErrors(['email' => 'Silakan masukkan email terlebih dahulu.']);
+        }
+
+        return view('absensi.resetkatasandi');
+    }
+
+    // ✅ Proses ubah password (SUDAH DIBENARKAN)
+    public function prosesReset(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $email = session('reset_email');
+        $user = Pengguna::where('email', $email)->first();
+
+        if (!$user) {
+            return redirect()->route('lupakatasandi')->withErrors(['email' => 'Email tidak valid.']);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        session()->forget('reset_email');
+
+        return redirect()->route('login')->with('success', 'Password berhasil diubah. Silakan login kembali.');
     }
 }

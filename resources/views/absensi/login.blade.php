@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login Form</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -202,38 +203,6 @@
                 <label>Password</label>
             </div>
 
-            <br>
-            <div class="field">
-                <input type="submit" id="loginButton" value="Login">
-            </div>
-
-            <div class="content">
-                <div class="pass-link">
-                    <a href="{{ url('/lupakatasandi') }}">Lupa kata sandi?</a>
-                </div>
-            </div>
-        </form>
-        @if ($errors->any())
-            <div style="color: red; text-align: center; margin-top: 10px;">
-                @foreach ($errors->all() as $error)
-                    <p>{{ $error }}</p>
-                @endforeach
-            </div>
-        @endif
-
-        <form action="{{ url('/login') }}" method="POST"> <!-- Gunakan POST -->
-            @csrf <!-- Penting untuk hindari error 419 -->
-
-            <div class="field">
-                <input type="text" name="email" id="email" required>
-                <label>Email</label>
-            </div>
-
-            <div class="field">
-                <input type="password" name="password" id="password" required>
-                <label>Password</label>
-            </div>
-
             <div class="field">
                 <input type="submit" id="loginButton" value="Masuk">
             </div>
@@ -250,6 +219,8 @@
                 </div>
             </div>
         </form>
+
+
         <!-- Script untuk mengatur fungsi toggle password dan tampilan ikon -->
         <script>
             function validateFields() {

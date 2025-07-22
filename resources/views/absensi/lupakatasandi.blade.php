@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,6 +15,7 @@
             justify-content: center;
             align-items: center;
         }
+
         .card {
             background-color: white;
             border-radius: 10px;
@@ -22,6 +24,7 @@
             width: 300px;
             text-align: center;
         }
+
         .icon-container {
             background-color: #e6e6e6;
             width: 60px;
@@ -32,20 +35,24 @@
             align-items: center;
             margin: 0 auto 20px;
         }
+
         .title {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .subtitle {
             font-size: 14px;
             color: #666;
             margin-bottom: 20px;
         }
+
         .form-group {
             margin-bottom: 20px;
             text-align: left;
         }
+
         .form-label {
             display: block;
             font-size: 14px;
@@ -53,6 +60,7 @@
             color: #333;
             font-weight: 500;
         }
+
         .form-input {
             width: 100%;
             padding: 10px;
@@ -61,6 +69,7 @@
             font-size: 14px;
             box-sizing: border-box;
         }
+
         .btn-primary {
             background-color: #0f172a;
             color: white;
@@ -71,6 +80,7 @@
             cursor: pointer;
             width: 100%;
         }
+
         .btn-secondary {
             background-color: transparent;
             color: #333;
@@ -81,50 +91,51 @@
             width: 100%;
             margin-top: 10px;
         }
+
         .btn-primary:hover {
             background-color: #1e293b;
         }
+
+        .error {
+            color: red;
+            font-size: 12px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
     </style>
 </head>
+
 <body>
     <div class="card">
         <div class="icon-container">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
                 <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
         </div>
         <h2 class="title">Lupa kata sandi?</h2>
-        <p class="subtitle">Masukan email anda untuk reset </p>
-        
-        <form id="forgotPasswordForm">
+        <p class="subtitle">Masukan email anda untuk reset</p>
+
+        @if ($errors->any())
+            <div class="error">
+                @foreach ($errors->all() as $error)
+                    <div>{{ $error }}</div>
+                @endforeach
+            </div>
+        @endif
+
+        <form action="{{ route('lupakatasandi.cek') }}" method="POST">
+            @csrf
             <div class="form-group">
                 <label class="form-label">E-mail</label>
-                <input type="email" class="form-input" id="email" placeholder="Masukan email anda" required>
+                <input type="email" name="email" class="form-input" placeholder="Masukan email anda" required>
             </div>
-            
+
             <button type="submit" class="btn-primary">Konfirmasi</button>
-            <a href="{{ route('login') }}">Kembali ke Login</a>
+            <a href="{{ route('login') }}">Kembali</a>
         </form>
     </div>
-
-    <script>
-        document.getElementById('forgotPasswordForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            
-            // Store email in localStorage to simulate session
-            localStorage.setItem('resetEmail', email);
-            
-            // Redirect to the reset password page
-            window.location.href = "{{ url('/resetkatasandi') }}";
-        });
-        
-       
-        
-        document.getElementById('backButton').addEventListener('click', function() {
-            window.location.href = 'login.html';
-        });
-    </script>
 </body>
+
 </html>
