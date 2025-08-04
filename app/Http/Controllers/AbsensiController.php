@@ -22,6 +22,7 @@ class AbsensiController extends Controller
             return "View tidak ditemukan.";
         }
     }
+
     // Absen masuk
     public function absenMasuk(Request $request)
     {
@@ -117,7 +118,6 @@ class AbsensiController extends Controller
 
         return response()->json(['message' => 'Absen pulang berhasil'], 200);
     }
-
 
     public function pulangAwal(Request $request)
     {
@@ -241,7 +241,7 @@ class AbsensiController extends Controller
 
         if (!$pengajuan) {
             return response()->json(['error' => 'Pengajuan tidak ditemukan'], 404);
-        }
+        } 
 
         // Ambil jadwal kerja berdasarkan perusahaan_id dari pengajuan
         $jadwal = JadwalKerja::where('pengguna_id', $pengajuan->perusahaan_id)->first();

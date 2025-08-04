@@ -56,6 +56,12 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+                        <a href="{{ url('/datapembimbing') }}" class='sidebar-link'>
+                            <i class="bi bi-journal-check"></i>
+                            <span>Data Pembimbing</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
                         <a href="{{ url('/notif') }}" class='sidebar-link'>
                             <i class="bi bi-bell"></i>
                             <span>Notifikasi</span>

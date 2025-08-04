@@ -291,6 +291,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     @include('siswa.layout.sidebar')
     <div class="container">
         <h1>Form Pengajuan Magang</h1>
@@ -302,6 +303,17 @@
                     <label for="nama">Nama Lengkap</label>
                     <input type="text" id="nama" name="nama" required>
                 </div>
+=======
+ <div class="container">
+<h1>Form Pengajuan Magang</h1>
+<div class="form-group">
+<form method="POST" action="{{ url('/pengajuan/tambah') }}">
+    @csrf
+    <div class="form-group">
+        <label for="nama">Nama Lengkap</label>
+        <input type="text" id="nama" name="nama" required>
+    </div>
+>>>>>>> 913a91d1e1e322536d058017e05e56f3692897c6
 
                 <div class="form-group">
                     <label for="jurusan">Jurusan</label>
@@ -330,6 +342,7 @@
                     <input type="date" id="tanggal_keluar" name="tanggal_keluar" required>
                 </div>
 
+<<<<<<< HEAD
                 <div class="form-group">
                     <label for="perusahaan">Perusahaan:</label>
                     <select name="perusahaan_id" id="perusahaan" required>
@@ -339,6 +352,12 @@
                         @endforeach
                     </select>
                 </div>
+=======
+    <div class="form-group">
+        <label for="perusahaan">Perusahaan:</label>
+        <input type="text" name="perusahaan" id="perusahaan" required>
+    </div>
+>>>>>>> 913a91d1e1e322536d058017e05e56f3692897c6
 
                 <div class="button-container">
                     <button type="submit" class="btn btn-submit">Ajukan Permohonan Magang</button>

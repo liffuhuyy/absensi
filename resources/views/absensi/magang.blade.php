@@ -445,12 +445,31 @@
             <table border="1">
                 <thead>
                     <tr>
+<<<<<<< HEAD
                         <th>Nama Siswa</th>
                         <th>Jurusan</th>
                         <th>Tanggal Masuk</th>
                         <th>Tanggal Keluar</th>
                         <th>Perusahaan</th>
                         <th>status</th>
+=======
+                        <td>{{ $p->nama }}</td>
+                        <td>{{ $p->jurusan }}</td>
+                        <td>{{ $p->tanggal_masuk }}</td>
+                        <td>{{ $p->tanggal_keluar ?? '-' }}</td>
+                        <td>{{ $p->perusahaan }}</td>
+                        <td>
+                        <div class="text-dark bg-{{ $p->status == 'Ditolak' ? 'danger' : ($p->status == 'Menunggu' ? 'warning' : 'success') }}">
+                      <div class="row">
+                        <div class="col">
+                          <div class="text-white text-center p-2">
+                              {{ $p->status }}
+                          </div>
+                       </div>
+                     </div>
+                </div>
+                      </td>
+>>>>>>> 913a91d1e1e322536d058017e05e56f3692897c6
                     </tr>
                 </thead>
                 <tbody>

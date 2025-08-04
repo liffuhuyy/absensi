@@ -304,6 +304,7 @@
                             </table>
                     </div>
 
+<<<<<<< HEAD
                     <!-- Modal Edit -->
                     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -318,6 +319,41 @@
                                     </div>
                                     <div class="modal-body">
                                         <input type="hidden" id="jadwal_id" name="id">
+=======
+<table class="table">
+    <thead>
+        <tr>
+            <th>Jam Masuk</th>
+            <th>Jam Keluar</th>
+            <th>Hari Kerja</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th>Aksi</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if ($jadwal)
+            <tr>
+                <td>{{ $jadwal->jam_masuk }}</td>
+                <td>{{ $jadwal->jam_keluar }}</td>
+                <td>{{ implode(', ', json_decode($jadwal->hari_kerja)) }}</td>
+                <td>{{ $jadwal->latitude }}</td>
+                <td>{{ $jadwal->longitude }}</td>
+  <td>
+    <div class="action-buttons">
+        <!-- Tombol Edit -->
+<button class="btn btn-warning btn-sm btn-edit" data-id="{{ $jadwal->id }}">
+  Edit
+</button>
+        <!-- Form Hapus -->
+        <form action="{{ route('jadwal.destroy', $jadwal->id) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
+        </form>
+    </div>
+</td>
+>>>>>>> 913a91d1e1e322536d058017e05e56f3692897c6
 
                                         <div class="form-group">
                                             <label for="jam_masuk">Jam Masuk</label>

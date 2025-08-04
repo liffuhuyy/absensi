@@ -13,8 +13,8 @@ return new class extends Migration
             $table->string('nama');// Nama
             $table->string('jurusan'); // Jurusan
             $table->date('tanggal_masuk'); // Tanggal masuk
-            $table->date('tanggal_keluar')->nullable(); // Tanggal keluar (bisa null)            
-            $table->unsignedBigInteger('perusahaan_id');
+            $table->date('tanggal_keluar')->nullable(); // Tanggal keluar (bisa null)
+            $table->string('perusahaan');
             $table->string('status')->default('Menunggu');
             $table->timestamps();
 

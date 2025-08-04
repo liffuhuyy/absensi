@@ -184,6 +184,25 @@
                     console.log("Tipe data:", typeof data);
                 });
 
+                // Pencarian berdasarkan teks input
+                $('#searchBox').on('input', function() {
+                    let query = $(this).val().toLowerCase();
+                    $('#dataPengguna tr').filter(function() {
+                        $(this).toggle($(this).text().toLowerCase().indexOf(query) > -1);
+                    });
+                });
+
+                // Pencarian berdasarkan dropdown role
+                $('#roleFilter').on('change', function() {
+                    let selectedRole = $(this).val().toLowerCase();
+                    $('#dataPengguna tr').filter(function() {
+                        if (selectedRole === 'all') {
+                            $(this).show(); // Tampilkan semua jika pilih "All"
+                        } else {
+                            $(this).toggle($(this).find('td.role').text().toLowerCase() === selectedRole);
+                        }
+                    });
+                });
             }
             // Panggil fungsi saat halaman dimuat
             loadData();

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -145,16 +144,8 @@
         }
 
         @keyframes button-loading-spinner {
-            from {
-                transform: rotate(0turn);
-            }
-<<<<<<< HEAD
-=======
-
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
-            to {
-                transform: rotate(1turn);
-            }
+            from { transform: rotate(0turn); }
+            to { transform: rotate(1turn); }
         }
 
         .change-password {
@@ -187,18 +178,8 @@
         }
 
         @keyframes fadeIn {
-<<<<<<< HEAD
             from { opacity: 0; }
             to { opacity: 1; }
-=======
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
         }
 
         .modal img {
@@ -209,18 +190,8 @@
         }
 
         @keyframes zoomIn {
-<<<<<<< HEAD
             from { transform: scale(0.8); }
             to { transform: scale(1); }
-=======
-            from {
-                transform: scale(0.8);
-            }
-
-            to {
-                transform: scale(1);
-            }
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
         }
 
         /* Toast notification */
@@ -241,9 +212,25 @@
         .toast.show {
             opacity: 1;
         }
+
+        /* Ripple effect */
+        .ripple-effect {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.7);
+            transform: scale(0);
+            animation: ripple 0.6s linear;
+            pointer-events: none;
+        }
+
+        @keyframes ripple {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
     </style>
 </head>
-
 <body>
     <div class="container">
         <div class="profile-photo" onclick="showModal()">
@@ -262,11 +249,7 @@
                 <input type="email" id="email" placeholder="Email" required
                     pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="Masukkan email yang valid">
             </div>
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
             <button type="submit" class="submit-btn" id="submitBtn">Simpan Perubahan</button>
         </form>
 
@@ -285,17 +268,6 @@
         // Load saved data from localStorage when page loads
         document.addEventListener('DOMContentLoaded', function() {
             const savedData = JSON.parse(localStorage.getItem('profileData')) || {};
-<<<<<<< HEAD
-            
-            if (savedData.profileImage) {
-                document.getElementById('profileImage').src = savedData.profileImage;
-            }
-            
-            if (savedData.nama) {
-                document.getElementById('nama').value = savedData.nama;
-            }
-            
-=======
 
             if (savedData.profileImage) {
                 document.getElementById('profileImage').src = savedData.profileImage;
@@ -305,7 +277,6 @@
                 document.getElementById('nama').value = savedData.nama;
             }
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
             if (savedData.email) {
                 document.getElementById('email').value = savedData.email;
             }
@@ -320,39 +291,23 @@
                     showToast('Hanya file gambar yang diperbolehkan');
                     return;
                 }
-<<<<<<< HEAD
-                
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
                 // Validate file size (max 2MB)
                 if (file.size > 2 * 1024 * 1024) {
                     showToast('Ukuran file terlalu besar. Maksimal 2MB');
                     return;
                 }
-<<<<<<< HEAD
-                
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const profileImage = document.getElementById('profileImage');
                     profileImage.src = e.target.result;
-<<<<<<< HEAD
-                    
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
                     // Save to localStorage
                     const currentData = JSON.parse(localStorage.getItem('profileData')) || {};
                     currentData.profileImage = e.target.result;
                     localStorage.setItem('profileData', JSON.stringify(currentData));
-<<<<<<< HEAD
-                    
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
                     showToast('Foto profil berhasil diubah');
                 };
                 reader.readAsDataURL(file);
@@ -362,27 +317,19 @@
         // Handle form submission
         document.getElementById('editProfileForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            
+
             if (this.checkValidity()) {
                 const submitBtn = document.getElementById('submitBtn');
                 submitBtn.classList.add('loading');
                 submitBtn.disabled = true;
-<<<<<<< HEAD
-                
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
                 // Simulate API call delay
                 setTimeout(() => {
                     // Get form values
                     const nama = document.getElementById('nama').value;
                     const email = document.getElementById('email').value;
                     const profileImage = document.getElementById('profileImage').src;
-<<<<<<< HEAD
-                    
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
                     // Save to localStorage
                     const profileData = {
                         nama: nama,
@@ -390,25 +337,12 @@
                         profileImage: profileImage
                     };
                     localStorage.setItem('profileData', JSON.stringify(profileData));
-<<<<<<< HEAD
-                    
-                    // Show success message
-                    showToast('Perubahan berhasil disimpan');
-                    
-                    submitBtn.classList.remove('loading');
-                    submitBtn.disabled = false;
-                    
-=======
 
                     // Show success message
                     showToast('Perubahan berhasil disimpan');
 
                     submitBtn.classList.remove('loading');
                     submitBtn.disabled = false;
-
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
-                    // Optional: Redirect after saving
-                    // window.location.href = "profil.html";
                 }, 1000);
             } else {
                 this.reportValidity();
@@ -419,11 +353,7 @@
         function showModal() {
             const profileImage = document.getElementById('profileImage').src;
             if (profileImage.includes('default-avatar.png')) return;
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
             document.getElementById('modalImage').src = profileImage;
             document.getElementById('modal').style.display = 'flex';
             document.body.style.overflow = 'hidden';
@@ -440,11 +370,7 @@
             const toast = document.getElementById('toast');
             toast.textContent = message;
             toast.classList.add('show');
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
             setTimeout(() => {
                 toast.classList.remove('show');
             }, 3000);
@@ -463,59 +389,19 @@
                 const rect = this.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-<<<<<<< HEAD
-                
-=======
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
                 const ripple = document.createElement('span');
                 ripple.style.left = `${x}px`;
                 ripple.style.top = `${y}px`;
                 ripple.classList.add('ripple-effect');
-<<<<<<< HEAD
-                
-                this.appendChild(ripple);
-                
-=======
 
                 this.appendChild(ripple);
 
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
                 setTimeout(() => {
                     ripple.remove();
                 }, 600);
             });
         });
-
-        // Add ripple effect styles dynamically
-        const style = document.createElement('style');
-        style.textContent = `
-            .ripple-effect {
-                position: absolute;
-                border-radius: 50%;
-                background-color: rgba(255, 255, 255, 0.7);
-                transform: scale(0);
-                animation: ripple 0.6s linear;
-                pointer-events: none;
-            }
-<<<<<<< HEAD
-            
-=======
-
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
     </script>
 </body>
-<<<<<<< HEAD
 </html>
-=======
-
-</html>
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79

@@ -324,12 +324,9 @@
             margin-top: 20px;
         }
 
-<<<<<<< HEAD
         table th, table td {
-=======
         table th,
         table td {
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
             padding: 12px 15px;
             text-align: left;
             border-bottom: 1px solid #ddd;
@@ -374,12 +371,11 @@
             color: #0a192f;
         }
 
-<<<<<<< HEAD
         .stat-hadir .value { color:  #0a192f; }
         .stat-terlambat .value { color:  #0a192f; }
         .stat-izin .value { color:  #0a192f; }
         .stat-sakit .value { color:  #0a192f; }
-=======
+
         .stat-hadir .value {
             color: #0a192f;
         }
@@ -395,7 +391,6 @@
         .stat-sakit .value {
             color: #0a192f;
         }
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
         .status-badge {
             display: inline-block;
@@ -405,13 +400,10 @@
             font-weight: bold;
             color: white;
         }
-
-<<<<<<< HEAD
         .status-hadir { background-color: #0a192f; }
         .status-terlambat { background-color:  #0a192f; }
         .status-izin { background-color:  #0a192f; }
         .status-sakit { background-color: #0a192f; }
-=======
         .status-hadir {
             background-color: #0a192f;
         }
@@ -672,7 +664,7 @@
             <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
         </div>
     </div>
-
+<form method="POST" action="{{ url('/absen/masuk') }}">
 <form method="POST" action="{{ url('/absensi') }}">
 
 
@@ -684,11 +676,14 @@
             <h1>Sistem Presensi Siswa</h1>
         </header>
         <div class="card">
+
         <!-- Tombol untuk kembali ke halaman sebelumnya -->
 <a href="javascript:history.back()" class="btn btn-primary">Kembali</a>
 <a href="{{ url('/dashboard') }}" class="btn btn-primary">Kembali ke Dashboard</a>
+        <div class="card">
 
         <div class="card">
+
             <div class="tanggal" id="tanggal"></div>
             <div class="jam-digital" id="jam"></div>
          <div id="alertBox" class="alert"></div>
@@ -725,11 +720,33 @@
     <div class="stat-item stat-sakit">
         <h3>Sakit</h3>
         <div class="value">{{ $data['sakit'] ?? 0 }}</div>
+    </div>
+</div>
+<tbody>
+    @if(isset($absensiData) && count($absensiData) > 0)
+        @foreach($absensiData as $absen)
+            <tr>
+                <td>{{ $absen->tanggal }}</td>
+                <td>{{ $absen->status }}</td>
+                <td>{{ $absen->jam_masuk ?? '-' }}</td>
+                <td>{{ $absen->jam_keluar ?? '-' }}</td>
+                <td>{{ $absen->keterangan ?? '-' }}</td>
+            </tr>
+        @endforeach
+    @else
+        <tr>
+            <td style="text-align: center">Belum ada data presensi bulan ini.</td>
+        </tr>
+    @endif
+</tbody>
+   </div>
+      </div>
+    </form>
 <div class="container">
     <header>
         <h1>Sistem Presensi Siswa</h1>
     </header>
-=======
+
         <!-- Modal Izin -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -760,7 +777,6 @@
                 </div>
             </div>
         </div>
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
         <div id="absenContainer" class="container p-3">
             <h2 class="card-title text-center">Riwayat Absensi</h2>
@@ -893,6 +909,74 @@
         </div>
     </div>
 =======
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
+
+    <!-- Modal Izin / Sakit -->
+<form method="POST" action="{{ url('/izin') }}">
+    @csrf
+    <div id="modalIzin" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Form Izin / Sakit</h2>
+            <form id="formIzin">
+                <div class="form-group">
+                    <label for="jenis_izin">Jenis Izin</label>
+                    <select name="jenis_izin" id="jenis_izin" class="form-control" required>
+                        <option value="Izin">Izin</option>
+                        <option value="Sakit">Sakit</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="alasan_izin">Alasan</label>
+                    <textarea name="alasan_izin" id="alasan_izin" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Kirim</button>
+            </form>
+        </div>
+>>>>>>> d1d392254c622b58447032346056bcba254f97de
+    </div>
+</form>
+
+    <!-- Modal Pulang Lebih Awal -->
+<form method="POST" action="{{ url('/absensi/pulang-cepat') }}">
+    @csrf
+    <div id="modalPulangAwal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Pulang Lebih Awal</h2>
+            <p>Anda pulang sebelum jam 17:00. Silakan berikan alasan:</p>
+            <form id="formPulangAwal">
+                <div class="form-group">
+                    <label for="alasan_pulang_cepat">Alasan Pulang Lebih Awal</label>
+                    <textarea name="alasan_pulang_cepat" id="alasan_pulang_cepat" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Konfirmasi</button>
+            </form>
+        </div>
+    </div>
+</form>
+
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const overlay = document.getElementById('overlay');
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+        overlay.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+<<<<<<< HEAD
+
+>>>>>>> 913a91d1e1e322536d058017e05e56f3692897c6
+=======
         </div>
         <div id="modalPulangAwal">
             <input type="text" id="alasanPulangAwal" placeholder="Alasan pulang awal">
@@ -973,6 +1057,7 @@ $(document).ready(function () {
                 kirimAbsen("/absen/masuk", position, "masuk", kodeKota);
             });
         });
+<<<<<<< HEAD
 
         // Event Absen Pulang
         $("#btnPulang").click(function () {
@@ -1241,6 +1326,316 @@ async function getKodeKota(position) {
                 lon: lon
             }
         });
+=======
+        function confirmLogout() {
+            let confirmAction = confirm("Apakah Anda yakin ingin logout?");
+            if (confirmAction) {
+                window.location.href = "{{ url('/index') }}";
+            }
+        }
+
+
+        // Data presensi (simulasi penyimpanan data)
+        let dataPresensi = JSON.parse(localStorage.getItem('dataPresensi')) || [];
+        // Fungsi untuk mendapatkan nama bulan dalam bahasa Indonesia
+        function getNamaBulan(bulan) {
+            const namaBulan = [
+                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
+            ];
+            return namaBulan[bulan];
+        }
+
+        // Fungsi untuk mendapatkan tanggal dan jadwal
+        function formatTanggal(date) {
+            const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+            return `${hari[date.getDay()]}, ${date.getDate()} ${getNamaBulan(date.getMonth())} ${date.getFullYear()}`;
+        }
+        function formatJam(date) {
+            return date.toTimeString().substring(0, 8);
+        }
+        function formatJamPendek(timeStr) {
+            if (!timeStr) return '-';
+            return timeStr.substring(0, 5);
+        }
+        // Fungsi untuk menampilkan jam dan tanggal
+        function updateJam() {
+            const now = new Date();
+            document.getElementById('jam').textContent = formatJam(now);
+            document.getElementById('tanggal').textContent = formatTanggal(now);
+            document.getElementById('bulanTahun').textContent = `${getNamaBulan(now.getMonth())} ${now.getFullYear()}`;
+
+            const jamMenit = now.getHours() * 60 + now.getMinutes();
+            const btnMasuk = document.getElementById('btnMasuk');
+
+
+            // Tombol absen masuk hanya aktif mulai jam 09:00
+            if (!cekSudahAbsenMasuk()) {
+                if (jamMenit < 9 * 60) {
+                    btnMasuk.disabled = true;
+                    btnMasuk.title = "Absen masuk dimulai pukul 09:00";
+                } else {
+                    btnMasuk.disabled = false;
+                    btnMasuk.title = "";
+                }
+            } else {
+                btnMasuk.disabled = true;
+                btnMasuk.title = "Anda sudah absen masuk hari ini";
+            }
+        }
+
+        // Update jam setiap detik
+        setInterval(updateJam, 1000);
+        updateJam(); // Panggil sekali untuk inisialisasi
+
+        // Tampilkan pesan alert
+        function showAlert(message, type = 'success') {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.className = 'alert alert-' + type;
+            alertBox.textContent = message;
+            alertBox.style.display = 'block';
+
+            // Sembunyikan pesan setelah 5 detik
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+
+        // Fungsi untuk menambahkan data presensi
+        function tambahDataPresensi(data) {
+            dataPresensi.push(data);
+            localStorage.setItem('dataPresensi', JSON.stringify(dataPresensi));
+            updateTabelPresensi();
+        }
+
+        // Fungsi untuk memperbarui data presensi yang sudah ada
+        function updateDataPresensi(tanggal, data) {
+            const index = dataPresensi.findIndex(item => item.tanggal === tanggal);
+            if (index !== -1) {
+                dataPresensi[index] = {...dataPresensi[index], ...data};
+                localStorage.setItem('dataPresensi', JSON.stringify(dataPresensi));
+                updateTabelPresensi();
+            }
+        }
+
+
+        // Perbarui tabel presensi dan statistik
+        function updateTabelPresensi() {
+            const tabelBody = document.getElementById('tabelPresensi');
+            const bulanIni = new Date().getMonth();
+
+            // Filter data bulan ini
+            const dataPresensiFiltered = dataPresensi.filter(item => {
+                const itemDate = new Date(item.tanggal);
+                return itemDate.getMonth() === bulanIni;
+            }).sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal)); // Sort descending
+
+            // Bersihkan tabel
+            tabelBody.innerHTML = '';
+
+            // Jika tidak ada data
+            if (dataPresensiFiltered.length === 0) {
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="5" style="text-align: center;">Belum ada data presensi bulan ini.</td>';
+                tabelBody.appendChild(row);
+            } else {
+                // Tampilkan data
+                dataPresensiFiltered.forEach(item => {
+                    const row = document.createElement('tr');
+
+                    // Format tanggal DD-MM-YYYY
+                    const itemDate = new Date(item.tanggal);
+                    const formattedDate = `${itemDate.getDate().toString().padStart(2, '0')}-${(itemDate.getMonth() + 1).toString().padStart(2, '0')}-${itemDate.getFullYear()}`;
+
+                    row.innerHTML = `
+                        <td>${formattedDate}</td>
+                        <td><span class="status-badge status-${item.status.toLowerCase()}">${item.status}</span></td>
+                        <td>${item.jamMasuk ? formatJamPendek(item.jamMasuk) : '-'}</td>
+                        <td>${item.jamKeluar ? formatJamPendek(item.jamKeluar) : '-'}</td>
+                        <td>${item.keterangan || '-'}</td>
+                    `;
+                    tabelBody.appendChild(row);
+                });
+            }
+
+            // Update statistik
+            updateStatistik();
+        }
+
+        // Update statistik
+        function updateStatistik() {
+            const bulanIni = new Date().getMonth();
+            const statHadir = document.getElementById('statHadir');
+            const statTerlambat = document.getElementById('statTerlambat');
+            const statIzin = document.getElementById('statIzin');
+            const statSakit = document.getElementById('statSakit');
+
+            // Filter data bulan ini
+            const dataPresensiFiltered = dataPresensi.filter(item => {
+                const itemDate = new Date(item.tanggal);
+                return itemDate.getMonth() === bulanIni;
+            });
+
+            // Hitung statistik
+            let countHadir = 0;
+            let countTerlambat = 0;
+            let countIzin = 0;
+            let countSakit = 0;
+
+            dataPresensiFiltered.forEach(item => {
+                if (item.status === 'Hadir') countHadir++;
+                else if (item.status === 'Terlambat') countTerlambat++;
+                else if (item.status === 'Izin') countIzin++;
+                else if (item.status === 'Sakit') countSakit++;
+            });
+
+            // Update tampilan
+            statHadir.textContent = countHadir;
+            statTerlambat.textContent = countTerlambat;
+            statIzin.textContent = countIzin;
+            statSakit.textContent = countSakit;
+        }
+     </script>
+
+
+     <script>
+        function cekSudahAbsenMasuk() {
+    let absensiList = JSON.parse(localStorage.getItem('absensiData')) || [];
+    let tanggal = new Date().toISOString().split('T')[0];
+    return absensiList.some(absen => absen.tanggal === tanggal);
+}
+        //tombol untuk absensi masuk
+        function cekSudahAbsenMasuk() {
+    let absensiList = JSON.parse(localStorage.getItem('absensiData')) || [];
+    let tanggal = new Date().toISOString().split('T')[0];
+    return absensiList.some(absen => absen.tanggal === tanggal);
+}
+fetch('/api/absen-masuk', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ user_id: 1, jam_masuk: "08:00:00" })
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error(error));
+
+   document.getElementById('btnMasuk').addEventListener('click', async function () {
+    const now = new Date();
+    const jam = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+    const tanggal = now.toISOString().split('T')[0];
+    const jamMenit = now.getHours() * 60 + now.getMinutes();
+    const batasWaktuMasuk = 9 * 60 + 5;
+
+    let status, pesan;
+
+    // Menentukan status kehadiran
+    if (jamMenit <= batasWaktuMasuk) {
+        status = 'Hadir';
+        pesan = 'Berhasil absen masuk!';
+    } else {
+        status = 'Terlambat';
+        pesan = 'Berhasil absen masuk tetapi Anda terlambat!';
+    }
+
+    // Cek apakah sudah absen hari ini (di localStorage)
+    let absensiList = JSON.parse(localStorage.getItem('absensiData')) || [];
+    let sudahAbsen = absensiList.some(absen => absen.tanggal === tanggal);
+
+    if (sudahAbsen) {
+        showAlert('Anda sudah absen hari ini!', 'info');
+        return;
+    }
+
+    // **KIRIM DATA KE BACKEND LARAVEL**
+    try {
+        const response = await fetch('/api/absen-masuk', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer TOKEN_KAMU' // Tambahkan jika API pakai autentikasi
+            },
+            body: JSON.stringify({
+                user_id: 1,  // Ambil user_id dari sesi atau input pengguna
+                jam_masuk: jam
+            })
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+            absensiList.push({ tanggal, jamMasuk: jam, jamKeluar: null, status, keterangan: null });
+            localStorage.setItem('absensiData', JSON.stringify(absensiList));
+            showAlert(pesan, 'success');
+        } else {
+            showAlert(`Gagal absen: ${data.message}`, 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showAlert('Terjadi kesalahan saat absen!', 'error');
+    }
+});
+     </script>
+
+
+     <script>
+        document.getElementById('btnMasuk').addEventListener('click', function() {
+    const now = new Date();
+    const jam = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+    const tanggal = now.toISOString().split('T')[0];
+
+    let absensiData = JSON.parse(localStorage.getItem('absensiData')) || [];
+
+    // Cek apakah sudah ada data absensi hari ini yang belum diisi jam keluar
+    let absenHariIni = absensiData.find(absen => absen.tanggal === tanggal && !absen.jamKeluar);
+    if (absenHariIni) {
+        showAlert('Anda belum absen keluar. Harap selesaikan absensi sebelum membuat yang baru.', 'error');
+        return;
+    }
+
+    // Buat data absensi baru
+    absensiData.push({
+        tanggal: tanggal,
+        jamMasuk: jam,
+        jamKeluar: null,
+        status: 'Hadir'
+    });
+>>>>>>> 913a91d1e1e322536d058017e05e56f3692897c6
+<<<<<<< HEAD
+    localStorage.setItem('absensiData', JSON.stringify(absensiData));
+
+    showAlert('Berhasil absen masuk!', 'success');
+});
+    </script>
+
+
+
+     <script>
+        document.getElementById('btnIzin').addEventListener('click', function() {
+    document.getElementById('modalIzin').style.display = 'block';
+});
+
+document.getElementById('formIzin').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const jenis = document.getElementById('jenis_izin').value;
+    const alasan = document.getElementById('alasan_izin').value;
+
+    const response = await fetch('http://127.0.0.1:8000/absenIzin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: jenis, alasan: alasan })
+    });
+
+    const data = await response.json();
+    alert(data.message);
+
+    document.getElementById('modalIzin').style.display = 'none';
+    document.getElementById('formIzin').reset();
+});
+     </script>
+
+
+     <script>
+=======
 <<<<<<< HEAD
 
         const city = response.address.city || response.address.town || response.address.village || "Tidak diketahui";
@@ -1256,7 +1651,7 @@ async function getKodeKota(position) {
     alert(data.message);
 
     document.getElementById('modalIzin').style.display = 'none';
-    document.getElementById('formIzin').reset(); 
+    document.getElementById('formIzin').reset();
      </script>
 
 
@@ -1390,6 +1785,15 @@ document.getElementById("formPulangAwal").addEventListener("submit", function(ev
     .catch(error => console.error("Terjadi kesalahan:", error));
 });
 
+<<<<<<< HEAD
+=======
+=======
+        updateStatistik();
+        updateJam();
+>>>>>>> 3edbfbba53ee6f0fb49ddd9c251ef44a41646aa8
+=======
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
+>>>>>>> 913a91d1e1e322536d058017e05e56f3692897c6
        document.getElementById('formPulangAwal').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -1453,6 +1857,17 @@ window.onclick = function(event) {
 updateTabelPresensi();
 updateStatistik();
 updateJam();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 817f91c4efa9020bd08c08355f13d82491af875c
+=======
+});
+
+>>>>>>> d1d392254c622b58447032346056bcba254f97de
+>>>>>>> 84e2654294087cac1211415410a44418b73f26ad
+>>>>>>> 913a91d1e1e322536d058017e05e56f3692897c6
     </script>
 
 </body>

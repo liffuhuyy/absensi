@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <?php
 
 ?><!DOCTYPE html>
@@ -44,7 +44,7 @@
         }
 
         .profile-icon a {
-             display: block; 
+             display: block;
              width: 100%;
              height: 100%;
         }
@@ -221,57 +221,15 @@
             .action-buttons {
                 flex-direction: column;
             }
-            
+
             .stat-item {
                 min-width: 100%;
             }
         }
     </style>
 </head>
-<body>
-    <div class="header">
-        <div class="menu-toggle" id="menuToggle">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <h3>SMKN 1 SUBANG</h3>
-
-            <div class="profile-icon">
-                <a href="{{ url('/profil') }}">
-                    <img src="{{ url('/profil') }}" alt="Profile Picture">
-                </a>
-            </div>            
-    </div>
-
-    <div class="overlay" id="overlay"></div>
-
-    <div class="sidebar" id="sidebar">
-        <div class="close-sidebar" id="closeSidebar">×</div>
-        
-        <div class="menu-group">
-            <a href="{{ url('/beranda') }}" class="menu-item">Beranda</a>
-            <a href="{{ url('/profil') }}" class="menu-item">Profil Saya</a>
-        </div>
-        
-        <div class="menu-group">
-            <div class="menu-title">Menu Utama</div>
-            <a href="{{ url('/presensi') }}" class="menu-item">Presensi</a>
-            <a href="{{ url('/manajementugas') }}" class="menu-item">Management Tugas</a>
-            <a href="{{ url('/magang') }}" class="menu-item">Pengajuan Magang</a>
-        </div>
-        
-        <div class="menu-group">
-            <div class="menu-title">Lainnya</div>
-            <a href="{{ url('/kontak') }}" class="menu-item">Kontak</a>
-            <a href="javascript:void(0)" class="menu-item" onclick="confirmLogout()">Logout</a>
-        </div>
-    </div>
-
-=======
 @extends('siswa.layout.siswa_layout')
 @section('content')
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
     <div class="container">
         <div class="welcome-card">
             <h3 class="welcome-title">Selamat Datang!</h3>
