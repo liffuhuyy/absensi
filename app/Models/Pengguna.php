@@ -23,7 +23,11 @@ class Pengguna extends Authenticatable
         'remember_token',
     ];
 
+<<<<<<< HEAD
 
+=======
+    // Mengecek peran pengguna
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
     public function isUser()
     {
         return $this->role === 'user';
@@ -42,4 +46,18 @@ class Pengguna extends Authenticatable
     {
         return $this->hasOne(Biodata::class, 'pengguna_id');
     }
+<<<<<<< HEAD
+=======
+
+    public function jadwalKerja()
+    {
+        return $this->hasMany(JadwalKerja::class, 'pengguna_id', 'pengguna_id');
+    }
+
+    public function pengajuan()
+    {
+        return $this->hasOne(Pengajuan::class, 'pengguna_id');
+        // Ganti ke ->hasMany(...) jika satu pengguna bisa punya banyak pengajuan
+    }
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
 }

@@ -8,7 +8,11 @@ return new class extends Migration {
     /**
      * Run the migrations.
      */
+<<<<<<< HEAD
     public function up(): void
+=======
+    public function up()
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
     {
         Schema::create('absensi', function (Blueprint $table) {
             $table->id();
@@ -18,11 +22,20 @@ return new class extends Migration {
             $table->time('absen_pulang')->nullable();
             $table->boolean('pulang_awal')->default(false);
             $table->string('keterangan')->nullable();
+<<<<<<< HEAD
             $table->decimal('lokasi_masuk_latitude', 10, 7)->nullable();
             $table->decimal('lokasi_masuk_longitude', 10, 7)->nullable();
             $table->decimal('lokasi_pulang_latitude', 10, 7)->nullable();
             $table->decimal('lokasi_pulang_longitude', 10, 7)->nullable();
             $table->enum('status', ['Hadir', 'Terlambat', 'Izin', 'Tanpa Keterangan'])->default('Tanpa Keterangan');
+=======
+            $table->decimal('lokasi_masuk_latitude', 10, 7)->nullable(); // Koordinat lokasi masuk
+            $table->decimal('lokasi_masuk_longitude', 10, 7)->nullable(); // Koordinat lokasi masuk
+            $table->decimal('lokasi_pulang_latitude', 10, 7)->nullable(); // Koordinat lokasi pulang
+            $table->decimal('lokasi_pulang_longitude', 10, 7)->nullable(); // Koordinat lokasi pulang
+            $table->enum('status', ['Hadir', 'Terlambat', 'Izin', 'Sakit', 'Tanpa Keterangan'])->default('Tanpa Keterangan');
+            $table->foreign('pengguna_id')->references('id')->on('pengguna')->onDelete('cascade');
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
             $table->timestamps();
 
             $table->foreign('pengguna_id')->references('id')->on('pengguna')->onDelete('cascade');
@@ -32,7 +45,11 @@ return new class extends Migration {
     /**
      * Reverse the migrations.
      */
+<<<<<<< HEAD
     public function down(): void
+=======
+    public function down()
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
     {
         Schema::dropIfExists('absensi');
     }

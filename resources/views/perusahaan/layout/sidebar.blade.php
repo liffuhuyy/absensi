@@ -66,7 +66,7 @@
                         <li class="sidebar-item">
                             <a href="{{ url('/ringkasanabsenpt') }}" class='sidebar-link'>
                                 <i class="bi bi-journal-check"></i>
-                                <span>Ringkasan Absen</span>
+                                <span>Riwayat Absen</span>
                             </a>
                         </li>
                         <li class="sidebar-item">

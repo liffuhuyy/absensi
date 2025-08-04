@@ -300,9 +300,11 @@
                 @csrf
                 <input type="hidden" name="pengguna_id" value="{{ auth()->user()->id }}">
                 <div class="form-group">
-                    <label for="nama">Nama Lengkap</label>
-                    <input type="text" id="nama" name="nama" required>
+                    <label>Nama</label>
+                    <input type="text" name="nama" class="form-control"
+                        value="{{ old('nama', optional($biodata)->nama) }}" readonly>
                 </div>
+<<<<<<< HEAD
 =======
  <div class="container">
 <h1>Form Pengajuan Magang</h1>
@@ -315,6 +317,8 @@
     </div>
 >>>>>>> 913a91d1e1e322536d058017e05e56f3692897c6
 
+=======
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
                 <div class="form-group">
                     <label for="jurusan">Jurusan</label>
                     <select id="jurusan" name="jurusan" required>

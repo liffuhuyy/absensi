@@ -17,11 +17,7 @@
                                     <i class="iconly-boldTick-Square"></i>
                                 </div>
                                 <h6 class="text-muted">Hadir</h6>
-                                @if (isset($jumlahAbsensi))
-                                    <h6 class="font-extrabold mb-0">{{ $jumlahAbsensi }}</h6>
-                                @else
-                                    <h6 class="font-extrabold mb-0">0</h6>
-                                @endif
+                                <h6 class="font-extrabold mb-0">{{ $jumlahHadir ?? 0 }}</h6>
                             </div>
                         </div>
                     </div>
@@ -34,7 +30,7 @@
                                     <i class="iconly-boldShield-Done"></i>
                                 </div>
                                 <h6 class="text-muted font-semibold">Izin</h6>
-                                <h6 class="font-extrabold mb-0">30</h6>
+                                <h6 class="font-extrabold mb-0">{{ $jumlahIzin ?? 0 }}</h6>
                             </div>
                         </div>
                     </div>
@@ -47,25 +43,31 @@
                                     <i class="iconly-boldClose-Square"></i>
                                 </div>
                                 <h6 class="text-muted font-semibold">Sakit</h6>
-                                <h6 class="font-extrabold mb-0">15</h6>
+                                <h6 class="font-extrabold mb-0">{{ $jumlahSakit ?? 0 }}</h6>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Tanpa Keterangan -->
+                    <!-- Terlambat -->
                     <div class="col-6 col-lg-3 col-md-6">
                         <div class="card text-center">
                             <div class="card-body">
-                                <div class="stats-icon dark mb-2">
-                                    <i class="iconly-boldDanger"></i>
+                                <div class="stats-icon warning mb-2">
+                                    <i class="iconly-boldTime-Circle"></i>
                                 </div>
+<<<<<<< HEAD
                                 <h6 class="text-muted font-semibold" style="font-size: 0.60rem;">Tanpa
                                     Keterangan</h6>
                                 <h6 class="font-extrabold mb-0">5</h6>
+=======
+                                <h6 class="text-muted font-semibold">Terlambat</h6>
+                                <h6 class="font-extrabold mb-0">{{ $jumlahTerlambat ?? 0 }}</h6>
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
                             </div>
                         </div>
                     </div>
 
+                    <!-- Total Siswa -->
                     <!-- Total Siswa -->
                     <div class="col-12 col-md-6 col-lg-6">
                         <div class="card">
@@ -73,12 +75,14 @@
                                 <div class="row align-items-center">
                                     <div class="col-4 d-flex justify-content-start">
                                         <div class="stats-icon purple mb-2" style="font-size: 2rem;">
-                                            <i class="iconly-boldShow"></i>
+                                            <i class="iconly-boldProfile"></i>
                                         </div>
                                     </div>
                                     <div class="col-8">
                                         <h6 class="text-muted font-semibold">Total Siswa</h6>
-                                        <h4 class="font-extrabold mb-0" style="font-size: 2rem;">380</h4>
+                                        <h4 class="font-extrabold mb-0" style="font-size: 2rem;">
+                                            {{ $totalSiswa ?? 0 }}
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
@@ -92,12 +96,14 @@
                                 <div class="row align-items-center">
                                     <div class="col-4 d-flex justify-content-start">
                                         <div class="stats-icon blue mb-2" style="font-size: 2rem;">
-                                            <i class="iconly-boldProfile"></i>
+                                            <i class="bi bi-building"></i>
                                         </div>
                                     </div>
                                     <div class="col-8">
                                         <h6 class="text-muted font-semibold">Perusahaan Partner</h6>
-                                        <h4 class="font-extrabold mb-0" style="font-size: 2rem;">100</h4>
+                                        <h4 class="font-extrabold mb-0" style="font-size: 2rem;">
+                                            {{ $totalPerusahaan ?? 0 }}
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
@@ -111,16 +117,61 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h4>Grafik Kehadiran Mingguan</h4>
+                <h4>Grafik Kehadiran Bulanan</h4>
             </div>
             <div class="card-body">
-                <div id="chart-profile-visit"></div>
+                <div id="grafikKehadiranBulanan"></div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
-    </section>
-    </div>
-    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var options = {
+                chart: {
+                    type: 'bar',
+                    height: 400
+                },
+                series: [{
+                        name: 'Hadir',
+                        data: @json(array_column($dataGrafik, 'hadir'))
+                    },
+                    {
+                        name: 'Terlambat',
+                        data: @json(array_column($dataGrafik, 'terlambat'))
+                    },
+                    {
+                        name: 'Izin',
+                        data: @json(array_column($dataGrafik, 'izin'))
+                    },
+                    {
+                        name: 'Sakit',
+                        data: @json(array_column($dataGrafik, 'sakit'))
+                    }
+                ],
+                colors: ['#2ecc71', '#e74c3c', '#3498db',
+                    '#f1c40f'
+                ], // Warna untuk Hadir, Terlambat, Izin, Sakit
+                xaxis: {
+                    categories: @json($bulanLabels)
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '50%'
+                    }
+                },
+                dataLabels: {
+                    enabled: true
+                },
+                legend: {
+                    position: 'top'
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#grafikKehadiranBulanan"), options);
+            chart.render();
+        });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 @endsection

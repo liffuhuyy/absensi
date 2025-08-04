@@ -38,7 +38,8 @@
                 <!-- Judul -->
                 <div class="col-md-6 col-12">
                     <h3>Penilaian</h3>
-                    <p class="text-subtitle text-muted">Melakukan penilaian kepada siswa yang sudah selesai magang.</p>
+                    <p class="text-subtitle text-muted">Melakukan penilaian kepada siswa yang sudah menyelesaikan
+                        magang.</p>
                 </div>
 
                 <!-- Breadcrumb kanan -->
@@ -64,10 +65,11 @@
                 <div class="container mt-1">
                     <div class="card">
                         <div class="card-body">
-                            <table class="table">
+                            <table class="table" id="tableSiswa">
                                 <thead>
                                     <tr>
                                         <th>Nama Siswa</th>
+                                        <th>NISN</th>
                                         <th>Tanggal Selesai</th>
                                         <th>Nilai</th>
                                         <th>Keterangan</th>
@@ -78,6 +80,7 @@
                                     @forelse ($penilaian as $nilai)
                                         <tr>
                                             <td>{{ $nilai->nama }}</td>
+                                            <td>{{ $nilai->nisn }}</td>
                                             <td>{{ $nilai->tanggal_keluar }}</td>
                                             <td>{{ $nilai->nilai ?? '-' }}</td>
                                             <td>{{ $nilai->keterangan ?? '-' }}</td>
@@ -100,7 +103,8 @@
                                                         @method('PATCH')
                                                         <div class="modal-header">
                                                             <h1 class="modal-title fs-5"
-                                                                id="modalLabel-{{ $nilai->id }}">Penilaian Siswa</h1>
+                                                                id="modalLabel-{{ $nilai->id }}">Penilaian Siswa
+                                                            </h1>
                                                             <button type="button" class="btn-close"
                                                                 data-bs-dismiss="modal" aria-label="Tutup"></button>
                                                         </div>
@@ -109,6 +113,11 @@
                                                                 <label>Nama:</label>
                                                                 <input type="text" class="form-control"
                                                                     value="{{ $nilai->nama }}" readonly>
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label>NISN:</label>
+                                                                <input type="text" class="form-control"
+                                                                    value="{{ $nilai->nisn }}" readonly>
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label>Tanggal Selesai:</label>
@@ -137,7 +146,7 @@
                                         </div>
                                     @empty
                                         <tr>
-                                            <td colspan="5" class="text-center">Belum ada penilaian</td>
+                                            <td colspan="6" class="text-center">Belum ada penilaian</td>
                                         </tr>
                                     @endforelse
                                 </tbody>
@@ -150,6 +159,22 @@
     </div>
 
     @include('admin.layout.footer')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const table = document.querySelector('#tableSiswa tbody');
+            const rows = table.querySelectorAll('tr');
+
+            searchInput.addEventListener('keyup', function() {
+                const query = this.value.toLowerCase();
+
+                rows.forEach(row => {
+                    const namaSiswa = row.querySelector('td')?.textContent.toLowerCase();
+                    row.style.display = namaSiswa.includes(query) ? '' : 'none';
+                });
+            });
+        });
+    </script>
     <script src="assets/static/js/components/dark.js"></script>
     <script src="assets/extensions/perfect-scrollbar/perfect-scrollbar.min.js"></script>
     <script src="assets/compiled/js/app.js"></script>

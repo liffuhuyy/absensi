@@ -91,4 +91,28 @@ class PenggunaController extends Controller
             return "View tidak ditemukan.";
         }
     }
+
+
+
+    //ubah pw
+    public function ubahPassword(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required'],
+            'new_password' => ['required', 'min:6'],
+            'confirm_password' => ['required', 'same:new_password'],
+        ]);
+
+        $pengguna = Auth::user();
+        $pengguna = Pengguna::where('email', $pengguna->email)->first();
+
+        if (!$pengguna || !Hash::check($request->current_password, $pengguna->password)) {
+            return back()->with('error', 'Kata sandi saat ini salah.');
+        }
+
+        $pengguna->password = Hash::make($request->new_password);
+        $pengguna->save();
+
+        return back()->with('success', 'Kata sandi berhasil diubah.');
+    }
 }

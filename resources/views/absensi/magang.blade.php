@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <title>Dashboard Siswa</title>
     <style>
         * {
@@ -16,15 +17,6 @@
 
         body {
             background-color: #f5f5f5;
-        }
-
-        .container {
-            max-width: 500px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-
         }
 
         .header {
@@ -43,10 +35,6 @@
             padding: 15px;
             text-align: center;
             font-size: 16px;
-        }
-
-        .content {
-            padding: 20px;
         }
 
         .time-info {
@@ -343,7 +331,7 @@
         h1 {
             text-align: center;
             margin: 20px 0;
-            color: #0056b3;
+            color: #ffffff;
         }
 
         h2 {
@@ -408,22 +396,27 @@
             background-color: #172a46;
         }
 
+        .table-responsive {
+            overflow-x: auto;
+            margin-bottom: 20px;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            min-width: 600px;
         }
 
-        table th,
-        table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
+        th,
+        td {
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
         }
 
         table th {
-            background-color: #f2f2f2;
-            color: #333;
+            background-color: #000000;
+            color: #ffffff;
         }
 
         table tr:hover {
@@ -431,7 +424,36 @@
         }
 
         h2 {
-            color: #333;
+            color: rgb(255, 255, 255);
+            text-align: center;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h2 {
+                font-size: 1.3rem;
+            }
+
+            .tombol {
+                width: 100%;
+                padding: 12px;
+            }
+        }
+
+        .btn-custom-black {
+            background-color: #000000;
+            color: #ffffff;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom-black:hover {
+            background-color: #172a46;
+            color: #ffffff;
         }
     </style>
 </head>
@@ -439,6 +461,7 @@
 <body>
     @include('siswa.layout.sidebar')
     @include('siswa.layout.header')
+<<<<<<< HEAD
     <div class="container">
         <h2>Daftar Pengajuan Magang</h2>
         @if (isset($pengajuan) && $pengajuan->count() > 0)
@@ -474,36 +497,57 @@
                 </thead>
                 <tbody>
                     @foreach ($pengajuan as $p)
+=======
+    <div class="container mt-4">
+        <div class="card shadow-sm p-4">
+            <div class="header">
+                <h2>Daftar Pengajuan Magang</h2>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped text-center">
+                    <thead class="table-dark">
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
                         <tr>
-                            <td>{{ $p->nama }}</td>
-                            <td>{{ $p->jurusan }}</td>
-                            <td>{{ $p->tanggal_masuk }}</td>
-                            <td>{{ $p->tanggal_keluar ?? '-' }}</td>
-                            <td>{{ $p->perusahaan_id ?? '-' }}</td>
-                            <td>
-                                <div
-                                    class="text-dark bg-{{ $p->status == 'Ditolak' ? 'danger' : ($p->status == 'Menunggu' ? 'warning' : 'success') }}">
-                                    <div class="row">
-                                        <div class="col">
-                                            <div class="text-white text-center p-2">
-                                                {{ $p->status }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
+                            <th>Nama Siswa</th>
+                            <th>Jurusan</th>
+                            <th>Tanggal Masuk</th>
+                            <th>Tanggal Keluar</th>
+                            <th>Perusahaan</th>
+                            <th>Status</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        @else
-            <p style="text-align: center;">Belum ada data Pengajuan.</p>
-        @endif
+                    </thead>
+                    <tbody>
+                        @if (isset($pengajuan) && $pengajuan->count() > 0)
+                            @foreach ($pengajuan as $p)
+                                <tr>
+                                    <td>{{ $p->nama }}</td>
+                                    <td>{{ $p->jurusan }}</td>
+                                    <td>{{ $p->tanggal_masuk }}</td>
+                                    <td>{{ $p->tanggal_keluar ?? '-' }}</td>
+                                    <td>{{ $p->perusahaan->nama ?? '-' }}</td>
+                                    <td>
+                                        <span
+                                            class="badge bg-{{ $p->status == 'Ditolak' ? 'danger' : ($p->status == 'Menunggu' ? 'warning text-dark' : 'success') }}">
+                                            {{ $p->status }}
+                                        </span>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <tr>
+                                <td colspan="6">Belum ada data pengajuan.</td>
+                            </tr>
+                        @endif
+                    </tbody>
+                </table>
+            </div>
 
-        <br>
-        <a href="{{ url('/pengajuan1') }}" class="tombol">Buat Pengajuan</a>
+            <div class="text-end mt-3">
+                <a href="{{ url('/pengajuan1') }}" class="btn btn-custom-black">Buat Pengajuan</a>
+            </div>
+        </div>
     </div>
-
     <script>
         // Menu toggle functionality
         const menuToggle = document.getElementById('menuToggle');

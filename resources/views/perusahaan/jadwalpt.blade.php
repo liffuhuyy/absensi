@@ -198,8 +198,9 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Jadwal Kerja Dan Titik</h3>
-                    <p class="text-subtitle text-muted">Membuat jadwal kerja dan titik koordinat perusahaan.</p>
+                    <h3>Jadwal Kerja Dan Titik koordinat</h3>
+                    <p class="text-subtitle text-muted">Membuat jadwal kerja perusahaan dan menambahkan titk koordinat.
+                    </p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -230,18 +231,18 @@
 
                                     <label>Hari Kerja</label>
                                     <div class="days-container">
-                                        <input type="checkbox" id="senin" name="hari_kerja[]" value="senin"><label
-                                            for="senin">Senin</label>
-                                        <input type="checkbox" id="selasa" name="hari_kerja[]" value="selasa"><label
-                                            for="selasa">Selasa</label>
-                                        <input type="checkbox" id="rabu" name="hari_kerja[]" value="rabu"><label
-                                            for="rabu">Rabu</label>
-                                        <input type="checkbox" id="kamis" name="hari_kerja[]" value="kamis"><label
-                                            for="kamis">Kamis</label>
-                                        <input type="checkbox" id="jumat" name="hari_kerja[]" value="jumat"><label
-                                            for="jumat">Jumat</label>
-                                        <input type="checkbox" id="sabtu" name="hari_kerja[]" value="sabtu"><label
-                                            for="sabtu">Sabtu</label>
+                                        <input type="checkbox" id="Senin" name="hari_kerja[]" value="Senin"><label
+                                            for="Senin">Senin</label>
+                                        <input type="checkbox" id="Selasa" name="hari_kerja[]" value="Selasa"><label
+                                            for="Selasa">Selasa</label>
+                                        <input type="checkbox" id="Rabu" name="hari_kerja[]" value="Rabu"><label
+                                            for="Rabu">Rabu</label>
+                                        <input type="checkbox" id="Kamis" name="hari_kerja[]" value="Kamis"><label
+                                            for="Kamis">Kamis</label>
+                                        <input type="checkbox" id="Jumat" name="hari_kerja[]" value="Jumat"><label
+                                            for="Jumat">Jumat</label>
+                                        <input type="checkbox" id="Sabtu" name="hari_kerja[]" value="Sabtu"><label
+                                            for="Sabtu">Sabtu</label>
                                     </div>
 
                                     <label for="latitude">Latitude</label>
@@ -296,7 +297,7 @@
                                             </td>
                                         @else
                                         <tr>
-                                            <td colspan="6" class="text-center">Tidak ada jadwal kerja tersedia
+                                            <td colspan="7" class="text-center">Tidak ada jadwal kerja tersedia
                                             </td>
                                         </tr>
                                     @endif
@@ -396,7 +397,7 @@
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn btn-success">Simpan</button>
+                                        <button type="submit" class="btn btn-primary w-100">Simpan Perubahan</button>
                                     </div>
                                 </div>
                             </form>
@@ -434,12 +435,12 @@
                                 console.log("Data dari server:", data);
                                 $('#editForm').attr('action', '/jadwalpt/update/' + id);
 
-                                if ($('#edit_jam_masuk').length) {
-                                    $('#edit_jam_masuk').val(data.jam_masuk);
+                                if ($('#jam_masuk').length) {
+                                    $('#jam_masuk').val(data.jam_masuk);
                                 } else {
                                     console.warn("Elemen #edit_jam_masuk tidak ditemukan.");
                                 }
-                                if ($('#edit_jam_keluar').length) $('#edit_jam_keluar').val(data
+                                if ($('#jam_keluar').length) $('#jam_keluar').val(data
                                     .jam_keluar);
                                 if ($('#edit_latitude').length) $('#edit_latitude').val(data.latitude ||
                                     '');

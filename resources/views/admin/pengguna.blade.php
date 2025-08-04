@@ -125,7 +125,6 @@
                                     <tr>
                                         <th>Nama</th>
                                         <th>Email</th>
-                                        <th>Password</th>
                                         <th>Role</th>
                                         <th>Aksi</th>
                                     </tr>
@@ -135,7 +134,6 @@
                                         <tr>
                                             <td>{{ $user->nama }}</td>
                                             <td>{{ $user->email }}</td>
-                                            <td>{{ $user->password }}</td>
                                             <td>{{ $user->role }}</td>
                                             <td>
                                                 <form method="POST" action="/pengguna/hapus/{{ $user->id }}">
@@ -184,6 +182,7 @@
                     console.log("Tipe data:", typeof data);
                 });
 
+<<<<<<< HEAD
                 // Pencarian berdasarkan teks input
                 $('#searchBox').on('input', function() {
                     let query = $(this).val().toLowerCase();
@@ -203,6 +202,8 @@
                         }
                     });
                 });
+=======
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
             }
             // Panggil fungsi saat halaman dimuat
             loadData();

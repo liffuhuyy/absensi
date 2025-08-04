@@ -184,7 +184,11 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+<<<<<<< HEAD
                         @if (isset($pembimbings) && $pembimbings->count())
+=======
+                        @if (isset($pembimbing) && $pembimbing->count())
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
                             <table class="table">
                                 <thead>
                                     <tr>
@@ -198,7 +202,11 @@
                                     </tr>
                                 </thead>
                                 <tbody id="dataPembimbing">
+<<<<<<< HEAD
                                     @foreach ($pembimbings as $user)
+=======
+                                    @foreach ($pembimbing as $user)
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
                                         <tr>
                                             <td>{{ $user->nama }}</td>
                                             <td>{{ $user->nip }}</td>

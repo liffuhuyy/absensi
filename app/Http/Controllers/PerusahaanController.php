@@ -11,14 +11,8 @@ class PerusahaanController extends Controller
     // Menampilkan daftar semua perusahaan
     public function index()
     {
-        $perusahaan = Perusahaan::all();
+        $perusahaan = Perusahaan::where('pengguna_id', Auth::id())->first();
         return view('perusahaan.profilpt', compact('perusahaan'));
-    }
-
-    // Menampilkan form tambah data
-    public function create()
-    {
-        return view('perusahaan.create');
     }
 
     // Simpan data perusahaan baru
@@ -48,16 +42,28 @@ class PerusahaanController extends Controller
         return redirect()->route('perusahaan.index')->with('success', 'Data perusahaan berhasil disimpan!');
     }
 
-    // Tampilkan form edit
+    // Tampilkan form untuk edit
     public function edit($id)
     {
         $perusahaan = Perusahaan::findOrFail($id);
-        return view('perusahaan.index', compact('perusahaan'));
+
+        // Cegah edit data orang lain
+        if ($perusahaan->pengguna_id !== Auth::id()) {
+            abort(403);
+        }
+
+        return view('perusahaan.profilpt', compact('perusahaan'));
     }
 
-    // Update data perusahaan
+    // Proses update data
     public function update(Request $request, $id)
     {
+        $perusahaan = Perusahaan::findOrFail($id);
+
+        if ($perusahaan->pengguna_id !== Auth::id()) {
+            abort(403);
+        }
+
         $request->validate([
             'nama_perusahaan' => 'required|string|max:255',
             'alamat' => 'required|string',
@@ -67,7 +73,6 @@ class PerusahaanController extends Controller
             'logo' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $perusahaan = Perusahaan::findOrFail($id);
         $logoPath = $request->hasFile('logo') ? $request->file('logo')->store('logos', 'public') : $perusahaan->logo;
 
         $perusahaan->update([
@@ -82,27 +87,23 @@ class PerusahaanController extends Controller
         return redirect()->route('perusahaan.index')->with('success', 'Data perusahaan berhasil diperbarui!');
     }
 
-    // Hapus perusahaan
-    public function destroy($id)
+    // Endpoint untuk ambil data 1 perusahaan via AJAX
+    public function getData($id)
     {
-        $perusahaan = Perusahaan::findOrFail($id);
-        $perusahaan->delete();
+        $perusahaan = Perusahaan::find($id);
 
-        return redirect()->route('perusahaan.index')->with('success', 'Data perusahaan berhasil dihapus!');
-    }
+        if (!$perusahaan || $perusahaan->pengguna_id !== Auth::id()) {
+            return response()->json(['error' => 'Data tidak ditemukan'], 404);
+        }
 
-    public function show($id)
-    {
-        $perusahaan = Perusahaan::findOrFail($id);
         return response()->json($perusahaan);
     }
 
-    public function profilpt()
+    // Endpoint untuk AJAX (get semua perusahaan milik user)
+    public function json()
     {
-        if (view()->exists('perusahaan.profilpt')) {
-            return view('perusahaan.profilpt');
-        } else {
-            return "View tidak ditemukan.";
-        }
+        return response()->json(
+            Perusahaan::where('pengguna_id', Auth::id())->get()
+        );
     }
 }

@@ -56,15 +56,28 @@
                         </a>
                     </li>
                     <li class="sidebar-item">
+<<<<<<< HEAD
                         <a href="{{ url('/datapembimbing') }}" class='sidebar-link'>
+=======
+                        <a href="{{ url('/pembimbing') }}" class='sidebar-link'>
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
                             <i class="bi bi-journal-check"></i>
                             <span>Data Pembimbing</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
+<<<<<<< HEAD
+=======
+                        <a href="{{ url('/riwayat') }}" class='sidebar-link'>
+                            <i class="bi bi-journal-check"></i>
+                            <span>Riwayat absen</span>
+                        </a>
+                    </li>
+                    <li class="sidebar-item">
+>>>>>>> 44734077802f2dac236b168425133a99aa31d034
                         <a href="{{ url('/notif') }}" class='sidebar-link'>
-                            <i class="bi bi-bell"></i>
-                            <span>Notifikasi</span>
+                            <i class="bi bi-chat"></i>
+                            <span>Kotak Masuk</span>
                         </a>
                     </li>
                     <li class="sidebar-item">
