@@ -4,14 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Penilaian;
-<<<<<<< HEAD
-=======
 use App\Models\Pengguna;
 use App\Models\Biodata;
 use App\Models\Pengajuan;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
->>>>>>> 44734077802f2dac236b168425133a99aa31d034
 
 class PenilaianController extends Controller
 {
@@ -34,15 +31,6 @@ class PenilaianController extends Controller
      */
     public function penilaian()
     {
-<<<<<<< HEAD
-        $penilaian = Penilaian::orderBy('created_at', 'desc')->get();
-
-        if (!view()->exists('absensi.penilaian')) {
-            abort(404, 'View absensi.penilaian tidak ditemukan.');
-        }
-
-        return view('absensi.penilaian', compact('penilaian'));
-=======
         $pengguna = Auth::user();
 
         $penilaian = Penilaian::where('pengguna_id', $pengguna->id)
@@ -52,7 +40,6 @@ class PenilaianController extends Controller
         $biodata = Biodata::where('pengguna_id', $pengguna->id)->first();
 
         return view('absensi.penilaian', compact('penilaian', 'biodata'));
->>>>>>> 44734077802f2dac236b168425133a99aa31d034
     }
 
     /**
@@ -73,10 +60,7 @@ class PenilaianController extends Controller
         // Simpan ke database
         Penilaian::create($validated);
 
-<<<<<<< HEAD
-=======
         // Redirect dengan pesan sukses
->>>>>>> 44734077802f2dac236b168425133a99aa31d034
         return redirect()->route('penilaian')->with('success', 'Penilaian berhasil ditambahkan.');
     }
 
@@ -96,12 +80,6 @@ class PenilaianController extends Controller
      */
     public function nilai()
     {
-<<<<<<< HEAD
-        $penilaian = Penilaian::all();
-
-        if (!view()->exists('perusahaan.nilai')) {
-            abort(404, 'View perusahaan.nilai tidak ditemukan.');
-=======
         if (view()->exists('perusahaan.nilai')) {
             $perusahaanId = Auth::user()->id;
 
@@ -118,7 +96,6 @@ class PenilaianController extends Controller
             return view('perusahaan.nilai', compact('penilaian'));
         } else {
             return "View tidak ditemukan.";
->>>>>>> 44734077802f2dac236b168425133a99aa31d034
         }
 
         return view('perusahaan.nilai', compact('penilaian'));
