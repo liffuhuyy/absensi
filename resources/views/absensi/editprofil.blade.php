@@ -394,8 +394,14 @@
                 const y = e.clientY - rect.top;
 
                 const ripple = document.createElement('span');
-                ripple.style.left = `${x}px`;
-                ripple.style.top = `${y}px`;
+                ripple.style.left = $ {
+                    x
+                }
+                px;
+                ripple.style.top = $ {
+                    y
+                }
+                px;
                 ripple.classList.add('ripple-effect');
 
                 this.appendChild(ripple);

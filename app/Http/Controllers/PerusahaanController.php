@@ -11,7 +11,6 @@ class PerusahaanController extends Controller
     // Menampilkan daftar semua perusahaan
     public function index()
     {
-        $perusahaan = Perusahaan::all();
         $perusahaan = Perusahaan::where('pengguna_id', Auth::id())->first();
         return view('perusahaan.profilpt', compact('perusahaan'));
     }
@@ -99,13 +98,7 @@ class PerusahaanController extends Controller
 
         return response()->json($perusahaan);
     }
-    public function show($id)
-    {
-        $perusahaan = Perusahaan::findOrFail($id);
-        return response()->json($perusahaan);
-    }
 
-    public function profilpt()
     // Endpoint untuk AJAX (get semua perusahaan milik user)
     public function json()
     {

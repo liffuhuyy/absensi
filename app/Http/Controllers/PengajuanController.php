@@ -54,12 +54,6 @@ class PengajuanController extends Controller
         return view('absensi.pengajuan1', compact('perusahaanList', 'biodata'));
     }
 
-    public function show($id)
-    {
-        $pengajuan = Pengajuan::findOrFail($id); // Ambil data pengajuan berdasarkan ID
-        return view('absensi.magang', compact('pengajuan')); // Tampilkan detail pengajuan
-    }
-
     public function updateStatus(Request $request)
     {
         $pengajuan = Pengajuan::find($request->id);
@@ -73,28 +67,6 @@ class PengajuanController extends Controller
         return response()->json(['success' => false, 'message' => 'Status sudah diperbarui sebelumnya']);
     }
 
-    public function create2()
-    {
-        $perusahaanList = JadwalKerja::select('pengguna_id')->distinct()->get();
-        return view('absensi.magang', compact('perusahaanList'));
-    }
-
-    public function pengajuanpt()
-    {
-        if (view()->exists('perusahaan.pengajuanpt')) {
-            $pengajuan = Pengajuan::all();
-            return view('perusahaan.pengajuanpt', compact('pengajuan'));
-        } else {
-            return "View tidak ditemukan.";
-        }
-    }
-
-    public function showPengajuan1()
-    {
-        $pengajuan = Pengajuan::paginate(10);
-        return view('absensi.magang', compact('pengajuan'));
-    }
-
     public function pengajuan1()
     {
         if (view()->exists('absensi.pengajuan1')) {
@@ -102,5 +74,47 @@ class PengajuanController extends Controller
         } else {
             return "View tidak ditemukan.";
         }
+    }
+
+
+    //Menampilkan data di halaman pengajuan perusahaan
+    public function pengajuanpt()
+    {
+        if (view()->exists('perusahaan.pengajuanpt')) {
+            $perusahaanId = Auth::user()->id;
+
+            // Ambil pengajuan yang ditujukan ke perusahaan ini
+            $pengajuan = Pengajuan::with('pengguna') // pastikan relasi ke pengguna dimuat
+                ->where('perusahaan_id', $perusahaanId)
+                ->get();
+
+            return view('perusahaan.pengajuanpt', compact('pengajuan'));
+        } else {
+            return "View tidak ditemukan.";
+        }
+    }
+
+
+
+    //Menampilkan data di halaman magang
+    public function showPengajuan1()
+    {
+        $pengajuan = Pengajuan::where('pengguna_id', Auth::id()) // hanya data milik user login
+            ->paginate(10);
+
+        return view('absensi.magang', compact('pengajuan'));
+    }
+
+    public function nisn()
+    {
+        $pengguna = Auth::user();
+
+        $nisn = Biodata::where('pengguna_id', $pengguna->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $biodata = Biodata::where('pengguna_id', $pengguna->id)->first();
+
+        return view('perusahaan.pengajuanpt', compact('biodata'));
     }
 }

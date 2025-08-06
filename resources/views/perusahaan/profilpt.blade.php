@@ -88,7 +88,7 @@
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
                     <h3>Profil Perusahaan</h3>
-                    <p class="text-subtitle text-muted">Lengkapi Profil Perusahaan Anda Sekarang Juga!</p>
+                    <p class="text-subtitle text-muted">Lengkapi biodata dari perusahaan.</p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -104,67 +104,64 @@
             <div class="container mt-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="mb-3">Tambah Data Perusahaan</h5>
-                        <form id="formTambahPerusahaan" method="POST" action="{{ route('perusahaan.store') }}" <h5
-                            class="mb-3">
+                        <h5 class="mb-3">
                             {{ isset($perusahaan) ? 'Edit Data Perusahaan' : 'Tambah Data Perusahaan' }}
-                            </h5>
+                        </h5>
 
-                            <form method="POST"
-                                action="{{ isset($perusahaan) ? route('perusahaan.update', $perusahaan->id) : route('perusahaan.store') }}"
-                                enctype="multipart/form-data">
-                                @csrf
-                                @if (isset($perusahaan))
-                                    @method('PUT')
-                                @endif
+                        <form method="POST"
+                            action="{{ isset($perusahaan) ? route('perusahaan.update', $perusahaan->id) : route('perusahaan.store') }}"
+                            enctype="multipart/form-data">
+                            @csrf
+                            @if (isset($perusahaan))
+                                @method('PUT')
+                            @endif
 
-                                <div class="mb-3">
-                                    <label class="form-label">Nama Perusahaan</label>
-                                    <input type="text" name="nama_perusahaan" class="form-control"
-                                        value="{{ old('nama_perusahaan', $perusahaan->nama_perusahaan ?? '') }}"
-                                        required>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nama Perusahaan</label>
+                                <input type="text" name="nama_perusahaan" class="form-control"
+                                    value="{{ old('nama_perusahaan', $perusahaan->nama_perusahaan ?? '') }}" required>
+                            </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Alamat</label>
-                                    <input type="text" name="alamat" class="form-control"
-                                        value="{{ old('alamat', $perusahaan->alamat ?? '') }}" required>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">Alamat</label>
+                                <input type="text" name="alamat" class="form-control"
+                                    value="{{ old('alamat', $perusahaan->alamat ?? '') }}" required>
+                            </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Email</label>
-                                    <input type="email" name="email" class="form-control"
-                                        value="{{ old('email', $perusahaan->email ?? '') }}" required>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">Email</label>
+                                <input type="email" name="email" class="form-control"
+                                    value="{{ old('email', $perusahaan->email ?? '') }}" required>
+                            </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Nomor Telepon</label>
-                                    <input type="text" name="telepon" class="form-control"
-                                        value="{{ old('telepon', $perusahaan->telepon ?? '') }}" required>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">Nomor Telepon</label>
+                                <input type="text" name="telepon" class="form-control"
+                                    value="{{ old('telepon', $perusahaan->telepon ?? '') }}" required>
+                            </div>
 
-                                <div class="mb-3">
-                                    <label class="form-label">Logo Perusahaan</label><br>
+                            <div class="mb-3">
+                                <label class="form-label">Logo Perusahaan</label><br>
 
-                                    {{-- Preview Logo Lama (jika ada) --}}
-                                    <img id="logoPreview"
-                                        src="{{ isset($perusahaan) && $perusahaan->logo ? asset('storage/' . $perusahaan->logo) : '#' }}"
-                                        alt="Logo Perusahaan" width="120"
-                                        style="{{ isset($perusahaan) && $perusahaan->logo ? '' : 'display:none;' }} margin-bottom: 10px; border: 1px solid #ccc; padding: 4px; border-radius: 6px;"><br>
+                                {{-- Preview Logo Lama (jika ada) --}}
+                                <img id="logoPreview"
+                                    src="{{ isset($perusahaan) && $perusahaan->logo ? asset('storage/' . $perusahaan->logo) : '#' }}"
+                                    alt="Logo Perusahaan" width="120"
+                                    style="{{ isset($perusahaan) && $perusahaan->logo ? '' : 'display:none;' }} margin-bottom: 10px; border: 1px solid #ccc; padding: 4px; border-radius: 6px;"><br>
 
-                                    {{-- Input File Logo --}}
-                                    <input type="file" name="logo" id="logoInput" accept="image/*"
-                                        class="form-control">
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Deskripsi Perusahaan</label>
-                                    <textarea name="deskripsi" class="form-control" placeholder="Masukkan Deskripsi">{{ old('deskripsi', $perusahaan->deskripsi ?? '') }}</textarea>
-                                </div>
+                                {{-- Input File Logo --}}
+                                <input type="file" name="logo" id="logoInput" accept="image/*"
+                                    class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Deskripsi Perusahaan</label>
+                                <textarea name="deskripsi" class="form-control" placeholder="Masukkan Deskripsi">{{ old('deskripsi', $perusahaan->deskripsi ?? '') }}</textarea>
+                            </div>
 
-                                <button type="submit" class="btn btn-success w-100">
-                                    {{ isset($perusahaan) ? 'Perbarui Data' : 'Simpan Data' }}
-                                </button>
-                            </form>
+                            <button type="submit" class="btn btn-success w-100">
+                                {{ isset($perusahaan) ? 'Perbarui Data' : 'Simpan Data' }}
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>

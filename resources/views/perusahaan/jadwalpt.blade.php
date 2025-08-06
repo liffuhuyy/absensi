@@ -198,8 +198,9 @@
         <div class="page-title">
             <div class="row">
                 <div class="col-12 col-md-6 order-md-1 order-last">
-                    <h3>Jadwal Kerja Dan Titik</h3>
-                    <p class="text-subtitle text-muted">Membuat jadwal kerja dan titik koordinat perusahaan.</p>
+                    <h3>Jadwal Kerja Dan Titik koordinat</h3>
+                    <p class="text-subtitle text-muted">Membuat jadwal kerja perusahaan dan menambahkan titk koordinat.
+                    </p>
                 </div>
                 <div class="col-12 col-md-6 order-md-2 order-first">
                     <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
@@ -230,18 +231,18 @@
 
                                     <label>Hari Kerja</label>
                                     <div class="days-container">
-                                        <input type="checkbox" id="senin" name="hari_kerja[]" value="senin"><label
-                                            for="senin">Senin</label>
-                                        <input type="checkbox" id="selasa" name="hari_kerja[]" value="selasa"><label
-                                            for="selasa">Selasa</label>
-                                        <input type="checkbox" id="rabu" name="hari_kerja[]" value="rabu"><label
-                                            for="rabu">Rabu</label>
-                                        <input type="checkbox" id="kamis" name="hari_kerja[]" value="kamis"><label
-                                            for="kamis">Kamis</label>
-                                        <input type="checkbox" id="jumat" name="hari_kerja[]" value="jumat"><label
-                                            for="jumat">Jumat</label>
-                                        <input type="checkbox" id="sabtu" name="hari_kerja[]" value="sabtu"><label
-                                            for="sabtu">Sabtu</label>
+                                        <input type="checkbox" id="Senin" name="hari_kerja[]" value="Senin"><label
+                                            for="Senin">Senin</label>
+                                        <input type="checkbox" id="Selasa" name="hari_kerja[]" value="Selasa"><label
+                                            for="Selasa">Selasa</label>
+                                        <input type="checkbox" id="Rabu" name="hari_kerja[]" value="Rabu"><label
+                                            for="Rabu">Rabu</label>
+                                        <input type="checkbox" id="Kamis" name="hari_kerja[]" value="Kamis"><label
+                                            for="Kamis">Kamis</label>
+                                        <input type="checkbox" id="Jumat" name="hari_kerja[]" value="Jumat"><label
+                                            for="Jumat">Jumat</label>
+                                        <input type="checkbox" id="Sabtu" name="hari_kerja[]" value="Sabtu"><label
+                                            for="Sabtu">Sabtu</label>
                                     </div>
 
                                     <label for="latitude">Latitude</label>
@@ -304,41 +305,6 @@
                             </table>
                     </div>
 
-<<<<<<< HEAD
-<table class="table">
-    <thead>
-        <tr>
-            <th>Jam Masuk</th>
-            <th>Jam Keluar</th>
-            <th>Hari Kerja</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>Aksi</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if ($jadwal)
-            <tr>
-                <td>{{ $jadwal->jam_masuk }}</td>
-                <td>{{ $jadwal->jam_keluar }}</td>
-                <td>{{ implode(', ', json_decode($jadwal->hari_kerja)) }}</td>
-                <td>{{ $jadwal->latitude }}</td>
-                <td>{{ $jadwal->longitude }}</td>
-  <td>
-    <div class="action-buttons">
-        <!-- Tombol Edit -->
-<button class="btn btn-warning btn-sm btn-edit" data-id="{{ $jadwal->id }}">
-  Edit
-</button>
-        <!-- Form Hapus -->
-        <form action="{{ route('jadwal.destroy', $jadwal->id) }}" method="POST" style="display:inline;">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Yakin ingin menghapus?')">Hapus</button>
-        </form>
-    </div>
-</td>
-=======
                     <!-- Modal Edit -->
                     <div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -353,7 +319,6 @@
                                     </div>
                                     <div class="modal-body">
                                         <input type="hidden" id="jadwal_id" name="id">
->>>>>>> d7390f319b47b889a80ef08f85da0dc72aacab79
 
                                         <div class="form-group">
                                             <label for="jam_masuk">Jam Masuk</label>
