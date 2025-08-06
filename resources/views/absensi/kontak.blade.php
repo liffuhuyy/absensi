@@ -164,7 +164,7 @@
                                 </div>
                                 <br />
                                 <button type="button" class="back-button"
-                                    onclick="window.location.href='beranda.blade'">Kembali</button>
+                                    onclick="window.location.href='beranda.blade.php'">Kembali</button>
                             </form>
                         </div>
                     </section>
