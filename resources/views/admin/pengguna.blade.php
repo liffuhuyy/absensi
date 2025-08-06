@@ -182,7 +182,7 @@
                     console.log("Tipe data:", typeof data);
                 });
 
-<<<<<<< HEAD
+
                 // Pencarian berdasarkan teks input
                 $('#searchBox').on('input', function() {
                     let query = $(this).val().toLowerCase();
@@ -202,8 +202,7 @@
                         }
                     });
                 });
-=======
->>>>>>> 037f74dcf11eaf6f1fa54ebb5b6298b7a1c6f796
+
             }
             // Panggil fungsi saat halaman dimuat
             loadData();
